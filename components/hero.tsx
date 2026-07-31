@@ -213,12 +213,7 @@ export function Hero() {
                 {
                   position: "relative",
                   width: "100%",
-                  height: 680,
-                  borderRadius: 38,
-                  overflow: "hidden",
-                  background: "#EFE8DE",
-                  boxShadow: "0 30px 80px rgba(42,52,61,.26)",
-                  border: "8px solid #2A343D",
+                  aspectRatio: "418 / 850",
                   "--yq-amp": "7px",
                   "--yq-dur": "5.50s",
                   "--yq-lag": "0.39s",
@@ -226,14 +221,14 @@ export function Hero() {
               }
             >
               <img
-                src="/assets/hero-app.webp"
-                alt="Écran de l'app dans un mockup"
+                src="/mockups/iphone_homepage.png"
+                alt="Écran d'accueil de l'application Yatu sur iPhone"
                 style={{
                   width: "100%",
                   height: "100%",
-                  objectFit: "cover",
-                  objectPosition: "50% 40%",
+                  objectFit: "contain",
                   display: "block",
+                  filter: "drop-shadow(0 30px 40px rgba(42,52,61,.2))",
                 }}
               />
             </div>
@@ -242,6 +237,7 @@ export function Hero() {
               tool="budget"
               title="Ta part"
               detail="45,20 €"
+              hideOnMobile
               style={
                 {
                   left: "clamp(-72px, calc(50vw - 100% - 20px), 0px)",
@@ -256,6 +252,7 @@ export function Hero() {
               tool="planning"
               title="Départ vendredi"
               detail="10:00, gare de Lyon"
+              hideOnMobile
               style={
                 {
                   right: "clamp(-70px, calc(50vw - 100% - 20px), 0px)",
@@ -281,28 +278,6 @@ export function Hero() {
                 } as React.CSSProperties
               }
             />
-
-            <div
-              data-r="pill mobile-hide"
-              data-float=""
-              style={
-                {
-                  ...PILL_BASE,
-                  right: "clamp(-56px, calc(50vw - 100% - 20px), 0px)",
-                  bottom: 238,
-                  borderRadius: 999,
-                  padding: "8px 16px 8px 10px",
-                  "--yq-amp": "9px",
-                  "--yq-dur": "6.60s",
-                  "--yq-lag": "1.13s",
-                } as React.CSSProperties
-              }
-            >
-              <AvatarPair height={30} />
-              <span style={{ fontFamily: UI, fontWeight: 700, fontSize: 14, color: "#2A343D" }}>
-                8 embarquent
-              </span>
-            </div>
           </div>
         </div>
       </div>

@@ -13,13 +13,13 @@ export const ROUTES = {
   faq: "/#faq",
   liste: "/#liste",
   bde: "/bde",
+  bdeFeatures: "/bde#fonctionnalites",
   bdePilote: "/bde#pilote",
   bdeDemo: "/bde#demo",
   bienvenue: "/bienvenue",
   mentionsLegales: "/mentions-legales",
   confidentialite: "/confidentialite",
   cookies: "/cookies",
-  
 } as const;
 
 /** Hash links must be plain <a>: next/link no-ops when only the hash changes. */

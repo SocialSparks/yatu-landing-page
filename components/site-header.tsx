@@ -1,7 +1,8 @@
 "use client";
 
 import { NavLink } from "@/components/nav-link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { ROUTES } from "@/lib/routes";
 
 const UI = "var(--font-ui), system-ui, sans-serif";
@@ -13,9 +14,47 @@ const NAV = [
   { href: ROUTES.bde, label: "BDE & assos", note: "Page dédiée" },
 ];
 
+/** "/#solution" -> "solution", "/bde" -> null (no in-page anchor). */
+function anchorId(href: string): string | null {
+  const i = href.indexOf("#");
+  return i === -1 ? null : href.slice(i + 1);
+}
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
+  const pathname = usePathname();
+  const [activeAnchor, setActiveAnchor] = useState<string | null>(null);
+
+  // Scroll-spy: highlight the nav link whose section is currently in view.
+  useEffect(() => {
+    const ids = NAV.map((item) => anchorId(item.href)).filter((id): id is string => !!id);
+    const sections = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => !!el);
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]) setActiveAnchor(visible[0].target.id);
+      },
+      { rootMargin: "-40% 0px -55% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] },
+    );
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, [pathname]);
+
+  const isActive = (href: string) => {
+    const id = anchorId(href);
+    if (id) {
+      const base = href.slice(0, href.indexOf("#")) || "/";
+      return pathname === base && activeAnchor === id;
+    }
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
 
   return (
     <header style={{ position: "sticky", top: 0, zIndex: 60, background: "#F7F4ED" }}>
@@ -33,11 +72,13 @@ export function SiteHeader() {
         <NavLink
           href={ROUTES.home}
           aria-label="Yatu - accueil"
+          className="yq-logo-link"
           style={{ display: "flex", alignItems: "center", flex: "none", textDecoration: "none" }}
         >
           <img
             src="/assets/yatu-wordmark.png"
             alt="Yatu"
+            className="yq-logo-mark"
             style={{ height: 40, width: "auto", display: "block" }}
           />
         </NavLink>
@@ -61,11 +102,13 @@ export function SiteHeader() {
               key={item.href}
               href={item.href}
               className="yq-nav-link"
+              aria-current={isActive(item.href) ? "page" : undefined}
               style={{
                 fontFamily: UI,
                 fontWeight: 600,
                 fontSize: 15,
-                color: "#4E565D",
+                color: isActive(item.href) ? "#2A343D" : "#4E565D",
+                background: isActive(item.href) ? "#EFE8DE" : undefined,
                 textDecoration: "none",
                 padding: "10px 16px",
                 borderRadius: 999,
@@ -175,14 +218,15 @@ export function SiteHeader() {
             key={item.href}
             href={item.href}
             onClick={close}
+            aria-current={isActive(item.href) ? "page" : undefined}
             style={{
               display: "flex",
               alignItems: "center",
               justifyContent: item.note ? "space-between" : undefined,
               minHeight: 52,
               padding: "0 18px",
-              background: "#FFFFFF",
-              border: "1px solid #EBE7DE",
+              background: isActive(item.href) ? "#EFE8DE" : "#FFFFFF",
+              border: isActive(item.href) ? "1px solid #DCD3C2" : "1px solid #EBE7DE",
               borderRadius: 16,
               fontFamily: UI,
               fontWeight: 600,

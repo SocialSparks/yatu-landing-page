@@ -58,7 +58,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <noscript>
           {/* site-motion.js hid elements from script; without script nothing should stay hidden. */}
-          <style>{`[data-reveal],[data-fly],[data-reveal="stagger"]>*{opacity:1!important;transform:none!important}`}</style>
+          <style>{`[data-reveal],[data-fly],[data-reveal="stagger"]>*,[data-float]{opacity:1!important;transform:none!important;scale:1!important}`}</style>
         </noscript>
         <Motion />
         {/* Every page in the design project imports these three. */}

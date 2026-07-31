@@ -220,10 +220,10 @@ export function DemoSection() {
 
           {/* The phone */}
           <div data-r="phone-wrap" style={{ display: "flex", justifyContent: "center", overflow: "hidden" }}>
-            <IOSDevice width={402} height={812}>
+            <IOSDevice width={418} height={850}>
               <div
                 style={{
-                  minHeight: 812,
+                  minHeight: 810,
                   background: "#F7F4ED",
                   padding: "52px 0 0",
                   display: "flex",

@@ -1,4 +1,3 @@
-import { AppHome } from "@/components/app-home";
 import { Countdown } from "@/components/countdown";
 import { Decor } from "@/components/decor";
 import { WaitlistForm } from "@/components/waitlist-form";
@@ -92,8 +91,6 @@ export function WaitlistSection() {
             minHeight: 320,
           }}
         >
-          <AppHome />
-
           <img
             src={icon("bell")}
             alt=""

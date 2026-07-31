@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { SectionHeading } from "@/components/section-heading";
+import { SectionCta } from "@/components/section-cta";
 import { ACCENT, MODULES, PRESETS, icon, type ModuleKey, type Preset } from "@/lib/content";
+import { ROUTES } from "@/lib/routes";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
@@ -332,6 +334,15 @@ export function ModulesSection() {
             {resume}
           </span>
         </div>
+
+        <SectionCta
+          title="Tu veux voir ces modules en situation ?"
+          body="Construis un événement en quatre étapes et vois immédiatement comment Yatu s'adapte à ton groupe."
+          primary={{ href: ROUTES.fonctionnement, label: "Essayer la démo" }}
+          secondary={{ href: ROUTES.liste, label: "Rejoindre la liste" }}
+          onDark
+          accent={ACCENT.sky}
+        />
       </div>
     </section>
   );

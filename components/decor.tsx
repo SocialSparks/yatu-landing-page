@@ -50,11 +50,11 @@ export function Decor({ items }: { items: DecorItem[] }) {
                 bottom: position.b,
                 width: d.s,
                 height: d.s,
-                opacity: d.o,
                 rotate: `${d.rot}deg`,
                 "--yq-amp": `${d.amp}px`,
                 "--yq-dur": d.dur,
                 "--yq-lag": d.lag,
+                "--yq-o": d.o,
               } as React.CSSProperties
             }
           />

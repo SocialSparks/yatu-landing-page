@@ -1,101 +1,12 @@
 /**
- * iOS 26 device frame - port of the ios-frame.jsx starter from the design
- * project, trimmed to what the home page actually mounts: the bezel, dynamic
- * island, status bar and home indicator. (The starter also ships a nav bar,
- * grouped list and keyboard; add them back if another page needs them.)
+ * Interactive screen mounted beneath the transparent iPhone mockup supplied
+ * with the landing-page assets. The frame stays above the demo without
+ * intercepting pointer events.
  */
-
-function IOSStatusBar({ dark = false, time = "9:41" }: { dark?: boolean; time?: string }) {
-  const c = dark ? "#fff" : "#000";
-  return (
-    <div
-      aria-hidden="true"
-      style={{
-        display: "flex",
-        gap: 154,
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "21px 24px 19px",
-        boxSizing: "border-box",
-        position: "relative",
-        zIndex: 20,
-        width: "100%",
-      }}
-    >
-      <div
-        style={{
-          flex: 1,
-          height: 22,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          paddingTop: 1.5,
-        }}
-      >
-        <span
-          style={{
-            fontFamily: '-apple-system, "SF Pro", system-ui',
-            fontWeight: 590,
-            fontSize: 17,
-            lineHeight: "22px",
-            color: c,
-          }}
-        >
-          {time}
-        </span>
-      </div>
-      <div
-        style={{
-          flex: 1,
-          height: 22,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 7,
-          paddingTop: 1,
-          paddingRight: 1,
-        }}
-      >
-        <svg width="19" height="12" viewBox="0 0 19 12">
-          <rect x="0" y="7.5" width="3.2" height="4.5" rx="0.7" fill={c} />
-          <rect x="4.8" y="5" width="3.2" height="7" rx="0.7" fill={c} />
-          <rect x="9.6" y="2.5" width="3.2" height="9.5" rx="0.7" fill={c} />
-          <rect x="14.4" y="0" width="3.2" height="12" rx="0.7" fill={c} />
-        </svg>
-        <svg width="17" height="12" viewBox="0 0 17 12">
-          <path
-            d="M8.5 3.2C10.8 3.2 12.9 4.1 14.4 5.6L15.5 4.5C13.7 2.7 11.2 1.5 8.5 1.5C5.8 1.5 3.3 2.7 1.5 4.5L2.6 5.6C4.1 4.1 6.2 3.2 8.5 3.2Z"
-            fill={c}
-          />
-          <path
-            d="M8.5 6.8C9.9 6.8 11.1 7.3 12 8.2L13.1 7.1C11.8 5.9 10.2 5.1 8.5 5.1C6.8 5.1 5.2 5.9 3.9 7.1L5 8.2C5.9 7.3 7.1 6.8 8.5 6.8Z"
-            fill={c}
-          />
-          <circle cx="8.5" cy="10.5" r="1.5" fill={c} />
-        </svg>
-        <svg width="27" height="13" viewBox="0 0 27 13">
-          <rect
-            x="0.5"
-            y="0.5"
-            width="23"
-            height="12"
-            rx="3.5"
-            stroke={c}
-            strokeOpacity="0.35"
-            fill="none"
-          />
-          <rect x="2" y="2" width="20" height="9" rx="2" fill={c} />
-          <path d="M25 4.5V8.5C25.8 8.2 26.5 7.2 26.5 6.5C26.5 5.8 25.8 4.8 25 4.5Z" fill={c} fillOpacity="0.4" />
-        </svg>
-      </div>
-    </div>
-  );
-}
-
 export function IOSDevice({
   children,
-  width = 402,
-  height = 874,
+  width = 418,
+  height = 850,
   dark = false,
 }: {
   children?: React.ReactNode;
@@ -109,62 +20,103 @@ export function IOSDevice({
         width,
         height,
         flex: "none",
-        borderRadius: 48,
-        overflow: "hidden",
         position: "relative",
-        background: dark ? "#000" : "#F2F2F7",
-        boxShadow: "0 40px 80px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.12)",
         fontFamily: "-apple-system, system-ui, sans-serif",
         WebkitFontSmoothing: "antialiased",
       }}
     >
-      {/* dynamic island */}
       <div
         style={{
           position: "absolute",
-          top: 11,
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: 126,
-          height: 37,
-          borderRadius: 24,
-          background: "#000",
-          zIndex: 50,
+          inset: "19px 23px 21px 22px",
+          overflow: "hidden",
+          borderRadius: 39,
+          background: dark ? "#000000" : "#F2F2F7",
+          zIndex: 1,
         }}
-      />
-      {/* status bar */}
-      <div style={{ position: "absolute", top: 0, left: 0, right: 0, zIndex: 10 }}>
-        <IOSStatusBar dark={dark} />
+      >
+        <div style={{ width: "100%", height: "100%", overflow: "auto" }}>{children}</div>
       </div>
-      {/* content */}
-      <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
-        <div style={{ flex: 1, overflow: "auto" }}>{children}</div>
-      </div>
-      {/* home indicator - always on top */}
+
       <div
+        aria-hidden="true"
         style={{
           position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          zIndex: 60,
-          height: 34,
+          top: 34,
+          left: 53,
+          right: 48,
+          zIndex: 1,
           display: "flex",
-          justifyContent: "center",
-          alignItems: "flex-end",
-          paddingBottom: 8,
+          alignItems: "center",
+          justifyContent: "space-between",
+          color: dark ? "#FFFFFF" : "#000000",
           pointerEvents: "none",
         }}
       >
-        <div
+        <span
           style={{
-            width: 139,
-            height: 5,
-            borderRadius: 100,
-            background: dark ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.25)",
+            fontFamily: '-apple-system, "SF Pro", system-ui',
+            fontWeight: 600,
+            fontSize: 16,
+            lineHeight: 1,
           }}
-        />
+        >
+          9:41
+        </span>
+        <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+            <rect x="0" y="8" width="3" height="4" rx="0.7" fill="currentColor" />
+            <rect x="5" y="5.5" width="3" height="6.5" rx="0.7" fill="currentColor" />
+            <rect x="10" y="3" width="3" height="9" rx="0.7" fill="currentColor" />
+            <rect x="15" width="3" height="12" rx="0.7" fill="currentColor" />
+          </svg>
+          <svg width="17" height="12" viewBox="0 0 17 12" aria-hidden="true">
+            <path
+              d="M1.4 4.4A10 10 0 0 1 15.6 4.4L14.3 5.7A8.2 8.2 0 0 0 2.7 5.7L1.4 4.4Zm2.8 2.8a6 6 0 0 1 8.6 0l-1.3 1.3a4.2 4.2 0 0 0-6 0L4.2 7.2ZM7 10.4a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z"
+              fill="currentColor"
+            />
+          </svg>
+          <svg width="27" height="13" viewBox="0 0 27 13" aria-hidden="true">
+            <rect x=".5" y=".5" width="23" height="12" rx="3.5" fill="none" stroke="currentColor" opacity=".35" />
+            <rect x="2" y="2" width="20" height="9" rx="2" fill="currentColor" />
+            <path d="M25 4.5v4c.8-.3 1.5-1.3 1.5-2s-.7-1.7-1.5-2Z" fill="currentColor" opacity=".4" />
+          </svg>
+        </span>
       </div>
+
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          left: "50%",
+          bottom: 29,
+          zIndex: 1,
+          width: 139,
+          height: 5,
+          borderRadius: 999,
+          background: dark ? "rgba(255,255,255,.7)" : "rgba(0,0,0,.25)",
+          transform: "translateX(-50%)",
+          pointerEvents: "none",
+        }}
+      />
+
+      <img
+        src="/mockups/iphone_transparent.png"
+        alt=""
+        aria-hidden="true"
+        draggable={false}
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          display: "block",
+          pointerEvents: "none",
+          userSelect: "none",
+          zIndex: 2,
+          filter: "drop-shadow(0 32px 46px rgba(0,0,0,.18))",
+        }}
+      />
     </div>
   );
 }

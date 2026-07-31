@@ -375,9 +375,7 @@ export type UseCase = {
   title: string;
   sub: string;
   /**
-   * Filled image-slot from the design file. Every slot on this page is still
-   * empty in the design project, so the cards render on the sand background
-   * until photos are dropped in.
+   * Editorial photo generated for the use-case card.
    */
   photo?: string;
 };
@@ -389,6 +387,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
     cards: [
       {
         id: "usage-soiree",
+        photo: "/assets/usecases/usage-soiree.jpg",
         icon: icon("chat"),
         badge: ACCENT.blush,
         label: "Soirée",
@@ -397,6 +396,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       },
       {
         id: "usage-anniv",
+        photo: "/assets/usecases/usage-anniv.jpg",
         icon: icon("heart"),
         badge: ACCENT.coral,
         label: "Anniversaire",
@@ -405,6 +405,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       },
       {
         id: "usage-weekend",
+        photo: "/assets/usecases/usage-weekend.jpg",
         icon: icon("calendar"),
         badge: ACCENT.apricot,
         label: "Week-end",
@@ -413,6 +414,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       },
       {
         id: "usage-voyage",
+        photo: "/assets/usecases/usage-voyage.jpg",
         icon: icon("send"),
         badge: ACCENT.sky,
         label: "Voyage",
@@ -421,6 +423,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       },
       {
         id: "usage-festival",
+        photo: "/assets/usecases/usage-festival.jpg",
         icon: icon("ticket"),
         badge: ACCENT.lilac,
         label: "Festival",
@@ -429,6 +432,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       },
       {
         id: "usage-evjf",
+        photo: "/assets/usecases/usage-evjf.jpg",
         icon: icon("heart"),
         badge: ACCENT.blush,
         label: "EVJF",
@@ -437,6 +441,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       },
       {
         id: "usage-evg",
+        photo: "/assets/usecases/usage-evg.jpg",
         icon: icon("bubble"),
         badge: ACCENT.meadow,
         label: "EVG",
@@ -451,6 +456,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
     cards: [
       {
         id: "usage-rando",
+        photo: "/assets/usecases/usage-rando.jpg",
         icon: icon("pin"),
         badge: ACCENT.meadow,
         label: "Randonnée",
@@ -459,6 +465,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       },
       {
         id: "usage-ski",
+        photo: "/assets/usecases/usage-ski.jpg",
         icon: icon("documents"),
         badge: ACCENT.sky,
         label: "Séjour ski",
@@ -467,6 +474,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       },
       {
         id: "usage-cremaillere",
+        photo: "/assets/usecases/usage-cremaillere.jpg",
         icon: icon("people"),
         badge: ACCENT.sunbeam,
         label: "Crémaillère",
@@ -475,6 +483,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       },
       {
         id: "usage-nouvelan",
+        photo: "/assets/usecases/usage-nouvelan.jpg",
         icon: icon("bell"),
         badge: ACCENT.lilac,
         label: "Nouvel An",
@@ -483,6 +492,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       },
       {
         id: "usage-roadtrip",
+        photo: "/assets/usecases/usage-roadtrip.jpg",
         icon: icon("planning"),
         badge: ACCENT.apricot,
         label: "Road trip",
@@ -491,6 +501,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       },
       {
         id: "usage-camping",
+        photo: "/assets/usecases/usage-camping.jpg",
         icon: icon("liste"),
         badge: ACCENT.meadow,
         label: "Camping",
@@ -499,6 +510,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       },
       {
         id: "usage-concert",
+        photo: "/assets/usecases/usage-concert.jpg",
         icon: icon("ticket"),
         badge: ACCENT.coral,
         label: "Concert",
@@ -513,6 +525,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
     cards: [
       {
         id: "usage-match",
+        photo: "/assets/usecases/usage-match.jpg",
         icon: icon("chart"),
         badge: ACCENT.sky,
         label: "Match",
@@ -521,6 +534,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       },
       {
         id: "usage-coloc",
+        photo: "/assets/usecases/usage-coloc.jpg",
         icon: icon("budget"),
         badge: ACCENT.lilac,
         label: "Coloc",
@@ -529,6 +543,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       },
       {
         id: "usage-mariage",
+        photo: "/assets/usecases/usage-mariage.jpg",
         icon: icon("img"),
         badge: ACCENT.blush,
         label: "Mariage",
@@ -537,6 +552,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       },
       {
         id: "usage-famille",
+        photo: "/assets/usecases/usage-famille.jpg",
         icon: icon("documents"),
         badge: ACCENT.apricot,
         label: "Vacances en famille",
@@ -545,6 +561,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       },
       {
         id: "usage-marathon",
+        photo: "/assets/usecases/usage-marathon.jpg",
         icon: icon("chart"),
         badge: ACCENT.coral,
         label: "Marathon",
@@ -553,6 +570,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       },
       {
         id: "usage-surf",
+        photo: "/assets/usecases/usage-surf.jpg",
         icon: icon("send"),
         badge: ACCENT.sky,
         label: "Surf trip",
@@ -561,6 +579,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       },
       {
         id: "usage-retrouvailles",
+        photo: "/assets/usecases/usage-retrouvailles.jpg",
         icon: icon("people"),
         badge: ACCENT.sunbeam,
         label: "Retrouvailles",

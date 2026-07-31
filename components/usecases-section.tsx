@@ -1,7 +1,9 @@
 import { Decor } from "@/components/decor";
 import { SectionHeading } from "@/components/section-heading";
+import { SectionCta } from "@/components/section-cta";
 import { ACCENT, USE_CASE_ROWS, type UseCase } from "@/lib/content";
 import { USAGES_DECOR } from "@/lib/decor";
+import { ROUTES } from "@/lib/routes";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
@@ -25,6 +27,8 @@ function Card({ card }: { card: UseCase }) {
         <img
           src={card.photo}
           alt=""
+          loading="lazy"
+          decoding="async"
           style={{
             position: "absolute",
             inset: 0,
@@ -161,6 +165,14 @@ export function UseCasesSection() {
           Yatu ne fait pas la différence entre une raclette et un festival. Vous choisissez les
           modules qui servent, le reste disparaît.
         </p>
+
+        <SectionCta
+          title="Tu as déjà le prochain événement en tête ?"
+          body="Garde ta place pour créer ton premier espace Yatu dès l'ouverture."
+          primary={{ href: ROUTES.liste, label: "Me garder une place" }}
+          secondary={{ href: ROUTES.fonctionnement, label: "Tester l'app" }}
+          accent={ACCENT.coral}
+        />
       </div>
     </section>
   );

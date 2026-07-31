@@ -27,7 +27,7 @@ import { useEffect } from "react";
 export function Motion() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      document.querySelectorAll<HTMLElement>("[data-reveal],[data-fly]").forEach((el) => {
+      document.querySelectorAll<HTMLElement>("[data-reveal],[data-fly],[data-float]").forEach((el) => {
         el.classList.add("yq-in");
       });
       return;
@@ -47,7 +47,7 @@ export function Motion() {
     );
 
     function scan() {
-      document.querySelectorAll<HTMLElement>("[data-reveal],[data-fly]").forEach((el) => {
+      document.querySelectorAll<HTMLElement>("[data-reveal],[data-fly],[data-float]").forEach((el) => {
         if (seen.has(el)) return;
         seen.add(el);
 
@@ -86,7 +86,7 @@ export function Motion() {
       if (document.visibilityState !== "visible") return;
       window.clearTimeout(bail);
       bail = window.setTimeout(() => {
-        document.querySelectorAll<HTMLElement>("[data-reveal],[data-fly]").forEach((el) => {
+        document.querySelectorAll<HTMLElement>("[data-reveal],[data-fly],[data-float]").forEach((el) => {
           const r = el.getBoundingClientRect();
           if (r.top < window.innerHeight && r.bottom > 0) el.classList.add("yq-in");
         });

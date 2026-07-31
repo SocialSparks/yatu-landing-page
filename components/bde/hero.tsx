@@ -8,8 +8,7 @@ import { BDE_HERO_DECOR } from "@/lib/decor";
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
 
-/** The `bde-hero` image-slot is still empty in the design project. */
-const PHOTO = findAsset(["/assets/bde-hero.png", "/assets/bde-hero.webp", "/assets/bde-hero.jpg"]);
+const PHOTO = findAsset(["/assets/bde-hero.jpg", "/assets/bde-hero.webp", "/assets/bde-hero.png"]);
 
 export function BdeHero() {
   return (

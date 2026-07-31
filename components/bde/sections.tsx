@@ -1,5 +1,6 @@
 import { Decor } from "@/components/decor";
 import { SectionHeading } from "@/components/section-heading";
+import { SectionCta } from "@/components/section-cta";
 import {
   BDE_FEATURES,
   BDE_PROBLEMES,
@@ -9,6 +10,7 @@ import {
 } from "@/lib/bde-content";
 import { ACCENT, icon } from "@/lib/content";
 import { BDE_PROBLEMES_DECOR, BDE_USAGES_DECOR } from "@/lib/decor";
+import { ROUTES } from "@/lib/routes";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
@@ -81,70 +83,262 @@ export function BdeProblemes() {
             <SoftCard key={p.title} {...p} />
           ))}
         </div>
+
+        <SectionCta
+          title="Et si tout revenait enfin au même endroit ?"
+          body="Découvre les outils pensés pour garder un grand groupe informé sans alourdir le travail du bureau."
+          primary={{ href: ROUTES.bdeFeatures, label: "Voir les fonctionnalités" }}
+          secondary={{ href: ROUTES.bdeDemo, label: "Parler de mon événement" }}
+          accent={ACCENT.coral}
+        />
       </div>
     </section>
   );
 }
 
 export function BdeFeatures() {
+  const spans = [7, 5, 5, 7, 7, 5];
+  const accents = ["#96E087", "#FED873", "#6FC6F1", "#C6A8E1", "#FF9F8E", "#96E087"];
+
   return (
-    <section style={{ background: "#2A343D", padding: "clamp(56px,8vw,104px) 0" }}>
-      <div data-r="gutter" style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
-        <SectionHeading
-          badge="Les fonctionnalités BDE"
-          badgeBg={ACCENT.meadow}
-          title="Ce que l'app fait en plus quand vous êtes deux cents."
-          titleMaxCh={20}
-          onDark
-        />
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit,minmax(min(240px,100%),1fr))",
-            gap: 16,
-          }}
-        >
-          {BDE_FEATURES.map((f) => (
-            <div
-              key={f.title}
-              data-fly={f.fly}
-              data-reveal-delay={f.delay || undefined}
-              className="yq-lift"
+    <section
+      id="fonctionnalites"
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        background: "#2A343D",
+        padding: "clamp(64px,9vw,116px) 0",
+      }}
+    >
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          width: 520,
+          height: 520,
+          borderRadius: 999,
+          top: -300,
+          right: -160,
+          background: "rgba(111,198,241,.1)",
+          filter: "blur(8px)",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          width: 420,
+          height: 420,
+          borderRadius: 999,
+          bottom: -260,
+          left: -130,
+          background: "rgba(198,168,225,.1)",
+          filter: "blur(8px)",
+        }}
+      />
+
+      <div
+        data-r="gutter"
+        style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}
+      >
+        <div className="yq-bde-feature-heading">
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 22 }}>
+            <span
+              data-reveal="up"
               style={{
-                background: "rgba(255,255,255,.06)",
-                border: "1px solid rgba(255,255,255,.1)",
-                borderRadius: 16,
-                padding: 26,
-                display: "flex",
-                flexDirection: "column",
-                gap: 12,
+                display: "inline-flex",
+                background: ACCENT.meadow,
+                color: "#2A343D",
+                borderRadius: 999,
+                padding: "11px 21px",
+                fontFamily: UI,
+                fontWeight: 700,
+                fontSize: 15,
               }}
             >
-              <img src={icon(f.tool)} alt="" style={{ width: 40, height: 40, display: "block" }} />
-              <span
-                style={{
-                  fontFamily: DISPLAY,
-                  fontSize: 19,
-                  lineHeight: 1.2,
-                  letterSpacing: "-.02em",
-                  color: "#FFFFFF",
-                }}
-              >
-                {f.title}
-              </span>
-              <span
-                style={{
-                  fontFamily: UI,
-                  fontSize: 15,
-                  lineHeight: 1.45,
-                  color: "rgba(255,255,255,.7)",
-                }}
-              >
-                {f.desc}
-              </span>
+              Les fonctionnalités BDE
+            </span>
+            <h2
+              data-reveal="up"
+              data-reveal-delay="70"
+              style={{
+                margin: 0,
+                maxWidth: "18ch",
+                fontFamily: DISPLAY,
+                fontWeight: 400,
+                fontSize: "clamp(36px,5vw,58px)",
+                lineHeight: 1.06,
+                letterSpacing: "-.027em",
+                color: "#FFFFFF",
+                textWrap: "balance",
+              }}
+            >
+              Tout reste clair, même quand vous êtes deux cents.
+            </h2>
+          </div>
+
+          <div data-reveal="right" data-reveal-delay="120" className="yq-bde-feature-summary">
+            <div style={{ display: "flex", alignItems: "center" }}>
+              {BDE_FEATURES.map((feature, index) => (
+                <span
+                  key={feature.title}
+                  style={{
+                    width: 42,
+                    height: 42,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flex: "none",
+                    marginLeft: index === 0 ? 0 : -8,
+                    background: "#FFFFFF",
+                    border: "2px solid #2A343D",
+                    borderRadius: 14,
+                    position: "relative",
+                    zIndex: BDE_FEATURES.length - index,
+                  }}
+                >
+                  <img src={icon(feature.tool)} alt="" style={{ width: 28, height: 28, display: "block" }} />
+                </span>
+              ))}
             </div>
-          ))}
+            <p
+              style={{
+                margin: 0,
+                fontFamily: UI,
+                fontSize: 16,
+                lineHeight: 1.55,
+                color: "rgba(255,255,255,.72)",
+                textWrap: "pretty",
+              }}
+            >
+              Six outils reliés au même événement. Le bureau garde la main et chaque participant
+              voit toujours la bonne information.
+            </p>
+          </div>
         </div>
+
+        <div className="yq-bde-feature-grid">
+          {BDE_FEATURES.map((f, index) => {
+            const accent = accents[index];
+
+            return (
+              <div
+                key={f.title}
+                data-fly={f.fly}
+                data-reveal-delay={f.delay || undefined}
+                className="yq-bde-feature-card"
+                style={
+                  {
+                    "--yq-feature-span": spans[index],
+                    "--yq-feature-accent": accent,
+                  } as React.CSSProperties
+                }
+              >
+                <div
+                  aria-hidden="true"
+                  style={{
+                    position: "absolute",
+                    width: 180,
+                    height: 180,
+                    right: -70,
+                    bottom: -100,
+                    borderRadius: 999,
+                    background: accent,
+                    opacity: 0.08,
+                  }}
+                />
+
+                <div
+                  style={{
+                    position: "relative",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: 16,
+                  }}
+                >
+                  <span
+                    style={{
+                      width: 52,
+                      height: 52,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      background: "#FFFFFF",
+                      borderRadius: 16,
+                      boxShadow: "0 10px 28px rgba(0,0,0,.14)",
+                    }}
+                  >
+                    <img
+                      src={icon(f.tool)}
+                      alt=""
+                      style={{ width: 36, height: 36, display: "block" }}
+                    />
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: DISPLAY,
+                      fontSize: 14,
+                      letterSpacing: ".08em",
+                      color: accent,
+                    }}
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                </div>
+
+                <h3
+                  style={{
+                    position: "relative",
+                    margin: 0,
+                    fontFamily: DISPLAY,
+                    fontWeight: 400,
+                    fontSize: "clamp(20px,2.2vw,25px)",
+                    lineHeight: 1.18,
+                    letterSpacing: "-.02em",
+                    color: "#FFFFFF",
+                  }}
+                >
+                  {f.title}
+                </h3>
+                <p
+                  style={{
+                    position: "relative",
+                    margin: 0,
+                    maxWidth: "54ch",
+                    fontFamily: UI,
+                    fontSize: 15,
+                    lineHeight: 1.55,
+                    color: "rgba(255,255,255,.7)",
+                    textWrap: "pretty",
+                  }}
+                >
+                  {f.desc}
+                </p>
+                <span
+                  aria-hidden="true"
+                  style={{
+                    position: "relative",
+                    width: 48,
+                    height: 3,
+                    marginTop: "auto",
+                    borderRadius: 999,
+                    background: accent,
+                  }}
+                />
+              </div>
+            );
+          })}
+        </div>
+
+        <SectionCta
+          title="Tu veux voir ce que ça donne sur ton prochain événement ?"
+          body="On te montre le parcours complet avec tes contraintes, ton volume et ton calendrier."
+          primary={{ href: ROUTES.bdeDemo, label: "Demander une démo" }}
+          secondary={{ href: ROUTES.bdePilote, label: "Voir le pack pilote" }}
+          onDark
+          accent={ACCENT.meadow}
+        />
       </div>
     </section>
   );
@@ -183,6 +377,14 @@ export function BdeUsages() {
             <SoftCard key={u.title} {...u} />
           ))}
         </div>
+
+        <SectionCta
+          title="Ton prochain événement ressemble à l'un de ceux-là ?"
+          body="Explique-nous votre organisation actuelle et on te dira où Yatu peut vraiment vous faire gagner du temps."
+          primary={{ href: ROUTES.bdeDemo, label: "Parler de mon événement" }}
+          secondary={{ href: ROUTES.bdePilote, label: "Découvrir le pack gratuit" }}
+          accent={ACCENT.blush}
+        />
       </div>
     </section>
   );
@@ -327,6 +529,13 @@ export function BdePilote() {
             </p>
           </div>
         </div>
+
+        <SectionCta
+          title="Le prochain BDE pilote peut être le tien."
+          body="Le pack est gratuit, sans engagement, et accompagné directement par l'équipe Yatu."
+          primary={{ href: ROUTES.bdeDemo, label: "Candidater au pack pilote" }}
+          accent={ACCENT.sunbeam}
+        />
       </div>
     </section>
   );
