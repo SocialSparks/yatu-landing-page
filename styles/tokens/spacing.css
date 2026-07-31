@@ -1,0 +1,12 @@
+/* Yatu spacing. The file works on a 4px base; 8/16/24 do the heavy lifting,
+   and screen gutters are 16px on a 402px iPhone frame. */
+:root{
+--space-2:2px;--space-4:4px;--space-6:6px;--space-8:8px;--space-10:10px;--space-12:12px;
+--space-16:16px;--space-20:20px;--space-24:24px;--space-32:32px;--space-40:40px;--space-48:48px;
+--gutter-screen:16px;      /* left/right padding of every app screen */
+--gap-card-stack:12px;     /* between cards in a vertical list */
+--gap-section:24px;        /* between screen sections */
+--tabbar-height:64px;      /* floating pill tab bar */
+--statusbar-height:54px;
+--device-width:402px;--device-height:874px;
+}

@@ -1,0 +1,27 @@
+/* Yatu type scale. Sizes are transcribed verbatim from the Figma file — the
+   float tokens (--text-*) in fig-tokens.css are unitless, so they are multiplied here. */
+:root{
+--size-large-title:calc(var(--text-large-title) * 1px);  /* 22 — screen titles, Capriola */
+--size-card-title:calc(var(--text-card-title) * 1px);    /* 18 — card headings, Capriola */
+--size-top-title:calc(var(--text-top-title) * 1px);      /* 16 — nav bar titles */
+--size-card-tag:calc(var(--text-card-tag) * 1px);        /* 16 — tags, chips */
+--size-body:calc(var(--text-p) * 1px);                   /* 16 — body copy, Lato */
+--size-detail:calc(var(--text-card-detail) * 1px);       /* 14 — meta rows, list detail */
+--size-small:calc(var(--text-small) * 1px);              /* 12 — captions, tab labels */
+--size-display:40px;                                     /* brand boards only */
+
+--weight-regular:400;--weight-semibold:600;--weight-bold:700;
+--leading-tight:1.05;   /* display + Capriola titles sit tight */
+--leading-snug:1.2;
+--leading-body:1.45;
+}
+/* Ready-made text roles. Apply as classes when you don't want to reassemble the stack. */
+.yatu-display{font-family:var(--font-display);font-weight:400;font-size:40px;line-height:var(--leading-tight);color:var(--text-primary)}
+.yatu-title-lg{font-family:var(--font-display);font-weight:400;font-size:var(--size-large-title);line-height:var(--leading-snug);color:var(--text-primary)}
+.yatu-title-card{font-family:var(--font-display);font-weight:400;font-size:var(--size-card-title);line-height:var(--leading-snug);color:var(--text-primary)}
+.yatu-title-top{font-family:var(--font-display);font-weight:400;font-size:var(--size-top-title);line-height:var(--leading-snug);color:var(--text-primary)}
+.yatu-body{font-family:var(--font-ui);font-weight:400;font-size:var(--size-body);line-height:var(--leading-body);color:var(--text-primary)}
+.yatu-body-strong{font-family:var(--font-ui);font-weight:700;font-size:var(--size-body);line-height:var(--leading-body);color:var(--text-primary)}
+.yatu-detail{font-family:var(--font-ui);font-weight:400;font-size:var(--size-detail);line-height:var(--leading-body);color:var(--text-secondary)}
+.yatu-small{font-family:var(--font-ui);font-weight:400;font-size:var(--size-small);line-height:var(--leading-body);color:var(--text-secondary)}
+.yatu-label{font-family:var(--font-ui);font-weight:600;font-size:var(--size-detail);line-height:var(--leading-snug);color:var(--text-primary)}

@@ -1,0 +1,59 @@
+/* Yatu semantic colour aliases. Base ramps live in fig-tokens.css (from Figma Variables).
+   Never hardcode a hex in product code — reach for one of these. */
+:root{
+/* ── Brand ─────────────────────────────────────────────── */
+--yatu-ink:var(--color-black-500);            /* #2A343D — the brand navy. Text, logo, primary fills */
+--yatu-sand:var(--color-beige-500);           /* #F7F4ED — the app canvas */
+--yatu-sand-deep:var(--color-beige-unselected); /* #EFE8DE — unselected / recessed sand */
+--yatu-outline:var(--color-border-border-1);  /* #EBE7DE — the hairline that borders almost everything */
+
+/* ── Accent palette (event colours, tool colours, tab dots) ── */
+--yatu-coral:var(--color-red-500);            /* #FF7676 */
+--yatu-apricot:var(--color-orange-500);       /* #FF8C64 */
+--yatu-sunbeam:var(--color-yellow-500);       /* #FED873 */
+--yatu-meadow:var(--color-green-500);         /* #96E087 */
+--yatu-sky:var(--color-blue-500);             /* #6FC6F1 */
+--yatu-lilac:var(--color-purple-500);         /* #C6A8E1 */
+--yatu-blush:var(--color-pink-500);           /* #FF92B1 */
+
+/* ── Text ──────────────────────────────────────────────── */
+--text-primary:var(--text-text-primary);      /* #2A343D */
+--text-secondary:var(--text-text-secondary);  /* #4E565D */
+--text-tertiary:var(--color-black-300);       /* #71787E */
+--text-invert:var(--text-text-invert);        /* #FFFFFF */
+--text-placeholder:var(--text-text-input);    /* #7C7A77 */
+--text-paragraph:var(--black-p);              /* rgba(42,52,61,.8) — long-form body copy */
+--text-danger:var(--color-alert-colors-danger);
+--text-link:var(--color-black-500);
+
+/* ── Surfaces ──────────────────────────────────────────── */
+--surface-canvas:var(--color-beige-500);
+--surface-card:var(--white);
+--surface-raised:var(--white);
+--surface-recessed:var(--color-beige-unselected);
+--surface-inverse:var(--color-black-500);
+--surface-disabled:var(--color-black-50);
+--surface-scrim:rgba(0,0,0,.8);
+
+/* ── Borders ───────────────────────────────────────────── */
+--border-default:var(--color-border-border-1);
+--border-strong:var(--color-black-500);
+--border-muted:var(--color-beige-600);
+--border-selected:var(--color-black-300);
+
+/* ── Semantic ──────────────────────────────────────────── */
+--status-success:var(--color-alert-colors-success);
+--status-danger:var(--color-alert-colors-danger);
+--status-warning:var(--color-yellow-500);
+--status-info:var(--color-blue-500);
+
+/* ── Tool colours (the six event tools) ────────────────── */
+--tool-planning:var(--yatu-sky);
+--tool-budget:var(--yatu-meadow);
+--tool-liste:var(--yatu-sunbeam);
+--tool-chat:var(--yatu-blush);
+--tool-img:var(--yatu-lilac);
+--tool-documents:var(--yatu-apricot);
+}
+a{color:var(--text-link);text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px}
+a:hover{color:var(--color-black-400);text-decoration-thickness:2px}

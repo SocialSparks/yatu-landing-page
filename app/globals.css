@@ -1,0 +1,347 @@
+@import "../styles/tokens/fonts.css";
+@import "../styles/tokens/fig-tokens.css";
+@import "../styles/tokens/colors.css";
+@import "../styles/tokens/typography.css";
+@import "../styles/tokens/spacing.css";
+@import "../styles/tokens/shape.css";
+
+/* ===================================================================
+   Base — transcribed from the <style> block of Accueil.dc.html
+   =================================================================== */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #f7f4ed;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: #2a343d;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #4e565d;
+}
+
+/* The header is sticky, so anchored sections must clear it. */
+section[id] {
+  scroll-margin-top: 90px;
+}
+
+summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+button {
+  font: inherit;
+  border: 0;
+  background: none;
+}
+
+.yq-plus {
+  transition: transform 200ms var(--ease-standard);
+}
+
+details[open] .yq-plus {
+  transform: rotate(45deg);
+}
+
+@keyframes yq-typing {
+  0%,
+  60%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+/* The use-case rows drift across the viewport and back. `100%` is the row's own
+   width, which is wider than the screen — so the offset is negative. */
+@keyframes yq-sweep {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(100vw - 100% - 48px));
+  }
+}
+
+/* ===================================================================
+   Motion — replaces site-motion.js + anime.js with native CSS.
+   DS conventions: fades and slides only, cubic-bezier(.2,.8,.2,1).
+   Nothing bounces, nothing parallaxes.
+   =================================================================== */
+@keyframes yq-float {
+  from {
+    translate: 0 calc(var(--yq-amp, 8px) * -1);
+  }
+  to {
+    translate: 0 var(--yq-amp, 8px);
+  }
+}
+
+[data-float] {
+  animation: yq-float var(--yq-dur, 5s) ease-in-out var(--yq-lag, 0s) infinite alternate;
+  will-change: translate;
+}
+
+[data-reveal] {
+  opacity: 0;
+  transition:
+    opacity 760ms var(--ease-standard) var(--yq-delay, 0ms),
+    transform 760ms var(--ease-standard) var(--yq-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+[data-reveal="up"] {
+  transform: translateY(22px);
+}
+[data-reveal="left"] {
+  transform: translateX(-26px);
+}
+[data-reveal="right"] {
+  transform: translateX(26px);
+}
+[data-reveal="scale"] {
+  transform: scale(0.95);
+}
+
+[data-reveal].yq-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* `stagger` animates the children, not the container. */
+[data-reveal="stagger"] {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+[data-reveal="stagger"] > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 720ms var(--ease-standard),
+    transform 720ms var(--ease-standard);
+}
+
+[data-reveal="stagger"].yq-in > * {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  [data-reveal],
+  [data-reveal="stagger"] > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  [data-float],
+  [style*="yq-sweep"],
+  [style*="yq-typing"] {
+    animation: none !important;
+  }
+}
+
+/* ===================================================================
+   Interaction states — the design canvas expressed these as
+   `style-hover` / `style-focus` attributes.
+   =================================================================== */
+.yq-nav-link {
+  transition:
+    background 200ms var(--ease-standard),
+    color 200ms var(--ease-standard);
+}
+.yq-nav-link:hover {
+  background: #efe8de;
+  color: #2a343d;
+}
+
+.yq-btn-dark {
+  transition: background 200ms var(--ease-standard);
+}
+.yq-btn-dark:hover {
+  background: #3a4750;
+  color: #ffffff;
+}
+
+.yq-btn-light {
+  transition: background 200ms var(--ease-standard);
+}
+.yq-btn-light:hover {
+  background: #efe8de;
+  color: #2a343d;
+}
+
+.yq-footer-link {
+  transition: color 200ms var(--ease-standard);
+}
+.yq-footer-link:hover {
+  color: #ffffff;
+}
+
+.yq-input {
+  transition: border-color 200ms var(--ease-standard);
+}
+.yq-input:focus {
+  border-color: #2a343d;
+}
+
+.yq-row-btn {
+  transition: background 200ms var(--ease-standard);
+}
+.yq-row-btn:hover {
+  background: #f7f4ed;
+}
+
+.yq-close-btn {
+  transition: background 200ms var(--ease-standard);
+}
+.yq-close-btn:hover {
+  background: #ebe7de;
+}
+
+:focus-visible {
+  outline: 2px solid #2a343d;
+  outline-offset: 2px;
+}
+
+/* ===================================================================
+   Responsive — port of site-responsive.css. The selectors target the
+   data-r attributes carried by the markup.
+   =================================================================== */
+
+/* The menu button only exists below 880px. */
+[data-r~="nav-burger"] {
+  display: none;
+}
+
+/* ------------------------------ Tablet ------------------------------ */
+@media (max-width: 1024px) {
+  [data-r~="gutter"] {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  [data-r~="phone-wrap"] {
+    zoom: 0.88;
+  }
+}
+
+/* ------------------------ Header: collapsed menu -------------------- */
+@media (max-width: 880px) {
+  [data-r~="nav-desk"] {
+    display: none !important;
+  }
+  [data-r~="nav-burger"] {
+    display: inline-flex !important;
+  }
+  [data-r~="hdr-cta"] {
+    margin-left: auto !important;
+    padding: 14px 18px !important;
+  }
+}
+
+/* ------------------- Large mobile / small tablet -------------------- */
+@media (max-width: 760px) {
+  /* Hero: the mockup and its pills become a vertical grid. */
+  [data-r~="hero-col"] {
+    min-height: 0 !important;
+  }
+  [data-r~="hero-mockwrap"] {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  [data-r~="hero-mock"] {
+    grid-column: 1 / -1;
+    height: min(126vw, 560px) !important;
+    border-radius: 30px !important;
+  }
+  [data-r~="pill"] {
+    position: static !important;
+  }
+  [data-r~="pill"][data-r~="wide"] {
+    grid-column: 1 / -1;
+  }
+  [data-r~="mobile-hide"] {
+    display: none !important;
+  }
+
+  /* Floating decor that deliberately overflowed left/right of the content. */
+  [data-r~="decor-l"] {
+    left: 0 !important;
+  }
+  [data-r~="decor-r"] {
+    right: 0 !important;
+  }
+
+  [data-r~="phone-wrap"] {
+    zoom: 0.8;
+  }
+}
+
+/* ------------------------------ Mobile ------------------------------ */
+@media (max-width: 600px) {
+  [data-r~="gutter"] {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* Timeline: tighter gutter, line and dots realigned. */
+  [data-timeline] {
+    padding-left: 40px !important;
+  }
+  [data-timeline] > div:first-of-type,
+  [data-timeline-fill] {
+    left: 11px !important;
+  }
+  [data-timeline-marker] {
+    left: 12px !important;
+  }
+  [data-r~="tl-dot-lg"] {
+    left: -40px !important;
+  }
+  [data-r~="tl-dot-sm"] {
+    left: -37px !important;
+  }
+
+  [data-r~="phone-wrap"] {
+    zoom: 0.78;
+  }
+  /* Touch targets: 44px minimum on chip rows. */
+  [data-r~="chip-row"] > button {
+    min-height: 44px !important;
+  }
+  [data-r~="mobile-solo"] {
+    grid-column: 1 / -1 !important;
+  }
+}
+
+@media (max-width: 400px) {
+  [data-r~="phone-wrap"] {
+    zoom: 0.7;
+  }
+}

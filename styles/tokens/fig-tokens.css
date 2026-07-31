@@ -1,0 +1,191 @@
+/* Generated from Figma Variables. First mode = :root default.
+   FLOAT tokens are unitless — multiply by 1px in calc() where a length is needed. */
+
+:root {
+  --ax1-headline: 34; /* @kind other */
+  --ax2-headline: 40; /* @kind other */
+  --ax3-headline: 48; /* @kind other */
+  --ax4-headline: 56; /* @kind other */
+  --ax5-headline: 62; /* @kind other */
+  --background-background-disabled: var(--color-black-50); /* @kind color */
+  --background-background-primary: var(--color-beige-500); /* @kind color */
+  --background-background-secondary: var(--color-beige-unselected); /* @kind color */
+  --background-background-selected: var(--color-black-500); /* @kind color */
+  --backgrounds-primary: rgb(255,255,255); /* @kind color */
+  --beige-bg: rgb(247,244,237); /* @kind color */
+  --beige-outline: rgb(235,231,222); /* @kind color */
+  --black-p: rgba(42,52,61,0.8); /* @kind color */
+  --border-border-primary: var(--color-border-border-1); /* @kind color */
+  --border-border-selected: var(--color-black-300); /* @kind color */
+  --border-corner-radius: 16; /* @kind other */
+  --color-alert-colors-danger: rgb(217,46,46); /* @kind color */
+  --color-alert-colors-success: rgb(68,182,120); /* @kind color */
+  --color-beige-1000: rgb(49,49,47); /* @kind color */
+  --color-beige-100: rgb(252,251,249); /* @kind color */
+  --color-beige-200: rgb(251,250,246); /* @kind color */
+  --color-beige-300: rgb(250,248,243); /* @kind color */
+  --color-beige-400: rgb(248,246,240); /* @kind color */
+  --color-beige-500: rgb(247,244,237); /* @kind color */
+  --color-beige-50: rgb(253,253,251); /* @kind color */
+  --color-beige-600: rgb(206,203,198); /* @kind color */
+  --color-beige-700: rgb(165,163,158); /* @kind color */
+  --color-beige-800: rgb(124,122,119); /* @kind color */
+  --color-beige-900: rgb(82,81,79); /* @kind color */
+  --color-beige-unselected: rgb(239,232,222); /* @kind color */
+  --color-black-0: rgb(255,255,255); /* @kind color */
+  --color-black-1000: rgb(8,10,12); /* @kind color */
+  --color-black-100: rgb(184,187,190); /* @kind color */
+  --color-black-200: rgb(148,153,158); /* @kind color */
+  --color-black-300: rgb(113,120,126); /* @kind color */
+  --color-black-400: rgb(78,86,93); /* @kind color */
+  --color-black-500: rgb(42,52,61); /* @kind color */
+  --color-black-50: rgb(212,214,216); /* @kind color */
+  --color-black-600: rgb(35,43,51); /* @kind color */
+  --color-black-700: rgb(28,35,41); /* @kind color */
+  --color-black-800: rgb(21,26,31); /* @kind color */
+  --color-black-900: rgb(14,17,20); /* @kind color */
+  --color-blue-1000: rgb(22,40,48); /* @kind color */
+  --color-blue-100: rgb(207,236,250); /* @kind color */
+  --color-blue-200: rgb(183,227,248); /* @kind color */
+  --color-blue-300: rgb(159,217,246); /* @kind color */
+  --color-blue-400: rgb(135,208,243); /* @kind color */
+  --color-blue-500: rgb(111,198,241); /* @kind color */
+  --color-blue-50: rgb(226,244,252); /* @kind color */
+  --color-blue-600: rgb(93,165,201); /* @kind color */
+  --color-blue-700: rgb(74,132,161); /* @kind color */
+  --color-blue-800: rgb(56,99,121); /* @kind color */
+  --color-blue-900: rgb(37,66,80); /* @kind color */
+  --color-border-border-1: rgb(235,231,222); /* @kind color */
+  --color-green-1000: rgb(30,45,27); /* @kind color */
+  --color-green-100: rgb(220,245,215); /* @kind color */
+  --color-green-200: rgb(203,240,195); /* @kind color */
+  --color-green-300: rgb(185,234,175); /* @kind color */
+  --color-green-400: rgb(168,229,155); /* @kind color */
+  --color-green-500: rgb(150,224,135); /* @kind color */
+  --color-green-50: rgb(234,249,231); /* @kind color */
+  --color-green-600: rgb(125,187,113); /* @kind color */
+  --color-green-700: rgb(100,149,90); /* @kind color */
+  --color-green-800: rgb(75,112,68); /* @kind color */
+  --color-green-900: rgb(50,75,45); /* @kind color */
+  --color-orange-1000: rgb(51,28,20); /* @kind color */
+  --color-orange-100: rgb(255,217,203); /* @kind color */
+  --color-orange-200: rgb(255,198,178); /* @kind color */
+  --color-orange-300: rgb(255,178,152); /* @kind color */
+  --color-orange-400: rgb(255,159,126); /* @kind color */
+  --color-orange-500: rgb(255,140,100); /* @kind color */
+  --color-orange-50: rgb(255,232,224); /* @kind color */
+  --color-orange-600: rgb(213,117,83); /* @kind color */
+  --color-orange-700: rgb(170,93,67); /* @kind color */
+  --color-orange-800: rgb(128,70,50); /* @kind color */
+  --color-orange-900: rgb(85,47,33); /* @kind color */
+  --color-pink-1000: rgb(51,29,35); /* @kind color */
+  --color-pink-100: rgb(255,219,229); /* @kind color */
+  --color-pink-200: rgb(255,201,216); /* @kind color */
+  --color-pink-300: rgb(255,182,203); /* @kind color */
+  --color-pink-400: rgb(255,164,190); /* @kind color */
+  --color-pink-500: rgb(255,146,177); /* @kind color */
+  --color-pink-50: rgb(255,233,239); /* @kind color */
+  --color-pink-600: rgb(213,122,148); /* @kind color */
+  --color-pink-700: rgb(170,97,118); /* @kind color */
+  --color-pink-800: rgb(128,73,89); /* @kind color */
+  --color-pink-900: rgb(85,49,59); /* @kind color */
+  --color-purple-1000: rgb(40,34,45); /* @kind color */
+  --color-purple-100: rgb(236,226,245); /* @kind color */
+  --color-purple-200: rgb(227,212,240); /* @kind color */
+  --color-purple-300: rgb(217,197,235); /* @kind color */
+  --color-purple-400: rgb(208,183,230); /* @kind color */
+  --color-purple-500: rgb(198,168,225); /* @kind color */
+  --color-purple-50: rgb(244,238,249); /* @kind color */
+  --color-purple-600: rgb(165,140,188); /* @kind color */
+  --color-purple-700: rgb(132,112,150); /* @kind color */
+  --color-purple-800: rgb(99,84,113); /* @kind color */
+  --color-purple-900: rgb(66,56,75); /* @kind color */
+  --color-red-1000: rgb(51,24,24); /* @kind color */
+  --color-red-100: rgb(255,209,209); /* @kind color */
+  --color-red-200: rgb(255,187,187); /* @kind color */
+  --color-red-300: rgb(255,164,164); /* @kind color */
+  --color-red-400: rgb(255,141,141); /* @kind color */
+  --color-red-500: rgb(255,118,118); /* @kind color */
+  --color-red-50: rgb(255,228,228); /* @kind color */
+  --color-red-600: rgb(213,98,98); /* @kind color */
+  --color-red-700: rgb(170,79,79); /* @kind color */
+  --color-red-800: rgb(128,59,59); /* @kind color */
+  --color-red-900: rgb(85,39,39); /* @kind color */
+  --color-yellow-1000: rgb(51,43,23); /* @kind color */
+  --color-yellow-100: rgb(255,242,208); /* @kind color */
+  --color-yellow-200: rgb(255,236,185); /* @kind color */
+  --color-yellow-300: rgb(254,229,162); /* @kind color */
+  --color-yellow-400: rgb(254,223,138); /* @kind color */
+  --color-yellow-500: rgb(254,216,115); /* @kind color */
+  --color-yellow-50: rgb(255,247,227); /* @kind color */
+  --color-yellow-600: rgb(212,180,96); /* @kind color */
+  --color-yellow-700: rgb(169,144,77); /* @kind color */
+  --color-yellow-800: rgb(127,108,58); /* @kind color */
+  --color-yellow-900: rgb(85,72,38); /* @kind color */
+  --color: rgb(33,33,33); /* @kind color */
+  --icon-icon-black: var(--color-black-500); /* @kind color */
+  --icon-icon-white: var(--color-black-0); /* @kind color */
+  --labels-primary: rgb(0,0,0); /* @kind color */
+  --large-default-headline: 22; /* @kind other */
+  --leading-headline: var(--xsmall-headline); /* @kind other */
+  --medium-headline: 21; /* @kind other */
+  --miscellaneous-kit-section-fill: rgb(245,245,245); /* @kind color */
+  --text-card-detail: 14; /* @kind other */
+  --text-card-tag: 16; /* @kind other */
+  --text-card-title: 18; /* @kind other */
+  --text-large-title: 22; /* @kind other */
+  --text-p: 16; /* @kind other */
+  --text-small: 12; /* @kind other */
+  --text-text-input: var(--color-beige-800); /* @kind color */
+  --text-text-invert: var(--color-black-0); /* @kind color */
+  --text-text-primary: var(--color-black-500); /* @kind color */
+  --text-text-secondary: var(--color-black-400); /* @kind color */
+  --text-top-title: 16; /* @kind other */
+  --white-2: rgb(255,255,255); /* @kind color */
+  --white-3: rgb(255,255,255); /* @kind color */
+  --white: rgb(255,255,255); /* @kind color */
+  --xlarge-headline: 24; /* @kind other */
+  --xsmall-headline: 19; /* @kind other */
+  --xxlarge-headline: 26; /* @kind other */
+  --xxxlarge-headline: 29; /* @kind other */
+}
+
+:root[data-mode="small"] { --leading-headline: var(--xsmall-headline); }
+:root[data-mode="medium"] { --leading-headline: var(--medium-headline); }
+:root[data-mode="large-default"] { --leading-headline: var(--large-default-headline); }
+:root[data-mode="xlarge"] { --leading-headline: var(--xlarge-headline); }
+:root[data-mode="xxlarge"] { --leading-headline: var(--xxlarge-headline); }
+:root[data-mode="xxxlarge"] { --leading-headline: var(--xxxlarge-headline); }
+:root[data-mode="ax1"] { --leading-headline: var(--ax1-headline); }
+:root[data-mode="ax2"] { --leading-headline: var(--ax2-headline); }
+:root[data-mode="ax3"] { --leading-headline: var(--ax3-headline); }
+:root[data-mode="ax4"] { --leading-headline: var(--ax4-headline); }
+:root[data-mode="ax5"] { --leading-headline: var(--ax5-headline); }
+
+:root[data-mode="loose"] {
+  --ax1-headline: 36;
+  --ax2-headline: 42;
+  --ax3-headline: 50;
+  --ax4-headline: 58;
+  --ax5-headline: 64;
+  --large-default-headline: 24;
+  --medium-headline: 23;
+  --xlarge-headline: 26;
+  --xsmall-headline: 21;
+  --xxlarge-headline: 28;
+  --xxxlarge-headline: 31;
+}
+
+:root[data-mode="tight"] {
+  --ax1-headline: 32;
+  --ax2-headline: 38;
+  --ax3-headline: 46;
+  --ax4-headline: 54;
+  --ax5-headline: 60;
+  --large-default-headline: 20;
+  --medium-headline: 19;
+  --xlarge-headline: 22;
+  --xsmall-headline: 17;
+  --xxlarge-headline: 24;
+  --xxxlarge-headline: 27;
+}
