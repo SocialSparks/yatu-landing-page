@@ -315,47 +315,6 @@ export function BdeHero() {
                 </div>
               </div>
             </div>
-
-            <img
-              src={icon("people")}
-              alt=""
-              data-float=""
-              data-r="decor-l"
-              style={
-                {
-                  position: "absolute",
-                  left: "clamp(-46px, calc(50vw - 100% - 20px), 0px)",
-                  top: "13%",
-                  width: 48,
-                  height: 48,
-                  display: "block",
-                  filter: "drop-shadow(0 8px 18px rgba(42,52,61,.2))",
-                  "--yq-amp": "10px",
-                  "--yq-dur": "4.40s",
-                  "--yq-lag": "1.50s",
-                } as React.CSSProperties
-              }
-            />
-            <img
-              src={icon("pin")}
-              alt=""
-              data-float=""
-              data-r="decor-r"
-              style={
-                {
-                  position: "absolute",
-                  right: "clamp(-40px, calc(50vw - 100% - 20px), 0px)",
-                  top: "58%",
-                  width: 42,
-                  height: 42,
-                  display: "block",
-                  filter: "drop-shadow(0 8px 18px rgba(42,52,61,.2))",
-                  "--yq-amp": "12px",
-                  "--yq-dur": "5.50s",
-                  "--yq-lag": "0.04s",
-                } as React.CSSProperties
-              }
-            />
           </div>
         </div>
       </div>

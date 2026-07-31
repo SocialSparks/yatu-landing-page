@@ -77,49 +77,36 @@ export const BDE_DEROULE = [
   },
 ];
 
-/** `fly` is the data-fly value: arrives from (x, y) with a rotation. */
 export const BDE_FEATURES = [
   {
     tool: "addpeople",
     title: "Validation des participants",
     desc: "Personne n'entre sans être validé par le bureau. La liste est toujours juste.",
-    fly: "-30,30,0",
-    delay: 0,
   },
   {
     tool: "bell",
     title: "Annonces organisateurs",
     desc: "Un canal officiel, séparé du chat, que personne ne peut noyer. Notifié à tous.",
-    fly: "-10,40,0",
-    delay: 60,
   },
   {
     tool: "pin",
     title: "Chambres et groupes",
     desc: "Réparti en chambres, bus ou équipes. Chacun voit son groupe, le bureau voit tout.",
-    fly: "10,40,0",
-    delay: 120,
   },
   {
     tool: "planning",
     title: "Planning officiel",
     desc: "Le programme heure par heure, modifiable en direct. Fini l'affiche imprimée périmée.",
-    fly: "30,30,0",
-    delay: 180,
   },
   {
     tool: "img",
     title: "Album souvenirs commun",
     desc: "Deux cents téléphones, un seul album. De quoi alimenter votre compte toute l'année.",
-    fly: "-20,50,0",
-    delay: 240,
   },
   {
     tool: "chart",
     title: "Feedback post-événement",
     desc: "Un questionnaire envoyé au bon moment, des réponses exploitables pour le bureau suivant.",
-    fly: "20,50,0",
-    delay: 300,
   },
 ];
 

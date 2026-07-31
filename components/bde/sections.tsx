@@ -97,7 +97,6 @@ export function BdeProblemes() {
 }
 
 export function BdeFeatures() {
-  const spans = [7, 5, 5, 7, 7, 5];
   const accents = ["#96E087", "#FED873", "#6FC6F1", "#C6A8E1", "#FF9F8E", "#96E087"];
 
   return (
@@ -217,19 +216,16 @@ export function BdeFeatures() {
           </div>
         </div>
 
-        <div className="yq-bde-feature-grid">
+        <div data-reveal="stagger" className="yq-bde-feature-grid">
           {BDE_FEATURES.map((f, index) => {
             const accent = accents[index];
 
             return (
               <div
                 key={f.title}
-                data-fly={f.fly}
-                data-reveal-delay={f.delay || undefined}
                 className="yq-bde-feature-card"
                 style={
                   {
-                    "--yq-feature-span": spans[index],
                     "--yq-feature-accent": accent,
                   } as React.CSSProperties
                 }
