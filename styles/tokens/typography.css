@@ -1,13 +1,13 @@
-/* Yatu type scale. Sizes are transcribed verbatim from the Figma file — the
+/* Yatu type scale. Sizes are transcribed verbatim from the Figma file - the
    float tokens (--text-*) in fig-tokens.css are unitless, so they are multiplied here. */
 :root{
---size-large-title:calc(var(--text-large-title) * 1px);  /* 22 — screen titles, Capriola */
---size-card-title:calc(var(--text-card-title) * 1px);    /* 18 — card headings, Capriola */
---size-top-title:calc(var(--text-top-title) * 1px);      /* 16 — nav bar titles */
---size-card-tag:calc(var(--text-card-tag) * 1px);        /* 16 — tags, chips */
---size-body:calc(var(--text-p) * 1px);                   /* 16 — body copy, Lato */
---size-detail:calc(var(--text-card-detail) * 1px);       /* 14 — meta rows, list detail */
---size-small:calc(var(--text-small) * 1px);              /* 12 — captions, tab labels */
+--size-large-title:calc(var(--text-large-title) * 1px);  /* 22 - screen titles, Capriola */
+--size-card-title:calc(var(--text-card-title) * 1px);    /* 18 - card headings, Capriola */
+--size-top-title:calc(var(--text-top-title) * 1px);      /* 16 - nav bar titles */
+--size-card-tag:calc(var(--text-card-tag) * 1px);        /* 16 - tags, chips */
+--size-body:calc(var(--text-p) * 1px);                   /* 16 - body copy, Lato */
+--size-detail:calc(var(--text-card-detail) * 1px);       /* 14 - meta rows, list detail */
+--size-small:calc(var(--text-small) * 1px);              /* 12 - captions, tab labels */
 --size-display:40px;                                     /* brand boards only */
 
 --weight-regular:400;--weight-semibold:600;--weight-bold:700;

@@ -216,7 +216,7 @@ export const DEMO_ETAPES = [
   },
 ];
 
-/* ── "La galère actuelle" — the group chat that goes nowhere ────────── */
+/* ── "La galère actuelle" - the group chat that goes nowhere ────────── */
 
 export const GALERE_MESSAGES: {
   who?: string;
@@ -262,7 +262,7 @@ export const GALERE_STATS = [
   },
 ];
 
-/* ── "Avant, pendant, après" — the scroll-driven timeline ───────────── */
+/* ── "Avant, pendant, après" - the scroll-driven timeline ───────────── */
 
 export type TimelineStep = {
   kind: "phase" | "card";
@@ -342,7 +342,7 @@ export const TIMELINE: TimelineStep[] = [
     kind: "card",
     icon: icon("budget"),
     title: "Les comptes tombent justes",
-    desc: "Yatu calcule qui rembourse qui, et combien. Un tap pour marquer réglé — plus de « je te dois combien déjà ? » trois mois après.",
+    desc: "Yatu calcule qui rembourse qui, et combien. Un tap pour marquer réglé - plus de « je te dois combien déjà ? » trois mois après.",
   },
   {
     kind: "card",
@@ -365,7 +365,7 @@ export const TIMELINE: TimelineStep[] = [
   },
 ];
 
-/* ── "Les cas d'usage" — three drifting rows ────────────────────────── */
+/* ── "Les cas d'usage" - three drifting rows ────────────────────────── */
 
 export type UseCase = {
   id: string;

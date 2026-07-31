@@ -66,7 +66,7 @@ export function WaitlistSection() {
               maxWidth: "42ch",
             }}
           >
-            Le 9 septembre, ton accès arrive par mail — avant l&apos;ouverture publique. Tu pourras
+            Le 9 septembre, ton accès arrive par mail - avant l&apos;ouverture publique. Tu pourras
             faire entrer ton groupe dans la foulée.
           </p>
 

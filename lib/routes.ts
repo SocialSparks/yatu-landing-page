@@ -4,7 +4,7 @@
  * Only Accueil.dc.html has been implemented so far. The routes below that are
  * not "/" or a bare hash point at pages still to be imported from the same
  * design project (BDE.dc.html, Bienvenue.dc.html, Mentions legales.dc.html,
- * Confidentialite.dc.html, Cookies.dc.html) — keeping the hrefs correct now
+ * Confidentialite.dc.html, Cookies.dc.html) - keeping the hrefs correct now
  * means those imports are drop-in.
  */
 export const ROUTES = {

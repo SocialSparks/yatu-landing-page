@@ -29,7 +29,7 @@ export function CountUp({ value }: { value: number }) {
 
         const tick = (now: number) => {
           const t = Math.min(1, (now - start) / duration);
-          // easeOutQuart — the counter easing the design system calls for
+          // easeOutQuart - the counter easing the design system calls for
           setShown(Math.round((1 - Math.pow(1 - t, 4)) * value));
           if (t < 1) frame.current = requestAnimationFrame(tick);
         };

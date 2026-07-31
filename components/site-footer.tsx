@@ -77,7 +77,7 @@ export function SiteFooter() {
                 textWrap: "pretty",
               }}
             >
-              Vos sorties et vos voyages entre amis, organisés au même endroit — de la première idée
+              Vos sorties et vos voyages entre amis, organisés au même endroit - de la première idée
               aux souvenirs.
             </p>
             <span
@@ -154,7 +154,7 @@ export function SiteFooter() {
           }}
         >
           <span style={{ fontFamily: UI, fontSize: 13, color: "rgba(255,255,255,.5)" }}>
-            © 2026 Yatu — édité par Quantiq Studio
+            © 2026 Yatu - édité par Quantiq Studio
           </span>
           <span style={{ fontFamily: UI, fontSize: 13, color: "rgba(255,255,255,.5)" }}>
             Fait en France, pour les groupes qui n&apos;arrivent jamais à se décider

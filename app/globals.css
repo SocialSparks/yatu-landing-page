@@ -6,7 +6,7 @@
 @import "../styles/tokens/shape.css";
 
 /* ===================================================================
-   Base — transcribed from the <style> block of Accueil.dc.html
+   Base - transcribed from the <style> block of Accueil.dc.html
    =================================================================== */
 * {
   box-sizing: border-box;
@@ -73,7 +73,7 @@ details[open] .yq-plus {
 }
 
 /* The use-case rows drift across the viewport and back. `100%` is the row's own
-   width, which is wider than the screen — so the offset is negative. */
+   width, which is wider than the screen - so the offset is negative. */
 @keyframes yq-sweep {
   from {
     transform: translateX(0);
@@ -84,7 +84,7 @@ details[open] .yq-plus {
 }
 
 /* ===================================================================
-   Motion — replaces site-motion.js + anime.js with native CSS.
+   Motion - replaces site-motion.js + anime.js with native CSS.
    DS conventions: fades and slides only, cubic-bezier(.2,.8,.2,1).
    Nothing bounces, nothing parallaxes.
    =================================================================== */
@@ -128,6 +128,34 @@ details[open] .yq-plus {
   transform: none;
 }
 
+/* `data-fly="x,y,deg"` - arrives from an offset. The starting transform is set
+   from the attribute by components/motion.tsx. */
+[data-fly] {
+  opacity: 0;
+  transition:
+    opacity 820ms var(--ease-standard),
+    transform 820ms var(--ease-standard);
+  will-change: opacity, transform;
+}
+
+[data-fly].yq-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hover lift for cards that also fly in. Uses `translate` rather than
+   `transform` so it can't fight the entry animation. */
+.yq-lift {
+  transition:
+    background 200ms var(--ease-standard),
+    translate 200ms var(--ease-standard);
+}
+
+.yq-lift:hover {
+  background: rgba(255, 255, 255, 0.11);
+  translate: 0 -4px;
+}
+
 /* `stagger` animates the children, not the container. */
 [data-reveal="stagger"] {
   opacity: 1;
@@ -153,6 +181,7 @@ details[open] .yq-plus {
     scroll-behavior: auto;
   }
   [data-reveal],
+  [data-fly],
   [data-reveal="stagger"] > * {
     opacity: 1;
     transform: none;
@@ -166,7 +195,7 @@ details[open] .yq-plus {
 }
 
 /* ===================================================================
-   Interaction states — the design canvas expressed these as
+   Interaction states - the design canvas expressed these as
    `style-hover` / `style-focus` attributes.
    =================================================================== */
 .yq-nav-link {
@@ -193,6 +222,14 @@ details[open] .yq-plus {
 .yq-btn-light:hover {
   background: #efe8de;
   color: #2a343d;
+}
+
+/* Translucent button on a dark panel. */
+.yq-ghost {
+  transition: background 200ms var(--ease-standard);
+}
+.yq-ghost:hover {
+  background: rgba(255, 255, 255, 0.14);
 }
 
 .yq-footer-link {
@@ -229,7 +266,7 @@ details[open] .yq-plus {
 }
 
 /* ===================================================================
-   Responsive — port of site-responsive.css. The selectors target the
+   Responsive - port of site-responsive.css. The selectors target the
    data-r attributes carried by the markup.
    =================================================================== */
 

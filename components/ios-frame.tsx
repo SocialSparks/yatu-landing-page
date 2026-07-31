@@ -1,5 +1,5 @@
 /**
- * iOS 26 device frame — port of the ios-frame.jsx starter from the design
+ * iOS 26 device frame - port of the ios-frame.jsx starter from the design
  * project, trimmed to what the home page actually mounts: the bezel, dynamic
  * island, status bar and home indicator. (The starter also ships a nav bar,
  * grouped list and keyboard; add them back if another page needs them.)
@@ -140,7 +140,7 @@ export function IOSDevice({
       <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
         <div style={{ flex: 1, overflow: "auto" }}>{children}</div>
       </div>
-      {/* home indicator — always on top */}
+      {/* home indicator - always on top */}
       <div
         style={{
           position: "absolute",

@@ -21,7 +21,7 @@ function parts(now: number) {
 
 /**
  * Both readouts render from the server's clock and then re-sync on mount, so
- * there is no layout shift and no blank frame — the values simply refresh.
+ * there is no layout shift and no blank frame - the values simply refresh.
  */
 function useLaunchClock(tick: boolean) {
   const [now, setNow] = useState(() => Date.now());
@@ -36,7 +36,7 @@ function useLaunchClock(tick: boolean) {
   return parts(now);
 }
 
-/** "J–NNN" — the days-remaining chip in the hero badge. */
+/** "J–NNN" - the days-remaining chip in the hero badge. */
 export function DaysUntil() {
   const { jours } = useLaunchClock(false);
   return (

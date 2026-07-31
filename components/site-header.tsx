@@ -32,7 +32,7 @@ export function SiteHeader() {
       >
         <NavLink
           href={ROUTES.home}
-          aria-label="Yatu — accueil"
+          aria-label="Yatu - accueil"
           style={{ display: "flex", alignItems: "center", flex: "none", textDecoration: "none" }}
         >
           <img

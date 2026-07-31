@@ -1,11 +1,11 @@
 /* Yatu semantic colour aliases. Base ramps live in fig-tokens.css (from Figma Variables).
-   Never hardcode a hex in product code — reach for one of these. */
+   Never hardcode a hex in product code - reach for one of these. */
 :root{
 /* ── Brand ─────────────────────────────────────────────── */
---yatu-ink:var(--color-black-500);            /* #2A343D — the brand navy. Text, logo, primary fills */
---yatu-sand:var(--color-beige-500);           /* #F7F4ED — the app canvas */
---yatu-sand-deep:var(--color-beige-unselected); /* #EFE8DE — unselected / recessed sand */
---yatu-outline:var(--color-border-border-1);  /* #EBE7DE — the hairline that borders almost everything */
+--yatu-ink:var(--color-black-500);            /* #2A343D - the brand navy. Text, logo, primary fills */
+--yatu-sand:var(--color-beige-500);           /* #F7F4ED - the app canvas */
+--yatu-sand-deep:var(--color-beige-unselected); /* #EFE8DE - unselected / recessed sand */
+--yatu-outline:var(--color-border-border-1);  /* #EBE7DE - the hairline that borders almost everything */
 
 /* ── Accent palette (event colours, tool colours, tab dots) ── */
 --yatu-coral:var(--color-red-500);            /* #FF7676 */
@@ -22,7 +22,7 @@
 --text-tertiary:var(--color-black-300);       /* #71787E */
 --text-invert:var(--text-text-invert);        /* #FFFFFF */
 --text-placeholder:var(--text-text-input);    /* #7C7A77 */
---text-paragraph:var(--black-p);              /* rgba(42,52,61,.8) — long-form body copy */
+--text-paragraph:var(--black-p);              /* rgba(42,52,61,.8) - long-form body copy */
 --text-danger:var(--color-alert-colors-danger);
 --text-link:var(--color-black-500);
 

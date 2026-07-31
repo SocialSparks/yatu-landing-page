@@ -150,7 +150,7 @@ export function Hero() {
             }}
           >
             Tu crées l&apos;événement, tu partages le lien. Chacun rejoint, tout le monde voit la
-            même chose — et l&apos;organisation arrête de reposer sur une seule personne.
+            même chose - et l&apos;organisation arrête de reposer sur une seule personne.
           </p>
 
           <div

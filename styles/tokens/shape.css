@@ -4,23 +4,23 @@
 --radius-5:5px;
 --radius-8:8px;      /* small chips, inputs inside sheets */
 --radius-12:12px;    /* list rows */
---radius-16:16px;    /* THE default: buttons, cards, sheets, inputs — --border-corner-radius */
+--radius-16:16px;    /* THE default: buttons, cards, sheets, inputs - --border-corner-radius */
 --radius-24:24px;    /* large media cards */
 --radius-32:32px;    /* device frame, bottom sheets */
 --radius-72:72px;    /* tab-bar pill */
---radius-80:80px;    /* icon buttons, avatars — effectively full round */
+--radius-80:80px;    /* icon buttons, avatars - effectively full round */
 --radius-full:999px;
 
 --stroke-hairline:1px;   /* the standard beige outline */
 --stroke-ring:2.5px;     /* dark ring around a selected tab dot */
 --stroke-focus:4px;      /* accent halo on the active tab tool */
 
-/* Elevation — three shadows, that's the whole system */
+/* Elevation - three shadows, that's the whole system */
 --shadow-card:0px 4px 16px 0px rgba(0,0,0,0.06);          /* event / memory cards */
 --shadow-popover:0px 8px 24px 0px rgba(42,52,61,0.0784);  /* option menus, floating panels */
 --shadow-sheet:0px -8px 24px 0px rgba(0,0,0,0.102);       /* bottom sheets, lifting upward */
 
-/* Motion — the conventions to apply. */
+/* Motion - the conventions to apply. */
 --ease-standard:cubic-bezier(.2,.8,.2,1);
 --duration-fast:120ms;    /* press feedback */
 --duration-base:200ms;    /* toggles, tab switches */

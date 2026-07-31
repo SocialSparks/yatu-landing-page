@@ -47,7 +47,7 @@ export function ModulesSection() {
           titleMaxCh={20}
           onDark
           marginBottom="clamp(38px,4.5vw,56px)"
-          lede="Yatu est modulaire : tu actives ce qui sert à ton événement et tu coupes le reste. Une soirée n'a pas besoin d'un budget, un voyage si. Seul le chat reste toujours là — et de nouveaux modules arrivent régulièrement."
+          lede="Yatu est modulaire : tu actives ce qui sert à ton événement et tu coupes le reste. Une soirée n'a pas besoin d'un budget, un voyage si. Seul le chat reste toujours là - et de nouveaux modules arrivent régulièrement."
         />
 
         <div

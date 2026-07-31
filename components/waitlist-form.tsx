@@ -1,13 +1,15 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useId, useState } from "react";
+import { ROUTES } from "@/lib/routes";
 
 const UI = "var(--font-ui), system-ui, sans-serif";
 
 /**
- * TODO — point this at the real list provider (Brevo / Mailchimp / Tally, or an
- * in-app route handler). While it is empty the form validates, stores the
- * address locally and confirms inline, so the journey stays testable end to end.
+ * TODO - point this at the real list provider (Brevo / Mailchimp / Tally, or an
+ * in-app route handler). While it is empty the address is only stored locally,
+ * but the journey still runs end to end: valid addresses land on /bienvenue.
  */
 const ENDPOINT = "";
 
@@ -32,6 +34,7 @@ export function WaitlistForm({
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
   const inputId = useId();
+  const router = useRouter();
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -48,28 +51,29 @@ export function WaitlistForm({
       list.push({ email, source, ts: new Date().toISOString() });
       window.localStorage.setItem("yatu-waitlist", JSON.stringify(list));
     } catch {
-      /* storage blocked — not worth failing the signup over */
+      /* storage blocked - not worth failing the signup over */
     }
 
-    if (!ENDPOINT) {
+    const welcome = `${ROUTES.bienvenue}?e=${encodeURIComponent(email)}&s=${encodeURIComponent(source)}`;
+
+    if (ENDPOINT) {
+      setStatus("sending");
+      setMessage("On t’inscrit…");
+      try {
+        await fetch(ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, source }),
+        });
+      } catch {
+        /* the address is already stored locally; don't punish the visitor */
+      }
+    } else {
       setStatus("done");
-      setMessage("C’est noté — on te prévient le 9 septembre.");
-      return;
+      setMessage("C’est bon, on t’emmène…");
     }
 
-    setStatus("sending");
-    setMessage("On t’inscrit…");
-    try {
-      await fetch(ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, source }),
-      });
-    } catch {
-      /* the address is already stored locally; don't punish the visitor */
-    }
-    setStatus("done");
-    setMessage("C’est noté — on te prévient le 9 septembre.");
+    router.push(welcome);
   }
 
   const noteColor = status === "error" ? "#D92E2E" : "#71787E";

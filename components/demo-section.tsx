@@ -93,7 +93,7 @@ export function DemoSection() {
     try {
       await navigator.clipboard.writeText(lien);
     } catch {
-      /* clipboard blocked — the label still confirms the intent */
+      /* clipboard blocked - the label still confirms the intent */
     }
     setCopie(true);
     window.clearTimeout(copyTimer.current);

@@ -1,9 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import { Capriola, Lato, Outfit } from "next/font/google";
+import { CookieBanner } from "@/components/cookie-banner";
 import { Motion } from "@/components/motion";
+import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
 
-/* Capriola — display / titles. Lato — UI + body.
+/* Capriola - display / titles. Lato - UI + body.
    Outfit stands in for Safiro (commercial); it only appears on brand boards. */
 const capriola = Capriola({
   weight: "400",
@@ -28,11 +31,11 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Yatu — Vos sorties, vos voyages. Une seule appli.",
+  title: "Yatu - Vos sorties, vos voyages. Une seule appli.",
   description:
     "Yatu réunit tout ce qu'un groupe doit décider et partager autour d'un événement : la date, les invitations, le programme, les dépenses, les listes, les documents et les photos. Sortie le 9 septembre 2026.",
   openGraph: {
-    title: "Yatu — Vos sorties, vos voyages. Une seule appli.",
+    title: "Yatu - Vos sorties, vos voyages. Une seule appli.",
     description:
       "Tu crées l'événement, tu partages le lien. Chacun rejoint, tout le monde voit la même chose.",
     locale: "fr_FR",
@@ -54,10 +57,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <noscript>
           {/* site-motion.js hid elements from script; without script nothing should stay hidden. */}
-          <style>{`[data-reveal],[data-reveal="stagger"]>*{opacity:1!important;transform:none!important}`}</style>
+          <style>{`[data-reveal],[data-fly],[data-reveal="stagger"]>*{opacity:1!important;transform:none!important}`}</style>
         </noscript>
         <Motion />
+        {/* Every page in the design project imports these three. */}
+        <SiteHeader />
         {children}
+        <SiteFooter />
+        <CookieBanner />
       </body>
     </html>
   );
