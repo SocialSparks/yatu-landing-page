@@ -168,3 +168,9 @@ export const BDE_DEMO_DECOR: DecorItem[] = [
   { i: "calendar", r: "15%", t: "24%", s: 28, o: 0.34, rot: -11, amp: 11, dur: "4.95s", lag: "1.87s" },
   { i: "pin", l: "22%", t: "5%", s: 28, o: 0.34, rot: 7, amp: 12, dur: "5.50s", lag: "0.04s" },
 ];
+
+export const COOKIES_DECOR: DecorItem[] = [
+  { i: "chart", l: "calc(50% - 620px)", t: "12%", s: 32, o: 0.82, rot: -10, amp: 9, dur: "6.60s", lag: "1.13s" },
+  { i: "bubble", r: "calc(50% - 624px)", t: "26%", s: 30, o: 0.82, rot: 9, amp: 11, dur: "4.95s", lag: "1.87s" },
+  { i: "heart", l: "calc(50% - 600px)", b: "14%", s: 26, o: 0.82, rot: 12, amp: 10, dur: "4.40s", lag: "1.50s" },
+];

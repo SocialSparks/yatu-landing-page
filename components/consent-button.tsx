@@ -2,6 +2,21 @@
 
 export const OPEN_COOKIES_EVENT = "yatu:open-cookies";
 
+/** Fired by CookieBanner once a choice is stored, so /cookies can show it live. */
+export const CONSENT_CHANGED_EVENT = "yatu:consent-changed";
+
+export const CONSENT_KEY = "yatu-consent-v1";
+
+export type Consent = { analytics: boolean; social: boolean; ts: string };
+
+export function readConsent(): Consent | null {
+  try {
+    return JSON.parse(window.localStorage.getItem(CONSENT_KEY) || "null");
+  } catch {
+    return null;
+  }
+}
+
 /** Re-opens the consent panel from the footer. */
 export function ConsentButton() {
   return (

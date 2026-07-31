@@ -1,4 +1,7 @@
+"use client";
+
 import { NavLink } from "@/components/nav-link";
+import { useId, useState } from "react";
 import { ROUTES } from "@/lib/routes";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
@@ -51,6 +54,68 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
   },
 ];
 
+function FaqItem({ item }: { item: (typeof FAQ)[number] }) {
+  const [open, setOpen] = useState(false);
+  const id = useId();
+  const answerId = `${id}-answer`;
+  const questionId = `${id}-question`;
+
+  return (
+    <div className="yq-faq-card" data-open={open}>
+      <button
+        id={questionId}
+        type="button"
+        className="yq-faq-trigger"
+        aria-expanded={open}
+        aria-controls={answerId}
+        onClick={() => setOpen((value) => !value)}
+      >
+        <span
+          style={{
+            flex: "1 1 auto",
+            fontFamily: DISPLAY,
+            fontSize: 18,
+            lineHeight: 1.3,
+            letterSpacing: "-.02em",
+            color: "#2A343D",
+            textAlign: "left",
+          }}
+        >
+          {item.q}
+        </span>
+        <span className="yq-plus" aria-hidden="true">
+          +
+        </span>
+      </button>
+
+      <div
+        id={answerId}
+        className="yq-faq-answer"
+        role="region"
+        aria-labelledby={questionId}
+        inert={!open}
+      >
+        <div className="yq-faq-answer-inner">
+          <p
+            style={{
+              margin: 0,
+              padding: "0 62px 20px 22px",
+              fontFamily: UI,
+              fontSize: 16,
+              lineHeight: 1.55,
+              color: "rgba(42,52,61,.8)",
+              maxWidth: "64ch",
+              textWrap: "pretty",
+            }}
+          >
+            {item.a}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function FaqSection() {
   return (
     <section id="faq" style={{ background: "#EFE8DE", padding: "clamp(56px,8vw,104px) 0" }}>
@@ -75,63 +140,7 @@ export function FaqSection() {
 
         <div data-reveal="stagger" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
           {FAQ.map((item) => (
-            <details
-              key={item.q}
-              style={{
-                background: "#FFFFFF",
-                border: "1px solid #EBE7DE",
-                borderRadius: 16,
-                padding: "20px 22px",
-              }}
-            >
-              <summary style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                <span
-                  style={{
-                    flex: "1 1 auto",
-                    fontFamily: DISPLAY,
-                    fontSize: 18,
-                    lineHeight: 1.3,
-                    letterSpacing: "-.02em",
-                    color: "#2A343D",
-                  }}
-                >
-                  {item.q}
-                </span>
-                <span
-                  className="yq-plus"
-                  aria-hidden="true"
-                  style={{
-                    flex: "none",
-                    width: 28,
-                    height: 28,
-                    borderRadius: 80,
-                    background: "#EFE8DE",
-                    color: "#2A343D",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontFamily: UI,
-                    fontSize: 18,
-                    lineHeight: 1,
-                  }}
-                >
-                  +
-                </span>
-              </summary>
-              <p
-                style={{
-                  margin: "14px 0 0",
-                  fontFamily: UI,
-                  fontSize: 16,
-                  lineHeight: 1.55,
-                  color: "rgba(42,52,61,.8)",
-                  maxWidth: "64ch",
-                  textWrap: "pretty",
-                }}
-              >
-                {item.a}
-              </p>
-            </details>
+            <FaqItem key={item.q} item={item} />
           ))}
         </div>
       </div>

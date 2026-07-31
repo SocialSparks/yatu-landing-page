@@ -17,7 +17,7 @@ npm run typecheck
 
 The site implements these Design Canvas files from the Claude Design project
 **"Site vitrine Yatu pré-lancement"** (`0d440bdb-cfe6-4157-bcea-c61d2e5865bd`). The home page
-came through the `claude_design` MCP; the other four were taken from `old/`.
+came through the `claude_design` MCP; the rest were taken from `old/`.
 
 | Design file | Route |
 | --- | --- |
@@ -26,6 +26,7 @@ came through the `claude_design` MCP; the other four were taken from `old/`.
 | `Bienvenue.dc.html` | `/bienvenue` |
 | `Mentions legales.dc.html` | `/mentions-legales` |
 | `Confidentialite.dc.html` | `/confidentialite` |
+| `Cookies.dc.html` | `/cookies` |
 
 The design file is a Design Canvas document: HTML with inline styles, `{{ }}` bindings,
 `<sc-for>` / `<sc-if>`, and a `DCLogic` class holding the page state. That maps onto React
@@ -43,6 +44,7 @@ as follows.
 | `<image-slot>` | plain `<img>`, or the sand background where the slot is still empty |
 | `data-timeline` (home + BDE) | `lib/use-timeline.ts`, shared by both scroll-driven rails |
 | `data-fly="x,y,deg"` (BDE features) | read by `components/motion.tsx`, transitioned in CSS |
+| the 800ms `setInterval` polling consent on `/cookies` | `CookieBanner` emits `yatu:consent-changed`; `components/consent-status.tsx` listens (plus `storage` for other tabs) |
 | page props (`showCountdown`, `showBdeTeaser`, `waitlistCta`) | constants - see the comment in `app/page.tsx` |
 
 Copy and data live in `lib/content.ts`, `lib/bde-content.ts` and `lib/decor.ts` so the section
@@ -81,8 +83,8 @@ to it, so it 404s today. `Cookies.dc.html` exists in the design project but was 
 `old/` - import it the same way as the others.
 
 **Legal copy needs completing** before go-live: every yellow-highlighted field on
-`/mentions-legales` and `/confidentialite` is a placeholder (immatriculation, address,
-host, email router, analytics tool).
+`/mentions-legales`, `/confidentialite` and `/cookies` is a placeholder (immatriculation,
+address, host, email router, analytics tool).
 
 **A dev-only hydration warning** is logged on pages whose content sits behind a Suspense
 boundary. The motion layer writes `.yq-in` onto nodes React is hydrating - the same

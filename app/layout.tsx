@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Capriola, Lato, Outfit } from "next/font/google";
+import { BackToTop } from "@/components/back-to-top";
 import { CookieBanner } from "@/components/cookie-banner";
 import { Motion } from "@/components/motion";
 import { SiteFooter } from "@/components/site-footer";
@@ -64,6 +65,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteHeader />
         {children}
         <SiteFooter />
+        <BackToTop />
         <CookieBanner />
       </body>
     </html>

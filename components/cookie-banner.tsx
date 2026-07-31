@@ -2,15 +2,17 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { OPEN_COOKIES_EVENT } from "@/components/consent-button";
+import {
+  CONSENT_CHANGED_EVENT,
+  CONSENT_KEY,
+  OPEN_COOKIES_EVENT,
+  readConsent,
+  type Consent,
+} from "@/components/consent-button";
 import { ROUTES } from "@/lib/routes";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
-const KEY = "yatu-consent-v1";
-
-type Consent = { analytics: boolean; social: boolean; ts: string };
-
 const PANEL: React.CSSProperties = {
   pointerEvents: "auto",
   width: "100%",
@@ -85,12 +87,7 @@ export function CookieBanner() {
   const [social, setSocial] = useState(false);
 
   useEffect(() => {
-    let saved: Consent | null = null;
-    try {
-      saved = JSON.parse(window.localStorage.getItem(KEY) || "null");
-    } catch {
-      saved = null;
-    }
+    const saved: Consent | null = readConsent();
 
     let timer: number | undefined;
     if (saved) {
@@ -120,11 +117,12 @@ export function CookieBanner() {
       ts: new Date().toISOString(),
     };
     try {
-      window.localStorage.setItem(KEY, JSON.stringify(value));
+      window.localStorage.setItem(CONSENT_KEY, JSON.stringify(value));
     } catch {
       /* storage blocked */
     }
     // Hook point: load the measurement tag here when nextAnalytics is true.
+    window.dispatchEvent(new CustomEvent(CONSENT_CHANGED_EVENT));
     setAnalytics(nextAnalytics);
     setSocial(nextSocial);
     setShowBanner(false);

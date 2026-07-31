@@ -2,6 +2,7 @@ import { AppHome } from "@/components/app-home";
 import { Countdown } from "@/components/countdown";
 import { Decor } from "@/components/decor";
 import { WaitlistForm } from "@/components/waitlist-form";
+import { WaitlistSocialProof } from "@/components/waitlist-social-proof";
 import { icon } from "@/lib/content";
 import { WAITLIST_DECOR } from "@/lib/decor";
 
@@ -70,7 +71,9 @@ export function WaitlistSection() {
             faire entrer ton groupe dans la foulée.
           </p>
 
-          <div data-reveal="up" data-reveal-delay="130" style={{ width: "100%", maxWidth: 540 }}>
+          <WaitlistSocialProof />
+
+          <div data-reveal="up" data-reveal-delay="180" style={{ width: "100%", maxWidth: 540 }}>
             <WaitlistForm
               source="bas-de-page"
               note="Un e-mail, pas une newsletter. Désinscription en un clic."

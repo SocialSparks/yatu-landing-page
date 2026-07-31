@@ -52,11 +52,79 @@ button {
 }
 
 .yq-plus {
-  transition: transform 200ms var(--ease-standard);
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 80px;
+  background: #efe8de;
+  color: #2a343d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-ui), system-ui, sans-serif;
+  font-size: 18px;
+  line-height: 1;
+  transition:
+    transform 260ms var(--ease-standard),
+    background 260ms var(--ease-standard);
 }
 
+.yq-faq-card[data-open="true"] .yq-plus,
 details[open] .yq-plus {
   transform: rotate(45deg);
+  background: #fed873;
+}
+
+.yq-faq-card {
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #ebe7de;
+  border-radius: 16px;
+  translate: 0 0;
+  transition:
+    translate 220ms var(--ease-standard),
+    border-color 220ms var(--ease-standard),
+    box-shadow 220ms var(--ease-standard);
+}
+
+.yq-faq-card:hover {
+  translate: 0 -2px;
+  border-color: #ded7cb;
+  box-shadow: 0 8px 24px rgba(42, 52, 61, 0.1);
+}
+
+.yq-faq-trigger {
+  width: 100%;
+  padding: 20px 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  color: #2a343d;
+  background: transparent;
+  text-align: left;
+}
+
+.yq-faq-answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    grid-template-rows 320ms var(--ease-standard),
+    opacity 220ms var(--ease-standard),
+    transform 320ms var(--ease-standard);
+}
+
+.yq-faq-answer-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.yq-faq-card[data-open="true"] .yq-faq-answer {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 @keyframes yq-typing {
@@ -209,19 +277,36 @@ details[open] .yq-plus {
 }
 
 .yq-btn-dark {
-  transition: background 200ms var(--ease-standard);
+  transition:
+    background 200ms var(--ease-standard),
+    color 200ms var(--ease-standard);
 }
-.yq-btn-dark:hover {
+.yq-btn-dark:not(:disabled):hover {
   background: #3a4750;
   color: #ffffff;
 }
 
 .yq-btn-light {
-  transition: background 200ms var(--ease-standard);
+  translate: 0 0;
+  transition:
+    background 200ms var(--ease-standard),
+    translate 200ms var(--ease-standard),
+    box-shadow 200ms var(--ease-standard);
 }
-.yq-btn-light:hover {
+.yq-btn-light:not(:disabled):hover {
   background: #efe8de;
   color: #2a343d;
+}
+
+.yq-btn-light:not(:disabled):hover,
+.yq-back-to-top:hover {
+  translate: 0 -2px;
+  box-shadow: 0 8px 24px rgba(42, 52, 61, 0.2);
+}
+
+.yq-btn-light:not(:disabled):active,
+.yq-back-to-top:active {
+  translate: 0 0;
 }
 
 /* Translucent button on a dark panel. */
@@ -258,6 +343,54 @@ details[open] .yq-plus {
 }
 .yq-close-btn:hover {
   background: #ebe7de;
+}
+
+.yq-back-to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 70;
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #ffffff;
+  background: #2a343d;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(42, 52, 61, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition:
+    opacity 200ms var(--ease-standard),
+    transform 200ms var(--ease-standard),
+    background 200ms var(--ease-standard),
+    translate 200ms var(--ease-standard),
+    box-shadow 200ms var(--ease-standard);
+}
+
+.yq-back-to-top[data-visible="true"] {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.yq-back-to-top:hover {
+  background: #3a4750;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yq-faq-card,
+  .yq-faq-answer,
+  .yq-plus,
+  .yq-btn-dark,
+  .yq-btn-light,
+  .yq-back-to-top {
+    transition: none;
+  }
 }
 
 :focus-visible {
@@ -345,6 +478,11 @@ details[open] .yq-plus {
   [data-r~="gutter"] {
     padding-left: 16px !important;
     padding-right: 16px !important;
+  }
+
+  .yq-back-to-top {
+    right: 16px;
+    bottom: 16px;
   }
 
   /* Timeline: tighter gutter, line and dots realigned. */
