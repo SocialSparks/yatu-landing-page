@@ -47,23 +47,17 @@ export const GALERE_DECOR: DecorItem[] = [
   { i: "pin", l: "22%", t: "5%", s: 28, o: 0.34, rot: 7, amp: 9, dur: "6.60s", lag: "1.13s" },
 ];
 
+/* The right half of this section holds the two event screens, so the icons
+   that sit under them stay faint. */
 export const YATU_DECOR: DecorItem[] = [
   { i: "bubble", l: "calc(50% - 662px)", t: "18%", s: 32, o: 0.82, rot: -9, amp: 9, dur: "6.60s", lag: "1.13s" },
   { i: "heart", r: "calc(50% - 664px)", t: "24%", s: 30, o: 0.82, rot: 8, amp: 10, dur: "4.40s", lag: "1.50s" },
   { i: "img", l: "calc(50% - 606px)", b: "18%", s: 26, o: 0.82, rot: 12, amp: 11, dur: "4.95s", lag: "1.87s" },
+  { i: "budget", r: "calc(50% - 606px)", b: "22%", s: 26, o: 0.82, rot: -12, amp: 9, dur: "6.05s", lag: "0.76s" },
   { i: "send", l: "5%", b: "8%", s: 34, o: 0.34, rot: 8, amp: 11, dur: "4.95s", lag: "1.87s" },
   { i: "pin", l: "22%", t: "5%", s: 28, o: 0.34, rot: 7, amp: 9, dur: "6.60s", lag: "1.13s" },
-  { i: "chart", r: "15%", t: "24%", s: 28, o: 0.34, rot: -11, amp: 8, dur: "6.05s", lag: "0.76s" },
-  { i: "addpeople", r: "24%", b: "16%", s: 30, o: 0.34, rot: -13, amp: 10, dur: "4.40s", lag: "1.50s" },
-];
-
-/* Light on purpose: this section already carries two large screenshots. */
-export const APERCU_DECOR: DecorItem[] = [
-  { i: "budget", l: "calc(50% - 660px)", t: "20%", s: 30, o: 0.82, rot: -10, amp: 10, dur: "4.40s", lag: "1.50s" },
-  { i: "pin", r: "calc(50% - 662px)", b: "20%", s: 28, o: 0.82, rot: 9, amp: 9, dur: "6.60s", lag: "1.13s" },
-  { i: "liste", l: "3%", t: "9%", s: 26, o: 0.14, rot: -12, amp: 11, dur: "4.95s", lag: "1.87s" },
-  { i: "img", r: "4%", t: "7%", s: 24, o: 0.13, rot: 10, amp: 12, dur: "5.50s", lag: "0.04s" },
-  { i: "documents", l: "5%", b: "8%", s: 26, o: 0.13, rot: 8, amp: 8, dur: "6.05s", lag: "0.76s" },
+  { i: "chart", r: "15%", t: "24%", s: 28, o: 0.13, rot: -11, amp: 8, dur: "6.05s", lag: "0.76s" },
+  { i: "addpeople", r: "24%", b: "16%", s: 30, o: 0.12, rot: -13, amp: 10, dur: "4.40s", lag: "1.50s" },
 ];
 
 export const CYCLE_DECOR: DecorItem[] = [

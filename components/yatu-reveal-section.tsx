@@ -1,15 +1,25 @@
 import { Decor } from "@/components/decor";
-import { ACCENT, YATU_REVEAL_BENEFITS, YATU_REVEAL_LEDE, icon } from "@/lib/content";
+import {
+  ACCENT,
+  YATU_REVEAL_BENEFITS,
+  YATU_REVEAL_LEDE,
+  YATU_REVEAL_SCREENS,
+  icon,
+} from "@/lib/content";
 import { YATU_DECOR } from "@/lib/decor";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
 
+const [EVENT_SCREEN, BUDGET_SCREEN] = YATU_REVEAL_SCREENS;
+
 /**
  * "Voici Yatu" - the answer to the group chat that goes nowhere, one section
- * above it. Copy on the left, the screen that opens an event on the right: the
- * page says what Yatu is and shows it in the same breath. The event itself is
- * up close in the section below, and the demo comes after that.
+ * above it. Copy on the left, the event itself on the right: the page says
+ * what Yatu is and shows it in the same breath, in one section rather than
+ * two. The creation flow belongs to the demo further down, so the screens
+ * here are the ones a group actually lives in - the event page in front, the
+ * budget peeking out behind it.
  */
 export function YatuRevealSection() {
   return (
@@ -144,28 +154,96 @@ export function YatuRevealSection() {
           </div>
         </div>
 
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 22 }}>
+          {/*
+            The two phones overlap inside one box sized by the taller of them:
+            the event page fills the left 72%, the budget sits behind it at 54%
+            and runs past the bottom-right corner. Percentages keep the pair
+            together at any width, so the composition shrinks instead of
+            stacking on mobile.
+          */}
           <div
             data-reveal="scale"
             data-reveal-delay="100"
-            style={{
-              position: "relative",
-              width: 380,
-              maxWidth: "100%",
-              aspectRatio: "418 / 850",
-            }}
+            style={{ position: "relative", width: "100%", maxWidth: 420, aspectRatio: "100 / 158" }}
           >
             <img
-              src="/mockups/iphone_create_event.svg"
-              alt="L'écran de création d'un événement Yatu sur iPhone : le type d'événement et les outils à activer - discussion, album, budget, tâches, programme"
+              src={BUDGET_SCREEN.src}
+              alt={BUDGET_SCREEN.alt}
               style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "contain",
+                position: "absolute",
+                right: 0,
+                bottom: 0,
+                width: "54%",
                 display: "block",
-                filter: "drop-shadow(0 30px 40px rgba(42,52,61,.2))",
+                filter: "drop-shadow(0 18px 28px rgba(42,52,61,.16))",
               }}
             />
+            <img
+              src={EVENT_SCREEN.src}
+              alt={EVENT_SCREEN.alt}
+              style={{
+                position: "absolute",
+                left: 0,
+                top: 0,
+                width: "72%",
+                display: "block",
+                filter: "drop-shadow(0 30px 44px rgba(42,52,61,.22))",
+              }}
+            />
+          </div>
+
+          <div
+            data-reveal="stagger"
+            data-reveal-delay="200"
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: 16,
+              width: "100%",
+              maxWidth: 420,
+            }}
+          >
+            {YATU_REVEAL_SCREENS.map((screen) => (
+              <div
+                key={screen.src}
+                style={{
+                  flex: "1 1 190px",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  gap: 7,
+                }}
+              >
+                <span
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    background: "#FFFFFF",
+                    border: "1px solid #EBE7DE",
+                    borderRadius: 999,
+                    padding: "7px 14px",
+                    fontFamily: UI,
+                    fontWeight: 700,
+                    fontSize: 13,
+                    color: "#2A343D",
+                  }}
+                >
+                  {screen.label}
+                </span>
+                <span
+                  style={{
+                    fontFamily: UI,
+                    fontSize: 14,
+                    lineHeight: 1.45,
+                    color: "rgba(42,52,61,.68)",
+                    textWrap: "pretty",
+                  }}
+                >
+                  {screen.caption}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </div>

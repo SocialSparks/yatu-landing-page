@@ -7,7 +7,6 @@ import { ModulesSection } from "@/components/modules-section";
 import { TimelineSection } from "@/components/timeline-section";
 import { UseCasesSection } from "@/components/usecases-section";
 import { WaitlistSection } from "@/components/waitlist-section";
-import { YatuOverviewSection } from "@/components/yatu-overview-section";
 import { YatuRevealSection } from "@/components/yatu-reveal-section";
 
 /**
@@ -26,7 +25,6 @@ export default function Page() {
       <Hero />
       <GalereSection />
       <YatuRevealSection />
-      <YatuOverviewSection />
       <DemoSection />
       <ModulesSection />
       <TimelineSection />

@@ -46,9 +46,9 @@ export const YATU_REVEAL_BENEFITS: Bullet[] = [
   },
 ];
 
-/* ── "Dans un événement Yatu" - the two app screens, up close ───────── */
+/* The two screens shown next to the reveal copy: what an event looks like. */
 
-export const YATU_OVERVIEW_SCREENS: { src: string; alt: string; label: string; caption: string }[] = [
+export const YATU_REVEAL_SCREENS: { src: string; alt: string; label: string; caption: string }[] = [
   {
     src: "/mockups/iphone_event.svg",
     alt: "L'écran d'un événement Yatu : le nom du séjour, les participants, la description et les onglets Infos, Discussion et Budget",
@@ -60,29 +60,6 @@ export const YATU_OVERVIEW_SCREENS: { src: string; alt: string; label: string; c
     alt: "L'écran budget d'un événement Yatu : total des dépenses, part de chacun et liste des dépenses avec qui a payé",
     label: "Page budget",
     caption: "Le total, ta part et qui a avancé quoi, à jour en direct.",
-  },
-];
-
-export const YATU_OVERVIEW_POINTS: Bullet[] = [
-  {
-    tool: "pin",
-    title: "Infos clés visibles tout de suite",
-    desc: "Adresse, horaires, détails pratiques et documents restent attachés à l’événement.",
-  },
-  {
-    tool: "budget",
-    title: "Budget clair pour tout le groupe",
-    desc: "Chacun voit les dépenses, qui a avancé quoi et comment les comptes se répartissent.",
-  },
-  {
-    tool: "liste",
-    title: "Organisation plus fluide",
-    desc: "Les tâches, listes et décisions sont visibles sans relancer tout le monde.",
-  },
-  {
-    tool: "img",
-    title: "Souvenirs centralisés",
-    desc: "Les photos restent dans l’événement, avec le reste du groupe.",
   },
 ];
 
