@@ -12,7 +12,7 @@ const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
 
 /**
- * "Le déroulé" - same scroll-driven rail as the home page's timeline, with
+ * "Le déroulé" - same scroll-driven rail as the home page’s timeline, with
  * four numbered stages instead of phases and cards.
  */
 export function BdeDeroule() {
@@ -41,9 +41,9 @@ export function BdeDeroule() {
         <SectionHeading
           badge="Le déroulé"
           badgeBg={ACCENT.sky}
-          title="Yatu se pose autour de votre événement, pas à la place."
+          title="Yatu se pose autour de ton événement, pas à la place."
           titleMaxCh={20}
-          lede="Fais défiler : voilà ce que le bureau fait, et à quel moment."
+          lede="Fais défiler : voilà ce que ton bureau fait, et à quel moment."
         />
 
         <div

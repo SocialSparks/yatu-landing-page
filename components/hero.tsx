@@ -1,16 +1,15 @@
-import { AvatarPair } from "@/components/avatar-pair";
 import { DaysUntil } from "@/components/countdown";
 import { Decor } from "@/components/decor";
 import { WaitlistForm } from "@/components/waitlist-form";
-import { icon } from "@/lib/content";
+import { LAUNCH_LABEL, icon } from "@/lib/content";
 import { HERO_DECOR } from "@/lib/decor";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
 
 const CHIPS = [
-  { dot: "#96E087", label: "Gratuit au lancement" },
-  { dot: "#6FC6F1", label: "Sans publicité" },
+  { dot: "#96E087", label: "Version gratuite disponible" },
+  { dot: "#6FC6F1", label: "Pour tous tes événements" },
   { dot: "#C6A8E1", label: "iOS et Android" },
 ];
 
@@ -97,7 +96,7 @@ export function Hero() {
             <span
               style={{ width: 8, height: 8, borderRadius: 80, background: "#FED873", flex: "none" }}
             />
-            Sortie le 9 septembre 2026
+            Sortie le {LAUNCH_LABEL}
             <DaysUntil />
           </span>
 
@@ -115,9 +114,7 @@ export function Hero() {
               textWrap: "balance",
             }}
           >
-            Vos sorties, vos voyages.
-            <br />
-            Une seule appli.
+            Organise tes événements entre amis.
           </h1>
 
           <p
@@ -132,9 +129,8 @@ export function Hero() {
               maxWidth: "46ch",
             }}
           >
-            Yatu réunit tout ce qu&apos;un groupe doit décider et partager autour d&apos;un
-            événement : la date, les invitations, le programme, les dépenses, les listes, les
-            documents et les photos.
+            Soirée, anniversaire, week-end ou voyage entre amis : une seule appli pour créer
+            l’espace de l’événement, embarquer ton groupe et tout garder au même endroit.
           </p>
 
           <p
@@ -149,8 +145,8 @@ export function Hero() {
               maxWidth: "46ch",
             }}
           >
-            Tu crées l&apos;événement, tu partages le lien. Chacun rejoint, tout le monde voit la
-            même chose - et l&apos;organisation arrête de reposer sur une seule personne.
+            Tout le monde voit la même chose, et l’organisation arrête de reposer sur une seule
+            personne.
           </p>
 
           <div
@@ -216,7 +212,7 @@ export function Hero() {
             >
               <img
                 src="/mockups/iphone_homepage.svg"
-                alt="Écran d'accueil de l'application Yatu sur iPhone"
+                alt="L’application Yatu sur iPhone : la liste des événements du groupe, avec les dates et les participants de chacun"
                 style={{
                   width: "100%",
                   height: "100%",
@@ -259,8 +255,8 @@ export function Hero() {
             />
             <Pill
               tool="img"
-              title="128 souvenirs"
-              detail="déposés par 8 amis"
+              title="Album partagé"
+              detail="128 photos, 8 amis"
               hideOnMobile
               style={
                 {

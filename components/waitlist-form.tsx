@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useId, useState } from "react";
+import { CTA } from "@/lib/content";
 import { ROUTES } from "@/lib/routes";
 
 const UI = "var(--font-ui), system-ui, sans-serif";
@@ -13,14 +14,14 @@ const UI = "var(--font-ui), system-ui, sans-serif";
  */
 const ENDPOINT = "";
 
-const DEFAULT_NOTE = "Gratuit au lancement. Un seul e-mail : celui du jour J.";
+const DEFAULT_NOTE = "Ton adresse sert seulement à te prévenir.";
 
 const isValid = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
 
 type Status = "idle" | "sending" | "done" | "error";
 
 export function WaitlistForm({
-  cta = "Je rejoins la liste",
+  cta = CTA.waitlist,
   placeholder = "ton@email.com",
   note = DEFAULT_NOTE,
   source = "accueil",
@@ -66,7 +67,7 @@ export function WaitlistForm({
           body: JSON.stringify({ email, source }),
         });
       } catch {
-        /* the address is already stored locally; don't punish the visitor */
+        /* the address is already stored locally; don’t punish the visitor */
       }
     } else {
       setStatus("done");
@@ -88,7 +89,7 @@ export function WaitlistForm({
         gap: 10,
       }}
     >
-      {/* noValidate: without it the browser's own (English) bubble fires first and
+      {/* noValidate: without it the browser’s own (English) bubble fires first and
           the designed French message below never shows. */}
       <form
         onSubmit={submit}

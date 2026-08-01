@@ -3,7 +3,16 @@
 import { useState } from "react";
 import { SectionHeading } from "@/components/section-heading";
 import { SectionCta } from "@/components/section-cta";
-import { ACCENT, MODULES, PRESETS, icon, type ModuleKey, type Preset } from "@/lib/content";
+import {
+  ACCENT,
+  CTA,
+  MODULES,
+  MODULES_NEXT,
+  PRESETS,
+  icon,
+  type ModuleKey,
+  type Preset,
+} from "@/lib/content";
 import { ROUTES } from "@/lib/routes";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
@@ -43,13 +52,13 @@ export function ModulesSection() {
         style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}
       >
         <SectionHeading
-          badge="Une app qui s'adapte"
+          badge="Une app qui s’adapte"
           badgeBg={ACCENT.meadow}
-          title="Tout ce qu'il faut. Rien de trop."
+          title="Tout ce qu’il faut. Rien de trop."
           titleMaxCh={20}
           onDark
           marginBottom="clamp(38px,4.5vw,56px)"
-          lede="Active seulement les outils utiles à ton événement : budget, tâches, planning, documents ou souvenirs. Le chat reste toujours disponible pour le groupe."
+          lede="Un anniversaire et un voyage n’ont pas besoin des mêmes outils. Tu actives ceux qui servent, les autres n’apparaissent pas."
         />
 
         <div
@@ -207,7 +216,11 @@ export function ModulesSection() {
                   {m.desc}
                 </span>
 
+                {/* Kept in the flow on every card so they stay the same height,
+                    but hidden from the accessibility tree and from crawlers -
+                    otherwise "Toujours actif" reads out on all eight modules. */}
                 <span
+                  aria-hidden={!m.locked}
                   style={{
                     alignSelf: "flex-start",
                     borderRadius: 999,
@@ -219,6 +232,7 @@ export function ModulesSection() {
                     color: "#96E087",
                     transition: `opacity ${EASE}`,
                     opacity: m.locked ? 1 : 0,
+                    visibility: m.locked ? "visible" : "hidden",
                   }}
                 >
                   Toujours actif
@@ -252,7 +266,7 @@ export function ModulesSection() {
                 color: "rgba(255,255,255,.62)",
               }}
             >
-              Et d&apos;autres à venir
+              {MODULES_NEXT.title}
             </span>
             <span
               style={{
@@ -262,7 +276,7 @@ export function ModulesSection() {
                 color: "rgba(255,255,255,.42)",
               }}
             >
-              Cagnotte, covoiturage, sondages… On ajoute les modules que vous nous réclamez.
+              {MODULES_NEXT.desc}
             </span>
           </div>
         </div>
@@ -336,10 +350,10 @@ export function ModulesSection() {
         </div>
 
         <SectionCta
-          title="Prêt à l'essayer sur ton prochain événement ?"
-          body="Rejoins la liste pour recevoir Yatu au lancement, ou reviens à la démo pour voir ces modules en situation."
-          primary={{ href: ROUTES.liste, label: "Rejoindre la liste" }}
-          secondary={{ href: ROUTES.fonctionnement, label: "Revoir la démo" }}
+          title="Prêt à l’essayer sur ton prochain événement ?"
+          body="Inscris-toi pour recevoir Yatu le jour du lancement."
+          primary={{ href: ROUTES.liste, label: CTA.waitlist }}
+          secondary={{ href: ROUTES.fonctionnement, label: CTA.demo }}
           onDark
           accent={ACCENT.sky}
         />

@@ -3,6 +3,7 @@
 import { NavLink } from "@/components/nav-link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { CTA } from "@/lib/content";
 import { ROUTES } from "@/lib/routes";
 
 const UI = "var(--font-ui), system-ui, sans-serif";
@@ -11,7 +12,7 @@ const UI = "var(--font-ui), system-ui, sans-serif";
 const NAV = [
   { href: ROUTES.fonctionnement, label: "Comment ça marche" },
   { href: ROUTES.modules, label: "Les modules" },
-  { href: ROUTES.usages, label: "Cas d'usage" },
+  { href: ROUTES.usages, label: "Cas d’usage" },
   { href: ROUTES.bde, label: "BDE & assos", note: "Page dédiée" },
 ];
 
@@ -72,13 +73,13 @@ export function SiteHeader() {
       >
         <NavLink
           href={ROUTES.home}
-          aria-label="Yatu - accueil"
+          aria-label="Yatu, retour à l’accueil"
           className="yq-logo-link"
           style={{ display: "flex", alignItems: "center", flex: "none", textDecoration: "none" }}
         >
           <img
             src="/assets/yatu-wordmark.png"
-            alt="Yatu"
+            alt=""
             className="yq-logo-mark"
             style={{ height: 40, width: "auto", display: "block" }}
           />
@@ -143,7 +144,7 @@ export function SiteHeader() {
           <span
             style={{ width: 8, height: 8, borderRadius: 80, background: "#FED873", flex: "none" }}
           />
-          Rejoindre la liste
+          {CTA.waitlist}
         </NavLink>
 
         <button

@@ -55,10 +55,10 @@ export function TimelineSection() {
         <SectionHeading
           badge="Avant, pendant, après"
           badgeBg={ACCENT.sky}
-          title="On ne vous lâche à aucun moment."
+          title="Yatu reste là du début à la fin."
           titleMaxCh={20}
           ledeMaxCh={42}
-          lede="Du premier « et si on partait ? » au dernier souvenir. Fais défiler."
+          lede="Du premier « et si on partait ? » aux dernières photos. Fais défiler."
         />
 
         <div
@@ -109,9 +109,12 @@ export function TimelineSection() {
                 >
                   {step.label}
                 </span>
-                <span
+                {/* The three phases are the section's only real sub-level. */}
+                <h3
                   style={{
+                    margin: 0,
                     fontFamily: DISPLAY,
+                    fontWeight: 400,
                     fontSize: "clamp(24px,3vw,30px)",
                     lineHeight: 1.1,
                     letterSpacing: "-.02em",
@@ -119,7 +122,7 @@ export function TimelineSection() {
                   }}
                 >
                   {step.title}
-                </span>
+                </h3>
                 <span
                   style={{
                     fontFamily: UI,

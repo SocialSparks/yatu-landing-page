@@ -2,6 +2,7 @@ import { Decor } from "@/components/decor";
 import { SectionHeading } from "@/components/section-heading";
 import { SectionCta } from "@/components/section-cta";
 import {
+  BDE_CTA,
   BDE_FEATURES,
   BDE_PROBLEMES,
   BDE_USAGES,
@@ -68,7 +69,7 @@ export function BdeProblemes() {
         <SectionHeading
           badge="Ce que vivent les organisateurs"
           badgeBg={ACCENT.coral}
-          title="Le problème n'est pas l'événement. C'est tout ce qu'il y a autour."
+          title="Le problème n’est pas l’événement. C’est tout ce qu’il y a autour."
           titleMaxCh={20}
         />
         <div
@@ -85,10 +86,10 @@ export function BdeProblemes() {
         </div>
 
         <SectionCta
-          title="Et si tout revenait enfin au même endroit ?"
-          body="Découvre les outils pensés pour garder un grand groupe informé sans alourdir le travail du bureau."
-          primary={{ href: ROUTES.bdeFeatures, label: "Voir les fonctionnalités" }}
-          secondary={{ href: ROUTES.bdeDemo, label: "Parler de mon événement" }}
+          title="Et si tout revenait au même endroit ?"
+          body="Les outils pensés pour tenir un grand groupe informé sans alourdir le travail du bureau."
+          primary={{ href: ROUTES.bdeFeatures, label: BDE_CTA.features }}
+          secondary={{ href: ROUTES.bdePilote, label: BDE_CTA.pilote }}
           accent={ACCENT.coral}
         />
       </div>
@@ -172,7 +173,7 @@ export function BdeFeatures() {
                 textWrap: "balance",
               }}
             >
-              Tout reste clair, même quand vous êtes deux cents.
+              Tout reste clair, même à deux cents.
             </h2>
           </div>
 
@@ -210,8 +211,8 @@ export function BdeFeatures() {
                 textWrap: "pretty",
               }}
             >
-              Six outils reliés au même événement. Le bureau garde la main et chaque participant
-              voit toujours la bonne information.
+              Six outils reliés au même événement : ton bureau garde la main, et chaque participant
+              regarde la même information.
             </p>
           </div>
         </div>
@@ -330,8 +331,8 @@ export function BdeFeatures() {
         <SectionCta
           title="Tu veux voir ce que ça donne sur ton prochain événement ?"
           body="On te montre le parcours complet avec tes contraintes, ton volume et ton calendrier."
-          primary={{ href: ROUTES.bdeDemo, label: "Demander une démo" }}
-          secondary={{ href: ROUTES.bdePilote, label: "Voir le pack pilote" }}
+          primary={{ href: ROUTES.bdeDemo, label: BDE_CTA.demo }}
+          secondary={{ href: ROUTES.bdePilote, label: BDE_CTA.pilote }}
           onDark
           accent={ACCENT.meadow}
         />
@@ -356,7 +357,7 @@ export function BdeUsages() {
         style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}
       >
         <SectionHeading
-          badge="Les cas d'usage"
+          badge="Les cas d’usage"
           badgeBg={ACCENT.blush}
           title="Là où un BDE perd le plus de temps."
           titleMaxCh={18}
@@ -375,10 +376,10 @@ export function BdeUsages() {
         </div>
 
         <SectionCta
-          title="Ton prochain événement ressemble à l'un de ceux-là ?"
-          body="Explique-nous votre organisation actuelle et on te dira où Yatu peut vraiment vous faire gagner du temps."
-          primary={{ href: ROUTES.bdeDemo, label: "Parler de mon événement" }}
-          secondary={{ href: ROUTES.bdePilote, label: "Découvrir le pack gratuit" }}
+          title="Ton prochain événement ressemble à l’un de ceux-là ?"
+          body="Explique-nous ton organisation actuelle, on te dira où Yatu peut vous faire gagner du temps. Tu organises entre amis plutôt qu’en asso ? La page d’accueil est faite pour ça."
+          primary={{ href: ROUTES.bdeDemo, label: BDE_CTA.demo }}
+          secondary={{ href: ROUTES.home, label: BDE_CTA.amis }}
           accent={ACCENT.blush}
         />
       </div>
@@ -434,10 +435,10 @@ export function BdePilote() {
         <SectionHeading
           badge="Le programme pilote"
           badgeBg={ACCENT.sunbeam}
-          title="Pack BDE Pilote - gratuit, avant le lancement."
+          title="Pack BDE pilote : gratuit, avant le lancement."
           titleMaxCh={20}
           ledeMaxCh={48}
-          lede="On ouvre Yatu à un petit nombre de BDE sur leur prochain événement. Vous utilisez tout, gratuitement, avec nous au bout du fil. En retour, on apprend de vous."
+          lede="On ouvre Yatu à quelques BDE pour leur prochain événement. Tu utilises tout, gratuitement, avec l’équipe au bout du fil. En échange, on apprend de ton organisation."
         />
 
         <div
@@ -506,7 +507,7 @@ export function BdePilote() {
                   color: "#FFFFFF",
                 }}
               >
-                Ce qu&apos;on vous demande en retour
+                Ce qu’on te demande en échange
               </span>
             </div>
             <PackList items={PACK_ASKS} dotColor="#FED873" color="rgba(255,255,255,.85)" />
@@ -520,16 +521,16 @@ export function BdePilote() {
                 textWrap: "pretty",
               }}
             >
-              Les statistiques d&apos;usage sont agrégées et anonymes : nombre d&apos;événements,
-              taux de participation, fonctionnalités utilisées. Jamais le contenu des conversations.
+              Les statistiques d’usage sont agrégées et anonymes : nombre d’événements, taux de
+              participation, fonctionnalités utilisées. Jamais le contenu des discussions.
             </p>
           </div>
         </div>
 
         <SectionCta
           title="Le prochain BDE pilote peut être le tien."
-          body="Le pack est gratuit, sans engagement, et accompagné directement par l'équipe Yatu."
-          primary={{ href: ROUTES.bdeDemo, label: "Candidater au pack pilote" }}
+          body="Le pack est gratuit, sans engagement, et accompagné directement par l’équipe Yatu."
+          primary={{ href: ROUTES.bdeDemo, label: BDE_CTA.demo }}
           accent={ACCENT.sunbeam}
         />
       </div>

@@ -41,9 +41,9 @@ export function GalereSection() {
         style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}
       >
         <SectionHeading
-          badge="La galère actuelle"
+          badge="Avant Yatu"
           badgeBg={ACCENT.coral}
-          title="Aujourd'hui, ça ressemble à ça."
+          title="Aujourd’hui, organiser à huit, ça ressemble à ça."
           titleMaxCh={18}
         />
 

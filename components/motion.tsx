@@ -10,7 +10,7 @@ import { useEffect } from "react";
  * globals.css. Sections stay server components: they only carry the attributes.
  *
  * `data-reveal-delay="120"` offsets the start. `data-reveal="stagger"` walks the
- * element's children 80ms apart instead of animating the container.
+ * element’s children 80ms apart instead of animating the container.
  * `data-fly="x,y,deg"` arrives from an offset with a rotation - the starting
  * transform is read off the attribute, the rest is the same CSS transition.
  *
@@ -78,7 +78,7 @@ export function Motion() {
     const mo = new MutationObserver(scan);
     mo.observe(document.documentElement, { childList: true, subtree: true });
 
-    /* Safety net, in the spirit of site-motion.js's fallback(): copy that never
+    /* Safety net, in the spirit of site-motion.js’s fallback(): copy that never
        reveals is copy nobody reads. Browsers defer IntersectionObserver in a
        background tab, so only start counting once the page is actually visible. */
     let bail: number | undefined;

@@ -51,6 +51,36 @@ Copy and data live in `lib/content.ts`, `lib/bde-content.ts` and `lib/decor.ts` 
 components stay markup-only. The two legal pages share `components/legal-page.tsx`; the
 yellow `<Todo>` spans mark the fields still waiting on Quantiq Studio's real details.
 
+## Domain and SEO
+
+The production domain is written **once**, in `lib/site.ts`:
+
+```ts
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://yatu-app.com";
+```
+
+A preview host (the Workers preview URL, a branch deploy) should set `NEXT_PUBLIC_SITE_URL`
+to itself so its canonical URLs, sitemap and social cards point at the preview instead of
+claiming to be production. Nothing else in the app hard-codes a domain — the demo's invite
+link, the share button, the contact addresses and the JSON-LD all read from there.
+
+| Concern | Where |
+| --- | --- |
+| `metadataBase`, title template, icons, manifest link | `app/layout.tsx` |
+| Per-page title / description / canonical / OG / Twitter | `pageMetadata()` in `lib/site.ts`, called by each `page.tsx` |
+| `robots.txt`, `sitemap.xml`, `manifest.webmanifest` | `app/robots.ts`, `app/sitemap.ts`, `app/manifest.ts` |
+| Indexable page list (the sitemap's source) | `SITE_PAGES` in `lib/site.ts` |
+| Social cards (1200×630 PNG, generated at build) | `app/opengraph-image.tsx`, `app/bde/opengraph-image.tsx`, shared layout in `lib/og-image.tsx` |
+| `SoftwareApplication`, `Organization`, `FAQPage` JSON-LD | `components/structured-data.tsx` |
+| Icons | `app/favicon.ico`, `public/icon-192.png`, `public/icon-512.png`, `public/apple-icon.png` |
+
+Adding a use-case landing page later (`/organiser-un-week-end-entre-amis`, `/evjf`…) means
+creating the route, calling `pageMetadata()` in it, and adding one entry to `SITE_PAGES`;
+robots and the sitemap follow automatically.
+
+The FAQ lives in `FAQ` (`lib/content.ts`) and feeds both the accordion and the `FAQPage`
+structured data, so the marked-up answers are always the visible ones.
+
 ### Deliberate departures from the design file
 
 - **anime.js is gone.** The design loaded it from a CDN to drive fades and slides.
@@ -78,9 +108,9 @@ route handler and the POST happens automatically.
 **Demo-request endpoint.** `ENDPOINT` in `components/bde/demo-form.tsx` is empty too;
 requests are stored under `localStorage["yatu-bde-demandes"]` meanwhile.
 
-**`/cookies` is still missing.** The footer, the cookie banner and the legal pages all link
-to it, so it 404s today. `Cookies.dc.html` exists in the design project but was not in
-`old/` - import it the same way as the others.
+**Social links are placeholders.** `SOCIAL` in `components/site-footer.tsx` and the two
+links on `/bienvenue` point at `instagram.com` / `tiktok.com` / `linkedin.com` with no
+handle. Replace them with the real profiles before go-live (or drop the rows).
 
 **Legal copy needs completing** before go-live: every yellow-highlighted field on
 `/mentions-legales`, `/confidentialite` and `/cookies` is a placeholder (immatriculation,

@@ -5,9 +5,10 @@ import { useEffect, useState } from "react";
 import { Decor } from "@/components/decor";
 import { CopyIcon, InstagramIcon, WhatsappIcon } from "@/components/icons";
 import { NavLink } from "@/components/nav-link";
-import { LAUNCH_DATE, icon } from "@/lib/content";
+import { LAUNCH_DATE, LAUNCH_LABEL, icon } from "@/lib/content";
 import { BIENVENUE_DECOR } from "@/lib/decor";
 import { ROUTES } from "@/lib/routes";
+import { SITE_URL } from "@/lib/site";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
@@ -16,22 +17,27 @@ const TYPES = ["Soirées", "Anniversaires", "Week-ends", "Voyages", "Événement
 const SIZES = ["2 à 5", "6 à 12", "13 à 30", "Plus de 30"];
 const BDE = ["Oui, un BDE", "Une autre asso", "Non, entre amis"];
 
-const SHARE_TEXT =
-  "On teste Yatu pour organiser nos trucs : tout au même endroit, ça sort le 9 septembre. Inscris-toi avec moi : ";
+const QUESTIONS = {
+  types: "Qu’est-ce que tu organises le plus souvent ?",
+  size: "Vous êtes combien, en général ?",
+  bde: "Tu organises pour un BDE ou une association ?",
+};
+
+const SHARE_TEXT = `On va tester Yatu pour organiser nos trucs : tout au même endroit. Ça sort le ${LAUNCH_LABEL}, inscris-toi avec moi : `;
 
 const LINKS = [
   {
     href: "https://instagram.com",
     tool: "send",
     title: "Instagram",
-    sub: "Les coulisses d'ici septembre",
+    sub: "Les coulisses d’ici septembre",
     external: true,
   },
   {
     href: "https://tiktok.com",
     tool: "bubble",
     title: "TikTok",
-    sub: "Les galères d'organisation, en vidéo",
+    sub: "L’organisation de groupe, en vidéo",
     external: true,
   },
   {
@@ -98,7 +104,7 @@ export function BienvenueContent() {
   const [copied, setCopied] = useState(false);
   const [shareUrl, setShareUrl] = useState("");
 
-  // window isn't available while rendering - resolve the share target on mount.
+  // window isn’t available while rendering - resolve the share target on mount.
   useEffect(() => setShareUrl(`${window.location.origin}/`), []);
 
   const [days, setDays] = useState(() =>
@@ -120,7 +126,7 @@ export function BienvenueContent() {
 
   async function copy() {
     try {
-      await navigator.clipboard.writeText(shareUrl || "https://yatu.app");
+      await navigator.clipboard.writeText(shareUrl || SITE_URL);
     } catch {
       /* clipboard blocked - the label still confirms the intent */
     }
@@ -203,9 +209,8 @@ export function BienvenueContent() {
               textWrap: "pretty",
             }}
           >
-            On t&apos;écrit à <strong style={{ fontWeight: 700, color: "#2A343D" }}>{email}</strong>{" "}
-            le 9 septembre 2026, jour du lancement. Tu auras l&apos;accès avant l&apos;ouverture
-            publique.
+            On t’écrit à <strong style={{ fontWeight: 700, color: "#2A343D" }}>{email}</strong> le{" "}
+            {LAUNCH_LABEL}, jour du lancement. Tu auras l’accès avant l’ouverture publique.
           </p>
           <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginTop: 2 }}>
             <span
@@ -252,7 +257,7 @@ export function BienvenueContent() {
                     color: "#2A343D",
                   }}
                 >
-                  Merci, c&apos;est enregistré.
+                  Merci, c’est enregistré.
                 </span>
                 <span
                   style={{
@@ -286,7 +291,7 @@ export function BienvenueContent() {
                     Trois questions, si tu veux bien
                   </h2>
                   <span style={{ fontFamily: UI, fontSize: 13, color: "#71787E" }}>
-                    Facultatif - trente secondes
+                    Facultatif, trente secondes
                   </span>
                 </div>
                 <p
@@ -299,11 +304,11 @@ export function BienvenueContent() {
                     textWrap: "pretty",
                   }}
                 >
-                  Pour savoir sur quoi travailler en priorité d&apos;ici septembre.
+                  Ça nous aide à savoir sur quoi travailler en priorité d’ici septembre.
                 </p>
               </div>
 
-              <Question label="Qu'est-ce que tu organises le plus souvent ?">
+              <Question label={QUESTIONS.types}>
                 {TYPES.map((t) => (
                   <Chip
                     key={t}
@@ -318,13 +323,13 @@ export function BienvenueContent() {
                 ))}
               </Question>
 
-              <Question label="Vous êtes combien, en général ?">
+              <Question label={QUESTIONS.size}>
                 {SIZES.map((s) => (
                   <Chip key={s} label={s} on={size === s} onClick={() => setSize(s)} />
                 ))}
               </Question>
 
-              <Question label="Tu organises pour un BDE ou une association ?">
+              <Question label={QUESTIONS.bde}>
                 {BDE.map((b) => (
                   <Chip key={b} label={b} on={bde === b} onClick={() => setBde(b)} />
                 ))}
@@ -396,7 +401,7 @@ export function BienvenueContent() {
                 color: "#FFFFFF",
               }}
             >
-              Yatu ne sert à rien tout seul.
+              Yatu, c’est mieux à plusieurs.
             </h2>
             <p
               style={{
@@ -409,8 +414,8 @@ export function BienvenueContent() {
                 textWrap: "pretty",
               }}
             >
-              Fais entrer ton groupe maintenant : le jour du lancement, votre premier événement sera
-              déjà prêt à créer.
+              Préviens ton groupe maintenant : le jour du lancement, vous pourrez créer votre
+              premier événement ensemble.
             </p>
           </div>
 

@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { Decor } from "@/components/decor";
 import { NavLink } from "@/components/nav-link";
-import { DEMO_REASSURANCE, EVENT_TYPES } from "@/lib/bde-content";
+import { BDE_CTA, DEMO_REASSURANCE, EVENT_TYPES } from "@/lib/bde-content";
 import { icon } from "@/lib/content";
 import { BDE_DEMO_DECOR } from "@/lib/decor";
 import { ROUTES } from "@/lib/routes";
+import { PUBLISHER } from "@/lib/site";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
@@ -138,7 +139,7 @@ export function BdeDemoForm() {
               textWrap: "balance",
             }}
           >
-            Vingt minutes en visio, et tu sais si Yatu vous sert.
+            Vingt minutes en visio, et tu sais si Yatu peut t’aider.
           </h2>
 
           <p
@@ -153,8 +154,8 @@ export function BdeDemoForm() {
               textWrap: "pretty",
             }}
           >
-            On te montre l&apos;app sur ton prochain événement, on répond aux questions du bureau,
-            et on te dit franchement si c&apos;est trop tôt pour vous.
+            On te montre l’app sur ton prochain événement, on répond aux questions de ton bureau,
+            et on te dit franchement si c’est trop tôt pour vous.
           </p>
 
           <div
@@ -215,7 +216,7 @@ export function BdeDemoForm() {
                   color: "#2A343D",
                 }}
               >
-                C&apos;est envoyé.
+                C’est envoyé.
               </span>
               <p
                 style={{
@@ -227,9 +228,8 @@ export function BdeDemoForm() {
                   textWrap: "pretty",
                 }}
               >
-                On revient vers toi sous deux jours ouvrés à l&apos;adresse indiquée, avec deux ou
-                trois créneaux de visio. Si ton événement est proche, dis-le nous en répondant : on
-                passe devant.
+                On revient vers toi à l’adresse indiquée, avec deux ou trois créneaux de visio. Si
+                ton événement est proche, dis-le nous en répondant : on passe devant.
               </p>
               <NavLink
                 href={ROUTES.home}
@@ -247,7 +247,7 @@ export function BdeDemoForm() {
                   textDecoration: "none",
                 }}
               >
-                Retour à l&apos;accueil
+                Retour à l’accueil
               </NavLink>
             </div>
           ) : (
@@ -271,7 +271,7 @@ export function BdeDemoForm() {
                 <Field label="E-mail">
                   <input name="email" type="email" required className="yq-input" style={FIELD} />
                 </Field>
-                <Field label="Type d'événement">
+                <Field label="Type d’événement">
                   <select
                     name="type"
                     className="yq-input"
@@ -295,7 +295,7 @@ export function BdeDemoForm() {
                 </Field>
               </div>
 
-              <Field label="Votre prochain événement, en deux lignes">
+              <Field label="Ton prochain événement, en deux lignes">
                 <textarea
                   name="message"
                   rows={3}
@@ -327,13 +327,13 @@ export function BdeDemoForm() {
                   borderRadius: 999,
                 }}
               >
-                Demander une démo
+                {BDE_CTA.demo}
               </button>
 
               <span
                 style={{ fontFamily: UI, fontSize: 13, lineHeight: 1.5, color: "#71787E" }}
               >
-                En envoyant ce formulaire, tu acceptes que Quantiq Studio te recontacte au sujet de
+                En envoyant ce formulaire, tu acceptes que {PUBLISHER} te recontacte au sujet de
                 Yatu. Détails dans la{" "}
                 <NavLink href={ROUTES.confidentialite} style={{ color: "#4E565D" }}>
                   politique de confidentialité

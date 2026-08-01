@@ -3,7 +3,7 @@ import { isAnchor } from "@/lib/routes";
 
 /**
  * Renders a same-page anchor as a plain <a> (next/link no-ops when the route
- * doesn't change) and everything else as a next/link.
+ * doesn’t change) and everything else as a next/link.
  */
 export function NavLink({
   href,

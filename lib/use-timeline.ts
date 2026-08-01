@@ -11,8 +11,8 @@ const EASE = "cubic-bezier(.2,.8,.2,1)";
  * as the marker passes its midpoint. Styles are written straight to the DOM
  * inside a rAF so scrolling stays cheap.
  *
- * Used by the home page's "avant / pendant / après" section and by the BDE
- * page's "déroulé"; the markup differs, the mechanics don't.
+ * Used by the home page’s "avant / pendant / après" section and by the BDE
+ * page’s "déroulé"; the markup differs, the mechanics don’t.
  */
 export function useTimeline(
   rootRef: RefObject<HTMLDivElement | null>,

@@ -1,9 +1,21 @@
 /**
- * All copy and data for the home page, lifted verbatim from Accueil.dc.html.
- * Keeping it here means the section components stay markup-only.
+ * All the words the home page says, in one file, so the section components
+ * stay markup-only and no sentence gets written twice.
+ *
+ * Editorial rules for anything added here:
+ * - tutoiement, always;
+ * - the benefit first, the feature after;
+ * - one job per section - the full list of modules belongs to MODULES and
+ *   nowhere else;
+ * - only promise what ships on day one. No numbers we cannot back.
+ *
+ * Feature names are fixed: discussion, infos clés, planning, budget, listes et
+ * tâches, discussion cachée, souvenirs, documents.
  */
 
 export const LAUNCH_DATE = "2026-09-09T00:00:00";
+/** Written once - the date shows up in the hero, the footer, the FAQ and the metadata. */
+export const LAUNCH_LABEL = "9 septembre 2026";
 
 export const ACCENT = {
   ink: "#2A343D",
@@ -21,28 +33,35 @@ export const ACCENT = {
 
 export const icon = (name: string) => `/assets/tools/${name}.svg`;
 
+/* ── The two calls to action, spelled the same way everywhere ────────── */
+
+export const CTA = {
+  waitlist: "Rejoindre la liste",
+  demo: "Voir la démo",
+} as const;
+
 /* ── "Voici Yatu" - what the product is, before any feature ─────────── */
 
 export type Bullet = { tool: string; title: string; desc: string };
 
 export const YATU_REVEAL_LEDE =
-  "Tu crées un événement, tu invites ton groupe par lien, et tout le monde retrouve au même endroit les discussions, les infos utiles, le budget, les tâches, le planning, les documents et les photos.";
+  "Tu crées l’événement, ton groupe te rejoint avec un lien. À partir de là, tout se passe dedans : ce qui se décide, ce qui se paie, ce qui se prépare et ce qu’il en reste.";
 
 export const YATU_REVEAL_BENEFITS: Bullet[] = [
   {
     tool: "documents",
-    title: "Tout est au même endroit",
-    desc: "Plus besoin de jongler entre les messages, les notes, les tableurs et les albums photo.",
+    title: "Tout tient dans l’événement",
+    desc: "Les décisions, les infos pratiques et les photos restent là où le groupe va les chercher.",
   },
   {
     tool: "people",
     title: "Le groupe participe vraiment",
-    desc: "Chacun peut suivre, décider, ajouter une dépense, cocher une tâche ou partager ses photos.",
+    desc: "Chacun peut proposer, cocher une tâche, ajouter une dépense ou déposer ses photos.",
   },
   {
-    tool: "calendar",
-    title: "L’événement continue après le jour J",
-    desc: "Les comptes, les discussions et les souvenirs restent réunis dans le bon espace.",
+    tool: "heart",
+    title: "L’organisateur souffle",
+    desc: "Tu n’es plus le seul à tout suivre, à tout rappeler et à tout avancer.",
   },
 ];
 
@@ -51,15 +70,15 @@ export const YATU_REVEAL_BENEFITS: Bullet[] = [
 export const YATU_REVEAL_SCREENS: { src: string; alt: string; label: string; caption: string }[] = [
   {
     src: "/mockups/iphone_event.svg",
-    alt: "L'écran d'un événement Yatu : le nom du séjour, les participants, la description et les onglets Infos, Discussion et Budget",
-    label: "Page événement",
-    caption: "Le hub du groupe : participants, infos pratiques et onglets du séjour.",
+    alt: "Écran d’un événement Yatu : le nom du séjour, les participants, la description et les onglets Infos, Discussion et Budget",
+    label: "L’événement",
+    caption: "Qui vient, les infos utiles, et les onglets choisis par le groupe.",
   },
   {
     src: "/mockups/iphone_budget.svg",
-    alt: "L'écran budget d'un événement Yatu : total des dépenses, part de chacun et liste des dépenses avec qui a payé",
-    label: "Page budget",
-    caption: "Le total, ta part et qui a avancé quoi, à jour en direct.",
+    alt: "Écran budget d’un événement Yatu : total des dépenses, part de chaque participant et liste des dépenses avec qui a payé",
+    label: "Le budget",
+    caption: "Ce qui a été payé, par qui, et ce que chacun doit encore.",
   },
 ];
 
@@ -86,54 +105,60 @@ export type Module = {
 export const MODULES: Module[] = [
   {
     key: "chat",
-    label: "Chat",
+    label: "Discussion",
     icon: icon("chat"),
     locked: true,
-    desc: "Une conversation par événement. Le seul module qu’on ne coupe jamais.",
+    desc: "La conversation du groupe, rattachée à l’événement. Le seul module qu’on ne coupe jamais.",
   },
   {
     key: "infos",
     label: "Infos clés",
     icon: icon("pin"),
-    desc: "L’adresse, le code du portail, le numéro à appeler. Épinglés en haut, pour tous.",
+    desc: "L’adresse, le code du portail, le numéro à appeler. Épinglés en haut de l’événement.",
   },
   {
     key: "planning",
     label: "Planning",
     icon: icon("planning"),
-    desc: "Le programme se propose et se vote. Chacun sait quoi, où, à quelle heure.",
+    desc: "Le programme de l’événement, heure par heure. Chacun sait quoi, où et quand.",
   },
   {
     key: "budget",
     label: "Budget",
     icon: icon("budget"),
-    desc: "Chaque dépense notée, la répartition calculée, les comptes soldés.",
+    desc: "Chaque dépense notée, la répartition calculée, et qui rembourse qui à la fin.",
   },
   {
     key: "liste",
-    label: "Listes",
+    label: "Listes et tâches",
     icon: icon("liste"),
-    desc: "Courses, affaires, tâches. On coche, tout le monde voit.",
+    desc: "Courses, affaires à prendre, choses à faire. On coche, le groupe suit.",
   },
   {
     key: "secret",
-    label: "Conversation cachée",
+    label: "Discussion cachée",
     icon: icon("heart"),
-    desc: "Un salon invisible pour une personne de l’événement. Le cadeau surprise s’organise sans elle.",
+    desc: "Un salon invisible pour une personne de l’événement, le temps de préparer sa surprise.",
   },
   {
     key: "img",
     label: "Souvenirs",
     icon: icon("img"),
-    desc: "L’album commun. Tout le monde dépose, tout le monde récupère.",
+    desc: "L’album partagé de l’événement. Chacun dépose ses photos et récupère celles des autres.",
   },
   {
     key: "documents",
     label: "Documents",
     icon: icon("documents"),
-    desc: "Billets, réservations, attestations. Rangés une fois pour toutes.",
+    desc: "Billets, réservations, attestations. Rangés une fois, retrouvés par tous.",
   },
 ];
+
+/** The dashed card that closes the module grid: an intention, not a roadmap. */
+export const MODULES_NEXT = {
+  title: "Ce qui pourrait suivre",
+  desc: "Cagnotte, covoiturage, sondages… Dis-nous ce qui te manque : ça oriente la suite.",
+};
 
 export type Preset = { key: string; label: string; on: ModuleKey[] | null };
 
@@ -183,8 +208,8 @@ export const DEMO_TYPES: DemoType[] = [
     key: "anniv",
     label: "Anniversaire",
     nom: "Les 25 ans de Léa",
-    court: "l'anniversaire",
-    courtDe: "de l'anniversaire",
+    court: "l’anniversaire",
+    courtDe: "de l’anniversaire",
     dates: "Vendredi 18 septembre · 20:00",
     mods: ["chat", "infos", "liste", "secret", "img"],
   },
@@ -200,7 +225,7 @@ export const DEMO_TYPES: DemoType[] = [
   {
     key: "voyage",
     label: "Voyage",
-    nom: "Ibiza c'est nous",
+    nom: "Ibiza c’est nous",
     court: "le voyage",
     courtDe: "du voyage",
     dates: "12 août → 17 août 2026",
@@ -241,24 +266,24 @@ export const DEMO_GENS = [
 
 export const DEMO_ETAPES = [
   {
-    titre: "Crée l'événement",
-    desc: "Trois questions, une couleur. L'espace du groupe existe.",
+    titre: "Crée l’événement",
+    desc: "Un nom, des dates, une couleur. L’espace du groupe existe.",
   },
   {
     titre: "Choisis les modules",
-    desc: "Tu actives ce qui sert, tu coupes le reste. Le chat reste toujours là.",
+    desc: "Tu actives ce qui sert à cet événement, tu laisses le reste de côté.",
   },
   {
     titre: "Invite ton groupe",
-    desc: "Un lien à partager. Chacun rejoint et voit qui a confirmé.",
+    desc: "Un lien à partager. Chacun rejoint et voit qui a déjà confirmé.",
   },
   {
-    titre: "Gardez le souvenir",
-    desc: "Les photos de tous au même endroit, les comptes soldés.",
+    titre: "Garde le souvenir",
+    desc: "Les photos du groupe réunies, les comptes à jour.",
   },
 ];
 
-/* ── "La galère actuelle" - the group chat that goes nowhere ────────── */
+/* ── "Avant Yatu" - the group chat that goes nowhere ─────────────────── */
 
 export const GALERE_MESSAGES: {
   who?: string;
@@ -268,38 +293,39 @@ export const GALERE_MESSAGES: {
   mine?: boolean;
 }[] = [
   { who: "Léa", color: ACCENT.coral, text: "On part quel week-end finalement ?" },
-  { who: "Malo", color: ACCENT.sky, text: "Moi c'est le 12 ou le 19" },
+  { who: "Malo", color: ACCENT.sky, text: "Moi c’est le 12 ou le 19" },
   {
     who: "Sarah",
     color: ACCENT.lilac,
-    text: "J'ai refait un sondage, votez svp",
+    text: "J’ai refait un sondage, votez svp",
     link: "sondage-dates-v2.link",
   },
-  { who: "Théo", color: ACCENT.apricot, text: "Quelqu'un a l'adresse du chalet ?" },
-  { text: "Je l'ai envoyée il y a trois semaines", mine: true },
-  { who: "Malo", color: ACCENT.sky, text: "J'ai avancé 240 €, je note ça où ?" },
+  { who: "Théo", color: ACCENT.apricot, text: "Quelqu’un a l’adresse du chalet ?" },
+  { text: "Je l’ai envoyée il y a trois semaines", mine: true },
+  { who: "Malo", color: ACCENT.sky, text: "J’ai avancé 240 €, je note ça où ?" },
   { who: "Sarah", color: ACCENT.lilac, text: "Dans le tableur" },
   { who: "Théo", color: ACCENT.apricot, text: "Quel tableur ?" },
 ];
 
+/** The tally of the conversation above - an illustration, not a statistic. */
 export const GALERE_STATS = [
   {
     icon: icon("chart"),
     count: 6,
     color: ACCENT.coral,
-    text: "applications ouvertes pour un seul week-end",
+    text: "applis ouvertes pour un seul week-end",
   },
   {
     icon: icon("bell"),
     count: 47,
     color: ACCENT.apricot,
-    text: "messages échangés pour choisir une date",
+    text: "messages avant de tomber d’accord sur une date",
   },
   {
     icon: icon("bubble"),
     count: 0,
     color: ACCENT.sunbeam,
-    text: "décision prise. Et à la fin, personne n'a les photos.",
+    text: "décision prise, et les photos restent sur huit téléphones.",
     dark: true,
   },
 ];
@@ -321,93 +347,93 @@ export const TIMELINE: TimelineStep[] = [
     kind: "phase",
     label: "AVANT",
     labelColor: ACCENT.sky,
-    title: "Se décider, sans y passer trois semaines",
-    desc: "Là où la plupart des groupes s'épuisent : choisir une date, savoir qui vient, se répartir les courses.",
+    title: "Se décider sans y passer trois semaines",
+    desc: "Choisir une date, savoir qui vient, se répartir les courses : c’est là que la plupart des groupes s’épuisent.",
   },
   {
     kind: "card",
     icon: icon("chat"),
-    title: "L'idée arrive",
-    desc: "« Et si on partait un week-end ? » Le chat ouvre l'événement.",
+    title: "L’idée arrive",
+    desc: "« Et si on partait un week-end ? » L’événement s’ouvre, la discussion démarre.",
   },
   {
     kind: "card",
     icon: icon("planning"),
-    title: "La date se tranche",
-    desc: "Chacun propose ses disponibilités, tout le monde vote. La date sort toute seule.",
+    title: "La date se choisit",
+    desc: "Chacun pose ses disponibilités au même endroit, et le groupe tranche.",
   },
   {
     kind: "card",
     icon: icon("addpeople"),
     title: "Le groupe embarque",
-    desc: "Un lien à partager. Chacun rejoint, répond présent, et voit qui est déjà là.",
+    desc: "Chacun rejoint l’événement et répond présent. Tu vois enfin qui vient vraiment.",
   },
   {
     kind: "card",
     icon: icon("liste"),
     title: "On se répartit tout",
-    desc: "Courses, affaires à prendre, trajets. Qui ramène quoi, coché en direct.",
+    desc: "Courses, affaires à prendre, trajets : qui ramène quoi, coché en direct.",
   },
   {
     kind: "phase",
     label: "PENDANT",
     labelColor: ACCENT.sunbeam,
     title: "Vivre le moment, pas le gérer",
-    desc: "Sur place, personne ne cherche l'info : elle est déjà au bon endroit.",
+    desc: "Sur place, personne ne cherche l’info : elle est déjà au bon endroit.",
   },
   {
     kind: "card",
     icon: icon("pin"),
-    title: "L'info clé sous la main",
-    desc: "Adresse, code du portail, numéro du proprio. Épinglés en haut, même sans réseau.",
+    title: "L’info utile sous la main",
+    desc: "Adresse, code du portail, numéro du propriétaire : personne ne refouille la conversation.",
   },
   {
     kind: "card",
     icon: icon("documents"),
     title: "Le jour J se déroule",
-    desc: "Programme heure par heure, billets et réservations à un tap. Une notification quand ça bouge.",
+    desc: "Le programme heure par heure, les billets et les réservations à portée de pouce.",
   },
   {
     kind: "card",
     icon: icon("budget"),
     title: "Les dépenses au fil de la journée",
-    desc: "Chacun ajoute ce qu'il avance. Personne ne tient de compte dans sa tête.",
+    desc: "Chacun ajoute ce qu’il avance. Personne ne tient les comptes dans sa tête.",
   },
   {
     kind: "phase",
     label: "APRÈS",
     labelColor: ACCENT.meadow,
-    title: "Le moment où les autres apps vous lâchent",
-    desc: "C'est là que Yatu sert le plus. Rien ne se referme, rien ne se perd, et le prochain événement démarre plus vite.",
+    title: "Le moment où les autres apps s’arrêtent",
+    desc: "C’est là que Yatu sert encore : il reste les comptes à solder, les photos à rassembler et l’envie de remettre ça.",
   },
   {
     kind: "card",
     icon: icon("budget"),
-    title: "Les comptes tombent justes",
-    desc: "Yatu calcule qui rembourse qui, et combien. Un tap pour marquer réglé - plus de « je te dois combien déjà ? » trois mois après.",
+    title: "Les comptes se soldent",
+    desc: "Yatu calcule qui rembourse qui, et combien. Un tap pour marquer réglé.",
   },
   {
     kind: "card",
     icon: icon("img"),
-    title: "L'album se referme en souvenir",
-    desc: "Les photos des huit téléphones se rassemblent. L'album reste ouvert, consultable des années après, même par ceux qui ont changé de portable.",
+    title: "L’album se remplit",
+    desc: "Les photos des huit téléphones se rassemblent dans l’événement, sans relancer personne.",
   },
   {
     kind: "card",
     icon: icon("chat"),
-    title: "La conversation continue",
-    desc: "Le chat de l'événement ne disparaît pas : les débriefs, les vannes et les photos qui arrivent en retard ont toujours leur place.",
+    title: "La discussion continue",
+    desc: "Les débriefs, les vannes et les photos qui arrivent en retard ont toujours leur place.",
   },
   {
     kind: "card",
-    icon: icon("calendar"),
-    title: "Le prochain part de celui-là",
-    desc: "Duplique l'événement : mêmes participants, mêmes listes, mêmes habitudes. La deuxième fois prend deux minutes.",
+    icon: icon("heart"),
+    title: "Rien ne se referme le lundi",
+    desc: "Les comptes, les documents et les souvenirs restent réunis dans l’événement, avec les gens qui y étaient.",
     dark: true,
   },
 ];
 
-/* ── "Les cas d'usage" - three drifting rows ────────────────────────── */
+/* ── "Les cas d’usage" - three drifting rows ────────────────────────── */
 
 export type UseCase = {
   id: string;
@@ -443,7 +469,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
         badge: ACCENT.coral,
         label: "Anniversaire",
         title: "La surprise de Lina",
-        sub: "Un espace sans elle, et la cagnotte.",
+        sub: "Un espace sans elle, et le budget du cadeau.",
       },
       {
         id: "usage-weekend",
@@ -459,7 +485,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
         photo: "/assets/usecases/usage-voyage.jpg",
         icon: icon("send"),
         badge: ACCENT.sky,
-        label: "Voyage",
+        label: "Voyage en groupe",
         title: "Ibiza, cinq jours",
         sub: "Vols, logement et 400 photos.",
       },
@@ -479,7 +505,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
         badge: ACCENT.blush,
         label: "EVJF",
         title: "Le week-end de Camille",
-        sub: "Programme secret, cagnotte commune.",
+        sub: "Programme secret, budget commun.",
       },
       {
         id: "usage-evg",
@@ -520,7 +546,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
         icon: icon("people"),
         badge: ACCENT.sunbeam,
         label: "Crémaillère",
-        title: "Le nouvel appart d'Inès",
+        title: "Le nouvel appart d’Inès",
         sub: "Liste de courses, voisins prévenus.",
       },
       {
@@ -590,7 +616,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
         badge: ACCENT.blush,
         label: "Mariage",
         title: "Le jour de Sarah et Malo",
-        sub: "L'album de tous les invités.",
+        sub: "L’album de tous les invités.",
       },
       {
         id: "usage-famille",
@@ -631,3 +657,65 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
     ],
   },
 ];
+
+/* ── The FAQ ────────────────────────────────────────────────────────────
+   Plain text on purpose: the same entries feed the visible accordion and the
+   FAQPage structured data, so what Google reads is what a visitor reads. The
+   optional link is rendered after the answer in both. */
+
+export type FaqEntry = {
+  q: string;
+  a: string;
+  link?: { href: string; label: string; before: string; after: string };
+};
+
+export const FAQ: FaqEntry[] = [
+  {
+    q: "C’est quoi Yatu, en une phrase ?",
+    a: "Yatu est l’application qui réunit au même endroit tout ce qu’un groupe doit organiser, décider et partager autour d’un événement entre amis.",
+  },
+  {
+    q: "Quand est-ce que Yatu sera disponible ?",
+    a: `Yatu sortira le ${LAUNCH_LABEL} sur iOS et Android. Les personnes inscrites seront prévenues dès l’ouverture.`,
+  },
+  {
+    q: "Yatu est-il gratuit ?",
+    a: "Oui. Yatu propose une version gratuite pour créer et organiser tes événements. Des options premium permettront d’accéder à davantage de possibilités ou de lever certaines limites.",
+  },
+  {
+    q: "Quels événements peut-on organiser avec Yatu ?",
+    a: "Soirées, anniversaires, week-ends, voyages, festivals, EVJF, EVG, vacances ou simples sorties : Yatu s’adapte aux besoins de chaque événement.",
+  },
+  {
+    q: "Qu’est-ce qu’on peut gérer dans un événement ?",
+    a: "Les discussions, les informations importantes, le planning, les tâches, les dépenses, les documents et les souvenirs du groupe.",
+  },
+  {
+    q: "Sur quels téléphones Yatu est-il disponible ?",
+    a: "Yatu sera disponible sur iPhone et Android dès le lancement. Tous les participants pourront utiliser le même événement, quel que soit leur téléphone.",
+  },
+  {
+    q: "Comment mes données sont-elles utilisées ?",
+    a: "Tes données servent au fonctionnement et à la sécurisation de Yatu. Elles ne sont pas utilisées pour afficher de la publicité.",
+    link: {
+      href: "/confidentialite",
+      label: "politique de confidentialité",
+      before: "Retrouve tous les détails dans notre ",
+      after: ".",
+    },
+  },
+  {
+    q: "Yatu fonctionne-t-il aussi pour les BDE et les associations ?",
+    a: "Oui. Les organisateurs peuvent disposer d’outils supplémentaires pour gérer les participants, diffuser des annonces et organiser les chambres ou les groupes.",
+    link: {
+      href: "/bde",
+      label: "découvrir Yatu pour les BDE",
+      before: "Tu peux ",
+      after: " et rejoindre le programme pilote.",
+    },
+  },
+];
+
+/** The answer as one string - what the FAQPage structured data quotes. */
+export const faqAnswerText = (item: FaqEntry) =>
+  item.link ? `${item.a} ${item.link.before}${item.link.label}${item.link.after}` : item.a;

@@ -5,14 +5,16 @@ import { NavLink } from "@/components/nav-link";
 import { ACCENT } from "@/lib/content";
 import { COOKIES_DECOR } from "@/lib/decor";
 import { ROUTES } from "@/lib/routes";
+import { pageMetadata } from "@/lib/site";
 
 const UI = "var(--font-ui), system-ui, sans-serif";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/cookies",
   title: "Gestion des cookies — Yatu",
   description:
-    "Les traceurs déposés par le site Yatu, ce qu'ils font, et comment revoir ton consentement à tout moment.",
-};
+    "Les traceurs déposés par le site Yatu, ce qu’ils font, combien de temps ils durent, et comment revoir ton consentement à tout moment.",
+});
 
 /** One family of trackers: badge, consent rule, then the entries. */
 function Tracker({
@@ -80,16 +82,16 @@ export default function Page() {
       title="Gestion des cookies"
       updatedAt="31 juillet 2026"
       decor={COOKIES_DECOR}
-      lede="Ce site pose le minimum : de quoi mémoriser ton choix, et - seulement si tu l'acceptes - de quoi compter les visites. Aucun traceur publicitaire, aucun revendeur de données."
+      lede="Ce site pose le minimum : de quoi mémoriser ton choix, et — seulement si tu l’acceptes — de quoi compter les visites. Aucun traceur publicitaire, aucun revendeur de données."
     >
       <ConsentStatus />
 
-      <LegalSection title="1. Ce qu'est un cookie">
+      <LegalSection title="1. Ce qu’est un cookie">
         <P>
           Un cookie est un petit fichier déposé par un site dans ton navigateur. Il permet de se
-          souvenir d&apos;une information d&apos;une page à l&apos;autre - par exemple ton choix de
-          consentement - ou de mesurer la fréquentation. Certains sont indispensables au
-          fonctionnement du site, d&apos;autres non : ceux-là ne sont déposés qu&apos;avec ton
+          souvenir d’une information d’une page à l’autre — par exemple ton choix de
+          consentement — ou de mesurer la fréquentation. Certains sont indispensables au
+          fonctionnement du site, d’autres non : ceux-là ne sont déposés qu’avec ton
           accord.
         </P>
       </LegalSection>
@@ -98,26 +100,26 @@ export default function Page() {
         <Tracker
           label="Strictement nécessaires"
           badge="#2A343D"
-          rule="Toujours actifs - pas de consentement requis"
+          rule="Toujours actifs — pas de consentement requis"
         >
           <Line>
-            <B>yatu-consent</B> - mémorise ton choix de consentement pour ne pas te reposer la
+            <B>yatu-consent</B> — mémorise ton choix de consentement pour ne pas te reposer la
             question à chaque visite. Stockage local, treize mois.
           </Line>
           <Line>
-            <B>yatu-waitlist</B> - conserve dans ton navigateur la trace de ton inscription, pour
-            t&apos;éviter de la refaire. Stockage local, supprimé en vidant les données du site.
+            <B>yatu-waitlist</B> — conserve dans ton navigateur la trace de ton inscription, pour
+            t’éviter de la refaire. Stockage local, supprimé en vidant les données du site.
           </Line>
         </Tracker>
 
         <Tracker
-          label="Mesure d'audience"
+          label="Mesure d’audience"
           badge={ACCENT.lilac}
           rule="Déposés seulement si tu les acceptes"
         >
           <Line>
-            <Todo>Outil de statistiques à préciser</Todo> - compte les pages vues, la source
-            d&apos;arrivée et les inscriptions abouties, en données agrégées. Durée maximale :
+            <Todo>Outil de statistiques à préciser</Todo> — compte les pages vues, la source
+            d’arrivée et les inscriptions abouties, en données agrégées. Durée maximale :
             treize mois.
           </Line>
           <Line>
@@ -142,12 +144,12 @@ export default function Page() {
       <LegalSection title="3. Régler ça depuis ton navigateur">
         <P>
           Tu peux aussi bloquer ou supprimer les cookies directement dans les réglages de ton
-          navigateur - rubrique confidentialité pour Chrome, Firefox, Safari ou Edge. Le site
+          navigateur — rubrique confidentialité pour Chrome, Firefox, Safari ou Edge. Le site
           continuera de fonctionner, mais ton choix de consentement te sera redemandé à chaque
           visite.
         </P>
         <P>
-          Pour tout savoir sur l&apos;usage de tes données au-delà des traceurs, va voir la{" "}
+          Pour tout savoir sur l’usage de tes données au-delà des traceurs, va voir la{" "}
           <NavLink href={ROUTES.confidentialite}>politique de confidentialité</NavLink>.
         </P>
       </LegalSection>

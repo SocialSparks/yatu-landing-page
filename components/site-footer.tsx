@@ -1,6 +1,8 @@
 import { NavLink } from "@/components/nav-link";
 import { ConsentButton } from "@/components/consent-button";
+import { LAUNCH_LABEL } from "@/lib/content";
 import { ROUTES } from "@/lib/routes";
+import { CONTACT_EMAIL, PUBLISHER } from "@/lib/site";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
@@ -22,19 +24,21 @@ const LINK: React.CSSProperties = {
 
 const COLUMNS: { title: string; links: { href: string; label: string; external?: boolean }[] }[] = [
   {
-    title: "L'app",
+    title: "L’app",
     links: [
-      { href: ROUTES.modules, label: "Ce que Yatu centralise" },
+      { href: ROUTES.fonctionnement, label: "Comment ça marche" },
+      { href: ROUTES.modules, label: "Les modules" },
       { href: ROUTES.cycle, label: "Avant, pendant, après" },
-      { href: ROUTES.usages, label: "Cas d'usage" },
+      { href: ROUTES.usages, label: "Cas d’usage" },
       { href: ROUTES.faq, label: "Questions fréquentes" },
     ],
   },
   {
-    title: "Associations",
+    title: "BDE et associations",
     links: [
-      { href: ROUTES.bde, label: "Yatu pour les BDE" },
-      { href: ROUTES.bdePilote, label: "Le pack pilote" },
+      { href: ROUTES.bde, label: "Organiser un WEI avec Yatu" },
+      { href: ROUTES.bdeFeatures, label: "Les fonctionnalités BDE" },
+      { href: ROUTES.bdePilote, label: "Le pack pilote gratuit" },
       { href: ROUTES.bdeDemo, label: "Demander une démo" },
     ],
   },
@@ -44,7 +48,7 @@ const SOCIAL = [
   { href: "https://instagram.com", label: "Instagram" },
   { href: "https://tiktok.com", label: "TikTok" },
   { href: "https://linkedin.com", label: "LinkedIn" },
-  { href: "mailto:hello@yatu.app", label: "hello@yatu.app" },
+  { href: `mailto:${CONTACT_EMAIL}`, label: CONTACT_EMAIL },
 ];
 
 export function SiteFooter() {
@@ -77,8 +81,8 @@ export function SiteFooter() {
                 textWrap: "pretty",
               }}
             >
-              Vos sorties et vos voyages entre amis, organisés au même endroit - de la première idée
-              aux souvenirs.
+              L’appli qui réunit tout ce qu’un groupe d’amis doit organiser autour d’un événement,
+              de la première idée aux dernières photos.
             </p>
             <span
               style={{
@@ -95,7 +99,7 @@ export function SiteFooter() {
                 color: "#FED873",
               }}
             >
-              Sortie le 9 septembre 2026
+              Sortie le {LAUNCH_LABEL}
             </span>
           </div>
 
@@ -154,10 +158,10 @@ export function SiteFooter() {
           }}
         >
           <span style={{ fontFamily: UI, fontSize: 13, color: "rgba(255,255,255,.5)" }}>
-            © 2026 Yatu - édité par Quantiq Studio
+            © 2026 Yatu — édité par {PUBLISHER}
           </span>
           <span style={{ fontFamily: UI, fontSize: 13, color: "rgba(255,255,255,.5)" }}>
-            Fait en France, pour les groupes qui n&apos;arrivent jamais à se décider
+            Fait en France, pour les bandes qui mettent trois semaines à choisir une date
           </span>
         </div>
       </div>

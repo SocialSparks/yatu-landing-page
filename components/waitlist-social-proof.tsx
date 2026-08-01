@@ -39,8 +39,8 @@ export function WaitlistSocialProof() {
           textWrap: "pretty",
         }}
       >
-        Rejoins plus de <strong style={{ color: "#2A343D", fontWeight: 900 }}>300 utilisateurs</strong>
-        {" "}déjà inscrits sur la liste d&apos;attente.
+        Rejoins les <strong style={{ color: "#2A343D", fontWeight: 900 }}>premiers inscrits</strong>
+        {" "}qui attendent déjà Yatu.
       </p>
     </div>
   );

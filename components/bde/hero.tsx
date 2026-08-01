@@ -1,7 +1,7 @@
 import { CountUp } from "@/components/count-up";
 import { Decor } from "@/components/decor";
 import { findAsset } from "@/lib/assets";
-import { BDE_CHIPS, BDE_SHOWCASE } from "@/lib/bde-content";
+import { BDE_CHIPS, BDE_CTA, BDE_SHOWCASE } from "@/lib/bde-content";
 import { icon } from "@/lib/content";
 import { BDE_HERO_DECOR } from "@/lib/decor";
 
@@ -55,7 +55,7 @@ export function BdeHero() {
             <span
               style={{ width: 8, height: 8, borderRadius: 80, background: "#2A343D", flex: "none" }}
             />
-            Pack pilote gratuit - places limitées
+            Pack pilote gratuit, avant le lancement
           </span>
 
           <h1
@@ -87,8 +87,8 @@ export function BdeHero() {
               maxWidth: "46ch",
             }}
           >
-            Yatu donne à ton BDE un espace unique par événement : inscriptions validées, annonces
-            officielles, planning, chambres, chat et album souvenirs.
+            Yatu donne à ton BDE un espace par événement : inscriptions validées, annonces
+            officielles, planning, chambres, discussion et album photo.
           </p>
 
           <p
@@ -104,8 +104,7 @@ export function BdeHero() {
             }}
           >
             Tu gardes ta billetterie. Yatu se branche juste après le paiement : les participants
-            arrivent informés, et ton équipe arrête de tout refaire à la main dans trois fichiers
-            différents.
+            arrivent informés, et ton équipe arrête de tenir trois fichiers en parallèle.
           </p>
 
           <div
@@ -139,7 +138,7 @@ export function BdeHero() {
                   flex: "none",
                 }}
               />
-              Demander une démo
+              {BDE_CTA.demo}
             </a>
             <a
               href="#pilote"
@@ -158,7 +157,7 @@ export function BdeHero() {
                 textDecoration: "none",
               }}
             >
-              Voir le pack pilote
+              {BDE_CTA.pilote}
             </a>
           </div>
 
@@ -217,7 +216,7 @@ export function BdeHero() {
                 {PHOTO ? (
                   <img
                     src={PHOTO}
-                    alt="Week-end d'intégration"
+                    alt="Un groupe d’étudiants pendant un week-end d’intégration"
                     style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                   />
                 ) : null}

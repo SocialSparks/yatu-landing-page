@@ -1,7 +1,7 @@
 import { Decor } from "@/components/decor";
 import { SectionHeading } from "@/components/section-heading";
 import { SectionCta } from "@/components/section-cta";
-import { ACCENT, USE_CASE_ROWS, type UseCase } from "@/lib/content";
+import { ACCENT, CTA, USE_CASE_ROWS, type UseCase } from "@/lib/content";
 import { USAGES_DECOR } from "@/lib/decor";
 import { ROUTES } from "@/lib/routes";
 
@@ -120,7 +120,7 @@ export function UseCasesSection() {
         style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}
       >
         <SectionHeading
-          badge="Les cas d'usage"
+          badge="Les cas d’usage"
           badgeBg={ACCENT.blush}
           title="Une soirée improvisée ou cinq jours à Ibiza."
           titleMaxCh={20}
@@ -162,15 +162,15 @@ export function UseCasesSection() {
             maxWidth: "60ch",
           }}
         >
-          Yatu ne fait pas la différence entre une raclette et un festival. Vous choisissez les
-          modules qui servent, le reste disparaît.
+          Anniversaire, EVJF, EVG, festival, week-end au ski ou voyage en groupe : c’est le même
+          espace partagé, avec les outils que tu choisis.
         </p>
 
         <SectionCta
           title="Tu as déjà le prochain événement en tête ?"
-          body="Garde ta place pour créer ton premier espace Yatu dès l'ouverture."
-          primary={{ href: ROUTES.liste, label: "Me garder une place" }}
-          secondary={{ href: ROUTES.fonctionnement, label: "Tester l'app" }}
+          body="Garde ta place pour créer ton premier événement dès l’ouverture."
+          primary={{ href: ROUTES.liste, label: CTA.waitlist }}
+          secondary={{ href: ROUTES.fonctionnement, label: CTA.demo }}
           accent={ACCENT.coral}
         />
       </div>

@@ -2,7 +2,7 @@ import { Countdown } from "@/components/countdown";
 import { Decor } from "@/components/decor";
 import { WaitlistForm } from "@/components/waitlist-form";
 import { WaitlistSocialProof } from "@/components/waitlist-social-proof";
-import { icon } from "@/lib/content";
+import { LAUNCH_LABEL, icon } from "@/lib/content";
 import { WAITLIST_DECOR } from "@/lib/decor";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
@@ -66,7 +66,7 @@ export function WaitlistSection() {
               maxWidth: "42ch",
             }}
           >
-            Le 9 septembre, ton accès arrive par mail - avant l&apos;ouverture publique. Tu pourras
+            Le {LAUNCH_LABEL}, ton accès arrive par e-mail, avant l’ouverture publique. Tu pourras
             faire entrer ton groupe dans la foulée.
           </p>
 
@@ -75,7 +75,7 @@ export function WaitlistSection() {
           <div data-reveal="up" data-reveal-delay="180" style={{ width: "100%", maxWidth: 540 }}>
             <WaitlistForm
               source="bas-de-page"
-              note="Un e-mail, pas une newsletter. Désinscription en un clic."
+              note="Inscription en dix secondes, sans mot de passe."
             />
           </div>
         </div>

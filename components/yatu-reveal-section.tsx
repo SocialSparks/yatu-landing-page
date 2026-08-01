@@ -83,7 +83,7 @@ export function YatuRevealSection() {
               textWrap: "balance",
             }}
           >
-            Un seul espace pour organiser chaque événement entre amis.
+            Un espace partagé, rien que pour ton événement.
           </h2>
 
           <p

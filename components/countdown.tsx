@@ -20,7 +20,7 @@ function parts(now: number) {
 }
 
 /**
- * Both readouts render from the server's clock and then re-sync on mount, so
+ * Both readouts render from the server’s clock and then re-sync on mount, so
  * there is no layout shift and no blank frame - the values simply refresh.
  */
 function useLaunchClock(tick: boolean) {

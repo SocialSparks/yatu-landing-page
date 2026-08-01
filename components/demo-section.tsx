@@ -15,6 +15,7 @@ import {
   type ModuleKey,
 } from "@/lib/content";
 import { DEMO_DECOR } from "@/lib/decor";
+import { SITE_DOMAIN } from "@/lib/site";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
@@ -87,7 +88,7 @@ export function DemoSection() {
     });
   }
 
-  const lien = `yatu.app/e/${type.key}-${DEMO_GENS.length}`;
+  const lien = `${SITE_DOMAIN}/e/${type.key}-${DEMO_GENS.length}`;
 
   async function copy() {
     try {
@@ -132,9 +133,9 @@ export function DemoSection() {
         <SectionHeading
           badge="Comment ça marche"
           badgeBg={ACCENT.sunbeam}
-          title="Essaie-le tout de suite. Clique dans l'écran."
+          title="Essaie-le tout de suite. Clique dans l’écran."
           titleMaxCh={20}
-          lede="Quatre étapes, une démo réelle. Rien à installer, rien à lire."
+          lede="Quatre étapes pour voir à quoi ressemble un événement Yatu. Rien à installer."
         />
 
         <div
@@ -269,7 +270,7 @@ export function DemoSection() {
                 >
                   {demo.step === 0 ? (
                     <>
-                      <span style={SCREEN_TITLE}>On part sur quel type d&apos;événement ?</span>
+                      <span style={SCREEN_TITLE}>On part sur quel type d’événement ?</span>
                       <div style={{ display: "flex", flexWrap: "wrap", gap: 7 }}>
                         {DEMO_TYPES.map((t) => {
                           const on = t.key === demo.type;
@@ -300,7 +301,7 @@ export function DemoSection() {
 
                       <div style={{ ...CARD, flexDirection: "column", alignItems: "stretch", gap: 3 }}>
                         <span style={{ fontFamily: UI, fontWeight: 600, fontSize: 12, color: "#71787E" }}>
-                          Nom de l&apos;événement
+                          Nom de l’événement
                         </span>
                         <span style={{ fontFamily: UI, fontSize: 16, color: "#2A343D" }}>
                           {type.nom}
@@ -350,7 +351,7 @@ export function DemoSection() {
                       <div style={{ ...CARD, marginTop: "auto" }}>
                         <img src={icon("heart")} alt="" style={{ width: 26, height: 26, flex: "none" }} />
                         <span style={{ fontFamily: UI, fontSize: 14, lineHeight: 1.4, color: "#4E565D" }}>
-                          La couleur suit l&apos;événement partout dans l&apos;app.
+                          La couleur suit l’événement partout dans l’app.
                         </span>
                       </div>
                     </>
@@ -679,8 +680,8 @@ export function DemoSection() {
                           }}
                         >
                           {demo.photos >= TOTAL_PHOTOS
-                            ? "L'album reste ouvert. Vous le rouvrirez dans dix ans."
-                            : "Chacun dépose, personne ne réclame les photos pendant trois semaines."}
+                            ? "L’album reste dans l’événement, avec les photos de tout le monde."
+                            : "Chacun dépose les siennes, personne n’a à les réclamer."}
                         </span>
                       </div>
                     </>

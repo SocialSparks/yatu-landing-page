@@ -2,59 +2,12 @@
 
 import { NavLink } from "@/components/nav-link";
 import { useId, useState } from "react";
-import { ROUTES } from "@/lib/routes";
+import { FAQ, type FaqEntry } from "@/lib/content";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
 
-const FAQ: { q: string; a: React.ReactNode }[] = [
-  {
-    q: "C'est quoi Yatu, en une phrase ?",
-    a: "Une appli mobile où un groupe d'amis crée un événement, invite tout le monde, discute, gère le budget et les tâches, et garde les souvenirs. Le tout au même endroit.",
-  },
-  {
-    q: "Quand est-ce que ça sort ?",
-    a: "Le 9 septembre 2026. Les inscrits reçoivent l'accès ce jour-là, avant l'ouverture publique.",
-  },
-  {
-    q: "C'est payant ?",
-    a: "Non, gratuit au lancement et sans publicité.",
-  },
-  {
-    q: "Faut-il que tout le groupe l'installe ?",
-    a: "Pour voter, ajouter une dépense ou déposer des photos, oui. L'invitation se fait par lien et rejoindre prend moins d'une minute.",
-  },
-  {
-    q: "Sur quels téléphones ?",
-    a: "iOS et Android au lancement. Un groupe mélangé fonctionne sans différence.",
-  },
-  {
-    q: "Qu'est-ce que vous faites de mes données ?",
-    a: (
-      <>
-        Ton adresse sert à te prévenir du lancement, et à rien d&apos;autre. Le détail est dans la{" "}
-        <NavLink href={ROUTES.confidentialite} style={{ color: "#2A343D" }}>
-          politique de confidentialité
-        </NavLink>
-        .
-      </>
-    ),
-  },
-  {
-    q: "Je suis dans un BDE, c'est pareil ?",
-    a: (
-      <>
-        Même appli, avec des outils en plus pour les organisateurs. Un{" "}
-        <NavLink href={ROUTES.bde} style={{ color: "#2A343D" }}>
-          pack pilote gratuit
-        </NavLink>{" "}
-        est ouvert avant le lancement.
-      </>
-    ),
-  },
-];
-
-function FaqItem({ item }: { item: (typeof FAQ)[number] }) {
+function FaqItem({ item }: { item: FaqEntry }) {
   const [open, setOpen] = useState(false);
   const id = useId();
   const answerId = `${id}-answer`;
@@ -109,6 +62,16 @@ function FaqItem({ item }: { item: (typeof FAQ)[number] }) {
             }}
           >
             {item.a}
+            {item.link ? (
+              <>
+                {" "}
+                {item.link.before}
+                <NavLink href={item.link.href} style={{ color: "#2A343D" }}>
+                  {item.link.label}
+                </NavLink>
+                {item.link.after}
+              </>
+            ) : null}
           </p>
         </div>
       </div>
@@ -135,7 +98,7 @@ export function FaqSection() {
             color: "#2A343D",
           }}
         >
-          Vos questions
+          Les questions qu’on nous pose
         </h2>
 
         <div data-reveal="stagger" style={{ display: "flex", flexDirection: "column", gap: 10 }}>

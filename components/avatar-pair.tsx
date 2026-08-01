@@ -5,7 +5,7 @@ const SRC = "/assets/avatar-pair.png";
 /**
  * The overlapping pair of member avatars used in the hero pill and the
  * group-chat card. Falls back to a CSS rendition in the event palette when
- * the source bitmap isn't present (see lib/assets.ts).
+ * the source bitmap isn’t present (see lib/assets.ts).
  */
 export function AvatarPair({ height = 30 }: { height?: number }) {
   if (hasAsset(SRC)) {

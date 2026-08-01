@@ -157,7 +157,7 @@ export function CookieBanner() {
               textWrap: "pretty",
             }}
           >
-            On dépose quelques cookies pour savoir si ce site est utile, et c&apos;est à peu près
+            On dépose quelques cookies pour savoir si ce site est utile, et c’est à peu près
             tout. Tu peux accepter, refuser ou choisir.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
@@ -263,7 +263,7 @@ export function CookieBanner() {
 
             {[
               {
-                title: "Mesure d'audience",
+                title: "Mesure d’audience",
                 desc: "Pages vues et inscriptions, en statistiques agrégées.",
                 on: analytics,
                 toggle: () => setAnalytics((v) => !v),

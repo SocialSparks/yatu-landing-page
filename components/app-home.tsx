@@ -1,9 +1,9 @@
 import { findAsset } from "@/lib/assets";
 
-/** The .webp came from the design project's image-slot sidecar; the .png is the
+/** The .webp came from the design project’s image-slot sidecar; the .png is the
  *  higher-resolution original, used automatically once it is added. */
 const CANDIDATES = ["/assets/app-home.png", "/assets/app-home.webp"];
-const ALT = "L'icône Yatu sur un écran d'accueil iPhone";
+const ALT = "L’icône Yatu sur un écran d’accueil iPhone";
 
 const FLOAT: React.CSSProperties = {
   "--yq-amp": "7px",
@@ -12,8 +12,8 @@ const FLOAT: React.CSSProperties = {
 } as React.CSSProperties;
 
 /**
- * The launch section's illustration: Yatu sitting on a phone home screen.
- * Falls back to a CSS home-screen mock when the source bitmap isn't present
+ * The launch section’s illustration: Yatu sitting on a phone home screen.
+ * Falls back to a CSS home-screen mock when the source bitmap isn’t present
  * (see lib/assets.ts).
  */
 export function AppHome() {

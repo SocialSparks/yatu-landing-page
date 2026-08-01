@@ -6,9 +6,9 @@ const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
 
 const FEATURES = [
-  { tool: "people", label: "Validation des participants" },
-  { tool: "bell", label: "Annonces organisateurs" },
-  { tool: "pin", label: "Chambres et groupes" },
+  { tool: "people", label: "Inscriptions validées par le bureau" },
+  { tool: "bell", label: "Annonces officielles des organisateurs" },
+  { tool: "pin", label: "Chambres, bus et groupes" },
 ];
 
 export function BdeTeaser() {
@@ -61,6 +61,21 @@ export function BdeTeaser() {
               Tu organises pour deux cents, pas pour huit ?
             </h2>
 
+            <p
+              style={{
+                margin: 0,
+                fontFamily: UI,
+                fontSize: 16,
+                lineHeight: 1.55,
+                color: "rgba(255,255,255,.7)",
+                maxWidth: "44ch",
+                textWrap: "pretty",
+              }}
+            >
+              WEI, gala, séjour ski : Yatu a une page dédiée aux BDE et aux associations
+              étudiantes, avec un pack pilote gratuit avant le lancement.
+            </p>
+
             <NavLink
               href={ROUTES.bde}
               className="yq-btn-light"
@@ -79,7 +94,7 @@ export function BdeTeaser() {
                 textDecoration: "none",
               }}
             >
-              Yatu pour les BDE
+              Voir Yatu pour les BDE
             </NavLink>
           </div>
 
