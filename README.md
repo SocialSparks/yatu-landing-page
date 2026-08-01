@@ -59,8 +59,13 @@ un onglet chacun :
 | Formulaire | Composant | Onglet |
 | --- | --- | --- |
 | Liste d'attente (hero + `#liste`) | `components/waitlist-form.tsx` | Waitlist |
+| Questionnaire facultatif de `/bienvenue` | `components/bienvenue-content.tsx` | Waitlist (même ligne) |
 | Demande de démo BDE | `components/bde/demo-form.tsx` | Demandes BDE |
-| Questionnaire facultatif de `/bienvenue` | `components/bienvenue-content.tsx` | Questionnaire |
+
+L'onglet *Waitlist* tient **une ligne par personne** : l'inscription écrit les quatre
+premières colonnes, le questionnaire complète les quatre suivantes sur cette même ligne,
+retrouvée par e-mail (`mergeOn` dans le script). Si l'e-mail est introuvable — quelqu'un qui
+ouvre `/bienvenue` directement — la réponse part sur une nouvelle ligne.
 
 La destination est un déploiement **Google Apps Script** : le site n'a donc besoin d'aucune
 route serveur, ce qui garde le déploiement Cloudflare tel quel. Le script et sa procédure
@@ -84,6 +89,9 @@ Quelques points volontaires :
 | `Content-Type: text/plain` | Apps Script ne sait pas répondre à un preflight CORS, et `application/json` en déclencherait un. Le corps reste du JSON, que le script parse comme tel. |
 | Échec d'envoi | Affiché au visiteur avec une invite à réessayer. La copie `localStorage` est sur *sa* machine : un envoi perdu en silence est un contact perdu. |
 | Champ `website` | Honeypot (`components/honeypot.tsx`) invisible pour un humain ; le script ignore toute soumission où il est rempli. L'URL `/exec` est publique. |
+| Bouton | `components/submit-button.tsx` porte les quatre états (spinner, pop vert, secousse rouge) pour les trois formulaires ; les keyframes sont dans `globals.css` (`.yq-submit`). |
+| Délai de 750 ms | Entre la confirmation verte et le changement d'écran, pour que l'animation se lise. Constante `CONFIRM_MS` dans chaque formulaire. |
+| Timeout de 20 s | Apps Script démarre à froid et l'URL `/exec` redirige une fois avant de répondre ; trop court, une première soumission lente passe pour une erreur. |
 
 Pour ajouter un champ : l'ajouter au formulaire React, puis ajouter sa ligne dans `FORMS` du
 script et **recréer une version** du déploiement (sinon l'ancienne continue de répondre).

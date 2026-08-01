@@ -545,6 +545,73 @@ details[open] .yq-plus {
   border-color: #2a343d;
 }
 
+/* Submit buttons: a spinner while the request is in flight, then a green pop
+   or a red shake. Deliberately not .yq-btn-dark - its hover is !important and
+   would repaint the button mid-answer. */
+.yq-submit {
+  transition:
+    background 240ms var(--ease-standard),
+    color 240ms var(--ease-standard);
+}
+.yq-submit:not(:disabled):not([data-state="done"]):not([data-state="error"]):hover {
+  background: #3a4750;
+}
+.yq-submit[data-state="done"] {
+  background: #44b678;
+  animation: yq-pop 460ms var(--ease-standard);
+}
+.yq-submit[data-state="error"] {
+  background: #d92e2e;
+  animation: yq-shake 440ms var(--ease-standard);
+}
+
+.yq-spinner {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  animation: yq-spin 700ms linear infinite;
+}
+
+@keyframes yq-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes yq-pop {
+  0% {
+    transform: scale(1);
+  }
+  38% {
+    transform: scale(1.055);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes yq-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  18% {
+    transform: translateX(-5px);
+  }
+  42% {
+    transform: translateX(4px);
+  }
+  68% {
+    transform: translateX(-3px);
+  }
+  88% {
+    transform: translateX(2px);
+  }
+}
+
 .yq-row-btn {
   transition: background 200ms var(--ease-standard);
 }
@@ -603,8 +670,16 @@ details[open] .yq-plus {
   .yq-logo-mark,
   .yq-btn-dark,
   .yq-btn-light,
+  .yq-submit,
   .yq-back-to-top {
     transition: none;
+  }
+
+  /* The colour change still answers; the pop and the shake don't. The spinner
+     stays - it is the only thing saying the request is still running. */
+  .yq-submit[data-state="done"],
+  .yq-submit[data-state="error"] {
+    animation: none;
   }
 
   .yq-logo-link:hover .yq-logo-mark {
@@ -789,6 +864,12 @@ details[open] .yq-plus {
   [data-r~="chip-row"] > button {
     min-height: 44px !important;
   }
+  [data-r~="modules-preset-label"] {
+    flex-basis: 100%;
+    margin-right: 0 !important;
+    margin-bottom: 5px;
+    text-align: center;
+  }
   [data-r~="mobile-solo"] {
     grid-column: 1 / -1 !important;
   }
@@ -816,6 +897,43 @@ details[open] .yq-plus {
   }
 
   [data-r~="waitlist-visual"] {
+    display: none !important;
+  }
+
+  /* Modules: nine full cards stacked one per row turned this section into a
+     scroll with no overview. Two compact columns instead - the whole set fits
+     on one screen, which is the point: seeing what you switch on and off. */
+  [data-r~="modules-grid"] {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+
+  [data-r~="module-card"] {
+    padding: 14px !important;
+    gap: 9px !important;
+    border-radius: 14px !important;
+  }
+
+  [data-r~="module-label"] {
+    font-size: 16px !important;
+  }
+
+  /* The descriptions are what made it endless. They stay on tablet up. */
+  [data-r~="module-desc"] {
+    display: none !important;
+  }
+
+  [data-r~="module-badge"][data-placeholder] {
+    display: none !important;
+  }
+
+  /* Demo: six steps with their descriptions push the phone far down the page.
+     The titles alone still say where you are, and the screen carries the rest. */
+  [data-r~="demo-steps"] {
+    gap: 6px !important;
+  }
+
+  [data-r~="demo-step-desc"] {
     display: none !important;
   }
 }

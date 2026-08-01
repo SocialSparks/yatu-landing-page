@@ -1,8 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { Honeypot } from "@/components/honeypot";
+import { type SubmitStatus, SubmitButton } from "@/components/submit-button";
 import { CTA } from "@/lib/content";
 import { HONEYPOT_NAME, submitForm } from "@/lib/forms";
 import { ROUTES } from "@/lib/routes";
@@ -11,9 +12,11 @@ const UI = "var(--font-ui), system-ui, sans-serif";
 
 const DEFAULT_NOTE = "Ton adresse sert seulement à te prévenir.";
 
-const isValid = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
+/** Long enough for the green pop to read as a confirmation, short enough to
+ *  not feel like the page is stuck. */
+const CONFIRM_MS = 750;
 
-type Status = "idle" | "sending" | "done" | "error";
+const isValid = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
 
 export function WaitlistForm({
   cta = CTA.waitlist,
@@ -27,10 +30,14 @@ export function WaitlistForm({
   source?: string;
 }) {
   const [value, setValue] = useState("");
-  const [status, setStatus] = useState<Status>("idle");
+  const [status, setStatus] = useState<SubmitStatus>("idle");
   const [message, setMessage] = useState("");
   const inputId = useId();
   const router = useRouter();
+  const timer = useRef<number>(undefined);
+
+  // Leaving before the confirmation delay is up would fire a push into nothing.
+  useEffect(() => () => window.clearTimeout(timer.current), []);
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -58,9 +65,12 @@ export function WaitlistForm({
 
     setStatus("done");
     setMessage("C’est bon, on t’emmène…");
-    router.push(
-      `${ROUTES.bienvenue}?e=${encodeURIComponent(email)}&s=${encodeURIComponent(source)}`,
-    );
+    // Let the button finish turning green before the page changes under it.
+    timer.current = window.setTimeout(() => {
+      router.push(
+        `${ROUTES.bienvenue}?e=${encodeURIComponent(email)}&s=${encodeURIComponent(source)}`,
+      );
+    }, CONFIRM_MS);
   }
 
   const noteColor = status === "error" ? "#D92E2E" : "#71787E";
@@ -115,26 +125,13 @@ export function WaitlistForm({
             outline: "none",
           }}
         />
-        <button
-          type="submit"
-          className="yq-btn-dark"
-          disabled={status === "sending"}
-          style={{
-            flex: "0 0 auto",
-            height: 56,
-            padding: "0 26px",
-            border: 0,
-            borderRadius: 16,
-            background: "#2A343D",
-            color: "#FFFFFF",
-            fontFamily: UI,
-            fontWeight: 700,
-            fontSize: 16,
-            cursor: "pointer",
-          }}
-        >
-          {cta}
-        </button>
+        <SubmitButton
+          status={status}
+          label={cta}
+          sendingLabel="On t’inscrit…"
+          doneLabel="Inscrit !"
+          style={{ flex: "0 0 auto", height: 56, padding: "0 26px", borderRadius: 16 }}
+        />
       </form>
 
       <p

@@ -278,8 +278,16 @@ export const DEMO_ETAPES = [
     desc: "Un lien à partager. Chacun rejoint et voit qui a déjà confirmé.",
   },
   {
-    titre: "Garde le souvenir",
-    desc: "Les photos du groupe réunies, les comptes à jour.",
+    titre: "Remplis l’album",
+    desc: "Chacun dépose ses photos, sans que personne ait à les réclamer.",
+  },
+  {
+    titre: "Retrouve le souvenir",
+    desc: "Yatu réunit les photos du groupe et referme les comptes.",
+  },
+  {
+    titre: "Et voilà",
+    desc: "Un événement entier, du premier message aux dernières photos.",
   },
 ];
 

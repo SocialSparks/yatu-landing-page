@@ -24,10 +24,15 @@ const DEFAULT_ACTIVE: ModuleKey[] = ["chat", "infos", "planning", "budget", "lis
 export function ModulesSection() {
   const [active, setActive] = useState<ModuleKey[]>(DEFAULT_ACTIVE);
   const [preset, setPreset] = useState("weekend");
+  const [chatNotice, setChatNotice] = useState(false);
 
   function toggle(key: ModuleKey) {
     const mod = MODULES.find((m) => m.key === key);
-    if (!mod || mod.locked) return;
+    if (!mod) return;
+    if (mod.locked) {
+      setChatNotice((visible) => !visible);
+      return;
+    }
     setPreset("custom");
     setActive((prev) => (prev.includes(key) ? prev.filter((k) => k !== key) : prev.concat(key)));
   }
@@ -75,11 +80,12 @@ export function ModulesSection() {
           }}
         >
           <span
+            data-r="modules-preset-label"
             style={{
               fontFamily: UI,
-              fontWeight: 600,
-              fontSize: 13,
-              color: "rgba(255,255,255,.45)",
+              fontWeight: 700,
+              fontSize: 17,
+              color: "rgba(255,255,255,.82)",
               marginRight: 4,
             }}
           >
@@ -113,6 +119,7 @@ export function ModulesSection() {
         </div>
 
         <div
+          data-r="modules-grid"
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit,minmax(min(230px,100%),1fr))",
@@ -121,13 +128,16 @@ export function ModulesSection() {
         >
           {MODULES.map((m) => {
             const on = active.includes(m.key);
+            const explainingChat = Boolean(m.locked && chatNotice);
             return (
               <button
                 key={m.key}
                 type="button"
                 onClick={() => toggle(m.key)}
                 aria-pressed={on}
-                disabled={m.locked}
+                aria-expanded={m.locked ? chatNotice : undefined}
+                aria-describedby={explainingChat ? "chat-module-note" : undefined}
+                data-r="module-card"
                 style={{
                   textAlign: "left",
                   borderRadius: 16,
@@ -135,10 +145,22 @@ export function ModulesSection() {
                   display: "flex",
                   flexDirection: "column",
                   gap: 12,
-                  transition: `background ${EASE}, border-color ${EASE}`,
-                  cursor: m.locked ? "default" : "pointer",
-                  background: on ? "rgba(255,255,255,.08)" : "rgba(255,255,255,.02)",
-                  border: `1px solid ${on ? "rgba(255,255,255,.16)" : "rgba(255,255,255,.07)"}`,
+                  transition: `background ${EASE}, border-color ${EASE}, transform ${EASE}, box-shadow ${EASE}`,
+                  cursor: "pointer",
+                  transform: explainingChat ? "translateY(-3px)" : "translateY(0)",
+                  boxShadow: explainingChat ? "0 12px 28px rgba(0,0,0,.18)" : "none",
+                  background: explainingChat
+                    ? "rgba(150,224,135,.14)"
+                    : on
+                      ? "rgba(255,255,255,.08)"
+                      : "rgba(255,255,255,.02)",
+                  border: `1px solid ${
+                    explainingChat
+                      ? "rgba(150,224,135,.8)"
+                      : on
+                        ? "rgba(255,255,255,.16)"
+                        : "rgba(255,255,255,.07)"
+                  }`,
                 }}
               >
                 <span
@@ -192,6 +214,7 @@ export function ModulesSection() {
                 </span>
 
                 <span
+                  data-r="module-label"
                   style={{
                     fontFamily: DISPLAY,
                     fontSize: 20,
@@ -205,6 +228,7 @@ export function ModulesSection() {
                 </span>
 
                 <span
+                  data-r="module-desc"
                   style={{
                     fontFamily: UI,
                     fontSize: 15,
@@ -221,6 +245,11 @@ export function ModulesSection() {
                     otherwise "Toujours actif" reads out on all eight modules. */}
                 <span
                   aria-hidden={!m.locked}
+                  data-r="module-badge"
+                  // The placeholder is what keeps every card the same height on
+                  // desktop; on mobile the grid rows already do that, so it can
+                  // go and take its 25px with it.
+                  data-placeholder={m.locked ? undefined : "true"}
                   style={{
                     alignSelf: "flex-start",
                     borderRadius: 999,
@@ -237,11 +266,40 @@ export function ModulesSection() {
                 >
                   Toujours actif
                 </span>
+
+                {m.locked && (
+                  <span
+                    id="chat-module-note"
+                    role="status"
+                    aria-hidden={!explainingChat}
+                    style={{
+                      width: "100%",
+                      maxHeight: explainingChat ? 130 : 0,
+                      overflow: "hidden",
+                      borderRadius: 12,
+                      padding: explainingChat ? "11px 13px" : "0 13px",
+                      fontFamily: UI,
+                      fontSize: 13,
+                      lineHeight: 1.45,
+                      color: "rgba(255,255,255,.82)",
+                      background: "rgba(150,224,135,.11)",
+                      border: explainingChat
+                        ? "1px solid rgba(150,224,135,.28)"
+                        : "1px solid transparent",
+                      opacity: explainingChat ? 1 : 0,
+                      transition: `max-height ${EASE}, padding ${EASE}, opacity ${EASE}, border-color ${EASE}`,
+                    }}
+                  >
+                    C’est le seul module obligatoire et commun à tous les événements : chaque
+                    groupe garde toujours un espace pour échanger.
+                  </span>
+                )}
               </button>
             );
           })}
 
           <div
+            data-r="module-card mobile-solo"
             style={{
               borderRadius: 16,
               padding: 24,
@@ -258,6 +316,7 @@ export function ModulesSection() {
               style={{ width: 36, height: 36, display: "block", opacity: 0.65 }}
             />
             <span
+              data-r="module-label"
               style={{
                 fontFamily: DISPLAY,
                 fontSize: 20,

@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Decor } from "@/components/decor";
 import { Honeypot } from "@/components/honeypot";
 import { NavLink } from "@/components/nav-link";
+import { type SubmitStatus, SubmitButton } from "@/components/submit-button";
 import { BDE_CTA, DEMO_REASSURANCE, EVENT_TYPES } from "@/lib/bde-content";
 import { icon } from "@/lib/content";
 import { BDE_DEMO_DECOR } from "@/lib/decor";
@@ -43,10 +44,15 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-type Status = "idle" | "sending" | "sent" | "error";
+/** Long enough for the green pop to register before the card swaps over. */
+const CONFIRM_MS = 750;
 
 export function BdeDemoForm() {
-  const [status, setStatus] = useState<Status>("idle");
+  const [status, setStatus] = useState<SubmitStatus>("idle");
+  const [sent, setSent] = useState(false);
+  const timer = useRef<number>(undefined);
+
+  useEffect(() => () => window.clearTimeout(timer.current), []);
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -63,11 +69,13 @@ export function BdeDemoForm() {
       return;
     }
 
-    setStatus("sent");
-    document.getElementById("demo")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setStatus("done");
+    // Same beat as the waitlist: confirm on the button, then swap the card.
+    timer.current = window.setTimeout(() => {
+      setSent(true);
+      document.getElementById("demo")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, CONFIRM_MS);
   }
-
-  const sent = status === "sent";
 
   return (
     <section
@@ -303,40 +311,21 @@ export function BdeDemoForm() {
                 />
               </Field>
 
-              <button
-                type="submit"
-                className="yq-btn-dark"
-                disabled={status === "sending"}
-                style={{
-                  alignSelf: "flex-start",
-                  border: 0,
-                  cursor: status === "sending" ? "progress" : "pointer",
-                  background: "#2A343D",
-                  color: "#FFFFFF",
-                  fontFamily: UI,
-                  fontWeight: 700,
-                  fontSize: 16,
-                  padding: "15px 26px",
-                  borderRadius: 999,
-                }}
-              >
-                {status === "sending" ? "On envoie…" : BDE_CTA.demo}
-              </button>
+              <SubmitButton
+                status={status}
+                label={BDE_CTA.demo}
+                doneLabel="Envoyé !"
+                style={{ alignSelf: "flex-start", padding: "15px 26px", borderRadius: 999 }}
+              />
 
-              <span
-                aria-live="polite"
-                style={{
-                  fontFamily: UI,
-                  fontSize: 14,
-                  lineHeight: 1.5,
-                  color: "#D92E2E",
-                  minHeight: status === "error" ? undefined : 0,
-                }}
-              >
-                {status === "error"
-                  ? "L’envoi n’est pas passé. Réessaie, ou écris-nous directement."
-                  : ""}
-              </span>
+              {status === "error" ? (
+                <span
+                  aria-live="polite"
+                  style={{ fontFamily: UI, fontSize: 14, lineHeight: 1.5, color: "#D92E2E" }}
+                >
+                  L’envoi n’est pas passé. Réessaie, ou écris-nous directement.
+                </span>
+              ) : null}
 
               <span
                 style={{ fontFamily: UI, fontSize: 13, lineHeight: 1.5, color: "#71787E" }}

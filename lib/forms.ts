@@ -34,7 +34,9 @@ const BACKUP_KEY: Record<FormKind, string> = {
  */
 export type SubmitResult = "sent" | "stored" | "failed";
 
-const TIMEOUT_MS = 8000;
+/** Apps Script cold-starts, and the /exec URL redirects once before answering.
+ *  Short timeouts turn a slow first submission into a false error. */
+const TIMEOUT_MS = 20000;
 
 export async function submitForm(
   kind: FormKind,

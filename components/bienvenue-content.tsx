@@ -1,11 +1,13 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Countdown } from "@/components/countdown";
 import { Decor } from "@/components/decor";
 import { CopyIcon, InstagramIcon, TikTokIcon, WhatsappIcon } from "@/components/icons";
 import { NavLink } from "@/components/nav-link";
-import { LAUNCH_DATE, LAUNCH_LABEL, icon } from "@/lib/content";
+import { type SubmitStatus, SubmitButton } from "@/components/submit-button";
+import { LAUNCH_LABEL, icon } from "@/lib/content";
 import { BIENVENUE_DECOR } from "@/lib/decor";
 import { submitForm } from "@/lib/forms";
 import { ROUTES } from "@/lib/routes";
@@ -25,6 +27,9 @@ const QUESTIONS = {
 };
 
 const SHARE_TEXT = `On va tester Yatu pour organiser nos prochains événements : tout au même endroit. Ça sort le ${LAUNCH_LABEL}, inscris-toi avec moi : `;
+
+/** Long enough for the green pop to register before the card swaps over. */
+const CONFIRM_MS = 750;
 
 type WelcomeLink = {
   href: string;
@@ -111,25 +116,18 @@ export function BienvenueContent() {
   const [types, setTypes] = useState<string[]>([]);
   const [size, setSize] = useState("");
   const [bde, setBde] = useState("");
-  const [sending, setSending] = useState(false);
-  const [failed, setFailed] = useState(false);
+  const [status, setStatus] = useState<SubmitStatus>("idle");
   const [done, setDone] = useState(false);
   const [copied, setCopied] = useState(false);
   const [shareUrl, setShareUrl] = useState("");
+  const timer = useRef<number>(undefined);
 
   // window isn’t available while rendering - resolve the share target on mount.
   useEffect(() => setShareUrl(`${window.location.origin}/`), []);
-
-  const [days, setDays] = useState(() =>
-    Math.max(0, Math.ceil((new Date(LAUNCH_DATE).getTime() - Date.now()) / 86400000)),
-  );
-  useEffect(() => {
-    setDays(Math.max(0, Math.ceil((new Date(LAUNCH_DATE).getTime() - Date.now()) / 86400000)));
-  }, []);
+  useEffect(() => () => window.clearTimeout(timer.current), []);
 
   async function save() {
-    setSending(true);
-    setFailed(false);
+    setStatus("sending");
 
     const result = await submitForm("profil", {
       email: signupEmail,
@@ -139,12 +137,14 @@ export function BienvenueContent() {
       source: params.get("s") || "",
     });
 
-    setSending(false);
     if (result === "failed") {
-      setFailed(true);
+      setStatus("error");
       return;
     }
-    setDone(true);
+
+    setStatus("done");
+    // Same beat as the other two forms: confirm on the button, then swap.
+    timer.current = window.setTimeout(() => setDone(true), CONFIRM_MS);
   }
 
   async function copy() {
@@ -235,18 +235,8 @@ export function BienvenueContent() {
             On t’écrit à <strong style={{ fontWeight: 700, color: "#2A343D" }}>{email}</strong> le{" "}
             {LAUNCH_LABEL}, jour du lancement. Tu auras l’accès avant l’ouverture publique.
           </p>
-          <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginTop: 2 }}>
-            <span
-              suppressHydrationWarning
-              style={{
-                fontFamily: DISPLAY,
-                fontSize: "clamp(40px,6vw,60px)",
-                lineHeight: 1,
-                color: "#2A343D",
-              }}
-            >
-              J–{days}
-            </span>
+          <div style={{ width: "100%", maxWidth: 440, marginTop: 2, textAlign: "left" }}>
+            <Countdown />
           </div>
         </div>
 
@@ -358,7 +348,7 @@ export function BienvenueContent() {
                 ))}
               </Question>
 
-              {failed ? (
+              {status === "error" ? (
                 <span
                   aria-live="polite"
                   style={{ fontFamily: UI, fontSize: 14, lineHeight: 1.5, color: "#D92E2E" }}
@@ -369,25 +359,14 @@ export function BienvenueContent() {
               ) : null}
 
               <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" }}>
-                <button
+                <SubmitButton
                   type="button"
                   onClick={save}
-                  disabled={sending}
-                  className="yq-btn-dark"
-                  style={{
-                    border: 0,
-                    cursor: sending ? "progress" : "pointer",
-                    background: "#2A343D",
-                    color: "#FFFFFF",
-                    fontFamily: UI,
-                    fontWeight: 700,
-                    fontSize: 15,
-                    padding: "14px 22px",
-                    borderRadius: 999,
-                  }}
-                >
-                  {sending ? "On envoie…" : "Envoyer mes réponses"}
-                </button>
+                  status={status}
+                  label="Envoyer mes réponses"
+                  doneLabel="Merci !"
+                  style={{ fontSize: 15, padding: "14px 22px", borderRadius: 999 }}
+                />
                 <button
                   type="button"
                   onClick={() => setDone(true)}

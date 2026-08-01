@@ -10,6 +10,7 @@ import {
   DEMO_ETAPES,
   DEMO_GENS,
   DEMO_TYPES,
+  LAUNCH_LABEL,
   MODULES,
   icon,
   type ModuleKey,
@@ -23,6 +24,7 @@ const EASE = "200ms var(--ease-standard)";
 
 const WEEKEND = DEMO_TYPES[2];
 const TOTAL_PHOTOS = 9;
+const LAST_STEP = DEMO_ETAPES.length - 1;
 
 const INITIAL = {
   step: 0,
@@ -61,18 +63,24 @@ export function DemoSection() {
   const type = DEMO_TYPES.find((t) => t.key === demo.type) ?? WEEKEND;
   const patch = (p: Partial<typeof INITIAL>) => setDemo((d) => ({ ...d, ...p }));
 
+  function reset() {
+    setDemo({ ...INITIAL, mods: WEEKEND.mods.slice() });
+    setCopie(false);
+  }
+
   function advance() {
+    // Steps 2 and 3 fill up before they hand over: the button keeps adding
+    // guests, then photos, and only moves on once the screen is full.
     if (demo.step === 2 && demo.invites < DEMO_GENS.length) {
       patch({ invites: Math.min(demo.invites + 2, DEMO_GENS.length) });
       return;
     }
-    if (demo.step === 3) {
-      if (demo.photos < TOTAL_PHOTOS) {
-        patch({ photos: Math.min(demo.photos + 3, TOTAL_PHOTOS) });
-        return;
-      }
-      setDemo({ ...INITIAL, mods: WEEKEND.mods.slice() });
-      setCopie(false);
+    if (demo.step === 3 && demo.photos < TOTAL_PHOTOS) {
+      patch({ photos: Math.min(demo.photos + 3, TOTAL_PHOTOS) });
+      return;
+    }
+    if (demo.step === LAST_STEP) {
+      reset();
       return;
     }
     patch({ step: demo.step + 1 });
@@ -109,8 +117,10 @@ export function DemoSection() {
       : demo.step === 3
         ? demo.photos < TOTAL_PHOTOS
           ? "Ajouter mes photos"
-          : "Recommencer la démo"
-        : "Continuer";
+          : "Voir le souvenir"
+        : demo.step === LAST_STEP
+          ? "Recommencer la démo"
+          : "Continuer";
 
   const tabs = MODULES.filter((m) => demo.mods.includes(m.key)).slice(0, 5);
 
@@ -135,7 +145,7 @@ export function DemoSection() {
           badgeBg={ACCENT.sunbeam}
           title="Essaie-le tout de suite. Clique dans l’écran."
           titleMaxCh={20}
-          lede="Quatre étapes pour voir à quoi ressemble un événement Yatu. Rien à installer."
+          lede={`${DEMO_ETAPES.length} étapes pour dérouler un événement Yatu du début à la fin. Rien à installer.`}
         />
 
         <div
@@ -147,8 +157,11 @@ export function DemoSection() {
             alignItems: "center",
           }}
         >
-          {/* The four steps, also a control for the screen */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 460 }}>
+          {/* The steps, also a control for the screen */}
+          <div
+            data-r="demo-steps"
+            style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 460 }}
+          >
             {DEMO_ETAPES.map((etape, i) => {
               const current = i === demo.step;
               const done = i < demo.step;
@@ -203,6 +216,7 @@ export function DemoSection() {
                       {etape.titre}
                     </span>
                     <span
+                      data-r="demo-step-desc"
                       style={{
                         fontFamily: UI,
                         fontSize: 14,
@@ -241,16 +255,17 @@ export function DemoSection() {
                   }}
                 >
                   <span style={{ fontFamily: UI, fontWeight: 700, fontSize: 12, color: "#71787E" }}>
-                    {demo.step + 1}/4
+                    {demo.step + 1}/{DEMO_ETAPES.length}
                   </span>
                   <span style={{ display: "flex", gap: 5 }}>
-                    {[0, 1, 2, 3].map((i) => (
+                    {DEMO_ETAPES.map((_, i) => (
                       <span
                         key={i}
                         style={{
                           width: 7,
                           height: 7,
                           borderRadius: 80,
+                          flex: "none",
                           transition: `background ${EASE}`,
                           background: i <= demo.step ? "#2A343D" : "#DCD6CB",
                         }}
@@ -592,7 +607,7 @@ export function DemoSection() {
 
                   {demo.step === 3 ? (
                     <>
-                      <span style={SCREEN_TITLE}>Le souvenir {type.courtDe}</span>
+                      <span style={SCREEN_TITLE}>L’album {type.courtDe}</span>
                       <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 7 }}>
                         {Array.from({ length: TOTAL_PHOTOS }).map((_, i) => {
                           const filled = i < demo.photos;
@@ -682,6 +697,241 @@ export function DemoSection() {
                           {demo.photos >= TOTAL_PHOTOS
                             ? "L’album reste dans l’événement, avec les photos de tout le monde."
                             : "Chacun dépose les siennes, personne n’a à les réclamer."}
+                        </span>
+                      </div>
+                    </>
+                  ) : null}
+
+                  {demo.step === 4 ? (
+                    <>
+                      <span style={SCREEN_TITLE}>Votre souvenir {type.courtDe}</span>
+
+                      {/* The album from the previous step, closed up into one
+                          cover: same colour the visitor picked on step 1. */}
+                      <div
+                        style={{
+                          borderRadius: 16,
+                          overflow: "hidden",
+                          border: "1px solid #EBE7DE",
+                          background: "#FFFFFF",
+                        }}
+                      >
+                        <div
+                          style={{
+                            height: 116,
+                            background: demo.couleur,
+                            display: "grid",
+                            gridTemplateColumns: "repeat(6,1fr)",
+                            gap: 2,
+                            padding: 2,
+                          }}
+                        >
+                          {Array.from({ length: 12 }).map((_, i) => (
+                            <span
+                              key={i}
+                              aria-hidden="true"
+                              style={{
+                                borderRadius: 4,
+                                background: "rgba(255,255,255,.22)",
+                                backgroundImage: `url("${icon("img")}")`,
+                                backgroundRepeat: "no-repeat",
+                                backgroundPosition: "center",
+                                backgroundSize: "14px 14px",
+                                opacity: 0.55 + (i % 3) * 0.15,
+                              }}
+                            />
+                          ))}
+                        </div>
+                        <div
+                          style={{
+                            padding: "12px 15px",
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: 2,
+                          }}
+                        >
+                          <span
+                            style={{
+                              fontFamily: DISPLAY,
+                              fontSize: 17,
+                              letterSpacing: "-.02em",
+                              color: "#2A343D",
+                            }}
+                          >
+                            {type.nom}
+                          </span>
+                          <span style={{ fontFamily: UI, fontSize: 13, color: "#71787E" }}>
+                            {TOTAL_PHOTOS} photos · {DEMO_GENS.length} amis · {type.dates}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div style={CARD}>
+                        <img
+                          src={icon("bell")}
+                          alt=""
+                          style={{ width: 26, height: 26, flex: "none" }}
+                        />
+                        <span
+                          style={{
+                            fontFamily: UI,
+                            fontSize: 14,
+                            lineHeight: 1.4,
+                            color: "#2A343D",
+                            flex: "1 1 auto",
+                          }}
+                        >
+                          Le souvenir se monte tout seul quand l’événement se termine.
+                        </span>
+                      </div>
+
+                      <div style={CARD}>
+                        <img
+                          src={icon("chat")}
+                          alt=""
+                          style={{ width: 26, height: 26, flex: "none" }}
+                        />
+                        <span
+                          style={{
+                            fontFamily: UI,
+                            fontSize: 14,
+                            lineHeight: 1.4,
+                            color: "#2A343D",
+                            flex: "1 1 auto",
+                          }}
+                        >
+                          La discussion reste ouverte : les photos en retard ont leur place.
+                        </span>
+                      </div>
+
+                      <div
+                        style={{
+                          marginTop: "auto",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 11,
+                          background: "#2A343D",
+                          borderRadius: 12,
+                          padding: "13px 15px",
+                        }}
+                      >
+                        <img
+                          src={icon("heart")}
+                          alt=""
+                          style={{ width: 26, height: 26, flex: "none" }}
+                        />
+                        <span
+                          style={{
+                            fontFamily: UI,
+                            fontSize: 14,
+                            lineHeight: 1.4,
+                            color: "rgba(255,255,255,.85)",
+                          }}
+                        >
+                          Rien ne se referme le lundi. L’événement reste, avec les gens qui y
+                          étaient.
+                        </span>
+                      </div>
+                    </>
+                  ) : null}
+
+                  {demo.step === LAST_STEP ? (
+                    <>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          textAlign: "center",
+                          gap: 10,
+                          padding: "18px 0 4px",
+                        }}
+                      >
+                        <img
+                          src={icon("heart")}
+                          alt=""
+                          style={{ width: 54, height: 54, display: "block" }}
+                        />
+                        <span
+                          style={{
+                            fontFamily: DISPLAY,
+                            fontSize: 24,
+                            lineHeight: 1.15,
+                            letterSpacing: "-.02em",
+                            color: "#2A343D",
+                          }}
+                        >
+                          C’est aussi simple que ça.
+                        </span>
+                        <span
+                          style={{
+                            fontFamily: UI,
+                            fontSize: 14,
+                            lineHeight: 1.5,
+                            color: "rgba(42,52,61,.7)",
+                            maxWidth: "30ch",
+                          }}
+                        >
+                          Un événement entier, du premier message aux dernières photos, sans
+                          quitter l’app.
+                        </span>
+                      </div>
+
+                      <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
+                        {DEMO_ETAPES.slice(0, LAST_STEP).map((etape) => (
+                          <span
+                            key={etape.titre}
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 10,
+                              background: "#FFFFFF",
+                              border: "1px solid #EBE7DE",
+                              borderRadius: 10,
+                              padding: "10px 13px",
+                            }}
+                          >
+                            <span
+                              aria-hidden="true"
+                              style={{
+                                width: 20,
+                                height: 20,
+                                borderRadius: 80,
+                                flex: "none",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                background: "#96E087",
+                                fontFamily: UI,
+                                fontWeight: 700,
+                                fontSize: 11,
+                                color: "#2A343D",
+                              }}
+                            >
+                              ✓
+                            </span>
+                            <span style={{ fontFamily: UI, fontSize: 14, color: "#2A343D" }}>
+                              {etape.titre}
+                            </span>
+                          </span>
+                        ))}
+                      </div>
+
+                      <div style={{ ...CARD, marginTop: "auto" }}>
+                        <img
+                          src={icon("send")}
+                          alt=""
+                          style={{ width: 26, height: 26, flex: "none" }}
+                        />
+                        <span
+                          style={{
+                            fontFamily: UI,
+                            fontSize: 14,
+                            lineHeight: 1.4,
+                            color: "#4E565D",
+                          }}
+                        >
+                          Le vrai Yatu arrive le {LAUNCH_LABEL}.
                         </span>
                       </div>
                     </>
