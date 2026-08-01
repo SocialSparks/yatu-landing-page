@@ -1,6 +1,5 @@
 import { CountUp } from "@/components/count-up";
 import { Decor } from "@/components/decor";
-import { findAsset } from "@/lib/assets";
 import { BDE_CHIPS, BDE_CTA, BDE_SHOWCASE } from "@/lib/bde-content";
 import { icon } from "@/lib/content";
 import { BDE_HERO_DECOR } from "@/lib/decor";
@@ -8,7 +7,7 @@ import { BDE_HERO_DECOR } from "@/lib/decor";
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
 
-const PHOTO = findAsset(["/assets/bde-hero.jpg", "/assets/bde-hero.webp", "/assets/bde-hero.png"]);
+const PHOTO = "/assets/bde-hero.jpg";
 
 export function BdeHero() {
   return (
@@ -201,8 +200,6 @@ export function BdeHero() {
         <div style={{ position: "relative", display: "flex", justifyContent: "center" }}>
           <div style={{ position: "relative", width: "100%", maxWidth: 520 }}>
             <div
-              data-reveal="scale"
-              data-reveal-delay="110"
               style={{
                 position: "relative",
                 borderRadius: 28,
@@ -213,13 +210,14 @@ export function BdeHero() {
               }}
             >
               <div style={{ position: "relative", height: 230, background: "#EFE8DE" }}>
-                {PHOTO ? (
-                  <img
-                    src={PHOTO}
-                    alt="Un groupe d’étudiants pendant un week-end d’intégration"
-                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                  />
-                ) : null}
+                <img
+                  src={PHOTO}
+                  alt="Un groupe d’étudiants pendant un week-end d’intégration"
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                />
               </div>
 
               <div

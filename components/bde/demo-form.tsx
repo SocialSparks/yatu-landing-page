@@ -227,8 +227,7 @@ export function BdeDemoForm() {
                   textWrap: "pretty",
                 }}
               >
-                On revient vers toi à l’adresse indiquée, avec deux ou trois créneaux de visio. Si
-                ton événement est proche, dis-le nous en répondant : on passe devant.
+                On revient rapidement vers toi à l’adresse indiquée, avec deux ou trois créneaux de visio.
               </p>
               <NavLink
                 href={ROUTES.home}
