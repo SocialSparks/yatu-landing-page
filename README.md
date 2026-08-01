@@ -61,7 +61,7 @@ export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://yatu-app.co
 
 A preview host (the Workers preview URL, a branch deploy) should set `NEXT_PUBLIC_SITE_URL`
 to itself so its canonical URLs, sitemap and social cards point at the preview instead of
-claiming to be production. Nothing else in the app hard-codes a domain — the demo's invite
+claiming to be production. Nothing else in the app hard-codes a domain - the demo's invite
 link, the share button, the contact addresses and the JSON-LD all read from there.
 
 | Concern | Where |

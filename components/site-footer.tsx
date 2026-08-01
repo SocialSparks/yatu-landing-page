@@ -45,10 +45,8 @@ const COLUMNS: { title: string; links: { href: string; label: string; external?:
 ];
 
 const SOCIAL = [
-  { href: "https://instagram.com", label: "Instagram" },
-  { href: "https://tiktok.com", label: "TikTok" },
-  { href: "https://linkedin.com", label: "LinkedIn" },
-  { href: `mailto:${CONTACT_EMAIL}`, label: CONTACT_EMAIL },
+  { href: "https://www.instagram.com/yatu_app/", label: "Instagram" },
+  { href: "https://www.tiktok.com/@yatu_app", label: "TikTok" },
 ];
 
 export function SiteFooter() {
@@ -158,7 +156,7 @@ export function SiteFooter() {
           }}
         >
           <span style={{ fontFamily: UI, fontSize: 13, color: "rgba(255,255,255,.5)" }}>
-            © 2026 Yatu — édité par {PUBLISHER}
+            © 2026 Yatu - édité par {PUBLISHER}
           </span>
           <span style={{ fontFamily: UI, fontSize: 13, color: "rgba(255,255,255,.5)" }}>
             Fait en France, pour les bandes qui mettent trois semaines à choisir une date

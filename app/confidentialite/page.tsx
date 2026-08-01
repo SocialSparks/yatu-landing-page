@@ -1,10 +1,19 @@
 import type { Metadata } from "next";
-import { B, Bullet, LegalPage, LegalSection, P, Todo } from "@/components/legal-page";
+import { B, Bullet, LegalPage, LegalSection, P } from "@/components/legal-page";
 import { NavLink } from "@/components/nav-link";
 import { ACCENT } from "@/lib/content";
 import { CONFIDENTIALITE_DECOR } from "@/lib/decor";
 import { ROUTES } from "@/lib/routes";
-import { PRIVACY_EMAIL, PUBLISHER, pageMetadata } from "@/lib/site";
+import {
+  COMPANY_ADDRESS,
+  CONTACT_PHONE,
+  CONTACT_PHONE_HREF,
+  HOST_NAME,
+  PRIVACY_EMAIL,
+  PUBLISHER,
+  SITE_DOMAIN,
+  pageMetadata,
+} from "@/lib/site";
 
 const UI = "var(--font-ui), system-ui, sans-serif";
 
@@ -12,10 +21,9 @@ export const metadata: Metadata = pageMetadata({
   path: "/confidentialite",
   title: "Politique de confidentialité — Yatu",
   description:
-    "Ce que Yatu collecte, pourquoi, combien de temps, qui y a accès et comment exercer tes droits. Rien n’est vendu ni partagé à des fins publicitaires.",
+    "Les données traitées sur le site Yatu, leurs finalités, bases légales, durées de conservation, destinataires et les moyens d’exercer ses droits.",
 });
 
-/** One processing activity: what is collected, why, on what basis, for how long. */
 function Treatment({
   label,
   badge,
@@ -55,12 +63,7 @@ function Treatment({
       {rows.map(([term, text]) => (
         <span
           key={term}
-          style={{
-            fontFamily: UI,
-            fontSize: 16,
-            lineHeight: 1.6,
-            color: "rgba(42,52,61,.8)",
-          }}
+          style={{ fontFamily: UI, fontSize: 16, lineHeight: 1.6, color: "rgba(42,52,61,.8)" }}
         >
           <B>{term} :</B> {text}
         </span>
@@ -69,149 +72,313 @@ function Treatment({
   );
 }
 
-/** Implemented from "Confidentialite.dc.html". */
 export default function Page() {
   return (
     <LegalPage
       badge="Tes données"
       title="Politique de confidentialité"
-      updatedAt="31 juillet 2026"
+      updatedAt="1er août 2026"
       decor={CONFIDENTIALITE_DECOR}
-      lede="En résumé : on collecte ton adresse e-mail pour te prévenir du lancement, les coordonnées que tu laisses si tu représentes un BDE, et des statistiques de fréquentation si tu les acceptes. Rien n’est vendu, rien n’est partagé à des fins publicitaires."
-      warning={
-        <>
-          <B>À compléter avant mise en ligne.</B> Les champs surlignés dépendent des outils
-          réellement branchés (routeur e-mail, mesure d’audience, hébergeur) et de
-          l’identité juridique de {PUBLISHER}.
-        </>
-      }
+      lede={`Cette politique explique comment ${PUBLISHER} traite les données liées au site ${SITE_DOMAIN}. Elle concerne le site de pré-lancement, pas encore les données qui seront créées dans l’application Yatu.`}
     >
-      <LegalSection title="1. Qui est responsable de tes données">
+      <LegalSection title="1. Responsable du traitement">
         <P>
-          Le responsable de traitement est <B>{PUBLISHER}</B>, éditeur de Yatu, dont les
-          coordonnées figurent dans les{" "}
-          <NavLink href={ROUTES.mentionsLegales}>mentions légales</NavLink>. Pour toute question
-          relative à tes données : <a href={`mailto:${PRIVACY_EMAIL}`}>{PRIVACY_EMAIL}</a>.
+          Le responsable des traitements décrits ici est <B>{PUBLISHER}</B>, {COMPANY_ADDRESS}.
+        </P>
+        <P>
+          Contact relatif à la vie privée :{" "}
+          <a href={`mailto:${PRIVACY_EMAIL}`}>{PRIVACY_EMAIL}</a> ou{" "}
+          <a href={`tel:${CONTACT_PHONE_HREF}`}>{CONTACT_PHONE}</a>. Aucun délégué à la protection
+          des données n’a été désigné ; ces coordonnées permettent de joindre directement le
+          responsable du traitement.
         </P>
       </LegalSection>
 
-      <LegalSection title="2. Ce qu’on collecte, et pourquoi" gap={18}>
+      <LegalSection title="2. Origine des données">
+        <P>Les données traitées proviennent :</P>
+        <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
+          <Bullet>
+            directement de toi lorsque tu saisis une adresse e-mail, réponds aux questions
+            facultatives, remplis le formulaire BDE ou écris au support ;
+          </Bullet>
+          <Bullet>
+            de ton navigateur lorsque le site enregistre localement tes réponses ou tes
+            préférences de consentement ;
+          </Bullet>
+          <Bullet>
+            automatiquement de la connexion au site, lorsque {HOST_NAME} traite les requêtes
+            nécessaires à l’affichage, à la sécurité et à la distribution des pages.
+          </Bullet>
+        </div>
+        <P>
+          {PUBLISHER} n’achète pas de fichiers de prospection et n’enrichit pas les informations
+          fournies avec des données provenant de courtiers en données.
+        </P>
+      </LegalSection>
+
+      <LegalSection title="3. Données traitées, finalités et durées" gap={18}>
         <Treatment
-          label="Liste d’attente"
+          label="Consultation et sécurité du site"
           badge={ACCENT.sky}
           rows={[
-            ["Données", "adresse e-mail, date d’inscription, page d’origine de l’inscription."],
             [
-              "Finalité",
-              "t’informer du lancement de l’application et de l’ouverture des accès anticipés.",
+              "Données",
+              "adresse IP, date et heure, URL demandée et ses paramètres, en-têtes de requête, navigateur, appareil et événements de sécurité.",
             ],
-            ["Base légale", "ton consentement (article 6.1.a du RGPD), retirable à tout moment."],
-            ["Conservation", "jusqu’à trois mois après le lancement, ou jusqu’à ton désabonnement."],
+            [
+              "Finalités",
+              "afficher le site, répartir le trafic, prévenir les abus, diagnostiquer les erreurs et assurer la sécurité.",
+            ],
+            [
+              "Base légale",
+              "intérêt légitime de QUANTIQ STUDIO à fournir un site disponible et sécurisé (article 6.1.f du RGPD).",
+            ],
+            [
+              "Conservation",
+              "les données de requête sont traitées pendant la durée nécessaire à la fourniture et à la sécurisation du service ; les éventuels journaux accessibles à QUANTIQ STUDIO ne sont pas conservés au-delà de 30 jours, sauf incident de sécurité ou obligation légale.",
+            ],
           ]}
         />
+
         <Treatment
-          label="Qualification facultative"
+          label="Liste d’attente et page de bienvenue"
           badge={ACCENT.sunbeam}
           rows={[
             [
               "Données",
-              "types d’événements organisés, taille habituelle du groupe, appartenance à un BDE ou une association.",
+              "adresse e-mail, page d’origine, date d’inscription et, si tu réponds aux questions facultatives, types d’événements, taille du groupe et appartenance éventuelle à une association.",
             ],
-            ["Finalité", "prioriser les fonctionnalités développées avant la sortie."],
+            [
+              "Finalités",
+              "confirmer ton parcours de préinscription, préparer l’annonce du lancement et mieux comprendre les usages attendus.",
+            ],
             [
               "Base légale",
-              "ton consentement. Ces questions sont facultatives et peuvent être passées.",
+              "consentement (article 6.1.a du RGPD), retirable à tout moment.",
             ],
-            ["Conservation", "même durée que l’inscription à la liste d’attente."],
+            [
+              "Fonctionnement actuel",
+              "ces informations sont enregistrées uniquement dans le stockage local de ton navigateur. Elles ne sont actuellement pas envoyées à une base de données de QUANTIQ STUDIO. L’adresse e-mail peut apparaître dans l’URL de la page de confirmation et donc dans l’historique du navigateur et les métadonnées techniques de la requête.",
+            ],
+            [
+              "Conservation",
+              "jusqu’à leur suppression depuis ton navigateur. Si une transmission à QUANTIQ STUDIO est activée, les données seront supprimées au plus tard trois mois après le lancement, ou plus tôt en cas de retrait du consentement.",
+            ],
           ]}
         />
+
         <Treatment
-          label="Formulaire BDE"
+          label="Demande BDE ou association"
           badge={ACCENT.meadow}
           rows={[
             [
               "Données",
-              "nom et prénom, nom du BDE ou de l’association, école ou campus, adresse e-mail, type et taille de l’événement, message libre.",
+              "nom, association, école ou campus, adresse e-mail, type et taille d’événement, message libre et date de saisie.",
             ],
             [
-              "Finalité",
-              "te recontacter pour une démonstration et instruire ta candidature au programme pilote.",
+              "Finalités",
+              "préparer une prise de contact, une démonstration et l’étude d’une participation au programme pilote.",
             ],
             [
               "Base légale",
               "mesures précontractuelles prises à ta demande (article 6.1.b du RGPD).",
             ],
-            ["Conservation", "trois ans à compter du dernier échange."],
+            [
+              "Fonctionnement actuel",
+              "le formulaire conserve actuellement la demande dans ton navigateur et ne la transmet pas à QUANTIQ STUDIO. Pour une demande immédiate, écris à support@yatu-pro.com.",
+            ],
+            [
+              "Conservation",
+              "jusqu’à suppression des données du navigateur ; après activation d’une transmission, trois ans à compter du dernier contact, puis archivage intermédiaire si nécessaire à la défense de droits en justice.",
+            ],
           ]}
         />
+
         <Treatment
-          label="Mesure d’audience"
+          label="Support et échanges directs"
           badge={ACCENT.lilac}
           rows={[
-            ["Données", "pages consultées, source d’arrivée, type d’appareil, adresse IP tronquée."],
             [
-              "Finalité",
-              "comprendre ce qui est lu et ce qui ne l’est pas, en statistiques agrégées.",
+              "Données",
+              "adresse e-mail, identité éventuellement communiquée, contenu du message, pièces jointes et historique des échanges.",
+            ],
+            [
+              "Finalités",
+              "répondre aux demandes, assurer le suivi et traiter les demandes d’exercice de droits.",
             ],
             [
               "Base légale",
-              "ton consentement, recueilli via le bandeau cookies et modifiable à tout moment.",
+              "intérêt légitime à répondre aux sollicitations ou mesures précontractuelles selon l’objet de la demande.",
             ],
-            ["Conservation", "treize mois maximum."],
+            [
+              "Conservation",
+              "trois ans après le dernier échange ; jusqu’à cinq ans en archivage intermédiaire lorsqu’un échange est nécessaire à la constatation, l’exercice ou la défense d’un droit en justice.",
+            ],
+          ]}
+        />
+
+        <Treatment
+          label="Préférences de traceurs"
+          badge={ACCENT.blush}
+          rows={[
+            [
+              "Données",
+              "choix d’acceptation ou de refus par catégorie et date du choix, enregistrés dans le stockage local du navigateur.",
+            ],
+            [
+              "Finalité",
+              "mémoriser ton choix et permettre sa modification.",
+            ],
+            [
+              "Base légale",
+              "respect des obligations relatives aux traceurs et intérêt légitime à conserver la preuve du choix exprimé.",
+            ],
+            ["Conservation", "six mois, puis le choix est demandé à nouveau."],
           ]}
         />
       </LegalSection>
 
-      <LegalSection title="3. Qui y a accès">
+      <LegalSection title="4. Mesure d’audience et réseaux sociaux">
         <P>
-          Tes données sont accessibles à l’équipe de {PUBLISHER} en charge du lancement de
-          Yatu, ainsi qu’aux prestataires techniques strictement nécessaires, agissant comme
-          sous-traitants au sens du RGPD :
+          Aucun outil de mesure d’audience tiers n’est actuellement chargé par le code du site. Le
+          panneau de préférences prévoit cette catégorie pour une éventuelle activation future,
+          mais le choix seul n’installe aucun outil de statistiques.
         </P>
-        <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
-          <Bullet>
-            Hébergement du site : <Todo>hébergeur</Todo>
-          </Bullet>
-          <Bullet>
-            Envoi des e-mails et gestion de la liste : <Todo>routeur e-mail</Todo>
-          </Bullet>
-          <Bullet>
-            Mesure d’audience : <Todo>outil de statistiques</Todo>
-          </Bullet>
-        </div>
         <P>
-          Aucune donnée n’est vendue, louée ni transmise à des tiers à des fins publicitaires.
-          Les données sont hébergées dans l’Union européenne ; tout transfert hors UE serait
-          encadré par les clauses contractuelles types de la Commission européenne.
+          Les liens Instagram, TikTok et WhatsApp sont de simples liens externes. Le site
+          n’intègre actuellement aucune publication de ces plateformes. Si tu cliques sur un lien,
+          la plateforme concernée traite ensuite tes données selon sa propre politique.
         </P>
       </LegalSection>
 
-      <LegalSection title="4. Tes droits">
+      <LegalSection title="5. Destinataires et sous-traitants">
         <P>
-          Tu disposes d’un droit d’accès, de rectification, d’effacement, de
-          limitation, d’opposition et de portabilité de tes données, ainsi que du droit de
-          retirer ton consentement à tout moment. Chaque e-mail envoyé comporte un lien de
-          désinscription.
+          Lorsque des données sont effectivement reçues par {PUBLISHER}, elles sont accessibles
+          uniquement aux personnes habilitées qui en ont besoin pour répondre à la finalité
+          concernée. Elles peuvent également être communiquées :
+        </P>
+        <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
+          <Bullet>
+            à <B>{HOST_NAME}</B>, sous-traitant chargé de l’hébergement, de la distribution et de
+            la sécurité du site ;
+          </Bullet>
+          <Bullet>
+            aux conseils professionnels, autorités administratives ou judiciaires lorsque la loi
+            l’exige ou pour protéger les droits de {PUBLISHER} ;
+          </Bullet>
+          <Bullet>
+            à un futur prestataire de routage e-mail ou de formulaire uniquement après mise à jour
+            de cette politique et encadrement contractuel conforme au RGPD.
+          </Bullet>
+        </div>
+        <P>
+          Aucune donnée n’est vendue, louée ou communiquée à des tiers pour leur prospection
+          commerciale ou de la publicité ciblée.
+        </P>
+      </LegalSection>
+
+      <LegalSection title="6. Transferts hors de l’Espace économique européen">
+        <P>
+          {HOST_NAME} est une société américaine exploitant un réseau mondial. Des données
+          techniques peuvent donc être traitées depuis les États-Unis ou d’autres pays. Cloudflare
+          indique encadrer les transferts vers les États-Unis par le cadre de protection des
+          données UE–États-Unis et, lorsque nécessaire, par les clauses contractuelles types de la
+          Commission européenne et des garanties supplémentaires.
         </P>
         <P>
-          Pour exercer ces droits, écris à <a href={`mailto:${PRIVACY_EMAIL}`}>{PRIVACY_EMAIL}</a>.
-          Une réponse te sera apportée dans un délai d’un mois. Si la réponse ne te convient
-          pas, tu peux introduire une réclamation auprès de la CNIL, 3 place de Fontenoy, 75007
-          Paris —{" "}
-          <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer">
-            cnil.fr
+          Les garanties contractuelles sont consultables dans le{" "}
+          <a
+            href="https://www.cloudflare.com/cloudflare-customer-dpa/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Data Processing Addendum de Cloudflare
+          </a>
+          . Une copie des garanties applicables peut aussi être demandée à{" "}
+          <a href={`mailto:${PRIVACY_EMAIL}`}>{PRIVACY_EMAIL}</a>.
+        </P>
+      </LegalSection>
+
+      <LegalSection title="7. Caractère obligatoire des données">
+        <P>
+          Les données techniques de connexion sont nécessaires pour afficher et sécuriser le site.
+          L’adresse e-mail est nécessaire si tu souhaites utiliser le parcours de liste d’attente.
+          Les questions de qualification sont facultatives. Les champs marqués comme obligatoires
+          dans le formulaire BDE sont nécessaires pour préparer une prise de contact ; tu peux
+          toutefois contacter directement le support sans remplir ce formulaire.
+        </P>
+        <P>
+          Le site ne prend aucune décision produisant un effet juridique sur la base d’un
+          traitement automatisé et ne réalise aucun profilage publicitaire.
+        </P>
+      </LegalSection>
+
+      <LegalSection title="8. Tes droits">
+        <P>
+          Selon le traitement concerné, tu peux demander l’accès à tes données, leur rectification,
+          leur effacement, la limitation de leur traitement et leur portabilité. Tu peux t’opposer
+          aux traitements fondés sur l’intérêt légitime et retirer à tout moment un consentement,
+          sans remettre en cause les traitements déjà réalisés avant ce retrait.
+        </P>
+        <P>
+          Tu peux également définir des directives relatives au sort de tes données après ton décès
+          dans les conditions prévues par la loi française.
+        </P>
+        <P>
+          Pour exercer un droit, écris à{" "}
+          <a href={`mailto:${PRIVACY_EMAIL}`}>{PRIVACY_EMAIL}</a> ou à {PUBLISHER},
+          {" "}{COMPANY_ADDRESS}. Précise le droit exercé et les informations permettant de retrouver
+          les données concernées. Un justificatif d’identité ne sera demandé qu’en cas de doute
+          raisonnable sur ton identité.
+        </P>
+        <P>
+          Une réponse sera apportée dans un délai d’un mois, pouvant être prolongé de deux mois si
+          la demande est complexe ou nombreuse, avec information préalable. Si tu estimes que tes
+          droits ne sont pas respectés, tu peux déposer une réclamation auprès de la CNIL : 3 place
+          de Fontenoy, TSA 80715, 75334 Paris Cedex 07 —{" "}
+          <a href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noopener noreferrer">
+            cnil.fr/fr/plaintes
           </a>
           .
         </P>
       </LegalSection>
 
-      <LegalSection title="5. Sécurité et durée de vie de ce document">
+      <LegalSection title="9. Sécurité">
         <P>
-          Les accès aux données sont restreints aux personnes qui en ont besoin, les échanges sont
-          chiffrés en transit et les mots de passe des outils utilisés sont protégés par une double
-          authentification. Cette politique sera mise à jour à la sortie de l’application,
-          notamment pour couvrir les données créées à l’intérieur des événements Yatu. La date
-          de mise à jour figure en haut de page.
+          {PUBLISHER} applique des mesures adaptées au risque : accès limités aux personnes
+          autorisées, chiffrement HTTPS, mises à jour, sauvegardes lorsque nécessaires et
+          authentification renforcée des outils d’administration. Aucun système n’étant totalement
+          infaillible, un incident susceptible d’engendrer un risque pour les personnes sera traité
+          conformément aux obligations de notification applicables.
+        </P>
+        <P>
+          Les données enregistrées uniquement dans ton navigateur restent sous le contrôle de ton
+          terminal. Tu peux les effacer depuis les réglages du navigateur. Évite de partager une URL
+          de confirmation contenant ton adresse e-mail et protège l’accès à ton appareil.
+        </P>
+      </LegalSection>
+
+      <LegalSection title="10. Mineurs">
+        <P>
+          Le site ne cherche pas à collecter sciemment les données d’enfants. Une personne mineure
+          doit demander l’accord de son représentant légal lorsque cet accord est requis. Si tu
+          penses qu’un mineur a transmis des données de manière inappropriée, contacte{" "}
+          <a href={`mailto:${PRIVACY_EMAIL}`}>{PRIVACY_EMAIL}</a> afin qu’elles soient supprimées.
+        </P>
+      </LegalSection>
+
+      <LegalSection title="11. Évolution de la politique">
+        <P>
+          Cette politique peut évoluer pour refléter une modification du site, l’activation d’un
+          prestataire ou une évolution juridique. La date affichée en haut de page indique la
+          dernière mise à jour. Une nouvelle politique couvrira les comptes et contenus créés dans
+          l’application Yatu avant son ouverture au public.
+        </P>
+        <P>
+          Pour les informations relatives au stockage local et aux traceurs, consulte la page{" "}
+          <NavLink href={ROUTES.cookies}>gestion des cookies</NavLink>. Les informations sur
+          l’éditeur figurent dans les{" "}
+          <NavLink href={ROUTES.mentionsLegales}>mentions légales</NavLink>.
         </P>
       </LegalSection>
     </LegalPage>

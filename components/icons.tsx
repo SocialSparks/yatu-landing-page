@@ -32,6 +32,14 @@ export function InstagramIcon({ size = 20 }: IconProps) {
   );
 }
 
+export function TikTokIcon({ size = 20 }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17.93.9 2.18 1.46 3.42 1.6V9.8a9.14 9.14 0 0 1-3.38-.78c-.46-.21-.89-.48-1.31-.76-.01 2.92.01 5.84-.02 8.75a7.42 7.42 0 0 1-1.35 3.94 7.35 7.35 0 0 1-5.91 3.21 7.15 7.15 0 0 1-4.08-1.03 7.4 7.4 0 0 1-3.65-5.72c-.02-.5-.03-1-.01-1.49a7.4 7.4 0 0 1 2.58-4.96 7.2 7.2 0 0 1 6.15-1.72c.02 1.48-.04 2.96-.04 4.44a3.36 3.36 0 0 0-3.02.37 3.3 3.3 0 0 0-1.36 1.75c-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87a3.4 3.4 0 0 0 2.77-1.61c.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07Z" />
+    </svg>
+  );
+}
+
 export function CopyIcon({ size = 20 }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">

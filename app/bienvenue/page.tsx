@@ -7,7 +7,7 @@ import { pageMetadata } from "@/lib/site";
 /** Post-signup confirmation: useful to the visitor, not to a search engine. */
 export const metadata: Metadata = pageMetadata({
   path: "/bienvenue",
-  title: "Tu es sur la liste — Yatu",
+  title: "Tu es sur la liste - Yatu",
   description: `Ton inscription à la liste d’attente de Yatu est enregistrée. Rendez-vous le ${LAUNCH_LABEL}.`,
   index: false,
 });

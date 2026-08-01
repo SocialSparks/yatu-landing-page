@@ -22,7 +22,7 @@ function describe(): string {
 }
 
 /**
- * "Modifier ton consentement" — the dark card at the top of /cookies.
+ * "Modifier ton consentement" - the dark card at the top of /cookies.
  *
  * The design polled localStorage every 800ms; here CookieBanner announces the
  * choice on a custom event instead, so the label updates the moment it changes

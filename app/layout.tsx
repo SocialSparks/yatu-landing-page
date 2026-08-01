@@ -39,8 +39,8 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Yatu — organiser un événement entre amis",
-    template: `%s — ${SITE_NAME}`,
+    default: "Yatu - organiser un événement entre amis",
+    template: `%s - ${SITE_NAME}`,
   },
   applicationName: SITE_NAME,
   publisher: PUBLISHER,
@@ -69,6 +69,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${capriola.variable} ${lato.variable} ${outfit.variable}`}
     >
       <body>
+        <div className="yq-watch-unsupported" role="main">
+          <span className="yq-watch-unsupported-mark" aria-hidden="true">
+            Y
+          </span>
+          <strong>Ce site ne peut pas s’afficher sur montre connectée.</strong>
+          <span>Ouvre le site sur ton téléphone ou ton ordinateur.</span>
+        </div>
         <noscript>
           {/* site-motion.js hid elements from script; without script nothing should stay hidden. */}
           <style>{`[data-reveal],[data-fly],[data-reveal="stagger"]>*,[data-float]{opacity:1!important;transform:none!important;scale:1!important}`}</style>

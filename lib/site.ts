@@ -18,9 +18,25 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://yatu-app.c
 export const SITE_DOMAIN = SITE_URL.replace(/^https?:\/\//, "");
 
 export const SITE_NAME = "Yatu";
-export const PUBLISHER = "Quantiq Studio";
-export const CONTACT_EMAIL = `hello@${SITE_DOMAIN}`;
-export const PRIVACY_EMAIL = `privacy@${SITE_DOMAIN}`;
+export const PUBLISHER = "QUANTIQ STUDIO";
+export const COMPANY_LEGAL_FORM = "SAS (société par actions simplifiée)";
+export const COMPANY_CAPITAL = "1 000 €";
+export const COMPANY_ADDRESS = "3 chemin de Chantenoy, 69330 Jons, France";
+export const COMPANY_SIREN = "944 423 805";
+export const COMPANY_SIRET = "944 423 805 00018";
+export const COMPANY_RCS = "944 423 805 R.C.S. Lyon";
+export const COMPANY_VAT = "FR76944423805";
+export const PUBLISHING_DIRECTOR = "Célian Frasca";
+
+export const CONTACT_EMAIL = "support@yatu-pro.com";
+export const PRIVACY_EMAIL = CONTACT_EMAIL;
+export const CONTACT_PHONE = "07 81 73 06 39";
+export const CONTACT_PHONE_HREF = "+33781730639";
+
+export const HOST_NAME = "Cloudflare, Inc.";
+export const HOST_ADDRESS = "101 Townsend Street, San Francisco, CA 94107, États-Unis";
+export const HOST_PHONE = "+1 650 319 8930";
+export const HOST_PHONE_HREF = "+16503198930";
 
 /** Absolute URL for a site-relative path. */
 export const absoluteUrl = (path = "/") => new URL(path, `${SITE_URL}/`).toString();

@@ -1,5 +1,13 @@
 import { FAQ, MODULES, faqAnswerText } from "@/lib/content";
-import { CONTACT_EMAIL, PUBLISHER, SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/site";
+import {
+  COMPANY_ADDRESS,
+  CONTACT_EMAIL,
+  CONTACT_PHONE_HREF,
+  PUBLISHER,
+  SITE_NAME,
+  SITE_URL,
+  absoluteUrl,
+} from "@/lib/site";
 
 function JsonLd({ data }: { data: object }) {
   return (
@@ -26,6 +34,8 @@ export function HomeStructuredData() {
     name: PUBLISHER,
     url: SITE_URL,
     email: CONTACT_EMAIL,
+    telephone: CONTACT_PHONE_HREF,
+    address: COMPANY_ADDRESS,
     logo: absoluteUrl("/icon-512.png"),
   };
 

@@ -157,8 +157,9 @@ export function CookieBanner() {
               textWrap: "pretty",
             }}
           >
-            On dépose quelques cookies pour savoir si ce site est utile, et c’est à peu près
-            tout. Tu peux accepter, refuser ou choisir.
+            Le site mémorise localement tes choix et les informations que tu saisis. Aucun outil
+            d’audience ni traceur publicitaire n’est actif pour le moment. Tu peux accepter,
+            refuser ou choisir les catégories prévues.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
             <button type="button" className="yq-btn-dark" style={PRIMARY} onClick={() => persist(true, true)}>
@@ -264,13 +265,13 @@ export function CookieBanner() {
             {[
               {
                 title: "Mesure d’audience",
-                desc: "Pages vues et inscriptions, en statistiques agrégées.",
+                desc: "Aucun outil actif pour le moment.",
                 on: analytics,
                 toggle: () => setAnalytics((v) => !v),
               },
               {
                 title: "Contenus des réseaux sociaux",
-                desc: "Publications Instagram ou TikTok intégrées aux pages.",
+                desc: "Aucune publication intégrée pour le moment.",
                 on: social,
                 toggle: () => setSocial((v) => !v),
               },

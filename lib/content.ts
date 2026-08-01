@@ -308,21 +308,29 @@ export const GALERE_MESSAGES: {
 ];
 
 /** The tally of the conversation above - an illustration, not a statistic. */
-export const GALERE_STATS = [
+export type GalereIcon = "apps" | "messages" | "unresolved";
+
+export const GALERE_STATS: {
+  icon: GalereIcon;
+  count: number;
+  color: string;
+  text: string;
+  dark?: boolean;
+}[] = [
   {
-    icon: icon("chart"),
+    icon: "apps",
     count: 6,
     color: ACCENT.coral,
     text: "applis ouvertes pour un seul week-end",
   },
   {
-    icon: icon("bell"),
+    icon: "messages",
     count: 47,
     color: ACCENT.apricot,
     text: "messages avant de tomber d’accord sur une date",
   },
   {
-    icon: icon("bubble"),
+    icon: "unresolved",
     count: 0,
     color: ACCENT.sunbeam,
     text: "décision prise, et les photos restent sur huit téléphones.",

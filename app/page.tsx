@@ -16,7 +16,7 @@ import { pageMetadata } from "@/lib/site";
 /** Search intent: organiser un événement entre amis. */
 export const metadata: Metadata = pageMetadata({
   path: "/",
-  title: "Yatu — l’appli pour organiser un événement entre amis",
+  title: "Yatu - l’appli pour organiser un événement entre amis",
   description: `Soirée, anniversaire, week-end ou voyage entre amis : Yatu réunit la discussion, le budget partagé, les listes, le planning, les documents et l’album photo au même endroit. Sortie le ${LAUNCH_LABEL}.`,
 });
 

@@ -22,6 +22,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+.yq-watch-unsupported {
+  display: none;
+}
+
 a {
   color: #2a343d;
   text-decoration: none;
@@ -793,5 +797,53 @@ details[open] .yq-plus {
 @media (max-width: 400px) {
   [data-r~="phone-wrap"] {
     zoom: 0.7;
+  }
+}
+
+/* Apple Watch and similarly small touch viewports cannot display the site. */
+@media (max-width: 240px) and (max-height: 320px) and (hover: none) {
+  html,
+  body {
+    min-height: 100%;
+    background: #f7f4ed;
+  }
+
+  body > :not(.yq-watch-unsupported) {
+    display: none !important;
+  }
+
+  .yq-watch-unsupported {
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 16px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-align: center;
+    color: #2a343d;
+    font-family: var(--font-ui), system-ui, sans-serif;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .yq-watch-unsupported-mark {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 2px;
+    border-radius: 50%;
+    background: #2a343d;
+    color: #fed873;
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: 18px;
+  }
+
+  .yq-watch-unsupported strong {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.25;
   }
 }

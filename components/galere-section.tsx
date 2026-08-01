@@ -2,7 +2,7 @@ import { AvatarPair } from "@/components/avatar-pair";
 import { CountUp } from "@/components/count-up";
 import { Decor } from "@/components/decor";
 import { SectionHeading } from "@/components/section-heading";
-import { ACCENT, GALERE_MESSAGES, GALERE_STATS } from "@/lib/content";
+import { ACCENT, GALERE_MESSAGES, GALERE_STATS, type GalereIcon } from "@/lib/content";
 import { GALERE_DECOR } from "@/lib/decor";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
@@ -20,6 +20,56 @@ function TypingDot({ delay }: { delay: string }) {
         animation: `yq-typing 1.3s infinite ${delay}`,
       }}
     />
+  );
+}
+
+function ProblemIcon({ name, dark = false }: { name: GalereIcon; dark?: boolean }) {
+  return (
+    <span
+      aria-hidden="true"
+      style={{
+        width: 40,
+        height: 40,
+        flex: "none",
+        display: "grid",
+        placeItems: "center",
+        borderRadius: 12,
+        color: dark ? "#FFFFFF" : "#71787E",
+        background: dark ? "rgba(255,255,255,.1)" : "#F7F4ED",
+        border: `1px solid ${dark ? "rgba(255,255,255,.18)" : "#EBE7DE"}`,
+      }}
+    >
+      <svg
+        viewBox="0 0 24 24"
+        width="24"
+        height="24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        {name === "apps" ? (
+          <>
+            <rect x="3" y="4" width="14" height="12" rx="2" />
+            <path d="M3 8h14M7 20h12a2 2 0 0 0 2-2V8" />
+          </>
+        ) : null}
+        {name === "messages" ? (
+          <>
+            <rect x="3" y="4" width="18" height="4" rx="2" />
+            <rect x="3" y="10" width="14" height="4" rx="2" />
+            <rect x="3" y="16" width="10" height="4" rx="2" />
+          </>
+        ) : null}
+        {name === "unresolved" ? (
+          <>
+            <circle cx="12" cy="12" r="9" />
+            <path d="M9.8 9a2.4 2.4 0 1 1 3.3 2.2c-.8.4-1.1.9-1.1 1.8M12 17h.01" />
+          </>
+        ) : null}
+      </svg>
+    </span>
   );
 }
 
@@ -206,11 +256,7 @@ export function GalereSection() {
                   padding: "20px 22px",
                 }}
               >
-                <img
-                  src={stat.icon}
-                  alt=""
-                  style={{ width: 38, height: 38, display: "block", flex: "none" }}
-                />
+                <ProblemIcon name={stat.icon} dark={stat.dark} />
                 <span
                   style={{
                     fontFamily: DISPLAY,

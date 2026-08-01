@@ -6,6 +6,7 @@
  */
 export const ROUTES = {
   home: "/",
+  yatu: "/#yatu",
   modules: "/#solution",
   cycle: "/#cycle",
   fonctionnement: "/#fonctionnement",

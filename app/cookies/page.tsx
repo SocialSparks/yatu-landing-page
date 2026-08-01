@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ConsentStatus } from "@/components/consent-status";
-import { B, LegalPage, LegalSection, P, Todo } from "@/components/legal-page";
+import { B, LegalPage, LegalSection, P } from "@/components/legal-page";
 import { NavLink } from "@/components/nav-link";
 import { ACCENT } from "@/lib/content";
 import { COOKIES_DECOR } from "@/lib/decor";
@@ -13,7 +13,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/cookies",
   title: "Gestion des cookies — Yatu",
   description:
-    "Les traceurs déposés par le site Yatu, ce qu’ils font, combien de temps ils durent, et comment revoir ton consentement à tout moment.",
+    "Le stockage local et les éventuels traceurs du site Yatu, leur durée et la façon de revoir ses préférences à tout moment.",
 });
 
 /** One family of trackers: badge, consent rule, then the entries. */
@@ -80,17 +80,17 @@ export default function Page() {
     <LegalPage
       badge="Traceurs"
       title="Gestion des cookies"
-      updatedAt="31 juillet 2026"
+      updatedAt="1er août 2026"
       decor={COOKIES_DECOR}
-      lede="Ce site pose le minimum : de quoi mémoriser ton choix, et — seulement si tu l’acceptes — de quoi compter les visites. Aucun traceur publicitaire, aucun revendeur de données."
+      lede="Le site utilise surtout le stockage local de ton navigateur pour mémoriser tes choix et les informations que tu saisis. Aucun traceur publicitaire ni outil de mesure d’audience tiers n’est actuellement activé."
     >
       <ConsentStatus />
 
       <LegalSection title="1. Ce qu’est un cookie">
         <P>
           Un cookie est un petit fichier déposé par un site dans ton navigateur. Il permet de se
-          souvenir d’une information d’une page à l’autre — par exemple ton choix de
-          consentement — ou de mesurer la fréquentation. Certains sont indispensables au
+          souvenir d’une information d’une page à l’autre - par exemple ton choix de
+          consentement - ou de mesurer la fréquentation. Certains sont indispensables au
           fonctionnement du site, d’autres non : ceux-là ne sont déposés qu’avec ton
           accord.
         </P>
@@ -100,15 +100,25 @@ export default function Page() {
         <Tracker
           label="Strictement nécessaires"
           badge="#2A343D"
-          rule="Toujours actifs — pas de consentement requis"
+          rule="Toujours actifs - pas de consentement requis"
         >
           <Line>
-            <B>yatu-consent</B> — mémorise ton choix de consentement pour ne pas te reposer la
-            question à chaque visite. Stockage local, treize mois.
+            <B>yatu-consent-v1</B> — mémorise les catégories acceptées ou refusées et la date du
+            choix. Stockage local, six mois.
           </Line>
           <Line>
-            <B>yatu-waitlist</B> — conserve dans ton navigateur la trace de ton inscription, pour
-            t’éviter de la refaire. Stockage local, supprimé en vidant les données du site.
+            <B>yatu-waitlist</B> — conserve dans ton navigateur l’adresse e-mail saisie, la page
+            d’origine et la date du parcours de préinscription. Supprimé en vidant les données du
+            site.
+          </Line>
+          <Line>
+            <B>yatu-profil</B> — conserve localement les réponses facultatives données sur la page
+            de bienvenue. Supprimé en vidant les données du site.
+          </Line>
+          <Line>
+            <B>yatu-bde-demandes</B> — conserve localement les formulaires BDE saisis. À ce jour,
+            ces formulaires ne sont pas transmis à QUANTIQ STUDIO. Supprimé en vidant les données
+            du site.
           </Line>
         </Tracker>
 
@@ -118,13 +128,12 @@ export default function Page() {
           rule="Déposés seulement si tu les acceptes"
         >
           <Line>
-            <Todo>Outil de statistiques à préciser</Todo> — compte les pages vues, la source
-            d’arrivée et les inscriptions abouties, en données agrégées. Durée maximale :
-            treize mois.
+            Aucun outil de mesure d’audience tiers n’est actuellement chargé par le site. Activer
+            cette préférence ne dépose donc aucun traceur de statistiques à ce jour.
           </Line>
           <Line>
-            Ces mesures servent uniquement à savoir quelles pages sont utiles avant le lancement.
-            Elles ne sont jamais croisées avec ton adresse e-mail.
+            Si un outil est ajouté ultérieurement, il ne sera activé qu’après consentement et cette
+            page sera mise à jour avant sa mise en service.
           </Line>
         </Tracker>
 
@@ -134,9 +143,9 @@ export default function Page() {
           rule="Déposés seulement si tu les acceptes"
         >
           <Line>
-            Si une publication Instagram ou TikTok est intégrée à une page, la plateforme concernée
-            peut déposer ses propres traceurs. Sans consentement, le contenu reste remplacé par un
-            simple lien.
+            Le site contient actuellement de simples liens vers Instagram, TikTok et WhatsApp,
+            sans publication intégrée. Aucun traceur de ces plateformes n’est chargé tant que tu ne
+            quittes pas le site en cliquant sur l’un de ces liens.
           </Line>
         </Tracker>
       </LegalSection>
@@ -144,7 +153,7 @@ export default function Page() {
       <LegalSection title="3. Régler ça depuis ton navigateur">
         <P>
           Tu peux aussi bloquer ou supprimer les cookies directement dans les réglages de ton
-          navigateur — rubrique confidentialité pour Chrome, Firefox, Safari ou Edge. Le site
+          navigateur - rubrique confidentialité pour Chrome, Firefox, Safari ou Edge. Le site
           continuera de fonctionner, mais ton choix de consentement te sera redemandé à chaque
           visite.
         </P>

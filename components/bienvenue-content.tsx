@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Decor } from "@/components/decor";
-import { CopyIcon, InstagramIcon, WhatsappIcon } from "@/components/icons";
+import { CopyIcon, InstagramIcon, TikTokIcon, WhatsappIcon } from "@/components/icons";
 import { NavLink } from "@/components/nav-link";
 import { LAUNCH_DATE, LAUNCH_LABEL, icon } from "@/lib/content";
 import { BIENVENUE_DECOR } from "@/lib/decor";
@@ -23,19 +23,26 @@ const QUESTIONS = {
   bde: "Tu organises pour un BDE ou une association ?",
 };
 
-const SHARE_TEXT = `On va tester Yatu pour organiser nos trucs : tout au même endroit. Ça sort le ${LAUNCH_LABEL}, inscris-toi avec moi : `;
+const SHARE_TEXT = `On va tester Yatu pour organiser nos prochains événements : tout au même endroit. Ça sort le ${LAUNCH_LABEL}, inscris-toi avec moi : `;
 
-const LINKS = [
+type WelcomeLink = {
+  href: string;
+  title: string;
+  sub: string;
+  external: boolean;
+} & ({ brand: "instagram" | "tiktok" } | { tool: string });
+
+const LINKS: WelcomeLink[] = [
   {
-    href: "https://instagram.com",
-    tool: "send",
+    href: "https://www.instagram.com/yatu_app/",
+    brand: "instagram",
     title: "Instagram",
     sub: "Les coulisses d’ici septembre",
     external: true,
   },
   {
-    href: "https://tiktok.com",
-    tool: "bubble",
+    href: "https://www.tiktok.com/@yatu_app",
+    brand: "tiktok",
     title: "TikTok",
     sub: "L’organisation de groupe, en vidéo",
     external: true,
@@ -524,11 +531,31 @@ export function BienvenueContent() {
                 textDecoration: "none",
               }}
             >
-              <img
-                src={icon(l.tool)}
-                alt=""
-                style={{ width: 40, height: 40, display: "block", flex: "none" }}
-              />
+              {"brand" in l ? (
+                <span
+                  aria-hidden="true"
+                  style={{
+                    width: 40,
+                    height: 40,
+                    display: "grid",
+                    placeItems: "center",
+                    flex: "none",
+                    color: l.brand === "instagram" ? "#E1306C" : "#111111",
+                  }}
+                >
+                  {l.brand === "instagram" ? (
+                    <InstagramIcon size={36} />
+                  ) : (
+                    <TikTokIcon size={34} />
+                  )}
+                </span>
+              ) : (
+                <img
+                  src={icon(l.tool)}
+                  alt=""
+                  style={{ width: 40, height: 40, display: "block", flex: "none" }}
+                />
+              )}
               <span style={{ display: "flex", flexDirection: "column" }}>
                 <span style={{ fontFamily: UI, fontWeight: 700, fontSize: 15, color: "#2A343D" }}>
                   {l.title}

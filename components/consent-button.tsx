@@ -6,12 +6,24 @@ export const OPEN_COOKIES_EVENT = "yatu:open-cookies";
 export const CONSENT_CHANGED_EVENT = "yatu:consent-changed";
 
 export const CONSENT_KEY = "yatu-consent-v1";
+const CONSENT_DURATION_MS = 1000 * 60 * 60 * 24 * 183;
 
 export type Consent = { analytics: boolean; social: boolean; ts: string };
 
 export function readConsent(): Consent | null {
   try {
-    return JSON.parse(window.localStorage.getItem(CONSENT_KEY) || "null");
+    const consent: Consent | null = JSON.parse(
+      window.localStorage.getItem(CONSENT_KEY) || "null",
+    );
+    if (!consent) return null;
+
+    const savedAt = new Date(consent.ts).getTime();
+    if (!Number.isFinite(savedAt) || Date.now() - savedAt > CONSENT_DURATION_MS) {
+      window.localStorage.removeItem(CONSENT_KEY);
+      return null;
+    }
+
+    return consent;
   } catch {
     return null;
   }

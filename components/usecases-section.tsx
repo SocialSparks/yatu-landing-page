@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { Decor } from "@/components/decor";
 import { SectionHeading } from "@/components/section-heading";
 import { SectionCta } from "@/components/section-cta";
@@ -8,14 +11,26 @@ import { ROUTES } from "@/lib/routes";
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
 
-const MASK = "linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)";
+const MAX_USE_CASES = 8;
+const ALL_USE_CASES = USE_CASE_ROWS.flatMap((row) => row.cards);
+const DEFAULT_USE_CASES = ALL_USE_CASES.slice(0, MAX_USE_CASES);
+
+function randomUseCases() {
+  const cards = [...ALL_USE_CASES];
+
+  for (let i = cards.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [cards[i], cards[j]] = [cards[j], cards[i]];
+  }
+
+  return cards.slice(0, MAX_USE_CASES);
+}
 
 function Card({ card }: { card: UseCase }) {
   return (
     <div
       style={{
-        flex: "none",
-        width: 290,
+        width: "100%",
         height: 300,
         borderRadius: 24,
         overflow: "hidden",
@@ -103,6 +118,12 @@ function Card({ card }: { card: UseCase }) {
 }
 
 export function UseCasesSection() {
+  const [useCases, setUseCases] = useState(DEFAULT_USE_CASES);
+
+  useEffect(() => {
+    setUseCases(randomUseCases());
+  }, []);
+
   return (
     <section
       id="usages"
@@ -126,27 +147,15 @@ export function UseCasesSection() {
           titleMaxCh={20}
         />
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          {USE_CASE_ROWS.map((row, i) => (
-            <div
-              key={i}
-              style={{ overflow: "hidden", maskImage: MASK, WebkitMaskImage: MASK }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  gap: 16,
-                  width: "max-content",
-                  animation: `yq-sweep ${row.duration} ease-in-out infinite ${
-                    row.reverse ? "alternate-reverse" : "alternate"
-                  }`,
-                }}
-              >
-                {row.cards.map((card) => (
-                  <Card key={card.id} card={card} />
-                ))}
-              </div>
-            </div>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit,minmax(min(230px,100%),1fr))",
+            gap: 16,
+          }}
+        >
+          {useCases.map((card) => (
+            <Card key={card.id} card={card} />
           ))}
         </div>
 

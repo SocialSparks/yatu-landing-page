@@ -3,7 +3,7 @@ import { SITE_NAME } from "@/lib/site";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: `${SITE_NAME} — organiser un événement entre amis`,
+    name: `${SITE_NAME} - organiser un événement entre amis`,
     short_name: SITE_NAME,
     description:
       "L’appli qui réunit la discussion, le budget, les listes, le planning, les documents et les photos d’un événement entre amis.",
