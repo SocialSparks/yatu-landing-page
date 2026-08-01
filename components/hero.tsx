@@ -208,20 +208,14 @@ export function Hero() {
               data-r="hero-mock"
               data-reveal="scale"
               data-reveal-delay="100"
-              data-float=""
-              style={
-                {
-                  position: "relative",
-                  width: "100%",
-                  aspectRatio: "418 / 850",
-                  "--yq-amp": "7px",
-                  "--yq-dur": "5.50s",
-                  "--yq-lag": "0.39s",
-                } as React.CSSProperties
-              }
+              style={{
+                position: "relative",
+                width: "100%",
+                aspectRatio: "418 / 850",
+              }}
             >
               <img
-                src="/mockups/iphone_homepage.png"
+                src="/mockups/iphone_homepage.svg"
                 alt="Écran d'accueil de l'application Yatu sur iPhone"
                 style={{
                   width: "100%",

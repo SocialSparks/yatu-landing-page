@@ -7,9 +7,10 @@ import { ROUTES } from "@/lib/routes";
 
 const UI = "var(--font-ui), system-ui, sans-serif";
 
+/* Same order as the sections on the home page. */
 const NAV = [
-  { href: ROUTES.modules, label: "Les modules" },
   { href: ROUTES.fonctionnement, label: "Comment ça marche" },
+  { href: ROUTES.modules, label: "Les modules" },
   { href: ROUTES.usages, label: "Cas d'usage" },
   { href: ROUTES.bde, label: "BDE & assos", note: "Page dédiée" },
 ];

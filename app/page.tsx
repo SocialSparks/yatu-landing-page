@@ -7,6 +7,8 @@ import { ModulesSection } from "@/components/modules-section";
 import { TimelineSection } from "@/components/timeline-section";
 import { UseCasesSection } from "@/components/usecases-section";
 import { WaitlistSection } from "@/components/waitlist-section";
+import { YatuOverviewSection } from "@/components/yatu-overview-section";
+import { YatuRevealSection } from "@/components/yatu-reveal-section";
 
 /**
  * Accueil - the pre-launch home page, implemented from Accueil.dc.html
@@ -23,10 +25,12 @@ export default function Page() {
     <main style={{ background: "#F7F4ED" }}>
       <Hero />
       <GalereSection />
+      <YatuRevealSection />
+      <YatuOverviewSection />
+      <DemoSection />
       <ModulesSection />
       <TimelineSection />
       <UseCasesSection />
-      <DemoSection />
       <WaitlistSection />
       <BdeTeaser />
       <FaqSection />

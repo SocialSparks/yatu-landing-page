@@ -19,7 +19,72 @@ export const ACCENT = {
   blush: "#FF92B1",
 } as const;
 
-export const icon = (name: string) => `/assets/tools/${name}.png`;
+export const icon = (name: string) => `/assets/tools/${name}.svg`;
+
+/* ── "Voici Yatu" - what the product is, before any feature ─────────── */
+
+export type Bullet = { tool: string; title: string; desc: string };
+
+export const YATU_REVEAL_LEDE =
+  "Tu crées un événement, tu invites ton groupe par lien, et tout le monde retrouve au même endroit les discussions, les infos utiles, le budget, les tâches, le planning, les documents et les photos.";
+
+export const YATU_REVEAL_BENEFITS: Bullet[] = [
+  {
+    tool: "documents",
+    title: "Tout est au même endroit",
+    desc: "Plus besoin de jongler entre les messages, les notes, les tableurs et les albums photo.",
+  },
+  {
+    tool: "people",
+    title: "Le groupe participe vraiment",
+    desc: "Chacun peut suivre, décider, ajouter une dépense, cocher une tâche ou partager ses photos.",
+  },
+  {
+    tool: "calendar",
+    title: "L’événement continue après le jour J",
+    desc: "Les comptes, les discussions et les souvenirs restent réunis dans le bon espace.",
+  },
+];
+
+/* ── "Dans un événement Yatu" - the two app screens, up close ───────── */
+
+export const YATU_OVERVIEW_SCREENS: { src: string; alt: string; label: string; caption: string }[] = [
+  {
+    src: "/mockups/iphone_event.svg",
+    alt: "L'écran d'un événement Yatu : le nom du séjour, les participants, la description et les onglets Infos, Discussion et Budget",
+    label: "Page événement",
+    caption: "Le hub du groupe : participants, infos pratiques et onglets du séjour.",
+  },
+  {
+    src: "/mockups/iphone_budget.svg",
+    alt: "L'écran budget d'un événement Yatu : total des dépenses, part de chacun et liste des dépenses avec qui a payé",
+    label: "Page budget",
+    caption: "Le total, ta part et qui a avancé quoi, à jour en direct.",
+  },
+];
+
+export const YATU_OVERVIEW_POINTS: Bullet[] = [
+  {
+    tool: "pin",
+    title: "Infos clés visibles tout de suite",
+    desc: "Adresse, horaires, détails pratiques et documents restent attachés à l’événement.",
+  },
+  {
+    tool: "budget",
+    title: "Budget clair pour tout le groupe",
+    desc: "Chacun voit les dépenses, qui a avancé quoi et comment les comptes se répartissent.",
+  },
+  {
+    tool: "liste",
+    title: "Organisation plus fluide",
+    desc: "Les tâches, listes et décisions sont visibles sans relancer tout le monde.",
+  },
+  {
+    tool: "img",
+    title: "Souvenirs centralisés",
+    desc: "Les photos restent dans l’événement, avec le reste du groupe.",
+  },
+];
 
 /* ── The modules a group can switch on ──────────────────────────────── */
 
@@ -81,7 +146,7 @@ export const MODULES: Module[] = [
   },
   {
     key: "img",
-    label: "Mémories",
+    label: "Souvenirs",
     icon: icon("img"),
     desc: "L’album commun. Tout le monde dépose, tout le monde récupère.",
   },
@@ -347,7 +412,7 @@ export const TIMELINE: TimelineStep[] = [
   {
     kind: "card",
     icon: icon("img"),
-    title: "L'album se referme en mémorie",
+    title: "L'album se referme en souvenir",
     desc: "Les photos des huit téléphones se rassemblent. L'album reste ouvert, consultable des années après, même par ceux qui ont changé de portable.",
   },
   {

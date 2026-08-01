@@ -38,7 +38,7 @@ export function Decor({ items }: { items: DecorItem[] }) {
         return (
           <img
             key={`${d.i}-${i}`}
-            src={`/assets/tools/${d.i}.png`}
+            src={`/assets/tools/${d.i}.svg`}
             alt=""
             data-float=""
             style={
