@@ -112,13 +112,21 @@ export default function Page() {
             site.
           </Line>
           <Line>
-            <B>yatu-profil</B> — conserve localement les réponses facultatives données sur la page
+            <B>yatu-profil</B> — conserve une copie des réponses facultatives données sur la page
             de bienvenue. Supprimé en vidant les données du site.
           </Line>
           <Line>
-            <B>yatu-bde-demandes</B> — conserve localement les formulaires BDE saisis. À ce jour,
-            ces formulaires ne sont pas transmis à QUANTIQ STUDIO. Supprimé en vidant les données
-            du site.
+            <B>yatu-bde-demandes</B> — conserve une copie des formulaires BDE saisis. Supprimé en
+            vidant les données du site.
+          </Line>
+          <Line>
+            Ces trois entrées sont des copies conservées sur ton appareil pour éviter la perte de
+            saisie. Le contenu des formulaires est par ailleurs transmis à QUANTIQ STUDIO au moment
+            où tu valides, pour pouvoir te recontacter : voir la{" "}
+            <NavLink href={ROUTES.confidentialite} style={{ color: "#4E565D" }}>
+              politique de confidentialité
+            </NavLink>
+            .
           </Line>
         </Tracker>
 

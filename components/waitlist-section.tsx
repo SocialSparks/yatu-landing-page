@@ -12,6 +12,7 @@ export function WaitlistSection() {
   return (
     <section
       id="liste"
+      data-r="waitlist-section"
       style={{
         position: "relative",
         overflow: "hidden",
@@ -81,6 +82,7 @@ export function WaitlistSection() {
         </div>
 
         <div
+          data-r="waitlist-visual"
           data-reveal="scale"
           data-reveal-delay="120"
           style={{

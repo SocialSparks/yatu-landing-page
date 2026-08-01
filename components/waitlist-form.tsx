@@ -2,17 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import { useId, useState } from "react";
+import { Honeypot } from "@/components/honeypot";
 import { CTA } from "@/lib/content";
+import { HONEYPOT_NAME, submitForm } from "@/lib/forms";
 import { ROUTES } from "@/lib/routes";
 
 const UI = "var(--font-ui), system-ui, sans-serif";
-
-/**
- * TODO - point this at the real list provider (Brevo / Mailchimp / Tally, or an
- * in-app route handler). While it is empty the address is only stored locally,
- * but the journey still runs end to end: valid addresses land on /bienvenue.
- */
-const ENDPOINT = "";
 
 const DEFAULT_NOTE = "Ton adresse sert seulement à te prévenir.";
 
@@ -37,9 +32,10 @@ export function WaitlistForm({
   const inputId = useId();
   const router = useRouter();
 
-  async function submit(e: React.FormEvent) {
+  async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const email = value.trim();
+    const trap = new FormData(e.currentTarget).get(HONEYPOT_NAME);
 
     if (!isValid(email)) {
       setStatus("error");
@@ -47,34 +43,24 @@ export function WaitlistForm({
       return;
     }
 
-    try {
-      const list = JSON.parse(window.localStorage.getItem("yatu-waitlist") || "[]");
-      list.push({ email, source, ts: new Date().toISOString() });
-      window.localStorage.setItem("yatu-waitlist", JSON.stringify(list));
-    } catch {
-      /* storage blocked - not worth failing the signup over */
+    setStatus("sending");
+    setMessage("On t’inscrit…");
+
+    const result = await submitForm("waitlist", { email, source, [HONEYPOT_NAME]: trap });
+
+    // The local copy sits on this visitor's machine, so a failed send is a lead
+    // we never see: say so and let them try again rather than sail on.
+    if (result === "failed") {
+      setStatus("error");
+      setMessage("L’inscription n’est pas passée. Réessaie dans un instant.");
+      return;
     }
 
-    const welcome = `${ROUTES.bienvenue}?e=${encodeURIComponent(email)}&s=${encodeURIComponent(source)}`;
-
-    if (ENDPOINT) {
-      setStatus("sending");
-      setMessage("On t’inscrit…");
-      try {
-        await fetch(ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, source }),
-        });
-      } catch {
-        /* the address is already stored locally; don’t punish the visitor */
-      }
-    } else {
-      setStatus("done");
-      setMessage("C’est bon, on t’emmène…");
-    }
-
-    router.push(welcome);
+    setStatus("done");
+    setMessage("C’est bon, on t’emmène…");
+    router.push(
+      `${ROUTES.bienvenue}?e=${encodeURIComponent(email)}&s=${encodeURIComponent(source)}`,
+    );
   }
 
   const noteColor = status === "error" ? "#D92E2E" : "#71787E";
@@ -99,6 +85,7 @@ export function WaitlistForm({
         <label htmlFor={inputId} style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap" }}>
           Adresse e-mail
         </label>
+        <Honeypot />
         <input
           id={inputId}
           className="yq-input"

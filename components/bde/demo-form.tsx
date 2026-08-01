@@ -2,22 +2,17 @@
 
 import { useState } from "react";
 import { Decor } from "@/components/decor";
+import { Honeypot } from "@/components/honeypot";
 import { NavLink } from "@/components/nav-link";
 import { BDE_CTA, DEMO_REASSURANCE, EVENT_TYPES } from "@/lib/bde-content";
 import { icon } from "@/lib/content";
 import { BDE_DEMO_DECOR } from "@/lib/decor";
+import { submitForm } from "@/lib/forms";
 import { ROUTES } from "@/lib/routes";
 import { PUBLISHER } from "@/lib/site";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
-
-/**
- * TODO - point this at wherever demo requests should land (an in-app route
- * handler, Tally, Brevo…). While it is empty the request is stored locally so
- * the journey stays testable end to end.
- */
-const ENDPOINT = "";
 
 const FIELD: React.CSSProperties = {
   height: 48,
@@ -48,35 +43,31 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-export function BdeDemoForm() {
-  const [sent, setSent] = useState(false);
+type Status = "idle" | "sending" | "sent" | "error";
 
-  function submit(e: React.FormEvent<HTMLFormElement>) {
+export function BdeDemoForm() {
+  const [status, setStatus] = useState<Status>("idle");
+
+  async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data: Record<string, unknown> = Object.fromEntries(
       new FormData(e.currentTarget).entries(),
     );
-    data.ts = new Date().toISOString();
 
-    try {
-      const list = JSON.parse(window.localStorage.getItem("yatu-bde-demandes") || "[]");
-      list.push(data);
-      window.localStorage.setItem("yatu-bde-demandes", JSON.stringify(list));
-    } catch {
-      /* storage blocked */
+    setStatus("sending");
+    const result = await submitForm("bde-demo", data);
+
+    // Someone typed out their whole event here - never pretend it arrived.
+    if (result === "failed") {
+      setStatus("error");
+      return;
     }
 
-    if (ENDPOINT) {
-      fetch(ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      }).catch(() => {});
-    }
-
-    setSent(true);
+    setStatus("sent");
     document.getElementById("demo")?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
+
+  const sent = status === "sent";
 
   return (
     <section
@@ -252,6 +243,7 @@ export function BdeDemoForm() {
             </div>
           ) : (
             <form onSubmit={submit} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+              <Honeypot />
               <div
                 style={{
                   display: "grid",
@@ -314,10 +306,11 @@ export function BdeDemoForm() {
               <button
                 type="submit"
                 className="yq-btn-dark"
+                disabled={status === "sending"}
                 style={{
                   alignSelf: "flex-start",
                   border: 0,
-                  cursor: "pointer",
+                  cursor: status === "sending" ? "progress" : "pointer",
                   background: "#2A343D",
                   color: "#FFFFFF",
                   fontFamily: UI,
@@ -327,8 +320,23 @@ export function BdeDemoForm() {
                   borderRadius: 999,
                 }}
               >
-                {BDE_CTA.demo}
+                {status === "sending" ? "On envoie…" : BDE_CTA.demo}
               </button>
+
+              <span
+                aria-live="polite"
+                style={{
+                  fontFamily: UI,
+                  fontSize: 14,
+                  lineHeight: 1.5,
+                  color: "#D92E2E",
+                  minHeight: status === "error" ? undefined : 0,
+                }}
+              >
+                {status === "error"
+                  ? "L’envoi n’est pas passé. Réessaie, ou écris-nous directement."
+                  : ""}
+              </span>
 
               <span
                 style={{ fontFamily: UI, fontSize: 13, lineHeight: 1.5, color: "#71787E" }}

@@ -49,28 +49,33 @@ export function DaysUntil() {
 const CELL: React.CSSProperties = {
   background: "#FFFFFF",
   border: "1px solid #EBE7DE",
-  borderRadius: 16,
-  padding: "14px 18px",
+  borderRadius: "clamp(10px,3vw,16px)",
+  padding: "clamp(9px,2.5vw,14px) clamp(3px,1.8vw,18px)",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   gap: 2,
-  minWidth: 82,
+  flex: "1 1 0",
+  minWidth: 0,
+  overflow: "hidden",
 };
 
 const NUM: React.CSSProperties = {
   fontFamily: DISPLAY,
-  fontSize: "clamp(32px,4.4vw,42px)",
+  fontSize: "clamp(21px,8vw,42px)",
   lineHeight: 1,
   color: "#2A343D",
+  fontVariantNumeric: "tabular-nums",
+  whiteSpace: "nowrap",
 };
 
 const LABEL: React.CSSProperties = {
   fontFamily: UI,
   fontWeight: 700,
-  fontSize: 11,
-  letterSpacing: ".08em",
+  fontSize: "clamp(8px,2vw,11px)",
+  letterSpacing: ".04em",
   color: "#71787E",
+  whiteSpace: "nowrap",
 };
 
 /** The four-cell countdown above the bottom-of-page signup. */
@@ -80,7 +85,14 @@ export function Countdown() {
   return (
     <div data-reveal="scale" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
       <span style={{ ...LABEL, fontSize: 12, letterSpacing: ".16em" }}>AVANT LA SORTIE</span>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 9 }}>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "nowrap",
+          gap: "clamp(3px,1.5vw,9px)",
+          width: "min(100%, 440px)",
+        }}
+      >
         <span style={CELL}>
           <span suppressHydrationWarning style={NUM}>
             {c.jours}

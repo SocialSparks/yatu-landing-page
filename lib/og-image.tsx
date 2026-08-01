@@ -1,25 +1,23 @@
-import fs from "node:fs";
-import path from "node:path";
 import { ImageResponse } from "next/og";
 import { ACCENT } from "@/lib/content";
+import { OG_WORDMARK } from "@/lib/og-wordmark";
 
 /**
  * The shared social card. Both pages render the same layout with their own
  * words, so a link to /bde never previews as the home page.
  *
- * The brand faces (Capriola, Lato) are not loaded here: the card is generated
- * at build time by satori, which would need the font binaries. The default
- * grotesque stays legible and the wordmark carries the brand.
+ * Nothing here may touch the filesystem: the card is prerendered at build time,
+ * but the worker re-renders it on request and has no fs. The wordmark is
+ * therefore inlined - see lib/og-wordmark.ts.
+ *
+ * The brand faces (Capriola, Lato) are not loaded here either, as satori would
+ * need the font binaries. The default grotesque stays legible and the wordmark
+ * carries the brand.
  */
 const SIZE = { width: 1200, height: 630 };
 
 const INK = "#2A343D";
 const DOTS = [ACCENT.coral, ACCENT.sunbeam, ACCENT.sky, ACCENT.meadow, ACCENT.lilac];
-
-function wordmark() {
-  const file = fs.readFileSync(path.join(process.cwd(), "public", "assets", "yatu-wordmark.png"));
-  return `data:image/png;base64,${file.toString("base64")}`;
-}
 
 export function ogImage({
   title,
@@ -47,7 +45,7 @@ export function ogImage({
         }}
       >
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <img src={wordmark()} width={185} height={86} alt="" />
+          <img src={OG_WORDMARK} width={185} height={86} alt="" />
           <div
             style={{
               display: "flex",

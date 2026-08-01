@@ -51,6 +51,43 @@ Copy and data live in `lib/content.ts`, `lib/bde-content.ts` and `lib/decor.ts` 
 components stay markup-only. The two legal pages share `components/legal-page.tsx`; the
 yellow `<Todo>` spans mark the fields still waiting on Quantiq Studio's real details.
 
+## Formulaires
+
+Les trois formulaires passent par `lib/forms.ts` et atterrissent dans une **Google Sheet**,
+un onglet chacun :
+
+| Formulaire | Composant | Onglet |
+| --- | --- | --- |
+| Liste d'attente (hero + `#liste`) | `components/waitlist-form.tsx` | Waitlist |
+| Demande de démo BDE | `components/bde/demo-form.tsx` | Demandes BDE |
+| Questionnaire facultatif de `/bienvenue` | `components/bienvenue-content.tsx` | Questionnaire |
+
+La destination est un déploiement **Google Apps Script** : le site n'a donc besoin d'aucune
+route serveur, ce qui garde le déploiement Cloudflare tel quel. Le script et sa procédure
+d'installation sont dans [`scripts/google-sheet.gs`](scripts/google-sheet.gs) ; à la fin, on
+colle l'URL `/exec` obtenue dans la variable d'environnement :
+
+```bash
+cp .env.local.example .env.local
+# NEXT_PUBLIC_FORMS_ENDPOINT=https://script.google.com/macros/s/xxxx/exec
+```
+
+La même variable doit être ajoutée côté hébergeur. Elle est `NEXT_PUBLIC_`, donc **inlinée au
+build** : après l'avoir changée il faut relancer `npm run dev` ou redéployer.
+
+Quelques points volontaires :
+
+| | |
+| --- | --- |
+| Variable vide | Mode local : rien n'est envoyé, la soumission est gardée dans `localStorage` et le parcours (`/bienvenue`, l'écran « C'est envoyé ») reste testable. |
+| Choix multiples | Le questionnaire envoie un tableau ; le script le joint en une cellule (`cell()`). |
+| `Content-Type: text/plain` | Apps Script ne sait pas répondre à un preflight CORS, et `application/json` en déclencherait un. Le corps reste du JSON, que le script parse comme tel. |
+| Échec d'envoi | Affiché au visiteur avec une invite à réessayer. La copie `localStorage` est sur *sa* machine : un envoi perdu en silence est un contact perdu. |
+| Champ `website` | Honeypot (`components/honeypot.tsx`) invisible pour un humain ; le script ignore toute soumission où il est rempli. L'URL `/exec` est publique. |
+
+Pour ajouter un champ : l'ajouter au formulaire React, puis ajouter sa ligne dans `FORMS` du
+script et **recréer une version** du déploiement (sinon l'ancienne continue de répondre).
+
 ## Domain and SEO
 
 The production domain is written **once**, in `lib/site.ts`:
@@ -97,16 +134,11 @@ structured data, so the marked-up answers are always the visible ones.
 
 ## Still to do
 
-**Waitlist endpoint.** `ENDPOINT` in `components/waitlist-form.tsx` is empty. Until it is
-filled in, a valid address is stored under `localStorage["yatu-waitlist"]` and the form
-confirms inline. Set it to your provider's URL (Brevo / Mailchimp / Tally) or an in-app
-route handler and the POST happens automatically.
+**Deploy the Apps Script and set `NEXT_PUBLIC_FORMS_ENDPOINT`** - see the "Formulaires"
+section above. Until it is set, the three forms stay in local mode and nothing is collected.
 
 **Analytics tag.** `components/cookie-banner.tsx` has the hook point marked, inside
 `persist()`, for loading a measurement tag once consent is given.
-
-**Demo-request endpoint.** `ENDPOINT` in `components/bde/demo-form.tsx` is empty too;
-requests are stored under `localStorage["yatu-bde-demandes"]` meanwhile.
 
 **Social links are placeholders.** `SOCIAL` in `components/site-footer.tsx` and the two
 links on `/bienvenue` point at `instagram.com` / `tiktok.com` / `linkedin.com` with no

@@ -7,6 +7,7 @@ import { CopyIcon, InstagramIcon, TikTokIcon, WhatsappIcon } from "@/components/
 import { NavLink } from "@/components/nav-link";
 import { LAUNCH_DATE, LAUNCH_LABEL, icon } from "@/lib/content";
 import { BIENVENUE_DECOR } from "@/lib/decor";
+import { submitForm } from "@/lib/forms";
 import { ROUTES } from "@/lib/routes";
 import { SITE_URL } from "@/lib/site";
 
@@ -102,11 +103,16 @@ function Question({ label, children }: { label: string; children: React.ReactNod
 /** Implemented from "Bienvenue.dc.html" - the page the signup lands on. */
 export function BienvenueContent() {
   const params = useSearchParams();
-  const email = params.get("e") || "ton adresse";
+  // Kept apart: the fallback is a sentence to read, never something to file
+  // under "E-mail" in the sheet.
+  const signupEmail = params.get("e") || "";
+  const email = signupEmail || "ton adresse";
 
   const [types, setTypes] = useState<string[]>([]);
   const [size, setSize] = useState("");
   const [bde, setBde] = useState("");
+  const [sending, setSending] = useState(false);
+  const [failed, setFailed] = useState(false);
   const [done, setDone] = useState(false);
   const [copied, setCopied] = useState(false);
   const [shareUrl, setShareUrl] = useState("");
@@ -121,12 +127,22 @@ export function BienvenueContent() {
     setDays(Math.max(0, Math.ceil((new Date(LAUNCH_DATE).getTime() - Date.now()) / 86400000)));
   }, []);
 
-  function save() {
-    const payload = { email, types, size, bde, ts: new Date().toISOString() };
-    try {
-      window.localStorage.setItem("yatu-profil", JSON.stringify(payload));
-    } catch {
-      /* storage blocked */
+  async function save() {
+    setSending(true);
+    setFailed(false);
+
+    const result = await submitForm("profil", {
+      email: signupEmail,
+      types,
+      size,
+      bde,
+      source: params.get("s") || "",
+    });
+
+    setSending(false);
+    if (result === "failed") {
+      setFailed(true);
+      return;
     }
     setDone(true);
   }
@@ -342,14 +358,25 @@ export function BienvenueContent() {
                 ))}
               </Question>
 
+              {failed ? (
+                <span
+                  aria-live="polite"
+                  style={{ fontFamily: UI, fontSize: 14, lineHeight: 1.5, color: "#D92E2E" }}
+                >
+                  Tes réponses ne sont pas parties. Réessaie, ou passe : ton inscription à la
+                  liste, elle, est bien enregistrée.
+                </span>
+              ) : null}
+
               <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" }}>
                 <button
                   type="button"
                   onClick={save}
+                  disabled={sending}
                   className="yq-btn-dark"
                   style={{
                     border: 0,
-                    cursor: "pointer",
+                    cursor: sending ? "progress" : "pointer",
                     background: "#2A343D",
                     color: "#FFFFFF",
                     fontFamily: UI,
@@ -359,7 +386,7 @@ export function BienvenueContent() {
                     borderRadius: 999,
                   }}
                 >
-                  Envoyer mes réponses
+                  {sending ? "On envoie…" : "Envoyer mes réponses"}
                 </button>
                 <button
                   type="button"

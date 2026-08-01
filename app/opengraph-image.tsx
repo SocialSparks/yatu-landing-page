@@ -1,6 +1,6 @@
 import { OG_CONTENT_TYPE, OG_SIZE, ogImage } from "@/lib/og-image";
 
-export const alt = "Yatu, l’appli pour organiser un événement entre amis";
+export const alt = "Yatu, l'appli pour organiser un événement entre amis";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 

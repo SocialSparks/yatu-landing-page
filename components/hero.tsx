@@ -100,22 +100,102 @@ export function Hero() {
             <DaysUntil />
           </span>
 
-          <h1
-            data-reveal="up"
-            data-reveal-delay="70"
+          <div
+            data-r="hero-title-with-icons"
             style={{
-              margin: 0,
-              fontFamily: DISPLAY,
-              fontWeight: 400,
-              fontSize: "clamp(40px,5.6vw,66px)",
-              lineHeight: 1.04,
-              letterSpacing: "-.028em",
-              color: "#2A343D",
-              textWrap: "balance",
+              position: "relative",
             }}
           >
-            Organise tes événements entre amis.
-          </h1>
+            <h1
+              data-reveal="up"
+              data-reveal-delay="70"
+              style={{
+                margin: 0,
+                fontFamily: DISPLAY,
+                fontWeight: 400,
+                fontSize: "clamp(40px,5.6vw,66px)",
+                lineHeight: 1.04,
+                letterSpacing: "-.028em",
+                color: "#2A343D",
+                textWrap: "balance",
+              }}
+            >
+              Organise tes événements entre amis.
+            </h1>
+
+            <span
+              data-r="hero-title-icons"
+              aria-hidden="true"
+              style={{
+                display: "none",
+                position: "absolute",
+                right: 0,
+                top: "50%",
+                width: 72,
+                height: 136,
+                transform: "translateY(-50%)",
+                pointerEvents: "none",
+              }}
+            >
+              <img
+                src={icon("calendar")}
+                alt=""
+                data-float=""
+                style={
+                  {
+                    position: "absolute",
+                    top: 0,
+                    right: 0,
+                    width: 32,
+                    height: 32,
+                    display: "block",
+                    filter: "drop-shadow(0 5px 10px rgba(42,52,61,.16))",
+                    "--yq-amp": "5px",
+                    "--yq-dur": "5.50s",
+                    "--yq-lag": "0.35s",
+                  } as React.CSSProperties
+                }
+              />
+              <img
+                src={icon("people")}
+                alt=""
+                data-float=""
+                style={
+                  {
+                    position: "absolute",
+                    top: 54,
+                    left: 0,
+                    width: 29,
+                    height: 29,
+                    display: "block",
+                    filter: "drop-shadow(0 5px 10px rgba(42,52,61,.16))",
+                    "--yq-amp": "5px",
+                    "--yq-dur": "6.05s",
+                    "--yq-lag": "0.82s",
+                  } as React.CSSProperties
+                }
+              />
+              <img
+                src={icon("heart")}
+                alt=""
+                data-float=""
+                style={
+                  {
+                    position: "absolute",
+                    right: 12,
+                    bottom: 0,
+                    width: 25,
+                    height: 25,
+                    display: "block",
+                    filter: "drop-shadow(0 5px 10px rgba(42,52,61,.16))",
+                    "--yq-amp": "4px",
+                    "--yq-dur": "4.95s",
+                    "--yq-lag": "1.14s",
+                  } as React.CSSProperties
+                }
+              />
+            </span>
+          </div>
 
           <p
             data-reveal="up"

@@ -83,7 +83,9 @@ export function pageMetadata({
   image?: string;
   index?: boolean;
 }): Metadata {
-  const images = [{ url: image, width: 1200, height: 630, alt: title }];
+  // The card routes answer on a URL with no extension, so the type is spelled
+  // out - some crawlers read it rather than the response's Content-Type.
+  const images = [{ url: image, width: 1200, height: 630, alt: title, type: "image/png" }];
 
   return {
     title: { absolute: title },
