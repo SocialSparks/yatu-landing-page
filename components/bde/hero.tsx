@@ -295,6 +295,8 @@ export function BdeHero() {
                   }}
                 >
                   <img
+                    loading="lazy"
+                    decoding="async"
                     src={icon("bell")}
                     alt=""
                     style={{ width: 34, height: 34, display: "block", flex: "none" }}

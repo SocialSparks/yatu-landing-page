@@ -113,6 +113,8 @@ export function BdeTeaser() {
                 }}
               >
                 <img
+                  loading="lazy"
+                  decoding="async"
                   src={icon(f.tool)}
                   alt=""
                   style={{ width: 36, height: 36, display: "block", flex: "none" }}

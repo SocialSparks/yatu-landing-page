@@ -157,6 +157,8 @@ export function TimelineSection() {
                   style={TIMELINE_RAIL.dotSmall}
                 />
                 <img
+                  loading="lazy"
+                  decoding="async"
                   src={step.icon}
                   alt=""
                   style={{ width: 36, height: 36, display: "block", flex: "none" }}

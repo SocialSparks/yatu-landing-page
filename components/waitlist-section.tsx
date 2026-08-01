@@ -94,6 +94,8 @@ export function WaitlistSection() {
           }}
         >
           <img
+            loading="lazy"
+            decoding="async"
             src={icon("bell")}
             alt=""
             data-float=""
@@ -113,6 +115,8 @@ export function WaitlistSection() {
             }
           />
           <img
+            loading="lazy"
+            decoding="async"
             src={icon("heart")}
             alt=""
             data-float=""

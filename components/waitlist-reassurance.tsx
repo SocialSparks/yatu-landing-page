@@ -33,6 +33,8 @@ export function WaitlistReassurance() {
           }}
         >
           <img
+            loading="lazy"
+            decoding="async"
             src={icon(point.tool)}
             alt=""
             style={{ width: 26, height: 26, display: "block", flex: "none" }}

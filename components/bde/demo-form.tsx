@@ -35,10 +35,25 @@ const LABEL: React.CSSProperties = {
   color: "#4E565D",
 };
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
+function Field({
+  label,
+  required = false,
+  children,
+}: {
+  label: string;
+  required?: boolean;
+  children: React.ReactNode;
+}) {
   return (
     <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-      <span style={LABEL}>{label}</span>
+      <span style={LABEL}>
+        {label}
+        {required ? (
+          <span aria-hidden="true" style={{ marginLeft: 3, color: "#D92E2E" }}>
+            *
+          </span>
+        ) : null}
+      </span>
       {children}
     </label>
   );
@@ -175,7 +190,7 @@ export function BdeDemoForm() {
                   color: "#2A343D",
                 }}
               >
-                <img src={icon(r.tool)} alt="" style={{ width: 28, height: 28, flex: "none" }} />
+                <img loading="lazy" decoding="async" src={icon(r.tool)} alt="" style={{ width: 28, height: 28, flex: "none" }} />
                 {r.label}
               </span>
             ))}
@@ -202,6 +217,8 @@ export function BdeDemoForm() {
               }}
             >
               <img
+                loading="lazy"
+                decoding="async"
                 src={icon("heart")}
                 alt=""
                 style={{ width: 56, height: 56, display: "block" }}
@@ -258,21 +275,22 @@ export function BdeDemoForm() {
                   gap: 14,
                 }}
               >
-                <Field label="Prénom et nom">
+                <Field label="Prénom et nom" required>
                   <input name="nom" required className="yq-input" style={FIELD} />
                 </Field>
-                <Field label="BDE ou association">
+                <Field label="BDE ou association" required>
                   <input name="asso" required className="yq-input" style={FIELD} />
                 </Field>
                 <Field label="École ou campus">
                   <input name="ecole" className="yq-input" style={FIELD} />
                 </Field>
-                <Field label="E-mail">
+                <Field label="E-mail" required>
                   <input name="email" type="email" required className="yq-input" style={FIELD} />
                 </Field>
-                <Field label="Type d’événement">
+                <Field label="Type d’événement" required>
                   <select
                     name="type"
+                    required
                     className="yq-input"
                     style={{ ...FIELD, padding: "0 12px" }}
                     defaultValue={EVENT_TYPES[0]}

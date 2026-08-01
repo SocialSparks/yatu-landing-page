@@ -10,7 +10,7 @@ const SRC = "/assets/avatar-pair.png";
 export function AvatarPair({ height = 30 }: { height?: number }) {
   if (hasAsset(SRC)) {
     return (
-      <img src={SRC} alt="" style={{ height, width: "auto", display: "block", flex: "none" }} />
+      <img loading="lazy" decoding="async" src={SRC} alt="" style={{ height, width: "auto", display: "block", flex: "none" }} />
     );
   }
 

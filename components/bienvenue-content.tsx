@@ -193,6 +193,8 @@ export function BienvenueContent() {
           }}
         >
           <img
+            loading="lazy"
+            decoding="async"
             src={icon("heart")}
             alt=""
             data-float=""
@@ -256,6 +258,8 @@ export function BienvenueContent() {
           {done ? (
             <div style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
               <img
+                loading="lazy"
+                decoding="async"
                 src={icon("heart")}
                 alt=""
                 style={{ width: 42, height: 42, display: "block", flex: "none" }}
@@ -557,6 +561,8 @@ export function BienvenueContent() {
                 </span>
               ) : (
                 <img
+                  loading="lazy"
+                  decoding="async"
                   src={icon(l.tool)}
                   alt=""
                   style={{ width: 40, height: 40, display: "block", flex: "none" }}

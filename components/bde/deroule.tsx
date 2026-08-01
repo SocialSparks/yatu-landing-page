@@ -73,6 +73,8 @@ export function BdeDeroule() {
             >
               <span data-timeline-dot="" data-r="tl-dot-sm" style={TIMELINE_RAIL.dotSmall} />
               <img
+                loading="lazy"
+                decoding="async"
                 src={step.icon}
                 alt=""
                 style={{ width: 38, height: 38, display: "block", flex: "none" }}

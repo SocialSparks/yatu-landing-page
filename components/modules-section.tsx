@@ -311,6 +311,8 @@ export function ModulesSection() {
             }}
           >
             <img
+              loading="lazy"
+              decoding="async"
               src={icon("bell")}
               alt=""
               style={{ width: 36, height: 36, display: "block", opacity: 0.65 }}

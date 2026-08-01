@@ -121,6 +121,8 @@ export function YatuRevealSection() {
                 }}
               >
                 <img
+                  loading="lazy"
+                  decoding="async"
                   src={icon(benefit.tool)}
                   alt=""
                   style={{ width: 34, height: 34, display: "block", flex: "none" }}
@@ -168,6 +170,8 @@ export function YatuRevealSection() {
             style={{ position: "relative", width: "100%", maxWidth: 420, aspectRatio: "100 / 158" }}
           >
             <img
+              loading="lazy"
+              decoding="async"
               src={BUDGET_SCREEN.src}
               alt={BUDGET_SCREEN.alt}
               style={{
@@ -180,6 +184,8 @@ export function YatuRevealSection() {
               }}
             />
             <img
+              loading="lazy"
+              decoding="async"
               src={EVENT_SCREEN.src}
               alt={EVENT_SCREEN.alt}
               style={{

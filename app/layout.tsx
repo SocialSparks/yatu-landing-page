@@ -5,6 +5,7 @@ import { CookieBanner } from "@/components/cookie-banner";
 import { Motion } from "@/components/motion";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { SiteStructuredData } from "@/components/structured-data";
 import { PUBLISHER, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
@@ -44,7 +45,23 @@ export const metadata: Metadata = {
   },
   applicationName: SITE_NAME,
   publisher: PUBLISHER,
+  authors: [{ name: PUBLISHER, url: SITE_URL }],
+  creator: PUBLISHER,
   manifest: "/manifest.webmanifest",
+  // Indexable by default; a page that must stay out says so through
+  // pageMetadata({ index: false }). max-image-preview:large is what lets the
+  // guide photos show full width in the results and in Discover.
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   // app/favicon.ico is picked up on its own; these cover the larger sizes.
   icons: {
     icon: [
@@ -81,6 +98,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <style>{`[data-reveal],[data-fly],[data-reveal="stagger"]>*,[data-float]{opacity:1!important;transform:none!important;scale:1!important}`}</style>
         </noscript>
         <Motion />
+        {/* Publisher + site identity, on every page: the pages then only have
+            to declare what they are and point back to these by @id. */}
+        <SiteStructuredData />
         {/* Every page in the design project imports these three. */}
         <SiteHeader />
         {children}

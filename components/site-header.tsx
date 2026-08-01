@@ -14,6 +14,7 @@ const NAV = [
   { href: ROUTES.fonctionnement, label: "Comment ça marche" },
   { href: ROUTES.modules, label: "Les modules" },
   { href: ROUTES.usages, label: "Cas d’usage" },
+  { href: ROUTES.organiser, label: "Guides" },
   { href: ROUTES.bde, label: "BDE & assos", note: "Page dédiée" },
 ];
 
@@ -78,10 +79,16 @@ export function SiteHeader() {
           className="yq-logo-link"
           style={{ display: "flex", alignItems: "center", flex: "none", textDecoration: "none" }}
         >
+          {/* In the sticky header of every page, so never deferred. */}
           <img
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
             src="/assets/yatu-wordmark.png"
             alt=""
             className="yq-logo-mark"
+            width={86}
+            height={40}
             style={{ height: 40, width: "auto", display: "block" }}
           />
         </NavLink>

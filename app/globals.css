@@ -713,6 +713,13 @@ details[open] .yq-plus {
   }
 }
 
+/* ------------- Guides: the promise band stacks on tablet ------------ */
+@media (max-width: 920px) {
+  [data-r~="guide-hero"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 /* ------------------------ Header: collapsed menu -------------------- */
 @media (max-width: 880px) {
   [data-r~="nav-desk"] {

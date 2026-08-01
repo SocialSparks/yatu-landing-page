@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Decor } from "@/components/decor";
+import { NavLink } from "@/components/nav-link";
 import { SectionHeading } from "@/components/section-heading";
 import { SectionCta } from "@/components/section-cta";
 import { ACCENT, CTA, USE_CASE_ROWS, type UseCase } from "@/lib/content";
@@ -56,6 +57,8 @@ function Card({ card }: { card: UseCase }) {
       ) : null}
 
       <img
+        loading="lazy"
+        decoding="async"
         src={card.icon}
         alt=""
         style={{
@@ -172,7 +175,10 @@ export function UseCasesSection() {
           }}
         >
           Anniversaire, EVJF, EVG, festival, week-end au ski ou voyage en groupe : c’est le même
-          espace partagé, avec les outils que tu choisis.
+          espace partagé, avec les outils que tu choisis.{" "}
+          <NavLink href={ROUTES.organiser} style={{ color: "#2A343D" }}>
+            Nos guides détaillent la méthode occasion par occasion.
+          </NavLink>
         </p>
 
         <SectionCta

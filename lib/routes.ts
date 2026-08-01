@@ -6,6 +6,7 @@
  */
 export const ROUTES = {
   home: "/",
+  organiser: "/organiser",
   yatu: "/#yatu",
   modules: "/#solution",
   cycle: "/#cycle",
@@ -25,3 +26,13 @@ export const ROUTES = {
 
 /** Hash links must be plain <a>: next/link no-ops when only the hash changes. */
 export const isAnchor = (href: string) => href.includes("#");
+
+/**
+ * One step of a breadcrumb trail: the visible label and where it points. The
+ * same array feeds <Breadcrumbs> and the BreadcrumbList markup, so the trail
+ * Google reads is always the one on screen.
+ */
+export type Crumb = { name: string; path: string };
+
+export const HOME_CRUMB: Crumb = { name: "Accueil", path: ROUTES.home };
+export const GUIDES_CRUMB: Crumb = { name: "Guides", path: ROUTES.organiser };

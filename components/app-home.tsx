@@ -22,6 +22,8 @@ export function AppHome() {
   if (src) {
     return (
       <img
+        loading="lazy"
+        decoding="async"
         src={src}
         alt={ALT}
         data-float=""
@@ -83,6 +85,8 @@ export function AppHome() {
             >
               {isYatu ? (
                 <img
+                  loading="lazy"
+                  decoding="async"
                   src="/assets/yatu-wordmark.png"
                   alt=""
                   style={{ width: "100%", height: "auto", display: "block" }}

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { LANDING_INDEX_PATH, LANDING_PAGES } from "@/lib/landing-content";
 
 /**
  * Everything that depends on *where* the site is served lives here, so the
@@ -41,21 +42,39 @@ export const HOST_PHONE_HREF = "+16503198930";
 /** Absolute URL for a site-relative path. */
 export const absoluteUrl = (path = "/") => new URL(path, `${SITE_URL}/`).toString();
 
-/**
- * The indexable pages, in sitemap order.
- *
- * This is also the extension point for the use-case landing pages we may add
- * later (`/organiser-un-week-end-entre-amis`, `/evjf`…): create the route, add
- * one entry here, and robots.txt and the sitemap pick it up. `/bienvenue` is
- * deliberately absent - it is a post-signup page and stays out of the index.
- */
-export const SITE_PAGES: {
+export type SitePage = {
   path: string;
   changeFrequency: "weekly" | "monthly" | "yearly";
   priority: number;
-}[] = [
-  { path: "/", changeFrequency: "weekly", priority: 1 },
-  { path: "/bde", changeFrequency: "monthly", priority: 0.8 },
+  /** Site-relative images offered to Google Images through the sitemap. */
+  images?: string[];
+};
+
+/**
+ * The indexable pages, in sitemap order.
+ *
+ * The occasion guides are not listed one by one: they come from
+ * LANDING_PAGES, so adding a guide in lib/landing-content.ts is enough for the
+ * sitemap, robots.txt and the internal links to pick it up. `/bienvenue` is
+ * deliberately absent - it is a post-signup page and stays out of the index.
+ */
+export const SITE_PAGES: SitePage[] = [
+  { path: "/", changeFrequency: "weekly", priority: 1, images: ["/opengraph-image"] },
+  { path: "/bde", changeFrequency: "monthly", priority: 0.8, images: ["/bde/opengraph-image"] },
+  {
+    path: LANDING_INDEX_PATH,
+    changeFrequency: "monthly",
+    priority: 0.7,
+    images: [`${LANDING_INDEX_PATH}/opengraph-image`],
+  },
+  ...LANDING_PAGES.map((page): SitePage => ({
+    path: `/${page.slug}`,
+    changeFrequency: "monthly",
+    // Below the home page and /bde, above the legal pages: these are the
+    // entry points we want crawled often, but they are not the front door.
+    priority: 0.7,
+    images: [page.photo, `/${page.slug}/opengraph-image`],
+  })),
   { path: "/mentions-legales", changeFrequency: "yearly", priority: 0.2 },
   { path: "/confidentialite", changeFrequency: "yearly", priority: 0.2 },
   { path: "/cookies", changeFrequency: "yearly", priority: 0.2 },
@@ -91,7 +110,10 @@ export function pageMetadata({
     title: { absolute: title },
     description,
     alternates: { canonical: path },
-    robots: index ? undefined : { index: false, follow: true },
+    // Spread, not `robots: undefined`: a key present with an undefined value
+    // still overrides the layout, and the page would lose the googleBot
+    // directives (max-image-preview:large…) declared there.
+    ...(index ? {} : { robots: { index: false, follow: true } }),
     openGraph: {
       title,
       description,

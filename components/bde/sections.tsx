@@ -30,7 +30,7 @@ function SoftCard({ tool, title, desc }: { tool: string; title: string; desc: st
         gap: 12,
       }}
     >
-      <img src={icon(tool)} alt="" style={{ width: 40, height: 40, display: "block" }} />
+      <img loading="lazy" decoding="async" src={icon(tool)} alt="" style={{ width: 40, height: 40, display: "block" }} />
       <span
         style={{
           fontFamily: DISPLAY,
@@ -197,7 +197,7 @@ export function BdeFeatures() {
                     zIndex: BDE_FEATURES.length - index,
                   }}
                 >
-                  <img src={icon(feature.tool)} alt="" style={{ width: 28, height: 28, display: "block" }} />
+                  <img loading="lazy" decoding="async" src={icon(feature.tool)} alt="" style={{ width: 28, height: 28, display: "block" }} />
                 </span>
               ))}
             </div>
@@ -267,6 +267,8 @@ export function BdeFeatures() {
                     }}
                   >
                     <img
+                      loading="lazy"
+                      decoding="async"
                       src={icon(f.tool)}
                       alt=""
                       style={{ width: 36, height: 36, display: "block" }}
@@ -462,6 +464,8 @@ export function BdePilote() {
           >
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
               <img
+                loading="lazy"
+                decoding="async"
                 src={icon("people")}
                 alt=""
                 style={{ width: 40, height: 40, display: "block", flex: "none" }}
@@ -494,6 +498,8 @@ export function BdePilote() {
           >
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
               <img
+                loading="lazy"
+                decoding="async"
                 src={icon("send")}
                 alt=""
                 style={{ width: 40, height: 40, display: "block", flex: "none" }}

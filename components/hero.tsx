@@ -41,7 +41,7 @@ function Pill({
 }) {
   return (
     <div data-r={hideOnMobile ? "pill mobile-hide" : "pill"} data-float="" style={{ ...PILL_BASE, ...style }}>
-      <img src={icon(tool)} alt="" style={{ width: 32, height: 32, display: "block", flex: "none" }} />
+      <img loading="lazy" decoding="async" src={icon(tool)} alt="" style={{ width: 32, height: 32, display: "block", flex: "none" }} />
       <span style={{ display: "flex", flexDirection: "column" }}>
         <span style={{ fontFamily: UI, fontWeight: 700, fontSize: 14, color: "#2A343D" }}>{title}</span>
         <span style={{ fontFamily: UI, fontSize: 13, color: "#4E565D" }}>{detail}</span>
@@ -138,6 +138,8 @@ export function Hero() {
               }}
             >
               <img
+                loading="lazy"
+                decoding="async"
                 src={icon("calendar")}
                 alt=""
                 data-float=""
@@ -157,6 +159,8 @@ export function Hero() {
                 }
               />
               <img
+                loading="lazy"
+                decoding="async"
                 src={icon("people")}
                 alt=""
                 data-float=""
@@ -176,6 +180,8 @@ export function Hero() {
                 }
               />
               <img
+                loading="lazy"
+                decoding="async"
                 src={icon("heart")}
                 alt=""
                 data-float=""
@@ -290,7 +296,13 @@ export function Hero() {
                 aspectRatio: "418 / 850",
               }}
             >
+              {/* The home page's LCP element: fetched first, never deferred. */}
               <img
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
+                width={418}
+                height={850}
                 src="/mockups/iphone_homepage.svg"
                 alt="L’application Yatu sur iPhone : la liste des événements du groupe, avec les dates et les participants de chacun"
                 style={{

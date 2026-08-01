@@ -324,7 +324,7 @@ export function DemoSection() {
                       </div>
 
                       <div style={CARD}>
-                        <img src={icon("planning")} alt="" style={{ width: 26, height: 26, flex: "none" }} />
+                        <img loading="lazy" decoding="async" src={icon("planning")} alt="" style={{ width: 26, height: 26, flex: "none" }} />
                         <span style={{ fontFamily: UI, fontSize: 15, color: "#2A343D" }}>{type.dates}</span>
                       </div>
 
@@ -364,7 +364,7 @@ export function DemoSection() {
                       </div>
 
                       <div style={{ ...CARD, marginTop: "auto" }}>
-                        <img src={icon("heart")} alt="" style={{ width: 26, height: 26, flex: "none" }} />
+                        <img loading="lazy" decoding="async" src={icon("heart")} alt="" style={{ width: 26, height: 26, flex: "none" }} />
                         <span style={{ fontFamily: UI, fontSize: 14, lineHeight: 1.4, color: "#4E565D" }}>
                           La couleur suit l’événement partout dans l’app.
                         </span>
@@ -596,7 +596,7 @@ export function DemoSection() {
                       </div>
 
                       <div style={{ ...CARD, marginTop: "auto" }}>
-                        <img src={icon("people")} alt="" style={{ width: 26, height: 26, flex: "none" }} />
+                        <img loading="lazy" decoding="async" src={icon("people")} alt="" style={{ width: 26, height: 26, flex: "none" }} />
                         <span style={{ fontFamily: UI, fontWeight: 700, fontSize: 14, color: "#2A343D" }}>
                           {DEMO_GENS.length} invités · {demo.invites}
                           {demo.invites > 1 ? " ont rejoint" : " a rejoint"}
@@ -646,7 +646,7 @@ export function DemoSection() {
                       </div>
 
                       <div style={CARD}>
-                        <img src={icon("img")} alt="" style={{ width: 26, height: 26, flex: "none" }} />
+                        <img loading="lazy" decoding="async" src={icon("img")} alt="" style={{ width: 26, height: 26, flex: "none" }} />
                         <span
                           style={{
                             fontFamily: UI,
@@ -663,7 +663,7 @@ export function DemoSection() {
                       </div>
 
                       <div style={CARD}>
-                        <img src={icon("budget")} alt="" style={{ width: 26, height: 26, flex: "none" }} />
+                        <img loading="lazy" decoding="async" src={icon("budget")} alt="" style={{ width: 26, height: 26, flex: "none" }} />
                         <span
                           style={{ fontFamily: UI, fontSize: 14, color: "#2A343D", flex: "1 1 auto" }}
                         >
@@ -685,7 +685,7 @@ export function DemoSection() {
                           padding: "13px 15px",
                         }}
                       >
-                        <img src={icon("heart")} alt="" style={{ width: 26, height: 26, flex: "none" }} />
+                        <img loading="lazy" decoding="async" src={icon("heart")} alt="" style={{ width: 26, height: 26, flex: "none" }} />
                         <span
                           style={{
                             fontFamily: UI,
@@ -768,6 +768,8 @@ export function DemoSection() {
 
                       <div style={CARD}>
                         <img
+                          loading="lazy"
+                          decoding="async"
                           src={icon("bell")}
                           alt=""
                           style={{ width: 26, height: 26, flex: "none" }}
@@ -787,6 +789,8 @@ export function DemoSection() {
 
                       <div style={CARD}>
                         <img
+                          loading="lazy"
+                          decoding="async"
                           src={icon("chat")}
                           alt=""
                           style={{ width: 26, height: 26, flex: "none" }}
@@ -816,6 +820,8 @@ export function DemoSection() {
                         }}
                       >
                         <img
+                          loading="lazy"
+                          decoding="async"
                           src={icon("heart")}
                           alt=""
                           style={{ width: 26, height: 26, flex: "none" }}
@@ -848,6 +854,8 @@ export function DemoSection() {
                         }}
                       >
                         <img
+                          loading="lazy"
+                          decoding="async"
                           src={icon("heart")}
                           alt=""
                           style={{ width: 54, height: 54, display: "block" }}
@@ -919,6 +927,8 @@ export function DemoSection() {
 
                       <div style={{ ...CARD, marginTop: "auto" }}>
                         <img
+                          loading="lazy"
+                          decoding="async"
                           src={icon("send")}
                           alt=""
                           style={{ width: 26, height: 26, flex: "none" }}

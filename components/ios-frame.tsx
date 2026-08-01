@@ -101,6 +101,8 @@ export function IOSDevice({
       />
 
       <img
+        loading="lazy"
+        decoding="async"
         src="/mockups/iphone_transparent.png"
         alt=""
         aria-hidden="true"

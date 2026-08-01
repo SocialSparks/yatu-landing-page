@@ -111,20 +111,54 @@ link, the share button, the contact addresses and the JSON-LD all read from ther
 
 | Concern | Where |
 | --- | --- |
-| `metadataBase`, title template, icons, manifest link | `app/layout.tsx` |
+| `metadataBase`, title template, icons, manifest link, `robots` defaults | `app/layout.tsx` |
 | Per-page title / description / canonical / OG / Twitter | `pageMetadata()` in `lib/site.ts`, called by each `page.tsx` |
-| `robots.txt`, `sitemap.xml`, `manifest.webmanifest` | `app/robots.ts`, `app/sitemap.ts`, `app/manifest.ts` |
+| `robots.txt`, `sitemap.xml` (with image entries), `manifest.webmanifest` | `app/robots.ts`, `app/sitemap.ts`, `app/manifest.ts` |
 | Indexable page list (the sitemap's source) | `SITE_PAGES` in `lib/site.ts` |
-| Social cards (1200×630 PNG, generated at build) | `app/opengraph-image.tsx`, `app/bde/opengraph-image.tsx`, shared layout in `lib/og-image.tsx` |
-| `SoftwareApplication`, `Organization`, `FAQPage` JSON-LD | `components/structured-data.tsx` |
+| Social cards (1200×630 PNG, generated at build) | `app/opengraph-image.tsx`, `app/bde/`, `app/organiser/`, `app/[slug]/`, shared layout in `lib/og-image.tsx` |
+| JSON-LD (`Organization`, `WebSite`, `SoftwareApplication`, `FAQPage`, `HowTo`, `BreadcrumbList`, `CollectionPage`) | `components/structured-data.tsx` |
+| Visible breadcrumb trail (same array as the markup) | `components/breadcrumbs.tsx`, `Crumb` in `lib/routes.ts` |
 | Icons | `app/favicon.ico`, `public/icon-192.png`, `public/icon-512.png`, `public/apple-icon.png` |
 
-Adding a use-case landing page later (`/organiser-un-week-end-entre-amis`, `/evjf`…) means
-creating the route, calling `pageMetadata()` in it, and adding one entry to `SITE_PAGES`;
-robots and the sitemap follow automatically.
+`robots` is declared once in the layout (`index, follow` plus `max-image-preview:large`,
+`max-snippet:-1` for Googlebot). `pageMetadata()` **spreads** its own `robots` only for a
+noindex page: a key present with an `undefined` value would override the layout and silently
+drop those directives.
 
 The FAQ lives in `FAQ` (`lib/content.ts`) and feeds both the accordion and the `FAQPage`
-structured data, so the marked-up answers are always the visible ones.
+structured data, so the marked-up answers are always the visible ones. The same rule holds
+for the guides: every `HowTo` step and every answer is rendered on the page.
+
+### Les guides d'organisation
+
+The occasion guides - `/organiser-un-evjf`, `/organiser-un-week-end-entre-amis`,
+`/partager-les-depenses-entre-amis`… - are the pages people reach from a search before they
+have heard of Yatu. They are written to be useful on their own; the waiting list comes after
+the advice.
+
+| | |
+| --- | --- |
+| Copy | `lib/landing-content.ts` - one `LandingPage` entry per guide |
+| Route | `app/[slug]/page.tsx` (`dynamicParams = false`, so anything else is a 404) |
+| Layout | `components/landing/guide-page.tsx` - promise + signup, problem, method, modules, FAQ, sibling guides |
+| Index | `app/organiser/page.tsx`, linked from the header, the footer and every guide |
+| Social card | `app/[slug]/opengraph-image.tsx`, one per guide |
+
+**Adding a guide: append one entry to `LANDING_PAGES`.** The route, the sitemap, the social
+card, the breadcrumbs, the structured data, the footer column and the `/organiser` index all
+pick it up with no other change. Two things to respect: the `tool` names must exist in
+`public/assets/tools/`, and `modules` must be `ModuleKey`s from `lib/content.ts`.
+
+### Images
+
+Every `<img>` carries `loading="lazy" decoding="async"`, except the ones above the fold -
+the header wordmark, the home hero mockup and each guide's photo - which are `eager` with
+`fetchPriority="high"` so the LCP is not deferred. `next/image` is deliberately not used:
+the design's inline styles are kept 1:1 and the Workers deployment has no image optimizer.
+`next.config.ts` serves `/assets` and `/mockups` with a one-year immutable cache.
+
+> The mockup SVGs in `public/mockups/` weigh 470-850 KiB each (they embed bitmaps). Lazy
+> loading keeps them off the critical path, but re-exporting them lighter is the real fix.
 
 ### Deliberate departures from the design file
 

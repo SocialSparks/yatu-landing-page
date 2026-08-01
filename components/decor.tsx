@@ -37,6 +37,8 @@ export function Decor({ items }: { items: DecorItem[] }) {
 
         return (
           <img
+            loading="lazy"
+            decoding="async"
             key={`${d.i}-${i}`}
             src={`/assets/tools/${d.i}.svg`}
             alt=""

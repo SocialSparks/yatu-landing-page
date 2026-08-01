@@ -79,9 +79,22 @@ function FaqItem({ item }: { item: FaqEntry }) {
   );
 }
 
-export function FaqSection() {
+/**
+ * The accordion. Defaults to the home page’s questions; the occasion guides
+ * pass their own, so there is only ever one implementation of the answer panel
+ * - and one place where the markup Google reads matches what is on screen.
+ */
+export function FaqSection({
+  items = FAQ,
+  title = "Les questions qu’on nous pose",
+  background = "#EFE8DE",
+}: {
+  items?: FaqEntry[];
+  title?: string;
+  background?: string;
+}) {
   return (
-    <section id="faq" style={{ background: "#EFE8DE", padding: "clamp(56px,8vw,104px) 0" }}>
+    <section id="faq" style={{ background, padding: "clamp(56px,8vw,104px) 0" }}>
       <div
         data-r="gutter"
         style={{ position: "relative", zIndex: 1, maxWidth: 820, margin: "0 auto", padding: "0 24px" }}
@@ -98,11 +111,11 @@ export function FaqSection() {
             color: "#2A343D",
           }}
         >
-          Les questions qu’on nous pose
+          {title}
         </h2>
 
         <div data-reveal="stagger" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          {FAQ.map((item) => (
+          {items.map((item) => (
             <FaqItem key={item.q} item={item} />
           ))}
         </div>
