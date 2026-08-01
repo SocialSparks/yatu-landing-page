@@ -1,5 +1,6 @@
 import { DaysUntil } from "@/components/countdown";
 import { Decor } from "@/components/decor";
+import { Picture } from "@/components/picture";
 import { WaitlistForm } from "@/components/waitlist-form";
 import { LAUNCH_LABEL, icon } from "@/lib/content";
 import { HERO_DECOR } from "@/lib/decor";
@@ -8,7 +9,7 @@ const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
 
 const CHIPS = [
-  { dot: "#96E087", label: "Version gratuite disponible" },
+  { dot: "#96E087", label: "Gratuit au lancement" },
   { dot: "#6FC6F1", label: "Pour tous tes événements" },
   { dot: "#C6A8E1", label: "iOS et Android" },
 ];
@@ -296,15 +297,16 @@ export function Hero() {
                 aspectRatio: "418 / 850",
               }}
             >
-              {/* The home page's LCP element: fetched first, never deferred. */}
-              <img
-                loading="eager"
-                decoding="async"
-                fetchPriority="high"
-                width={418}
-                height={850}
+              {/* The home page's LCP element: fetched first, never deferred.
+                  25 KiB in AVIF, against the 830 KiB SVG wrapper it replaces. */}
+              <Picture
                 src="/mockups/iphone_homepage.svg"
                 alt="L’application Yatu sur iPhone : la liste des événements du groupe, avec les dates et les participants de chacun"
+                widths={[418, 836]}
+                sizes="(max-width: 760px) 78vw, 380px"
+                priority
+                width={418}
+                height={850}
                 style={{
                   width: "100%",
                   height: "100%",

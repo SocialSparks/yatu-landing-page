@@ -2,6 +2,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { Decor } from "@/components/decor";
 import { FaqSection } from "@/components/faq-section";
 import { NavLink } from "@/components/nav-link";
+import { Picture } from "@/components/picture";
 import { SectionCta } from "@/components/section-cta";
 import { SectionHeading } from "@/components/section-heading";
 import { LandingStructuredData } from "@/components/structured-data";
@@ -10,6 +11,7 @@ import { ACCENT, CTA, LAUNCH_LABEL, MODULES, icon } from "@/lib/content";
 import { USAGES_DECOR } from "@/lib/decor";
 import { type LandingPage, landingBySlug, landingPath } from "@/lib/landing-content";
 import { GUIDES_CRUMB, HOME_CRUMB, ROUTES } from "@/lib/routes";
+import { formatDateFr } from "@/lib/site";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
@@ -22,12 +24,15 @@ const GUTTER: React.CSSProperties = {
   padding: "0 24px",
 };
 
-/** The trail shown on the page and marked up as a BreadcrumbList. */
-export const guideTrail = (page: LandingPage) => [
-  HOME_CRUMB,
-  GUIDES_CRUMB,
-  { name: page.cardTitle, path: landingPath(page.slug) },
-];
+/**
+ * The trail shown on the page and marked up as a BreadcrumbList. An "app" page
+ * hangs off the home page, not off /organiser: it is not one of the guides that
+ * index lists.
+ */
+export const guideTrail = (page: LandingPage) =>
+  page.kind === "guide"
+    ? [HOME_CRUMB, GUIDES_CRUMB, { name: page.cardTitle, path: landingPath(page.slug) }]
+    : [HOME_CRUMB, { name: page.cardTitle, path: landingPath(page.slug) }];
 
 function Pain({ pain }: { pain: LandingPage["pains"][number] }) {
   return (
@@ -215,7 +220,23 @@ export function GuidePage({ page }: { page: LandingPage }) {
         <Decor items={USAGES_DECOR} />
 
         <div data-r="gutter" style={GUTTER}>
-          <Breadcrumbs trail={trail} />
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "center",
+              gap: "6px 14px",
+            }}
+          >
+            <Breadcrumbs trail={trail} />
+            {/* The date the Article markup quotes - printed, not just declared. */}
+            <time
+              dateTime={page.updated}
+              style={{ fontFamily: UI, fontSize: 14, color: "rgba(42,52,61,.5)" }}
+            >
+              Mis à jour le {formatDateFr(page.updated)}
+            </time>
+          </div>
 
           <div
             data-r="guide-hero"
@@ -292,12 +313,12 @@ export function GuidePage({ page }: { page: LandingPage }) {
               }}
             >
               {/* Above the fold on this page: fetched first, never deferred. */}
-              <img
-                loading="eager"
-                decoding="async"
-                fetchPriority="high"
+              <Picture
                 src={page.photo}
                 alt={page.photoAlt}
+                widths={[480, 1040]}
+                sizes="(max-width: 920px) 100vw, 520px"
+                priority
                 style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
               />
             </div>
@@ -364,6 +385,139 @@ export function GuidePage({ page }: { page: LandingPage }) {
           </ol>
         </div>
       </section>
+
+      {/* ── Le rétroplanning ─────────────────────────────────────────── */}
+      {page.timeline ? (
+        <section style={{ background: "#EFE8DE", padding: "clamp(56px,8vw,96px) 0" }}>
+          <div data-r="gutter" style={GUTTER}>
+            <SectionHeading
+              badge="Le rétroplanning"
+              badgeBg="#FFFFFF"
+              title={page.timelineTitle ?? "Quoi, et quand"}
+              titleMaxCh={22}
+              marginBottom="clamp(30px,4vw,48px)"
+            />
+
+            <ol
+              data-reveal="stagger"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 0,
+                margin: "0 auto",
+                padding: 0,
+                maxWidth: 780,
+                listStyle: "none",
+              }}
+            >
+              {page.timeline.map((row) => (
+                <li
+                  key={row.when}
+                  className="yq-milestone"
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "minmax(140px,auto) 1fr",
+                    gap: "6px 22px",
+                    padding: "16px 0",
+                    borderTop: "1px solid rgba(42,52,61,.12)",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: UI,
+                      fontWeight: 700,
+                      fontSize: 15,
+                      color: "#2A343D",
+                    }}
+                  >
+                    {row.when}
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: UI,
+                      fontSize: 16,
+                      lineHeight: 1.55,
+                      color: "rgba(42,52,61,.75)",
+                      textWrap: "pretty",
+                    }}
+                  >
+                    {row.what}
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+      ) : null}
+
+      {/* ── Les erreurs classiques ───────────────────────────────────── */}
+      {page.mistakes ? (
+        <section style={{ background: "#F7F4ED", padding: "clamp(56px,8vw,96px) 0" }}>
+          <div data-r="gutter" style={GUTTER}>
+            <SectionHeading
+              badge="À éviter"
+              badgeBg={ACCENT.coral}
+              title="Les erreurs classiques"
+              titleMaxCh={20}
+              marginBottom="clamp(30px,4vw,48px)"
+            />
+
+            <ul
+              data-reveal="stagger"
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit,minmax(min(280px,100%),1fr))",
+                gap: 16,
+                margin: 0,
+                padding: 0,
+                listStyle: "none",
+              }}
+            >
+              {page.mistakes.map((mistake) => (
+                <li
+                  key={mistake.title}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 10,
+                    background: "#FFFFFF",
+                    border: "1px solid #EBE7DE",
+                    borderLeft: `4px solid ${ACCENT.coral}`,
+                    borderRadius: 18,
+                    padding: 22,
+                  }}
+                >
+                  <h3
+                    style={{
+                      margin: 0,
+                      fontFamily: DISPLAY,
+                      fontWeight: 400,
+                      fontSize: 19,
+                      lineHeight: 1.22,
+                      letterSpacing: "-.02em",
+                      color: "#2A343D",
+                    }}
+                  >
+                    {mistake.title}
+                  </h3>
+                  <p
+                    style={{
+                      margin: 0,
+                      fontFamily: UI,
+                      fontSize: 15.5,
+                      lineHeight: 1.55,
+                      color: "rgba(42,52,61,.72)",
+                      textWrap: "pretty",
+                    }}
+                  >
+                    {mistake.desc}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      ) : null}
 
       {/* ── Ce que Yatu réunit ───────────────────────────────────────── */}
       <section style={{ background: "#FFFFFF", padding: "clamp(56px,8vw,96px) 0" }}>
@@ -455,7 +609,7 @@ export function GuidePage({ page }: { page: LandingPage }) {
           <SectionHeading
             badge="À lire ensuite"
             badgeBg={ACCENT.blush}
-            title="Les autres guides"
+            title={page.kind === "guide" ? "Les autres guides" : "À lire aussi"}
             titleMaxCh={20}
             marginBottom="clamp(30px,4vw,48px)"
           />

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Capriola, Lato, Outfit } from "next/font/google";
 import { BackToTop } from "@/components/back-to-top";
 import { CookieBanner } from "@/components/cookie-banner";
+import { Measurement } from "@/components/measurement";
 import { Motion } from "@/components/motion";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -73,6 +74,9 @@ export const metadata: Metadata = {
   openGraph: { siteName: SITE_NAME, locale: "fr_FR", type: "website" },
   twitter: { card: "summary_large_image" },
   formatDetection: { telephone: false },
+  ...(process.env.GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION.trim() } }
+    : {}),
 };
 
 export const viewport: Viewport = {
@@ -86,18 +90,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${capriola.variable} ${lato.variable} ${outfit.variable}`}
     >
       <body>
-        <div className="yq-watch-unsupported" role="main">
-          <span className="yq-watch-unsupported-mark" aria-hidden="true">
-            Y
-          </span>
-          <strong>Ce site ne peut pas s’afficher sur montre connectée.</strong>
-          <span>Ouvre le site sur ton téléphone ou ton ordinateur.</span>
-        </div>
         <noscript>
           {/* site-motion.js hid elements from script; without script nothing should stay hidden. */}
           <style>{`[data-reveal],[data-fly],[data-reveal="stagger"]>*,[data-float]{opacity:1!important;transform:none!important;scale:1!important}`}</style>
         </noscript>
         <Motion />
+        <Measurement />
         {/* Publisher + site identity, on every page: the pages then only have
             to declare what they are and point back to these by @id. */}
         <SiteStructuredData />
@@ -107,6 +105,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteFooter />
         <BackToTop />
         <CookieBanner />
+        {/* Last in the body, and no role="main": the CSS that swaps it in
+            (`body > :not(.yq-watch-unsupported)`) does not care about order,
+            but anything that reads the document top-down - a crawler, a text
+            extractor, a screen reader - used to meet this notice before the
+            <h1>, and a second "main" landmark with it. */}
+        <div className="yq-watch-unsupported">
+          <span className="yq-watch-unsupported-mark" aria-hidden="true">
+            Y
+          </span>
+          <strong>Ce site ne peut pas s’afficher sur montre connectée.</strong>
+          <span>Ouvre le site sur ton téléphone ou ton ordinateur.</span>
+        </div>
       </body>
     </html>
   );

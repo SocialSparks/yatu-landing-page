@@ -1,4 +1,5 @@
 import { Decor } from "@/components/decor";
+import { Picture } from "@/components/picture";
 import {
   ACCENT,
   YATU_REVEAL_BENEFITS,
@@ -169,11 +170,11 @@ export function YatuRevealSection() {
             data-reveal-delay="100"
             style={{ position: "relative", width: "100%", maxWidth: 420, aspectRatio: "100 / 158" }}
           >
-            <img
-              loading="lazy"
-              decoding="async"
+            <Picture
               src={BUDGET_SCREEN.src}
               alt={BUDGET_SCREEN.alt}
+              widths={[418, 836]}
+              sizes="(max-width: 760px) 42vw, 227px"
               style={{
                 position: "absolute",
                 right: 0,
@@ -183,11 +184,11 @@ export function YatuRevealSection() {
                 filter: "drop-shadow(0 18px 28px rgba(42,52,61,.16))",
               }}
             />
-            <img
-              loading="lazy"
-              decoding="async"
+            <Picture
               src={EVENT_SCREEN.src}
               alt={EVENT_SCREEN.alt}
+              widths={[418, 836]}
+              sizes="(max-width: 760px) 56vw, 302px"
               style={{
                 position: "absolute",
                 left: 0,

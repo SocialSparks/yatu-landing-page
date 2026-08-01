@@ -67,9 +67,12 @@ export function WaitlistForm({
     setMessage("C’est bon, on t’emmène…");
     // Let the button finish turning green before the page changes under it.
     timer.current = window.setTimeout(() => {
-      router.push(
-        `${ROUTES.bienvenue}?e=${encodeURIComponent(email)}&s=${encodeURIComponent(source)}`,
-      );
+      try {
+        window.sessionStorage.setItem("yatu-signup-email", email);
+      } catch {
+        /* storage blocked - the confirmation page falls back to generic copy */
+      }
+      router.push(`${ROUTES.bienvenue}?s=${encodeURIComponent(source)}`);
     }, CONFIRM_MS);
   }
 

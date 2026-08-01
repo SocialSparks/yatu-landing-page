@@ -109,6 +109,10 @@ export default function Page() {
             automatiquement de la connexion au site, lorsque {HOST_NAME} traite les requêtes
             nécessaires à l’affichage, à la sécurité et à la distribution des pages.
           </Bullet>
+          <Bullet>
+            de ta navigation et de tes interactions avec les pages lorsque tu acceptes la mesure
+            d’audience.
+          </Bullet>
         </div>
         <P>
           {PUBLISHER} n’achète pas de fichiers de prospection et n’enrichit pas les informations
@@ -158,7 +162,7 @@ export default function Page() {
             ],
             [
               "Fonctionnement actuel",
-              "ces informations sont enregistrées uniquement dans le stockage local de ton navigateur. Elles ne sont actuellement pas envoyées à une base de données de QUANTIQ STUDIO. L’adresse e-mail peut apparaître dans l’URL de la page de confirmation et donc dans l’historique du navigateur et les métadonnées techniques de la requête.",
+              "ces informations sont enregistrées dans le stockage local de ton navigateur et, si un point de collecte est configuré, transmises à QUANTIQ STUDIO. L’adresse e-mail passe à la page de confirmation par le stockage de session du navigateur et n’est pas ajoutée à son URL.",
             ],
             [
               "Conservation",
@@ -236,13 +240,43 @@ export default function Page() {
             ["Conservation", "six mois, puis le choix est demandé à nouveau."],
           ]}
         />
+
+        <Treatment
+          label="Mesure d’audience et amélioration du parcours"
+          badge={ACCENT.lilac}
+          rows={[
+            [
+              "Données",
+              "pages consultées, date et durée de visite, provenance, navigateur, appareil, zone géographique approximative, identifiants pseudonymes et interactions telles que clics, défilements et mouvements. Les paramètres des URL ne sont pas ajoutés aux événements de page envoyés par Yatu à Google Analytics.",
+            ],
+            [
+              "Finalités",
+              "mesurer la fréquentation, comprendre les parcours, repérer les difficultés d’utilisation et améliorer les pages grâce à Google Analytics 4 et Microsoft Clarity.",
+            ],
+            [
+              "Base légale",
+              "consentement (article 6.1.a du RGPD), retirable à tout moment depuis la gestion des cookies.",
+            ],
+            [
+              "Conservation",
+              "les cookies Google Analytics ont une durée maximale par défaut de deux ans. Clarity conserve les reconstitutions de sessions 30 jours et les données agrégées, cartes de chaleur ou sessions sélectionnées jusqu’à neuf mois. Le retrait du consentement bloque les nouvelles mesures et supprime les cookies accessibles sur le domaine.",
+            ],
+          ]}
+        />
       </LegalSection>
 
       <LegalSection title="4. Mesure d’audience et réseaux sociaux">
         <P>
-          Aucun outil de mesure d’audience tiers n’est actuellement chargé par le code du site. Le
-          panneau de préférences prévoit cette catégorie pour une éventuelle activation future,
-          mais le choix seul n’installe aucun outil de statistiques.
+          Google Analytics 4 et Microsoft Clarity sont bloqués par défaut et ne sont chargés que si
+          tu acceptes la catégorie « Mesure d’audience ». Les fonctions publicitaires et la
+          personnalisation publicitaire de Google sont désactivées. Pour Clarity, le stockage
+          publicitaire reste refusé ; les champs sensibles des formulaires sont masqués par défaut.
+          Tu peux retirer ton accord à tout moment depuis le pied de page.
+        </P>
+        <P>
+          Google Search Console sert uniquement à vérifier la propriété du site et à consulter des
+          statistiques agrégées de présence dans les résultats de recherche. Sa balise de
+          vérification ne dépose aucun cookie et n’enregistre pas ta navigation sur le site.
         </P>
         <P>
           Les liens Instagram, TikTok et WhatsApp sont de simples liens externes. Le site
@@ -261,6 +295,10 @@ export default function Page() {
           <Bullet>
             à <B>{HOST_NAME}</B>, sous-traitant chargé de l’hébergement, de la distribution et de
             la sécurité du site ;
+          </Bullet>
+          <Bullet>
+            à Google pour Google Analytics 4 et à Microsoft pour Clarity, uniquement après ton
+            consentement à la mesure d’audience ;
           </Bullet>
           <Bullet>
             aux conseils professionnels, autorités administratives ou judiciaires lorsque la loi
@@ -284,6 +322,13 @@ export default function Page() {
           indique encadrer les transferts vers les États-Unis par le cadre de protection des
           données UE–États-Unis et, lorsque nécessaire, par les clauses contractuelles types de la
           Commission européenne et des garanties supplémentaires.
+        </P>
+        <P>
+          Lorsque tu acceptes la mesure d’audience, Google et Microsoft peuvent également traiter
+          certaines données depuis des pays situés hors de l’Espace économique européen, notamment
+          les États-Unis. Ces prestataires indiquent encadrer ces transferts au moyen des mécanismes
+          reconnus applicables, notamment le cadre de protection des données UE–États-Unis et les
+          clauses contractuelles types lorsque nécessaire.
         </P>
         <P>
           Les garanties contractuelles sont consultables dans le{" "}

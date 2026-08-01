@@ -19,12 +19,32 @@ import { ACCENT, LAUNCH_LABEL, type ModuleKey, icon } from "@/lib/content";
  */
 
 export type LandingStep = { title: string; body: string };
+/** One row of the countdown: how long before, and what is settled by then. */
+export type LandingMilestone = { when: string; what: string };
+export type LandingMistake = { title: string; desc: string };
 export type LandingPain = { tool: string; title: string; desc: string };
 export type LandingFaq = { q: string; a: string };
 
 export type LandingPage = {
+  /**
+   * "guide" - the method for an occasion, written for someone who has never
+   * heard of Yatu; listed on /organiser and marked up as an Article.
+   * "app" - the product answer to an applicative query ("application pour
+   * partager les dépenses"); it says what Yatu does, not how to organise.
+   *
+   * They must never say the same thing: each guide links to its app page and
+   * back, and neither repeats the other's paragraphs.
+   */
+  kind: "guide" | "app";
   /** URL, without the leading slash. Also the waiting-list source. */
   slug: string;
+  /**
+   * ISO date of the last real edit to this guide - shown on the page, quoted by
+   * the Article markup and by the sitemap. Bump it when the copy changes, and
+   * only then: a date that moves at every build is a signal Google learns to
+   * ignore.
+   */
+  updated: string;
   /** The pill above the title, and the badge on the social card. */
   badge: string;
   accent: string;
@@ -50,6 +70,18 @@ export type LandingPage = {
   stepsTitle: string;
   stepsLede: string;
   steps: LandingStep[];
+  /**
+   * The countdown, read top to bottom. Guides only: an "app" page has nothing
+   * to plan.
+   */
+  timelineTitle?: string;
+  timeline?: LandingMilestone[];
+  /**
+   * What people actually get wrong - not the structural problems the "pains"
+   * describe, but the decisions that cost the weekend. Never a rewording of a
+   * step: if it is already in the method, it does not belong here.
+   */
+  mistakes?: LandingMistake[];
   /** The Yatu modules that carry this occasion, in the order they matter. */
   modulesLede: string;
   modules: ModuleKey[];
@@ -60,7 +92,9 @@ export type LandingPage = {
 
 export const LANDING_PAGES: LandingPage[] = [
   {
+    kind: "guide",
     slug: "organiser-un-week-end-entre-amis",
+    updated: "2026-08-01",
     badge: "Week-end",
     accent: ACCENT.apricot,
     icon: icon("calendar"),
@@ -124,6 +158,29 @@ export const LANDING_PAGES: LandingPage[] = [
         body: "Adresse exacte, code du portail, heure d’arrivée, numéro du propriétaire. Écrits une fois, retrouvés par tous - au lieu d’être répétés à chaque personne qui arrive.",
       },
     ],
+    timelineTitle: "Six semaines, sans se presser",
+    timeline: [
+      { when: "6 semaines avant", what: "Deux dates proposées au groupe, avec une date limite de réponse. Le noyau dur se confirme." },
+      { when: "5 semaines avant", what: "Logement réservé, en annulation gratuite si possible. Budget par personne annoncé dans la foulée." },
+      { when: "3 semaines avant", what: "Chacun a payé sa part du logement. Les rôles sont attribués : courses, trajets, musique." },
+      { when: "1 semaine avant", what: "Menus décidés, liste de courses ouverte, covoiturage calé avec les heures de passage." },
+      { when: "La veille", what: "Infos pratiques épinglées : adresse exacte, code d’entrée, heure d’arrivée, numéro du propriétaire." },
+      { when: "Au retour", what: "Comptes soldés en une fois, album commun ouvert pendant que tout le monde a encore ses photos." },
+    ],
+    mistakes: [
+      {
+        title: "Attendre que tout le monde ait répondu",
+        desc: "Deux indécis bloquent six personnes qui, elles, ont répondu. Tranche à l’échéance annoncée avec les réponses reçues : les autres se joignent ou pas, mais le week-end existe.",
+      },
+      {
+        title: "Réserver avant d’avoir annoncé le prix",
+        desc: "Chaque désistement postérieur à la réservation devient une dette pour ceux qui restent. Le chiffre par personne se dit avant le premier virement, pas après.",
+      },
+      {
+        title: "Faire porter la logistique à une seule personne",
+        desc: "Si l’adresse, les comptes et le programme vivent dans une seule tête, cette personne passe le week-end à répondre aux mêmes questions. Ce qui est écrit une fois n’a pas à être répété huit fois.",
+      },
+    ],
     modulesLede:
       "Sur un week-end, quatre outils font le travail. Tu actives ceux dont tu as besoin, les autres restent fermés.",
     modules: ["chat", "budget", "liste", "infos", "img"],
@@ -144,16 +201,26 @@ export const LANDING_PAGES: LandingPage[] = [
         q: "Quelle appli pour organiser un week-end entre amis ?",
         a: `La plupart des groupes cumulent une messagerie, un tableur pour les comptes et un album photo créé après coup. Yatu réunit la discussion, le budget partagé, les listes, le planning, les documents et les photos dans un même espace d’événement. L’application ouvre le ${LAUNCH_LABEL} et la liste d’attente est ouverte.`,
       },
+      {
+        q: "Combien de personnes pour un week-end qui reste gérable ?",
+        a: "Entre six et huit, tout le monde participe sans qu’il faille organiser l’organisation. Au-delà de dix, la logistique change de nature : deux voitures deviennent trois, une table ne suffit plus, et chaque sujet demande son référent. Ce n’est pas impossible, c’est simplement un autre exercice.",
+      },
+      {
+        q: "Que faire de ceux qui se désistent au dernier moment ?",
+        a: "Annonce dès l’invitation ce qui reste dû en cas d’annulation - typiquement la part de logement, déjà engagée - et ce qui ne l’est pas. Une règle dite avant se respecte ; un arbitrage improvisé après se solde toujours au détriment de celui qui a avancé l’argent.",
+      },
     ],
     related: [
+      "application-organiser-week-end-entre-amis",
       "organiser-un-voyage-entre-amis",
-      "organiser-un-week-end-au-ski",
       "partager-les-depenses-entre-amis",
     ],
   },
 
   {
+    kind: "guide",
     slug: "organiser-un-voyage-entre-amis",
+    updated: "2026-08-01",
     badge: "Voyage en groupe",
     accent: ACCENT.sky,
     icon: icon("send"),
@@ -217,6 +284,29 @@ export const LANDING_PAGES: LandingPage[] = [
         body: "Chaque dépense notée le jour même, avec qui a payé et pour qui. Au retour, le groupe solde en une fois. Reconstituer un voyage de dix jours de mémoire, personne ne le fait vraiment.",
       },
     ],
+    timelineTitle: "Quatre mois, dans cet ordre",
+    timeline: [
+      { when: "4 à 6 mois avant", what: "Budget plafond par personne validé par tout le monde. La destination se choisit dans cette limite, jamais l’inverse." },
+      { when: "3 mois avant", what: "Transport réservé pour le groupe confirmé. Chacun rembourse sa part dans la semaine." },
+      { when: "2 mois avant", what: "Logement bloqué, référents désignés : transport, logement, activités, comptes." },
+      { when: "1 mois avant", what: "Documents rassemblés : billets, confirmations, assurance, validité des pièces d’identité vérifiée." },
+      { when: "1 semaine avant", what: "Programme écrit, volontairement léger. Point de rendez-vous et heure du départ confirmés." },
+      { when: "Au retour", what: "Comptes soldés en une fois, album partagé pendant que les photos sont encore sur les téléphones." },
+    ],
+    mistakes: [
+      {
+        title: "Choisir la destination avant le budget",
+        desc: "Une fois que le groupe s’est projeté sur un endroit précis, plus personne n’ose dire que c’est trop cher. Le plafond se pose à froid, avant les recherches, et il engage tout le monde.",
+      },
+      {
+        title: "Laisser une seule personne avancer les réservations",
+        desc: "Avancer quatre mille euros pour huit, c’est devenir le banquier du groupe pendant trois mois. Chacun rembourse sa part à la réservation, pas au retour.",
+      },
+      {
+        title: "Minuter les journées",
+        desc: "Un programme plein transforme chaque retard en tension. Deux temps forts par jour et du temps libre autour : c’est ce qui distingue un voyage de groupe réussi d’un séjour où l’on se surveille.",
+      },
+    ],
     modulesLede:
       "Un voyage mobilise presque tous les modules, du premier virement à l’album du retour.",
     modules: ["chat", "budget", "documents", "planning", "img"],
@@ -237,16 +327,26 @@ export const LANDING_PAGES: LandingPage[] = [
         q: "Comment garder toutes les réservations accessibles au groupe ?",
         a: `Dans un espace commun où chacun dépose ce qu’il réserve, au lieu d’un fil de conversation où les PDF remontent. Yatu range les documents de l’événement à côté du planning et du budget, à partir du ${LAUNCH_LABEL}.`,
       },
+      {
+        q: "Faut-il voter chaque décision ou désigner un référent ?",
+        a: "Un référent par sujet, qui décide dans son périmètre et rend compte. Le vote systématique paraît plus juste mais paralyse : à huit, chaque question rouverte coûte deux jours et quinze messages. Le groupe garde la main sur les arbitrages structurants - le budget, les dates, la destination.",
+      },
+      {
+        q: "Comment gérer quelqu’un qui ne vient qu’une partie du voyage ?",
+        a: "Calcule sa part au prorata des nuits et des dépenses communes qui le concernent, et annonce-la en même temps que le budget général. Ce qui crée des tensions, ce n’est jamais la présence partielle : c’est de découvrir à la fin que tout le monde a payé pareil.",
+      },
     ],
     related: [
+      "application-organiser-voyage-groupe",
       "organiser-un-week-end-entre-amis",
       "partager-les-depenses-entre-amis",
-      "organiser-un-week-end-au-ski",
     ],
   },
 
   {
+    kind: "guide",
     slug: "organiser-un-evjf",
+    updated: "2026-08-01",
     badge: "EVJF",
     accent: ACCENT.blush,
     icon: icon("heart"),
@@ -310,6 +410,29 @@ export const LANDING_PAGES: LandingPage[] = [
         body: "Chacune dépose ses photos au fil du week-end, plutôt que de promettre de les envoyer. Passé une semaine, la moitié ne les envoie jamais.",
       },
     ],
+    timelineTitle: "Trois mois, sans rien éventer",
+    timeline: [
+      { when: "3 mois avant", what: "L’équipe se forme - témoins plus deux ou trois proches - et se donne un espace où la future mariée n’est pas." },
+      { when: "10 semaines avant", what: "Date bloquée avec elle, sous un prétexte. Vérifie qu’elle ne tombe ni la semaine du mariage ni juste après." },
+      { when: "8 semaines avant", what: "Budget par participante arrêté, part de la mariée comprise, et annoncé au groupe avec un délai pour se retirer." },
+      { when: "6 semaines avant", what: "Argent collecté, puis logement et activités réservés - dans cet ordre." },
+      { when: "2 semaines avant", what: "Programme écrit avec heures et adresses, activité de repli prévue en cas de pluie." },
+      { when: "La veille", what: "Point de rendez-vous, transport et surprise du premier moment confirmés à chacune, en privé." },
+    ],
+    mistakes: [
+      {
+        title: "Demander l’avis des vingt invitées sur tout",
+        desc: "Trois personnes décident, le reste valide des options déjà chiffrées. Une organisation collégiale à vingt ne produit pas un meilleur week-end, elle produit six semaines de discussions.",
+      },
+      {
+        title: "Réserver avant d’avoir encaissé",
+        desc: "L’organisatrice qui avance le logement se retrouve à relancer pendant deux mois. L’argent arrive d’abord, les réservations partent ensuite - c’est la seule règle qui protège celle qui organise.",
+      },
+      {
+        title: "Ne pas demander ses contraintes à la principale intéressée",
+        desc: "Allergies, phobies, activités qu’elle déteste, personnes qu’elle préfère ne pas voir ensemble : ces informations s’obtiennent auprès de son conjoint ou d’une sœur, sans rien dévoiler. C’est ce qui sépare une surprise réussie d’un week-end subi.",
+      },
+    ],
     modulesLede:
       "L’EVJF est l’occasion type de la discussion cachée : le groupe prépare, la future mariée ne voit rien.",
     modules: ["secret", "budget", "planning", "liste", "img"],
@@ -330,12 +453,22 @@ export const LANDING_PAGES: LandingPage[] = [
         q: "Quand organiser l’EVJF par rapport au mariage ?",
         a: "Entre deux et six semaines avant, jamais le week-end qui précède. La semaine du mariage est déjà pleine, et un EVJF la veille se paie le lendemain sur les photos.",
       },
+      {
+        q: "Que faire si une participante ne peut pas suivre le budget ?",
+        a: "Prévois un format à la journée en plus du week-end complet, annoncé en même temps que le budget. La plupart des désistements ne viennent pas d’un manque d’envie mais d’un montant découvert trop tard, quand il n’existe plus d’option intermédiaire.",
+      },
+      {
+        q: "Faut-il tout garder secret jusqu’au bout ?",
+        a: "Non - et c’est même une mauvaise idée pour la logistique. Communique-lui ce qui la concerne matériellement : les dates, la météo à prévoir, le type d’affaires à emporter, l’heure de départ. Le programme reste la surprise, pas la valise.",
+      },
     ],
     related: ["organiser-un-evg", "organiser-un-week-end-entre-amis", "organiser-un-anniversaire"],
   },
 
   {
+    kind: "guide",
     slug: "organiser-un-evg",
+    updated: "2026-08-01",
     badge: "EVG",
     accent: ACCENT.meadow,
     icon: icon("bubble"),
@@ -395,6 +528,28 @@ export const LANDING_PAGES: LandingPage[] = [
         body: "Horaires, adresses, qui apporte quoi, et le plan B s’il pleut. Le marié reçoit seulement l’heure et le point de rendez-vous - le reste se découvre.",
       },
     ],
+    timelineTitle: "Deux mois, en cinq jalons",
+    timeline: [
+      { when: "8 semaines avant", what: "Deux organisateurs désignés. Le marié bloque un week-end sans savoir ce qu’il y a dedans." },
+      { when: "6 semaines avant", what: "Prix tout compris annoncé au groupe, part du marié incluse, avec un délai pour se retirer sans se justifier." },
+      { when: "5 semaines avant", what: "Virements reçus. Hébergement et activité réservés seulement à ce moment-là." },
+      { when: "2 semaines avant", what: "Programme, horaires et plan B météo écrits. Qui apporte quoi est attribué nominativement." },
+      { when: "La veille", what: "Point de rendez-vous envoyé au marié - l’heure et le lieu, rien d’autre." },
+    ],
+    mistakes: [
+      {
+        title: "Construire le week-end autour du groupe, pas autour de lui",
+        desc: "Le saut en parachute fait plaisir à ceux qui le proposent. La question utile est celle qu’il raconterait lui-même le lendemain, pas celle qui impressionne le plus la bande.",
+      },
+      {
+        title: "Ne pas prévoir de plan B météo",
+        desc: "Une activité extérieure annulée sans repli, c’est un après-midi entier à improviser à dix, souvent au bar le plus proche. L’option de secours se réserve en même temps que l’activité principale.",
+      },
+      {
+        title: "Découvrir les frais annexes sur place",
+        desc: "Transport, repas, consommations, caution du matériel : ce qui n’est pas dans le prix annoncé finit par sortir de la poche de celui qui a une carte. Chiffre les extras avec le reste, ou dis clairement qu’ils sont en plus.",
+      },
+    ],
     modulesLede: "Le groupe prépare d’un côté, le marié voit seulement ce qu’on veut bien lui montrer.",
     modules: ["secret", "budget", "planning", "chat", "img"],
     faq: [
@@ -414,12 +569,22 @@ export const LANDING_PAGES: LandingPage[] = [
         q: "Comment cacher le programme au futur marié ?",
         a: `Avec un espace de préparation auquel il n’a pas accès, plutôt qu’un deuxième groupe créé en parallèle - c’est là qu’arrivent les messages envoyés dans la mauvaise fenêtre. La discussion cachée de Yatu est faite pour ça, dès le ${LAUNCH_LABEL}.`,
       },
+      {
+        q: "Faut-il inviter les collègues et la famille ?",
+        a: "Pose la question au marié, en amont et sans détailler le programme : c’est la seule information dont tu as vraiment besoin de sa part. Un groupe qui mélange des cercles qui ne se connaissent pas demande un programme plus collectif et moins d’allusions internes.",
+      },
+      {
+        q: "Comment répartir la part du marié ?",
+        a: "Divise-la entre les participants et intègre-la au prix annoncé, plutôt que de la traiter comme une cagnotte à part. Une seule ligne, un seul chiffre : c’est ce qui évite les discussions sur qui paie quoi la veille du départ.",
+      },
     ],
     related: ["organiser-un-evjf", "organiser-un-week-end-entre-amis", "partager-les-depenses-entre-amis"],
   },
 
   {
+    kind: "guide",
     slug: "organiser-un-anniversaire",
+    updated: "2026-08-01",
     badge: "Anniversaire",
     accent: ACCENT.coral,
     icon: icon("heart"),
@@ -478,6 +643,28 @@ export const LANDING_PAGES: LandingPage[] = [
         body: "Heure d’arrivée des invités, heure d’arrivée de la personne fêtée, qui l’amène et sous quel prétexte, qui coupe la musique. Cinq lignes écrites valent mieux que dix messages le jour même.",
       },
     ],
+    timelineTitle: "Trois semaines suffisent",
+    timeline: [
+      { when: "3 semaines avant", what: "Date et lieu arrêtés. Le créneau de la personne fêtée est bloqué via un proche, sans explication." },
+      { when: "2 semaines avant", what: "Invitations envoyées dans un espace où elle n’est pas, avec la règle du silence rappelée en une phrase." },
+      { when: "10 jours avant", what: "Cadeau commun choisi, montant par personne annoncé, date limite de versement fixée." },
+      { when: "1 semaine avant", what: "Liste du « qui ramène quoi » ouverte. Chacun prend une ligne visible par tous." },
+      { when: "La veille", what: "Déroulé de l’arrivée écrit : heure des invités, heure de la personne fêtée, qui l’amène et sous quel prétexte." },
+    ],
+    mistakes: [
+      {
+        title: "Inviter trop large pour une surprise",
+        desc: "Chaque invité supplémentaire est une chance de plus que l’information circule. Au-delà d’une quinzaine de personnes, considère que la surprise tiendra du hasard - et prépare-toi à en rire.",
+      },
+      {
+        title: "Prévenir la personne trop tard pour qu’elle soit libre",
+        desc: "Une surprise suppose qu’elle n’ait rien prévu ce soir-là. Fais bloquer la date par un proche deux semaines avant, sous n’importe quel prétexte : c’est l’étape que les organisateurs oublient le plus souvent.",
+      },
+      {
+        title: "Confondre cagnotte et contribution libre",
+        desc: "« Chacun met ce qu’il veut » finit systématiquement sous le prix du cadeau, et c’est l’organisateur qui comble. Annonce un montant par personne, quitte à prévoir discrètement un tarif réduit pour ceux qui le demandent.",
+      },
+    ],
     modulesLede: "La discussion cachée est faite pour ça : préparer à l’intérieur de l’événement, sans que la personne concernée en voie la moindre trace.",
     modules: ["secret", "liste", "budget", "chat", "img"],
     faq: [
@@ -497,12 +684,22 @@ export const LANDING_PAGES: LandingPage[] = [
         q: "Combien de temps à l’avance faut-il s’y prendre ?",
         a: "Trois semaines si tu veux un cadeau commun financé par plusieurs personnes, une semaine pour une soirée simple. Le facteur limitant, c’est le temps de collecte de l’argent - pas la préparation elle-même.",
       },
+      {
+        q: "Surprise ou pas surprise ?",
+        a: "La surprise a un coût : tu ne peux vérifier ni ses envies, ni sa disponibilité réelle, ni son état de fatigue. Pour un anniversaire important, beaucoup de groupes gardent la date secrète mais préviennent qu’il se passe quelque chose - assez pour qu’elle soit libre et présentable, pas assez pour gâcher l’effet.",
+      },
+      {
+        q: "Qui prévient les proches qu’on ne connaît pas ?",
+        a: "Passe par une personne de chaque cercle - la famille, les collègues, les amis d’enfance - plutôt que de collecter cinquante numéros. C’est plus rapide, et ça évite le message qui arrive à quelqu’un qui n’était pas censé savoir.",
+      },
     ],
     related: ["organiser-une-soiree-entre-amis", "organiser-un-evjf", "partager-les-depenses-entre-amis"],
   },
 
   {
+    kind: "guide",
     slug: "organiser-une-soiree-entre-amis",
+    updated: "2026-08-01",
     badge: "Soirée",
     accent: ACCENT.lilac,
     icon: icon("chat"),
@@ -561,6 +758,28 @@ export const LANDING_PAGES: LandingPage[] = [
         body: "Solde les dépenses en une fois, et ouvre un album commun pendant que tout le monde a encore ses photos. Passé trois jours, la moitié ne les envoie jamais.",
       },
     ],
+    timelineTitle: "Une semaine, quatre moments",
+    timeline: [
+      { when: "1 semaine avant", what: "Date, heure et adresse envoyées dans le même message. La question du lieu est réglée en premier." },
+      { when: "3 jours avant", what: "Réponses fermes demandées, avec une échéance. Les courses se calibrent sur ces réponses, pas sur la liste d’invités." },
+      { when: "La veille", what: "Liste du « qui ramène quoi » complétée. Ce qui manque encore est visible par tout le monde." },
+      { when: "Le jour même", what: "Courses faites et notées avec leur montant. Les voisins prévenus si la soirée déborde." },
+      { when: "Le lendemain", what: "Décompte unique envoyé, album commun ouvert." },
+    ],
+    mistakes: [
+      {
+        title: "Calibrer les courses sur la liste d’invités",
+        desc: "Douze invités, six présents : le surplus se jette et c’est toi qui l’as payé. Achète pour les réponses fermes, avec une marge courte plutôt qu’une marge confortable.",
+      },
+      {
+        title: "Ne rien prévoir à manger",
+        desc: "Une soirée sans nourriture se termine plus tôt, plus mal, et coûte plus cher en boisson. Même minimal - du pain, du fromage, quelque chose de chaud - c’est ce qui change la durée d’une soirée.",
+      },
+      {
+        title: "Oublier qu’il y a un lendemain",
+        desc: "Le ménage et les comptes se règlent le jour même ou pas du tout. Dire en fin de soirée qui reste dix minutes ranger, et envoyer le décompte le lendemain matin, évite les deux rancunes les plus banales entre amis.",
+      },
+    ],
     modulesLede: "Pour une soirée, trois modules suffisent - les autres restent fermés.",
     modules: ["chat", "liste", "budget", "infos", "img"],
     faq: [
@@ -580,12 +799,22 @@ export const LANDING_PAGES: LandingPage[] = [
         q: "Que faire des photos de la soirée ?",
         a: `Ouvre un album commun le soir même : chacun y dépose les siennes et récupère celles des autres. C’est ce que fait le module souvenirs de Yatu, dans le même espace que la soirée, dès le ${LAUNCH_LABEL}.`,
       },
+      {
+        q: "Comment gérer les invités qui en amènent d’autres ?",
+        a: "Dis-le explicitement dans l’invitation : soit c’est ouvert, soit ça ne l’est pas. Ce n’est pas la personne en plus qui pose problème, c’est le calcul des courses et de la place assise qui saute sans prévenir.",
+      },
+      {
+        q: "Faut-il faire payer les invités ?",
+        a: "Pour un apéritif, non. Pour une soirée où tu avances des courses conséquentes, annonce-le avant plutôt qu’au moment de réclamer : « je m’occupe des courses, comptez une quinzaine d’euros » passe très bien en amont, et beaucoup moins bien à deux heures du matin.",
+      },
     ],
     related: ["organiser-un-anniversaire", "organiser-un-week-end-entre-amis", "partager-les-depenses-entre-amis"],
   },
 
   {
+    kind: "guide",
     slug: "organiser-un-week-end-au-ski",
+    updated: "2026-08-01",
     badge: "Ski",
     accent: ACCENT.sky,
     icon: icon("calendar"),
@@ -649,6 +878,29 @@ export const LANDING_PAGES: LandingPage[] = [
         body: "Assurance, contrat de location, bon de forfait, adresse du chalet. Ce sont les documents qu’on cherche à l’arrivée, avec du réseau qui ne suit pas toujours.",
       },
     ],
+    timelineTitle: "Six mois pour les vacances scolaires",
+    timeline: [
+      { when: "3 à 6 mois avant", what: "Logement réservé sur le nombre de couchages réel, pas optimiste. C’est la disponibilité qui manque, pas l’argent." },
+      { when: "2 mois avant", what: "Budget complet annoncé : logement, forfaits, location, transport, courses. Un seul chiffre par personne." },
+      { when: "1 mois avant", what: "Forfaits et matériel réservés en groupe. Tailles, pointures et niveaux collectés une bonne fois." },
+      { when: "2 semaines avant", what: "Répartition des chambres écrite et validée, avec les lits doubles et les canapés annoncés tels quels." },
+      { when: "La veille", what: "Documents rassemblés : assurance, contrat de location, bons de forfait, adresse et code du chalet." },
+      { when: "Au retour", what: "Comptes soldés : quatre personnes ont avancé quatre choses différentes, c’est le moment de tout remettre à plat." },
+    ],
+    mistakes: [
+      {
+        title: "Estimer le budget sur le seul logement",
+        desc: "Le forfait et la location de matériel pèsent souvent autant que le lit. Un prix annoncé « chalet divisé par huit » finit toujours en mauvaise surprise à l’arrivée en station.",
+      },
+      {
+        title: "Louer le matériel sur place, le samedi matin",
+        desc: "C’est la file d’attente la plus longue du week-end, et les tarifs de groupe réservés à l’avance sont plus bas. Trente minutes de préparation valent deux heures de queue à huit.",
+      },
+      {
+        title: "Vouloir skier groupés toute la journée",
+        desc: "Avec des niveaux écartés, la journée se passe à attendre en bas des télésièges et personne ne skie vraiment. Deux points de rendez-vous quotidiens suffisent à garder le groupe ensemble.",
+      },
+    ],
     modulesLede: "Le ski mobilise le budget, les listes et les documents plus que n’importe quelle autre occasion.",
     modules: ["budget", "liste", "documents", "infos", "img"],
     faq: [
@@ -668,6 +920,14 @@ export const LANDING_PAGES: LandingPage[] = [
         q: "Comment gérer des niveaux de ski différents ?",
         a: "En fixant deux points de rendez-vous par jour et en laissant le reste libre. Vouloir skier groupés toute la journée avec des niveaux écartés finit toujours en attente au bas d’un télésiège.",
       },
+      {
+        q: "Location ou matériel personnel ?",
+        a: "Pour un seul week-end par an, la location reste plus simple : rien à transporter, matériel adapté aux conditions, et le tarif groupe négocié à l’avance. Le calcul s’inverse à partir de deux ou trois séjours par saison.",
+      },
+      {
+        q: "Quelle assurance prévoir ?",
+        a: "Vérifie ce que couvrent déjà ta carte bancaire et ton assurance habitation avant d’acheter quoi que ce soit au guichet : les garanties se recoupent souvent. Ce qui compte, c’est que le groupe sache qui est couvert pour quoi, et que l’attestation soit accessible à tous, pas seulement à celui qui l’a souscrite.",
+      },
     ],
     related: [
       "organiser-un-week-end-entre-amis",
@@ -677,7 +937,9 @@ export const LANDING_PAGES: LandingPage[] = [
   },
 
   {
+    kind: "guide",
     slug: "partager-les-depenses-entre-amis",
+    updated: "2026-08-01",
     badge: "Budget partagé",
     accent: ACCENT.sunbeam,
     icon: icon("budget"),
@@ -736,6 +998,28 @@ export const LANDING_PAGES: LandingPage[] = [
         body: "Ne fais pas rembourser chacun par chacun : compense d’abord les dettes croisées, puis envoie un seul décompte. Un groupe de huit se solde en général en trois ou quatre virements.",
       },
     ],
+    timelineTitle: "Avant, pendant, après",
+    timeline: [
+      { when: "Avant l’événement", what: "Une personne avance le gros - logement, transport - et chacun rembourse sa part tout de suite. Une avance qui dure des mois est une dette qu’on finit par oublier." },
+      { when: "Pendant, chaque jour", what: "Les dépenses sont notées le jour même, avec qui a payé et pour combien de personnes. Ce qui n’est pas écrit sur le moment est écrit faux." },
+      { when: "Le dernier soir", what: "Le groupe relit la liste ensemble, pendant que tout le monde se souvient. Cinq minutes à ce moment-là valent trois échanges de messages une semaine après." },
+      { when: "Dans les 48 heures", what: "Le décompte unique part, avec le détail par personne. Plus le délai s’allonge, plus le taux de remboursement baisse." },
+      { when: "Après", what: "La liste reste consultable. C’est elle qui règle, sans discussion, la question qui ressort six mois plus tard." },
+    ],
+    mistakes: [
+      {
+        title: "Mélanger cagnotte et dépenses",
+        desc: "Une cagnotte collectée à l’avance et des dépenses individuelles dans le même total, et plus personne ne sait ce qui a été payé deux fois. Traite la cagnotte comme un versement de chacun, pas comme une dépense de plus.",
+      },
+      {
+        title: "Laisser des dépenses sans bénéficiaire",
+        desc: "« Courses 84 € » sans dire pour qui, c’est une ligne qui sera contestée. Le nom des personnes concernées coûte trois secondes à saisir et supprime la totalité des désaccords de fin de séjour.",
+      },
+      {
+        title: "Solder trop tard",
+        desc: "Un décompte envoyé trois semaines après tombe au milieu d’autres dépenses, et se paie mal. Les remboursements se font tant que le voyage est encore frais - c’est un fait de comportement, pas de comptabilité.",
+      },
+    ],
     modulesLede:
       "Chez Yatu, le budget n’est pas une application à part : il vit dans l’événement, à côté de la discussion et des listes qui l’ont produit.",
     modules: ["budget", "chat", "liste", "documents"],
@@ -756,14 +1040,306 @@ export const LANDING_PAGES: LandingPage[] = [
         q: "Quelle application pour partager les dépenses d’un groupe ?",
         a: `Les applications de comptes partagés font bien le calcul, mais elles vivent à côté de la conversation et des listes qui ont produit la dépense. Yatu met le budget dans l’événement lui-même : la discussion, les listes, les documents et les comptes au même endroit, à partir du ${LAUNCH_LABEL}.`,
       },
+      {
+        q: "Que faire des dépenses payées en espèces ?",
+        a: "Note-les comme les autres, en précisant qui a sorti l’argent. Le liquide est la première source d’écart dans un décompte de groupe, précisément parce qu’il ne laisse pas de trace sur un relevé - c’est donc celui qu’il faut écrire en premier.",
+      },
+      {
+        q: "Comment gérer les dépenses en devise étrangère ?",
+        a: "Saisis le montant dans la devise du paiement et convertis tout à un seul taux, choisi à l’avance, plutôt qu’au taux du jour de chaque achat. La précision perdue est négligeable ; la discussion évitée ne l’est pas.",
+      },
+    ],
+    related: [
+      "application-partage-depenses-entre-amis",
+      "organiser-un-week-end-entre-amis",
+      "organiser-un-voyage-entre-amis",
+    ],
+  },
+  /* ── Les pages « application pour X » ─────────────────────────────────
+     Elles répondent à une requête applicative, pas à une question
+     d'organisation : ce que fait Yatu, pas comment s'y prendre. Chacune
+     pointe vers le guide méthode correspondant, et réciproquement. */
+
+  {
+    kind: "app",
+    slug: "application-partage-depenses-entre-amis",
+    updated: "2026-08-01",
+    badge: "Budget partagé",
+    accent: ACCENT.sunbeam,
+    icon: icon("budget"),
+    photo: "/assets/usecases/usage-roadtrip.jpg",
+    photoAlt: "Des amis en road trip calculant leurs dépenses communes",
+    h1: "L’application qui tient les dépenses de ton groupe",
+    title: "Application pour partager les dépenses entre amis - Yatu",
+    description:
+      "Noter une dépense, dire qui elle concerne, voir qui doit combien et solder en un minimum de virements - dans le même espace que la conversation et les listes du groupe. Yatu ouvre le 9 septembre 2026.",
+    lede: "Les applis de comptes partagés font très bien le calcul. Ce qu’elles ne font pas, c’est te dire pourquoi la dépense existe : la conversation qui l’a décidée, la liste qui l’a produite et le programme qui la justifie vivent ailleurs. Yatu met les comptes à l’intérieur de l’événement.",
+    og: {
+      title: "Les dépenses du groupe, dans l’événement qui les a produites.",
+      subtitle: "Qui a payé, pour qui, et qui rembourse - à côté de la discussion et des listes.",
+    },
+    cardTitle: "Appli de dépenses partagées",
+    cardSub: "Les comptes dans l’événement, pas à côté.",
+    painsTitle: "Ce qu’un tableur de comptes ne règle pas",
+    pains: [
+      {
+        tool: "chat",
+        title: "La dépense sans son contexte",
+        desc: "« Courses 84 € » six mois plus tard ne dit rien à personne. Dans Yatu, la dépense est dans l’événement, à côté de la liste et de la conversation qui l’ont décidée.",
+      },
+      {
+        tool: "people",
+        title: "Une appli de plus à faire installer",
+        desc: "Comptes d’un côté, discussion de l’autre, photos ailleurs : à chaque outil, une partie du groupe décroche. Un seul espace, c’est une seule adhésion à obtenir.",
+      },
+      {
+        tool: "documents",
+        title: "Les justificatifs qui se perdent",
+        desc: "La facture du logement et le reçu de la location sont dans la boîte mail de celui qui a réservé. Rangés dans l’événement, ils restent lisibles par tout le groupe.",
+      },
+    ],
+    stepsTitle: "Comment ça marche, en 5 gestes",
+    stepsLede:
+      "Le principe tient en une phrase : tu écris pendant, l’application calcule après.",
+    steps: [
+      {
+        title: "Crée l’événement, pas un « groupe de dépenses »",
+        body: "Un week-end, un voyage, une coloc : l’événement est le contenant. Le budget est un module que tu actives dedans, avec la discussion, les listes et le reste - et tu peux laisser les autres fermés.",
+      },
+      {
+        title: "Invite avec un lien",
+        body: "Chaque personne rejoint l’événement et voit les mêmes chiffres. Pas de tableur envoyé en pièce jointe, pas de version qui diverge selon qui l’a ouvert en dernier.",
+      },
+      {
+        title: "Note la dépense au moment où tu paies",
+        body: "Le montant, ce que c’est, qui a payé. Dix secondes en caisse valent mieux qu’une demi-heure de reconstitution au retour, et le total ne se discute pas.",
+      },
+      {
+        title: "Dis pour qui elle compte",
+        body: "Certaines dépenses concernent tout le monde, d’autres cinq personnes sur huit. C’est cette information-là, plus que le calcul, qui manque à la plupart des tableurs partagés.",
+      },
+      {
+        title: "Solde en une fois",
+        body: "Yatu compense les dettes croisées et donne le minimum de virements à faire. Un groupe de huit se solde en général en trois ou quatre transferts, au lieu de vingt petits remboursements oubliés.",
+      },
+    ],
+    modulesLede:
+      "Le budget ne vit pas seul : il est dans le même espace que ce qui l’a produit.",
+    modules: ["budget", "chat", "liste", "documents"],
+    faq: [
+      {
+        q: "L’application est-elle gratuite ?",
+        a: "Oui. Yatu propose une version gratuite pour créer et organiser tes événements, budget partagé compris. Des options premium permettront plus tard d’accéder à davantage de possibilités ou de lever certaines limites.",
+      },
+      {
+        q: "Faut-il que tout le groupe installe l’application ?",
+        a: "Pour ajouter une dépense ou cocher une tâche, oui : chacun agit sous son nom, sinon les soldes ne veulent plus rien dire. L’intérêt d’un espace unique est justement de ne demander qu’une seule installation, au lieu d’une appli de comptes, d’un tableur et d’un album photo.",
+      },
+      {
+        q: "Yatu se connecte-t-il à mon compte bancaire ?",
+        a: "Non. Tu notes les dépenses, l’application calcule les parts et les soldes. Aucun accès bancaire n’est demandé et aucun paiement ne transite par Yatu : les remboursements se font par les moyens que ton groupe utilise déjà.",
+      },
+      {
+        q: "Sur quels téléphones, et à partir de quand ?",
+        a: `Sur iOS et Android, à partir du ${LAUNCH_LABEL}. Les personnes inscrites sur la liste d’attente sont prévenues le jour de l’ouverture.`,
+      },
+      {
+        q: "Et si je veux seulement la méthode, sans application ?",
+        a: "Elle est écrite : notre guide pour partager les dépenses entre amis détaille la façon de tenir des comptes de groupe qui tiennent, y compris sur un carnet.",
+      },
+    ],
+    related: [
+      "partager-les-depenses-entre-amis",
+      "organiser-un-voyage-entre-amis",
+      "organiser-un-week-end-entre-amis",
+    ],
+  },
+
+  {
+    kind: "app",
+    slug: "application-organiser-week-end-entre-amis",
+    updated: "2026-08-01",
+    badge: "Week-end",
+    accent: ACCENT.apricot,
+    icon: icon("calendar"),
+    photo: "/assets/usecases/usage-retrouvailles.jpg",
+    photoAlt: "Un groupe d’amis réunis dans une maison pour un week-end",
+    h1: "L’application pour organiser un week-end entre amis",
+    title: "Application pour organiser un week-end entre amis - Yatu",
+    description:
+      "Un espace par week-end : la discussion, les infos pratiques, la liste de courses, le budget et l’album photo au même endroit, pour que l’organisation ne repose plus sur une seule personne. Ouverture le 9 septembre 2026.",
+    lede: "Un week-end à huit, ce n’est pas une appli qu’il faut, c’est un endroit. Un lien, tout le monde dedans, et les décisions qui arrêtent de se perdre entre une conversation, deux messages privés et un tableur que personne ne rouvre.",
+    og: {
+      title: "Un espace par week-end, et le groupe s’organise dedans.",
+      subtitle: "Discussion, infos pratiques, courses, budget et photos au même endroit.",
+    },
+    cardTitle: "Appli week-end entre amis",
+    cardSub: "Un lien, un espace, tout le groupe dedans.",
+    painsTitle: "Pourquoi une conversation de groupe ne suffit pas",
+    pains: [
+      {
+        tool: "pin",
+        title: "L’information remonte et disparaît",
+        desc: "L’adresse et le code du portail sont dans le fil, trois cents messages plus haut. Épinglés dans l’événement, ils se retrouvent en deux secondes à l’arrivée.",
+      },
+      {
+        tool: "liste",
+        title: "Personne ne sait ce qui est déjà pris",
+        desc: "Sans liste visible, chacun suppose que quelqu’un d’autre y a pensé. Une liste cochée en direct montre le trou avant le départ, pas devant le frigo.",
+      },
+      {
+        tool: "people",
+        title: "Une seule personne qui porte tout",
+        desc: "Elle réserve, avance, relance et finit par ne plus vouloir organiser. Quand chacun peut ajouter une dépense ou cocher une tâche, la charge se répartit d’elle-même.",
+      },
+    ],
+    stepsTitle: "Comment ça marche, en 5 gestes",
+    stepsLede: "De la création de l’espace au partage des photos, sans changer d’outil.",
+    steps: [
+      {
+        title: "Crée l’événement",
+        body: "Un nom, des dates, une photo. C’est tout ce qu’il faut pour que le week-end existe ailleurs que dans ta tête - et pour que les questions arrivent au bon endroit.",
+      },
+      {
+        title: "Envoie le lien à ton groupe",
+        body: "Chacun rejoint l’espace et voit la même chose : les dates, les infos pratiques, ce qui est décidé et ce qui ne l’est pas encore.",
+      },
+      {
+        title: "Active seulement les modules utiles",
+        body: "Pour un week-end : les infos clés, la liste de courses, le budget et l’album. Le planning et les documents restent fermés s’ils ne servent pas - une interface vide n’aide personne.",
+      },
+      {
+        title: "Laisse le groupe remplir",
+        body: "Chacun ajoute ce qu’il apporte, coche ce qu’il a acheté, note ce qu’il a avancé. L’organisateur arbitre, il ne saisit pas tout à la place des autres.",
+      },
+      {
+        title: "Récupère les comptes et les photos au retour",
+        body: "Le solde est déjà calculé, l’album se remplit pendant le week-end plutôt qu’en promesses de partage. L’événement reste consultable après : c’est ce qui manque à un fil de conversation.",
+      },
+    ],
+    modulesLede: "Sur un week-end, ce sont ces cinq-là qui travaillent.",
+    modules: ["chat", "infos", "liste", "budget", "img"],
+    faq: [
+      {
+        q: "En quoi c’est mieux qu’une conversation de groupe ?",
+        a: "Une conversation est chronologique : ce qui est décidé descend et se perd. Un espace d’événement est structuré - les infos pratiques restent épinglées, la liste reste à jour, les comptes restent justes, et tout ça se retrouve trois mois plus tard.",
+      },
+      {
+        q: "Combien de personnes peut-on inviter ?",
+        a: "Un week-end entre amis tient largement dans ce que permet la version gratuite. Pour les groupes de plusieurs dizaines de personnes - un WEI, un gala - la page BDE et associations décrit ce qui est prévu.",
+      },
+      {
+        q: "L’application est-elle gratuite ?",
+        a: "Oui, dans sa version de base : créer un événement, inviter ton groupe et utiliser les modules. Des options premium viendront lever certaines limites, sans fermer ce qui est ouvert au lancement.",
+      },
+      {
+        q: "Quand est-ce que je peux l’utiliser ?",
+        a: `À partir du ${LAUNCH_LABEL}, sur iOS et Android. En attendant, la méthode complète pour organiser un week-end entre amis est écrite dans notre guide, et la liste d’attente prévient dès l’ouverture.`,
+      },
     ],
     related: [
       "organiser-un-week-end-entre-amis",
-      "organiser-un-voyage-entre-amis",
-      "organiser-une-soiree-entre-amis",
+      "application-partage-depenses-entre-amis",
+      "organiser-un-week-end-au-ski",
     ],
   },
+
+  {
+    kind: "app",
+    slug: "application-organiser-voyage-groupe",
+    updated: "2026-08-01",
+    badge: "Voyage en groupe",
+    accent: ACCENT.sky,
+    icon: icon("send"),
+    photo: "/assets/usecases/usage-surf.jpg",
+    photoAlt: "Un groupe d’amis en voyage au bord de la mer",
+    h1: "L’application pour organiser un voyage en groupe",
+    title: "Application pour organiser un voyage en groupe - Yatu",
+    description:
+      "Billets, réservations, budget, programme et photos d’un voyage à plusieurs, réunis dans un seul espace partagé au lieu de huit boîtes mail. Yatu ouvre le 9 septembre 2026 sur iOS et Android.",
+    lede: "Un voyage de groupe se joue sur ce que personne ne retrouve : le billet, l’adresse du logement, le montant déjà avancé. Yatu range tout ça dans l’événement, accessible à tout le groupe plutôt qu’à celui qui a réservé.",
+    og: {
+      title: "Un voyage à huit, dans un seul espace partagé.",
+      subtitle: "Billets, réservations, budget, programme et album au même endroit.",
+    },
+    cardTitle: "Appli voyage en groupe",
+    cardSub: "Billets, budget, programme, photos.",
+    painsTitle: "Ce qui coince quand on part à plusieurs",
+    pains: [
+      {
+        tool: "documents",
+        title: "Les réservations éparpillées",
+        desc: "Le vol dans un mail, le logement dans un PDF, l’assurance chez celui qui l’a prise. À l’aéroport, c’est toujours la même personne qui doit répondre à tout le monde.",
+      },
+      {
+        tool: "budget",
+        title: "Les avances qu’on ne sait plus démêler",
+        desc: "Quatre personnes ont réservé quatre choses différentes. Sans total commun tenu au jour le jour, le décompte du retour se fait de mémoire - et de travers.",
+      },
+      {
+        tool: "planning",
+        title: "Le programme que trois personnes connaissent",
+        desc: "Les horaires vivent dans une note privée. Écrits dans l’événement, ils évitent quinze messages par jour pour savoir où et à quelle heure.",
+      },
+    ],
+    stepsTitle: "Comment ça marche, en 5 gestes",
+    stepsLede: "Le même espace du premier virement à l’album du retour.",
+    steps: [
+      {
+        title: "Ouvre l’événement dès la première idée",
+        body: "Même sans dates ni destination : l’espace existe, et les propositions arrêtent de se disperser en messages privés. Les dates se posent dedans quand elles se décident.",
+      },
+      {
+        title: "Rassemble les documents au fur et à mesure",
+        body: "Chaque personne dépose ce qu’elle réserve. Billets, confirmations, attestations : le groupe entier y accède, au lieu de dépendre de la boîte mail d’une seule personne.",
+      },
+      {
+        title: "Tiens le budget pendant, pas après",
+        body: "Chaque dépense notée le jour même, avec qui a payé et pour qui. Au retour, il ne reste qu’à solder - c’est la différence entre un décompte juste et une estimation.",
+      },
+      {
+        title: "Écris un programme volontairement léger",
+        body: "Deux temps forts par jour, le reste libre, visible par tous. Les voyages de groupe se cassent sur les journées minutées, pas sur le manque d’activités.",
+      },
+      {
+        title: "Ouvre l’album dès le départ",
+        body: "Chacun dépose ses photos pendant le voyage et récupère celles des autres. Passé une semaine, la moitié du groupe ne les envoie jamais.",
+      },
+    ],
+    modulesLede: "Un voyage mobilise presque tout, du premier virement au dernier souvenir.",
+    modules: ["documents", "budget", "planning", "chat", "img"],
+    faq: [
+      {
+        q: "Est-ce que ça marche sans réseau, à l’étranger ?",
+        a: "Nous ne promettons pas un mode hors ligne complet au lancement. La consigne qui marche partout : télécharge tes billets sur ton téléphone avant de partir, en plus de les déposer dans l’événement pour le reste du groupe.",
+      },
+      {
+        q: "Peut-on gérer un voyage à quinze ?",
+        a: "Oui. Plus le groupe est grand, plus l’écart se creuse avec une conversation classique : c’est à quinze que les décisions se perdent et que les comptes deviennent illisibles.",
+      },
+      {
+        q: "Que se passe-t-il après le voyage ?",
+        a: "L’événement reste consultable : les comptes soldés, les documents, le programme et l’album. C’est précisément ce qu’un fil de discussion ne rend pas au bout de six mois.",
+      },
+      {
+        q: "Comment organiser le voyage en attendant l’ouverture ?",
+        a: `Notre guide pour organiser un voyage entre amis donne la méthode complète, applicable dès aujourd’hui. Yatu ouvre le ${LAUNCH_LABEL} et les inscrits sont prévenus le jour même.`,
+      },
+    ],
+    related: [
+      "organiser-un-voyage-entre-amis",
+      "application-partage-depenses-entre-amis",
+      "organiser-un-week-end-au-ski",
+    ],
+  },
+
 ];
+
+/** The occasion guides only - what /organiser lists and what the footer links. */
+export const GUIDE_PAGES = LANDING_PAGES.filter((page) => page.kind === "guide");
+
+/** The "application pour X" pages, linked from the footer's product column. */
+export const APP_PAGES = LANDING_PAGES.filter((page) => page.kind === "app");
 
 /** The /organiser index - the hub every guide links back to. */
 export const LANDING_INDEX_PATH = "/organiser";

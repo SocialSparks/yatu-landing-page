@@ -87,7 +87,7 @@ export function AppHome() {
                 <img
                   loading="lazy"
                   decoding="async"
-                  src="/assets/yatu-wordmark.png"
+                  src="/assets/yatu-wordmark-344.webp"
                   alt=""
                   style={{ width: "100%", height: "auto", display: "block" }}
                 />

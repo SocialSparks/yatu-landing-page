@@ -157,9 +157,9 @@ export function CookieBanner() {
               textWrap: "pretty",
             }}
           >
-            Le site mémorise localement tes choix et les informations que tu saisis. Aucun outil
-            d’audience ni traceur publicitaire n’est actif pour le moment. Tu peux accepter,
-            refuser ou choisir les catégories prévues.
+            Le site mémorise localement tes choix et les informations que tu saisis. Google
+            Analytics et Microsoft Clarity ne sont chargés qu’avec ton accord. Tu peux accepter,
+            refuser ou personnaliser les catégories.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
             <button type="button" className="yq-btn-dark" style={PRIMARY} onClick={() => persist(true, true)}>
@@ -265,7 +265,7 @@ export function CookieBanner() {
             {[
               {
                 title: "Mesure d’audience",
-                desc: "Aucun outil actif pour le moment.",
+                desc: "Google Analytics et Microsoft Clarity : fréquentation, parcours et interactions.",
                 on: analytics,
                 toggle: () => setAnalytics((v) => !v),
               },

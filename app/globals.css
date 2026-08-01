@@ -720,6 +720,14 @@ details[open] .yq-plus {
   }
 }
 
+/* The countdown rows put the date above the sentence once side by side
+   would leave four words per line. */
+@media (max-width: 560px) {
+  .yq-milestone {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 /* ------------------------ Header: collapsed menu -------------------- */
 @media (max-width: 880px) {
   [data-r~="nav-desk"] {

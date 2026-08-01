@@ -129,6 +129,25 @@ The FAQ lives in `FAQ` (`lib/content.ts`) and feeds both the accordion and the `
 structured data, so the marked-up answers are always the visible ones. The same rule holds
 for the guides: every `HowTo` step and every answer is rendered on the page.
 
+### Analytics, Clarity et Search Console
+
+`components/measurement.tsx` charge Google Analytics 4 et Microsoft Clarity uniquement
+après acceptation de la catégorie « Mesure d’audience ». Les signaux publicitaires restent
+refusés. Un retrait de consentement est transmis aux deux outils et efface leurs cookies
+accessibles sur le domaine.
+
+Configurer les trois identifiants au build (voir `.env.example`) :
+
+```bash
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-TBFPKYGBGY
+NEXT_PUBLIC_CLARITY_PROJECT_ID=xvqi59gd5v
+GOOGLE_SITE_VERIFICATION=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+La vérification Search Console est rendue dans le `<head>` par les métadonnées Next.js. Les
+événements de page GA n’incluent pas les paramètres d’URL, et l’adresse de la liste d’attente
+passe à `/bienvenue` par `sessionStorage` plutôt que dans l’URL.
+
 ### Les guides d'organisation
 
 The occasion guides - `/organiser-un-evjf`, `/organiser-un-week-end-entre-amis`,
@@ -138,27 +157,57 @@ the advice.
 
 | | |
 | --- | --- |
-| Copy | `lib/landing-content.ts` - one `LandingPage` entry per guide |
-| Route | `app/[slug]/page.tsx` (`dynamicParams = false`, so anything else is a 404) |
-| Layout | `components/landing/guide-page.tsx` - promise + signup, problem, method, modules, FAQ, sibling guides |
+| Copy | `lib/landing-content.ts` - one `LandingPage` entry per page |
+| Route | `app/[slug]/page.tsx` - a static segment always wins, so `/bde` and the rest are untouched |
+| Layout | `components/landing/guide-page.tsx` - promise + signup, problem, method, countdown, mistakes, modules, FAQ, siblings |
 | Index | `app/organiser/page.tsx`, linked from the header, the footer and every guide |
-| Social card | `app/[slug]/opengraph-image.tsx`, one per guide |
+| Social card | `app/[slug]/opengraph-image.tsx`, one per page |
 
-**Adding a guide: append one entry to `LANDING_PAGES`.** The route, the sitemap, the social
+Two kinds share that route, and they must never say the same thing:
+
+- **`kind: "guide"`** - the method for an occasion (`/organiser-un-evjf`), written for
+  someone who has never heard of Yatu. Listed on `/organiser`, marked up as an `Article`
+  with a visible "mis à jour le" date.
+- **`kind: "app"`** - the product answer to an applicative query
+  (`/application-partage-depenses-entre-amis`): what Yatu does, not how to organise. Linked
+  from the footer's product column, and from its sibling guide.
+
+**Adding a page: append one entry to `LANDING_PAGES`.** The route, the sitemap, the social
 card, the breadcrumbs, the structured data, the footer column and the `/organiser` index all
-pick it up with no other change. Two things to respect: the `tool` names must exist in
-`public/assets/tools/`, and `modules` must be `ModuleKey`s from `lib/content.ts`.
+pick it up with no other change. Three things to respect: the `tool` names must exist in
+`public/assets/tools/`, `modules` must be `ModuleKey`s from `lib/content.ts`, and the photo
+must have its variants generated (see *Images* below).
+
+`dynamicParams` is deliberately left at its default. Set to `false`, Next refuses to render
+any path it cannot find in the prerender manifest *at runtime* - and on the Cloudflare
+worker those entries are not where the router looks, so every guide answered 404 in
+production while the sibling image route answered fine.
 
 ### Images
 
 Every `<img>` carries `loading="lazy" decoding="async"`, except the ones above the fold -
-the header wordmark, the home hero mockup and each guide's photo - which are `eager` with
-`fetchPriority="high"` so the LCP is not deferred. `next/image` is deliberately not used:
-the design's inline styles are kept 1:1 and the Workers deployment has no image optimizer.
-`next.config.ts` serves `/assets` and `/mockups` with a one-year immutable cache.
+the header wordmark, the home hero mockup, each guide's photo, the BDE photo - which are
+`eager` with `fetchPriority="high"` so the LCP is not deferred.
 
-> The mockup SVGs in `public/mockups/` weigh 470-850 KiB each (they embed bitmaps). Lazy
-> loading keeps them off the critical path, but re-exporting them lighter is the real fix.
+The photos and the mockups go through `components/picture.tsx`, which serves **AVIF then
+WebP at the width the device needs**. The variants are real files, generated once and
+committed:
+
+```bash
+node scripts/optimize-images.mjs   # après avoir ajouté ou remplacé une image source
+```
+
+`next/image` is **not** an option here, and not for style reasons: the Workers deployment
+has no image optimizer for it to call, and Cloudflare's own resizing is a paid add-on. The
+`<picture>` markup does the same job with files that already exist.
+
+What that changed, measured on the home page's initial render: **4 459 KiB → 326 KiB** of
+images on a phone. The mockups were the bulk of it - not SVGs at all, but two full-size
+base64 PNGs in an SVG wrapper (830 KiB for the hero alone; base64 barely gzips). Rasterising
+the wrapper flattens both layers and keeps the transparent frame: 25 KiB in AVIF.
+
+Sources stay in the repo, untouched, as the input of the script. `next.config.ts` serves
+`/assets` and `/mockups` with a one-year immutable cache.
 
 ### Deliberate departures from the design file
 
@@ -179,8 +228,14 @@ the design's inline styles are kept 1:1 and the Workers deployment has no image 
 **Deploy the Apps Script and set `NEXT_PUBLIC_FORMS_ENDPOINT`** - see the "Formulaires"
 section above. Until it is set, the three forms stay in local mode and nothing is collected.
 
-**Analytics tag.** `components/cookie-banner.tsx` has the hook point marked, inside
-`persist()`, for loading a measurement tag once consent is given.
+**Search Console credential.** The GA4 Measurement ID and Clarity project ID have production
+defaults in `components/measurement.tsx`. The Search Console verification token still needs to
+be added to the production build environment.
+
+**The contact address is on another domain.** `CONTACT_EMAIL` is `support@yatu-pro.com`
+while the site is `yatu-app.com`. It appears on the legal pages and in the `Organization`
+markup, where a domain mismatch reads as a trust signal problem. Left as is - it is a
+business decision, not a code one.
 
 **Social links are placeholders.** `SOCIAL` in `components/site-footer.tsx` and the two
 links on `/bienvenue` point at `instagram.com` / `tiktok.com` / `linkedin.com` with no

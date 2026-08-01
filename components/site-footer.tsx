@@ -1,7 +1,7 @@
 import { NavLink } from "@/components/nav-link";
 import { ConsentButton } from "@/components/consent-button";
 import { LAUNCH_LABEL } from "@/lib/content";
-import { LANDING_PAGES, landingPath } from "@/lib/landing-content";
+import { APP_PAGES, GUIDE_PAGES, landingPath } from "@/lib/landing-content";
 import { ROUTES } from "@/lib/routes";
 import { CONTACT_EMAIL, PUBLISHER } from "@/lib/site";
 
@@ -32,13 +32,15 @@ const COLUMNS: { title: string; links: { href: string; label: string; external?:
       { href: ROUTES.cycle, label: "Avant, pendant, après" },
       { href: ROUTES.usages, label: "Cas d’usage" },
       { href: ROUTES.faq, label: "Questions fréquentes" },
+      ...APP_PAGES.map((page) => ({ href: landingPath(page.slug), label: page.cardTitle })),
     ],
   },
   {
-    // The guides live one click from every page; /organiser carries the rest.
+    // Every guide, one click from every page - a guide reachable only through
+    // /organiser is a guide two clicks deep.
     title: "Guides d’organisation",
     links: [
-      ...LANDING_PAGES.slice(0, 5).map((page) => ({
+      ...GUIDE_PAGES.map((page) => ({
         href: landingPath(page.slug),
         label: page.cardTitle,
       })),

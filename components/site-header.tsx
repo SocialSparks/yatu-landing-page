@@ -79,12 +79,14 @@ export function SiteHeader() {
           className="yq-logo-link"
           style={{ display: "flex", alignItems: "center", flex: "none", textDecoration: "none" }}
         >
-          {/* In the sticky header of every page, so never deferred. */}
+          {/* In the sticky header of every page, so never deferred. The source
+              PNG is 3468px wide for an 86px slot; these are 5 and 10 KiB. */}
           <img
             loading="eager"
             decoding="async"
             fetchPriority="high"
-            src="/assets/yatu-wordmark.png"
+            src="/assets/yatu-wordmark-172.webp"
+            srcSet="/assets/yatu-wordmark-172.webp 1x, /assets/yatu-wordmark-344.webp 2x"
             alt=""
             className="yq-logo-mark"
             width={86}

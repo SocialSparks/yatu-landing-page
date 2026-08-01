@@ -411,7 +411,7 @@ export function ModulesSection() {
         </div>
 
         <SectionCta
-          title="Prêt à l’essayer sur ton prochain événement ?"
+          title="Ton prochain événement, tu le lances avec Yatu ?"
           body="Inscris-toi pour recevoir Yatu le jour du lancement."
           primary={{ href: ROUTES.liste, label: CTA.waitlist }}
           secondary={{ href: ROUTES.fonctionnement, label: CTA.demo }}

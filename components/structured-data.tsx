@@ -1,5 +1,5 @@
 import { FAQ, LAUNCH_DATE, MODULES, faqAnswerText } from "@/lib/content";
-import { LANDING_INDEX_PATH, LANDING_PAGES, type LandingPage } from "@/lib/landing-content";
+import { GUIDE_PAGES, LANDING_INDEX_PATH, type LandingPage } from "@/lib/landing-content";
 import type { Crumb } from "@/lib/routes";
 import {
   COMPANY_ADDRESS,
@@ -21,8 +21,16 @@ function JsonLd({ data }: { data: object }) {
   );
 }
 
-/** The two nodes every page points at, by @id, instead of repeating them. */
+/**
+ * The nodes every page points at, by @id, instead of repeating them.
+ *
+ * `#organization` is the *brand*, Yatu - that is the entity a reader searches
+ * for and the one the guides are authored by. The company that publishes it
+ * sits behind it as `#publisher`, linked with parentOrganization: legally
+ * exact, without handing the brand entity to the studio's name.
+ */
 const ORGANIZATION_ID = absoluteUrl("/#organization");
+const PUBLISHER_ID = absoluteUrl("/#publisher");
 const WEBSITE_ID = absoluteUrl("/#website");
 
 const graph = (...nodes: object[]) => ({ "@context": "https://schema.org", "@graph": nodes });
@@ -36,13 +44,22 @@ export function SiteStructuredData() {
   const organization = {
     "@type": "Organization",
     "@id": ORGANIZATION_ID,
+    name: SITE_NAME,
+    url: SITE_URL,
+    email: CONTACT_EMAIL,
+    logo: absoluteUrl("/icon-512.png"),
+    sameAs: ["https://www.instagram.com/yatu_app/", "https://www.tiktok.com/@yatu_app"],
+    parentOrganization: { "@id": PUBLISHER_ID },
+  };
+
+  const publisher = {
+    "@type": "Organization",
+    "@id": PUBLISHER_ID,
     name: PUBLISHER,
     url: SITE_URL,
     email: CONTACT_EMAIL,
     telephone: CONTACT_PHONE_HREF,
     address: COMPANY_ADDRESS,
-    logo: absoluteUrl("/icon-512.png"),
-    sameAs: ["https://www.instagram.com/yatu_app/", "https://www.tiktok.com/@yatu_app"],
   };
 
   const website = {
@@ -54,7 +71,7 @@ export function SiteStructuredData() {
     publisher: { "@id": ORGANIZATION_ID },
   };
 
-  return <JsonLd data={graph(organization, website)} />;
+  return <JsonLd data={graph(organization, publisher, website)} />;
 }
 
 const breadcrumbNode = (trail: Crumb[]) => ({
@@ -131,7 +148,29 @@ export function LandingStructuredData({ page, trail }: { page: LandingPage; trai
     isPartOf: { "@id": WEBSITE_ID },
     about: { "@id": absoluteUrl("/#app") },
     primaryImageOfPage: absoluteUrl(page.photo),
+    datePublished: page.updated,
+    dateModified: page.updated,
     breadcrumb: breadcrumbNode(trail),
+  };
+
+  /**
+   * The guide as a piece of writing: who stands behind the advice and when it
+   * was last revised. Both dates are the one printed under the title - a date
+   * in the markup that the reader cannot see is worth nothing.
+   */
+  const article = {
+    "@type": "Article",
+    "@id": `${url}#article`,
+    headline: page.h1,
+    description: page.description,
+    inLanguage: "fr-FR",
+    image: absoluteUrl(page.photo),
+    datePublished: page.updated,
+    dateModified: page.updated,
+    author: { "@id": ORGANIZATION_ID },
+    publisher: { "@id": ORGANIZATION_ID },
+    isPartOf: { "@id": WEBSITE_ID },
+    mainEntityOfPage: { "@id": url },
   };
 
   const howTo = {
@@ -160,7 +199,13 @@ export function LandingStructuredData({ page, trail }: { page: LandingPage; trai
     })),
   };
 
-  return <JsonLd data={graph(webPage, howTo, faq)} />;
+  // Article only for the guides: an "application pour X" page is a product
+  // page, and calling it an article would be a claim about what it is.
+  return (
+    <JsonLd
+      data={page.kind === "guide" ? graph(webPage, article, howTo, faq) : graph(webPage, howTo, faq)}
+    />
+  );
 }
 
 /** The /organiser index: the list of guides, in the order the page shows them. */
@@ -177,7 +222,7 @@ export function LandingIndexStructuredData({ trail }: { trail: Crumb[] }) {
     breadcrumb: breadcrumbNode(trail),
     mainEntity: {
       "@type": "ItemList",
-      itemListElement: LANDING_PAGES.map((page, i) => ({
+      itemListElement: GUIDE_PAGES.map((page, i) => ({
         "@type": "ListItem",
         position: i + 1,
         name: page.cardTitle,

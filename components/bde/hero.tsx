@@ -1,5 +1,6 @@
 import { CountUp } from "@/components/count-up";
 import { Decor } from "@/components/decor";
+import { Picture } from "@/components/picture";
 import { BDE_CHIPS, BDE_CTA, BDE_SHOWCASE } from "@/lib/bde-content";
 import { icon } from "@/lib/content";
 import { BDE_HERO_DECOR } from "@/lib/decor";
@@ -210,12 +211,12 @@ export function BdeHero() {
               }}
             >
               <div style={{ position: "relative", height: 230, background: "#EFE8DE" }}>
-                <img
+                <Picture
                   src={PHOTO}
                   alt="Un groupe d’étudiants pendant un week-end d’intégration"
-                  loading="eager"
-                  fetchPriority="high"
-                  decoding="async"
+                  widths={[520, 1040]}
+                  sizes="(max-width: 760px) 100vw, 520px"
+                  priority
                   style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                 />
               </div>

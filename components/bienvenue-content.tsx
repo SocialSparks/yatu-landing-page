@@ -110,7 +110,7 @@ export function BienvenueContent() {
   const params = useSearchParams();
   // Kept apart: the fallback is a sentence to read, never something to file
   // under "E-mail" in the sheet.
-  const signupEmail = params.get("e") || "";
+  const [signupEmail, setSignupEmail] = useState(() => params.get("e") || "");
   const email = signupEmail || "ton adresse";
 
   const [types, setTypes] = useState<string[]>([]);
@@ -122,8 +122,16 @@ export function BienvenueContent() {
   const [shareUrl, setShareUrl] = useState("");
   const timer = useRef<number>(undefined);
 
-  // window isn’t available while rendering - resolve the share target on mount.
-  useEffect(() => setShareUrl(`${window.location.origin}/`), []);
+  // window isn’t available while rendering - resolve browser-only values on mount.
+  useEffect(() => {
+    setShareUrl(`${window.location.origin}/`);
+    if (signupEmail) return;
+    try {
+      setSignupEmail(window.sessionStorage.getItem("yatu-signup-email") || "");
+    } catch {
+      /* storage blocked - the generic confirmation copy remains readable */
+    }
+  }, [signupEmail]);
   useEffect(() => () => window.clearTimeout(timer.current), []);
 
   async function save() {

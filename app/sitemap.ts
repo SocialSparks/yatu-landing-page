@@ -7,11 +7,10 @@ import { SITE_PAGES, absoluteUrl } from "@/lib/site";
  * this is the file to submit in Search Console.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
-
   return SITE_PAGES.map((page) => ({
     url: absoluteUrl(page.path),
-    lastModified,
+    // Each page's own date - see the comment on SitePage.updated.
+    lastModified: page.updated,
     changeFrequency: page.changeFrequency,
     priority: page.priority,
     images: page.images?.map((image) => absoluteUrl(image)),

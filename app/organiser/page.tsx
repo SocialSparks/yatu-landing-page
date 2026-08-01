@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { Decor } from "@/components/decor";
 import { NavLink } from "@/components/nav-link";
+import { Picture } from "@/components/picture";
 import { SectionCta } from "@/components/section-cta";
 import { SectionHeading } from "@/components/section-heading";
 import { LandingIndexStructuredData } from "@/components/structured-data";
 import { WaitlistForm } from "@/components/waitlist-form";
 import { ACCENT, CTA, LAUNCH_LABEL } from "@/lib/content";
 import { USAGES_DECOR } from "@/lib/decor";
-import { LANDING_PAGES, landingPath } from "@/lib/landing-content";
+import { GUIDE_PAGES, landingPath } from "@/lib/landing-content";
 import { HOME_CRUMB, GUIDES_CRUMB, ROUTES } from "@/lib/routes";
 import { pageMetadata } from "@/lib/site";
 
@@ -141,7 +142,7 @@ export default function Page() {
               gap: 18,
             }}
           >
-            {LANDING_PAGES.map((page) => (
+            {GUIDE_PAGES.map((page) => (
               <NavLink
                 key={page.slug}
                 href={landingPath(page.slug)}
@@ -157,11 +158,11 @@ export default function Page() {
                 }}
               >
                 <span style={{ position: "relative", display: "block", height: 172, background: ACCENT.sandDeep }}>
-                  <img
-                    loading="lazy"
-                    decoding="async"
+                  <Picture
                     src={page.photo}
                     alt={page.photoAlt}
+                    widths={[480, 1040]}
+                    sizes="(max-width: 700px) 100vw, 350px"
                     style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                   />
                   <span

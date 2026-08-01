@@ -46,6 +46,14 @@ export type SitePage = {
   path: string;
   changeFrequency: "weekly" | "monthly" | "yearly";
   priority: number;
+  /**
+   * ISO date of the last real change to the page, quoted as <lastmod>.
+   *
+   * Deliberately not `new Date()`: that told crawlers all twelve pages had
+   * changed at every deploy, which is exactly how a site teaches Google to stop
+   * reading its lastmod. Bump the date when the page's content changes.
+   */
+  updated: string;
   /** Site-relative images offered to Google Images through the sitemap. */
   images?: string[];
 };
@@ -59,12 +67,25 @@ export type SitePage = {
  * deliberately absent - it is a post-signup page and stays out of the index.
  */
 export const SITE_PAGES: SitePage[] = [
-  { path: "/", changeFrequency: "weekly", priority: 1, images: ["/opengraph-image"] },
-  { path: "/bde", changeFrequency: "monthly", priority: 0.8, images: ["/bde/opengraph-image"] },
+  {
+    path: "/",
+    changeFrequency: "weekly",
+    priority: 1,
+    updated: "2026-08-01",
+    images: ["/opengraph-image"],
+  },
+  {
+    path: "/bde",
+    changeFrequency: "monthly",
+    priority: 0.8,
+    updated: "2026-08-01",
+    images: ["/bde/opengraph-image"],
+  },
   {
     path: LANDING_INDEX_PATH,
     changeFrequency: "monthly",
     priority: 0.7,
+    updated: "2026-08-01",
     images: [`${LANDING_INDEX_PATH}/opengraph-image`],
   },
   ...LANDING_PAGES.map((page): SitePage => ({
@@ -73,12 +94,26 @@ export const SITE_PAGES: SitePage[] = [
     // Below the home page and /bde, above the legal pages: these are the
     // entry points we want crawled often, but they are not the front door.
     priority: 0.7,
+    updated: page.updated,
     images: [page.photo, `/${page.slug}/opengraph-image`],
   })),
-  { path: "/mentions-legales", changeFrequency: "yearly", priority: 0.2 },
-  { path: "/confidentialite", changeFrequency: "yearly", priority: 0.2 },
-  { path: "/cookies", changeFrequency: "yearly", priority: 0.2 },
+  { path: "/mentions-legales", changeFrequency: "yearly", priority: 0.2, updated: "2026-08-01" },
+  { path: "/confidentialite", changeFrequency: "yearly", priority: 0.2, updated: "2026-08-01" },
+  { path: "/cookies", changeFrequency: "yearly", priority: 0.2, updated: "2026-08-01" },
 ];
+
+/** "1er août 2026" - the date as the guides show it, and as Article quotes it. */
+export const formatDateFr = (iso: string) => {
+  const date = new Date(`${iso}T12:00:00Z`);
+  const day = date.getUTCDate();
+  const rest = new Intl.DateTimeFormat("fr-FR", {
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(date);
+
+  return `${day === 1 ? "1er" : day} ${rest}`;
+};
 
 /** Pages excluded from the index; kept next to SITE_PAGES so robots.ts stays in sync. */
 export const PRIVATE_PATHS = ["/bienvenue"];

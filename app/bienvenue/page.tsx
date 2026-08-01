@@ -13,9 +13,9 @@ export const metadata: Metadata = pageMetadata({
 });
 
 /**
- * Implemented from "Bienvenue.dc.html". The signup redirects here with the
- * address in `?e=`; useSearchParams needs the Suspense boundary for the page
- * to stay statically rendered.
+ * Implemented from "Bienvenue.dc.html". The signup redirects here with its
+ * source in the query string; the address itself stays in sessionStorage.
+ * useSearchParams needs the Suspense boundary for the page to stay static.
  */
 export default function Page() {
   return (

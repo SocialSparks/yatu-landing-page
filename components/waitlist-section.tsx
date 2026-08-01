@@ -52,7 +52,7 @@ export function WaitlistSection() {
               textWrap: "balance",
             }}
           >
-            Sois prévenu le premier.
+            Ton accès arrive avant l’ouverture publique.
           </h2>
 
           <p

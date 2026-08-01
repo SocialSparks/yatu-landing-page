@@ -143,9 +143,9 @@ export function DemoSection() {
         <SectionHeading
           badge="Comment ça marche"
           badgeBg={ACCENT.sunbeam}
-          title="Essaie-le tout de suite. Clique dans l’écran."
-          titleMaxCh={20}
-          lede={`${DEMO_ETAPES.length} étapes pour dérouler un événement Yatu du début à la fin. Rien à installer.`}
+          title="Créer un événement, écran par écran."
+          titleMaxCh={22}
+          lede={`${DEMO_ETAPES.length} étapes, rien à installer. Touche l’écran pour avancer.`}
         />
 
         <div

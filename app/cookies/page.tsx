@@ -82,7 +82,7 @@ export default function Page() {
       title="Gestion des cookies"
       updatedAt="1er août 2026"
       decor={COOKIES_DECOR}
-      lede="Le site utilise surtout le stockage local de ton navigateur pour mémoriser tes choix et les informations que tu saisis. Aucun traceur publicitaire ni outil de mesure d’audience tiers n’est actuellement activé."
+      lede="Le site utilise le stockage local pour mémoriser tes choix. Google Analytics et Microsoft Clarity ne sont chargés qu’après ton accord à la mesure d’audience."
     >
       <ConsentStatus />
 
@@ -136,12 +136,25 @@ export default function Page() {
           rule="Déposés seulement si tu les acceptes"
         >
           <Line>
-            Aucun outil de mesure d’audience tiers n’est actuellement chargé par le site. Activer
-            cette préférence ne dépose donc aucun traceur de statistiques à ce jour.
+            <B>Google Analytics 4</B> mesure les pages consultées, la provenance, les appareils et
+            les interactions générales. Il peut déposer <B>_ga</B> et <B>_ga_&lt;identifiant&gt;</B>,
+            utilisés pour distinguer les visiteurs et les sessions, avec une durée maximale par
+            défaut de deux ans.
           </Line>
           <Line>
-            Si un outil est ajouté ultérieurement, il ne sera activé qu’après consentement et cette
-            page sera mise à jour avant sa mise en service.
+            <B>Microsoft Clarity</B> produit des statistiques de navigation, cartes de chaleur et
+            reconstitutions de sessions à partir des clics, défilements et mouvements. Il peut
+            déposer notamment <B>_clck</B> et <B>_clsk</B>. Les contenus sensibles des formulaires
+            sont masqués par défaut par Clarity.
+          </Line>
+          <Line>
+            Ces deux outils sont entièrement bloqués avant ton accord. Si tu retires ensuite ton
+            consentement, le site leur transmet le refus et supprime les cookies de mesure
+            accessibles sur son domaine.
+          </Line>
+          <Line>
+            La balise de vérification Google Search Console placée dans l’en-tête ne mesure pas ta
+            navigation et ne dépose aucun cookie.
           </Line>
         </Tracker>
 

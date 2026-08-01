@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Decor } from "@/components/decor";
 import { NavLink } from "@/components/nav-link";
+import { Picture } from "@/components/picture";
 import { SectionHeading } from "@/components/section-heading";
 import { SectionCta } from "@/components/section-cta";
 import { ACCENT, CTA, USE_CASE_ROWS, type UseCase } from "@/lib/content";
@@ -40,11 +41,11 @@ function Card({ card }: { card: UseCase }) {
       }}
     >
       {card.photo ? (
-        <img
+        <Picture
           src={card.photo}
           alt=""
-          loading="lazy"
-          decoding="async"
+          widths={[480, 1040]}
+          sizes="(max-width: 600px) 100vw, 300px"
           style={{
             position: "absolute",
             inset: 0,
@@ -146,8 +147,8 @@ export function UseCasesSection() {
         <SectionHeading
           badge="Les cas d’usage"
           badgeBg={ACCENT.blush}
-          title="Une soirée improvisée ou cinq jours à Ibiza."
-          titleMaxCh={20}
+          title="Soirée, week-end, voyage : le même espace partagé."
+          titleMaxCh={24}
         />
 
         <div
@@ -174,8 +175,8 @@ export function UseCasesSection() {
             maxWidth: "60ch",
           }}
         >
-          Anniversaire, EVJF, EVG, festival, week-end au ski ou voyage en groupe : c’est le même
-          espace partagé, avec les outils que tu choisis.{" "}
+          Anniversaire, EVJF, EVG, festival, week-end au ski ou voyage en groupe : tu actives
+          les outils dont cette occasion a besoin, et pas les autres.{" "}
           <NavLink href={ROUTES.organiser} style={{ color: "#2A343D" }}>
             Nos guides détaillent la méthode occasion par occasion.
           </NavLink>

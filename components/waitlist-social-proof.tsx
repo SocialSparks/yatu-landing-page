@@ -19,7 +19,10 @@ export function WaitlistSocialProof() {
               marginLeft: index === 0 ? 0 : -11,
               border: "3px solid #F7F4ED",
               borderRadius: 999,
-              backgroundImage: "url('/assets/waitlist-avatars.jpg')",
+              // image-set lets the browser pick the WebP and leaves the JPEG
+              // for anything that cannot: a background has no <picture>.
+              backgroundImage:
+                "image-set(url('/assets/waitlist-avatars-320.webp') type('image/webp'), url('/assets/waitlist-avatars.jpg') type('image/jpeg'))",
               backgroundSize: "200% 200%",
               backgroundPosition: position,
               backgroundRepeat: "no-repeat",
