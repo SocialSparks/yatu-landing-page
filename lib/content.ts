@@ -61,7 +61,7 @@ export const YATU_REVEAL_BENEFITS: Bullet[] = [
   {
     tool: "heart",
     title: "L’organisateur souffle",
-    desc: "Tu n’es plus le seul à tout suivre, à tout rappeler et à tout avancer.",
+    desc: "Tu n’as plus à tout suivre, tout rappeler et tout avancer.",
   },
 ];
 

@@ -189,7 +189,7 @@ export default function Page() {
             ],
             [
               "Fonctionnement actuel",
-              "le formulaire conserve actuellement la demande dans ton navigateur et ne la transmet pas à QUANTIQ STUDIO. Pour une demande immédiate, écris à support@yatu-pro.com.",
+              "le formulaire conserve actuellement la demande dans ton navigateur et ne la transmet pas à QUANTIQ STUDIO. Pour une demande immédiate, écris à support@yatu-app.com.",
             ],
             [
               "Conservation",

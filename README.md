@@ -148,6 +148,13 @@ La vérification Search Console est rendue dans le `<head>` par les métadonnée
 événements de page GA n’incluent pas les paramètres d’URL, et l’adresse de la liste d’attente
 passe à `/bienvenue` par `sessionStorage` plutôt que dans l’URL.
 
+⚠️ `GOOGLE_SITE_VERIFICATION` est lu **au build**, dans `app/layout.tsx`, et la valeur est
+figée dans le HTML statique. Le renseigner dans `.env.local` suffit en local, mais ce fichier
+est couvert par `.env*.local` dans `.gitignore` : il n’arrive jamais sur le worker. En
+production il doit être déclaré comme **variable de build** Cloudflare (*Settings → Build →
+Variables and secrets*), pas comme binding runtime du worker - à ce moment-là les pages sont
+déjà générées. Variable simple, pas secret : ce jeton finit dans le HTML de chaque page.
+
 ### Les guides d'organisation
 
 The occasion guides - `/organiser-un-evjf`, `/organiser-un-week-end-entre-amis`,
@@ -159,7 +166,7 @@ the advice.
 | --- | --- |
 | Copy | `lib/landing-content.ts` - one `LandingPage` entry per page |
 | Route | `app/[slug]/page.tsx` - a static segment always wins, so `/bde` and the rest are untouched |
-| Layout | `components/landing/guide-page.tsx` - promise + signup, problem, method, countdown, mistakes, modules, FAQ, siblings |
+| Layout | `components/landing/guide-page.tsx` - promise + signup, problem, screens*, method, comparison*, countdown, budget, mistakes, modules + cross-link, FAQ, siblings (* app pages only) |
 | Index | `app/organiser/page.tsx`, linked from the header, the footer and every guide |
 | Social card | `app/[slug]/opengraph-image.tsx`, one per page |
 
@@ -172,11 +179,33 @@ Two kinds share that route, and they must never say the same thing:
   (`/application-partage-depenses-entre-amis`): what Yatu does, not how to organise. Linked
   from the footer's product column, and from its sibling guide.
 
+**A pair is one occasion answered twice, and that is the risk.** `organiser-un-week-end-entre-amis`
+and `application-organiser-week-end-entre-amis` target neighbouring queries; if they read
+alike, Google picks one and it is rarely the right one. Four things keep them apart, and all
+four have to hold when a page is edited:
+
+- `modulesTitle` is **per page** - the `<h2>` over the module grid used to be one string
+  shared by all eleven pages, which is the single strongest "these are the same page" signal
+  a pair can send.
+- `moduleNotes` overrides the canonical `MODULES` sentence on app pages, so a guide and its
+  app page never print the same module paragraph.
+- The guide carries what the app page does not: `costs` (budget per person by format) and
+  `timeline`. The app page carries what the guide does not: `screens` and `compare`.
+- `counterpart` links the two **both ways**, with an anchor that says what is on the other
+  end. `npm run build` then `node scripts/check-duplicates.mjs` reports any body sentence a
+  pair still shares - it should stay at zero.
+
+The `compare` table is written **by category** - a group conversation, a spreadsheet, a
+shared-accounts app - and never by brand. In France a comparison naming a competitor has to
+be objective and verifiable (art. L122-1 code de la consommation), and none of this is
+measured.
+
 **Adding a page: append one entry to `LANDING_PAGES`.** The route, the sitemap, the social
 card, the breadcrumbs, the structured data, the footer column and the `/organiser` index all
-pick it up with no other change. Three things to respect: the `tool` names must exist in
-`public/assets/tools/`, `modules` must be `ModuleKey`s from `lib/content.ts`, and the photo
-must have its variants generated (see *Images* below).
+pick it up with no other change. Four things to respect: the `tool` names must exist in
+`public/assets/tools/`, `modules` must be `ModuleKey`s from `lib/content.ts`, `modulesTitle`
+must be a sentence no other page uses, and the photo must have its variants generated (see
+*Images* below).
 
 `dynamicParams` is deliberately left at its default. Set to `false`, Next refuses to render
 any path it cannot find in the prerender manifest *at runtime* - and on the Cloudflare
@@ -206,8 +235,16 @@ images on a phone. The mockups were the bulk of it - not SVGs at all, but two fu
 base64 PNGs in an SVG wrapper (830 KiB for the hero alone; base64 barely gzips). Rasterising
 the wrapper flattens both layers and keeps the transparent frame: 25 KiB in AVIF.
 
-Sources stay in the repo, untouched, as the input of the script. `next.config.ts` serves
-`/assets` and `/mockups` with a one-year immutable cache.
+**Sources live in `assets-src/`, outside `public/`.** The rule is worth keeping: `public/`
+holds only what a browser can request, `assets-src/` holds what it never asks for.
+`<Picture>` emits `-418.avif`-style paths and never the original, so leaving the originals in
+`public/` shipped 8.6 MiB of Worker bundle that no request could reach - `public/` went from
+15 MiB to 5.8 MiB by moving them out. Two files stay in `public/` because something really
+does fetch them: `waitlist-avatars.jpg` is the `image-set()` fallback in
+`components/waitlist-social-proof.tsx`, and `app-home.webp` is served as-is by
+`components/app-home.tsx`.
+
+`next.config.ts` serves `/assets` and `/mockups` with a one-year immutable cache.
 
 ### Deliberate departures from the design file
 
@@ -224,18 +261,6 @@ Sources stay in the repo, untouched, as the input of the script. `next.config.ts
   `scroll-margin-top` so anchors clear the sticky header.
 
 ## Still to do
-
-**Deploy the Apps Script and set `NEXT_PUBLIC_FORMS_ENDPOINT`** - see the "Formulaires"
-section above. Until it is set, the three forms stay in local mode and nothing is collected.
-
-**Search Console credential.** The GA4 Measurement ID and Clarity project ID have production
-defaults in `components/measurement.tsx`. The Search Console verification token still needs to
-be added to the production build environment.
-
-**The contact address is on another domain.** `CONTACT_EMAIL` is `support@yatu-pro.com`
-while the site is `yatu-app.com`. It appears on the legal pages and in the `Organization`
-markup, where a domain mismatch reads as a trust signal problem. Left as is - it is a
-business decision, not a code one.
 
 **Social links are placeholders.** `SOCIAL` in `components/site-footer.tsx` and the two
 links on `/bienvenue` point at `instagram.com` / `tiktok.com` / `linkedin.com` with no

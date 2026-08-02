@@ -29,7 +29,7 @@ export const COMPANY_RCS = "944 423 805 R.C.S. Lyon";
 export const COMPANY_VAT = "FR76944423805";
 export const PUBLISHING_DIRECTOR = "Célian Frasca";
 
-export const CONTACT_EMAIL = "support@yatu-pro.com";
+export const CONTACT_EMAIL = "support@yatu-app.com";
 export const PRIVACY_EMAIL = CONTACT_EMAIL;
 export const CONTACT_PHONE = "07 81 73 06 39";
 export const CONTACT_PHONE_HREF = "+33781730639";
@@ -71,7 +71,7 @@ export const SITE_PAGES: SitePage[] = [
     path: "/",
     changeFrequency: "weekly",
     priority: 1,
-    updated: "2026-08-01",
+    updated: "2026-08-02",
     images: ["/opengraph-image"],
   },
   {

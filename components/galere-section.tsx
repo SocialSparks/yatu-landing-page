@@ -93,7 +93,7 @@ export function GalereSection() {
         <SectionHeading
           badge="Avant Yatu"
           badgeBg={ACCENT.coral}
-          title="Aujourd’hui, organiser à huit, ça ressemble à ça."
+          title="Aujourd’hui, organiser à plusieurs, ça ressemble à ça."
           titleMaxCh={18}
         />
 

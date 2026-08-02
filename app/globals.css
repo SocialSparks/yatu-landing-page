@@ -238,6 +238,85 @@ details[open] .yq-plus {
   translate: 0 -4px;
 }
 
+/* --------- Guides: the cost rows and the comparison tables ---------- */
+
+/* Format on the left, price on the right, the detail across both. Below
+   560px the price drops under the format - see the responsive section. */
+.yq-cost {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px 20px;
+  align-items: baseline;
+}
+
+.yq-cost-detail {
+  grid-column: 1 / -1;
+}
+
+/* The only horizontal scroll allowed anywhere: it belongs to the table,
+   never to the page. */
+.yq-table-wrap {
+  overflow-x: auto;
+  border: 1px solid #ebe7de;
+  border-radius: 20px;
+  background: #ffffff;
+  -webkit-overflow-scrolling: touch;
+}
+
+.yq-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-ui), system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.yq-table caption {
+  padding: 16px 20px 0;
+  font-weight: 700;
+  font-size: 14px;
+  color: rgba(42, 52, 61, 0.55);
+  text-align: left;
+}
+
+.yq-table th,
+.yq-table td {
+  padding: 14px 20px;
+  vertical-align: top;
+  border-top: 1px solid #ebe7de;
+  text-wrap: pretty;
+}
+
+.yq-table thead th {
+  border-top: 0;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(42, 52, 61, 0.55);
+  white-space: nowrap;
+}
+
+.yq-table tbody th {
+  font-weight: 700;
+  color: #2a343d;
+  min-width: 15ch;
+}
+
+.yq-table tbody td {
+  color: rgba(42, 52, 61, 0.75);
+  min-width: 24ch;
+}
+
+/* Amounts read as a column, so they line up and never wrap. */
+.yq-table td.yq-num {
+  min-width: 0;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: #2a343d;
+}
+
 .yq-section-cta {
   margin-top: clamp(56px, 7vw, 84px);
   padding: clamp(20px, 3vw, 28px);
@@ -725,6 +804,16 @@ details[open] .yq-plus {
 @media (max-width: 560px) {
   .yq-milestone {
     grid-template-columns: 1fr !important;
+  }
+
+  /* Same reason: a four-word format and a price fight for the same line. */
+  .yq-cost {
+    grid-template-columns: 1fr;
+  }
+
+  .yq-table th,
+  .yq-table td {
+    padding: 12px 16px;
   }
 }
 
