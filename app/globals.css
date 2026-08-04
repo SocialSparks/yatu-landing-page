@@ -1095,3 +1095,37 @@ details[open] .yq-plus {
     line-height: 1.25;
   }
 }
+
+/* ===================================================================
+   Shimmer Loader
+   =================================================================== */
+@keyframes yq-shimmer-anim {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.yq-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(42, 52, 61, 0.04) 25%,
+    rgba(42, 52, 61, 0.08) 50%,
+    rgba(42, 52, 61, 0.04) 75%
+  );
+  background-size: 200% 100%;
+  animation: yq-shimmer-anim 1.5s infinite linear;
+  border-radius: 8px;
+}
+
+[data-tone="dark"] .yq-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 25%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.04) 75%
+  );
+  background-size: 200% 100%;
+}

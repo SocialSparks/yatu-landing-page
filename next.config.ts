@@ -3,6 +3,8 @@ import type {NextConfig} from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // OpenNext bundles this traced standalone output into .open-next/worker.js.
+  output: "standalone",
   // A stray lockfile in the home directory otherwise wins the root inference.
   outputFileTracingRoot: path.join(__dirname),
   // Nothing to gain from announcing the framework on every response.

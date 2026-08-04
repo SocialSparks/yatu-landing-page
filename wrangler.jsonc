@@ -1,4 +1,17 @@
 {
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "yatu-landing-page",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-08-04",
+  "compatibility_flags": ["nodejs_compat"],
+  "upload_source_maps": true,
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "images": {
+    "binding": "IMAGES"
+  },
   "observability": {
     "logs": {
       "enabled": true,

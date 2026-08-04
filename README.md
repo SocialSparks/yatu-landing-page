@@ -13,7 +13,7 @@ Google Sheet par Google Apps Script ; le dépôt ne contient ni base de données
 - Node.js 20 ou supérieur
 - Next.js 15, React 19 et TypeScript
 - CSS natif et styles React, sans framework CSS
-- Cloudflare Workers pour l’hébergement
+- Cloudflare Workers et OpenNext pour l’hébergement
 - Google Apps Script pour les formulaires
 - Google Analytics 4 et Microsoft Clarity après consentement
 - Sharp pour produire les variantes WebP et AVIF
@@ -40,8 +40,13 @@ les contrôles de production.
 | Commande | Usage |
 | --- | --- |
 | `npm run dev` | Génère le contenu agent puis lance le serveur de développement. |
-| `npm run build` | Génère le contenu agent puis crée le build de production. |
+| `npm run build` | Génère le contenu agent, le build Next.js puis l’artefact Worker OpenNext. |
 | `npm run start` | Sert un build de production existant. |
+| `npm run preview` | Construit puis sert le Worker dans le runtime local Cloudflare. |
+| `npm run deploy` | Construit puis déploie le Worker avec Wrangler. |
+| `npm run logs` | Affiche les logs Cloudflare du Worker en temps réel. |
+| `npm run logs:errors` | Affiche uniquement les invocations Cloudflare en erreur. |
+| `npm run cf-typegen` | Régénère les types des bindings déclarés dans Wrangler. |
 | `npm run typecheck` | Vérifie les types TypeScript sans écrire de fichiers. |
 | `npm run generate:agents` | Régénère `/llms.txt` et les variantes Markdown. |
 | `npm run check:agents` | Teste les en-têtes `Link`, `Vary` et la négociation Markdown d’un build. |
@@ -89,6 +94,7 @@ docs/                 Procédures opérationnelles complémentaires
 middleware.ts         Négociation HTML/Markdown pour les agents
 next.config.ts        En-têtes HTTP et cache des ressources statiques
 wrangler.jsonc        Observabilité locale du Worker Cloudflare
+open-next.config.ts   Adaptateur du build Next.js vers Cloudflare Workers
 ```
 
 ### Routes principales
@@ -203,18 +209,44 @@ commandes de validation et limites du draft sont documentés dans
 
 ## Déploiement Cloudflare
 
-Le domaine de production est `https://yatu-app.com`. Le build Cloudflare doit utiliser Node.js 20+
-et exécuter :
+Le domaine de production est `https://yatu-app.com`. Le déploiement utilise l’adaptateur
+`@opennextjs/cloudflare`. Le build Cloudflare doit utiliser Node.js 20+ avec les commandes :
 
 ```bash
-npm install
+npm ci
 npm run build
+# Commande de déploiement Cloudflare Workers Builds :
+npx wrangler deploy
 ```
 
-Le fichier `wrangler.jsonc` active la conservation des logs d’invocation et les traces du Worker.
-Il ne contient volontairement ni secret, ni binding, ni paramètre propre à un compte Cloudflare.
-Les variables publiques et le jeton Search Console sont configurés dans les variables de build du
-projet Cloudflare.
+`npm run build` produit `.open-next/worker.js` et `.open-next/assets`. `wrangler.jsonc` référence
+ces deux sorties, active `nodejs_compat`, le binding Cloudflare Images `IMAGES`, les source maps,
+les logs d’invocation et les traces. Le nom du Worker est `yatu-landing-page`.
+
+Le fichier Wrangler ne contient volontairement aucun secret. Les variables publiques et le jeton
+Search Console sont configurés dans les variables de build du projet Cloudflare. Lorsqu’un nouveau
+binding est ajouté au fichier Wrangler, relancer `npm run cf-typegen`.
+
+### Logs et erreurs
+
+Les erreurs de build et de déploiement sont disponibles dans le détail du déploiement Cloudflare.
+Pour les erreurs d’exécution, ouvrir **Workers & Pages > yatu-landing-page > Observability** ou
+suivre les événements en temps réel depuis un terminal authentifié :
+
+```bash
+npx wrangler login
+npm run logs
+npm run logs:errors
+```
+
+Dans Workers Logs, le filtre `$metadata.error EXISTS` retrouve toutes les erreurs et
+`$workers.outcome = "exception"` cible les exceptions non interceptées. Les traces permettent
+d’examiner la durée des requêtes, sous-requêtes et appels de bindings. Les source maps envoyées par
+Wrangler rendent les piles d’appels du Worker plus lisibles.
+
+Ces journaux couvrent le Worker, mais pas les exceptions JavaScript exécutées uniquement dans le
+navigateur. Une collecte dédiée côté client, par exemple Sentry, est nécessaire pour centraliser
+ces erreurs avec leur URL, navigateur et pile d’appels.
 
 Après déploiement, vérifier au minimum :
 

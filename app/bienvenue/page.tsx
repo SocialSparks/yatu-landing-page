@@ -19,7 +19,13 @@ export const metadata: Metadata = pageMetadata({
  */
 export default function Page() {
   return (
-    <Suspense fallback={<div style={{ minHeight: "60vh", background: "#F7F4ED" }} />}>
+    <Suspense
+      fallback={
+        <div style={{ minHeight: "60vh", padding: "40px 20px" }}>
+          <div className="yq-shimmer" style={{ width: "100%", height: "400px", maxWidth: "800px", margin: "0 auto" }} />
+        </div>
+      }
+    >
       <BienvenueContent />
     </Suspense>
   );
