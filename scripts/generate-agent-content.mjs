@@ -6,7 +6,7 @@ import {startNextServer, stopNextServer} from "./agent-server.mjs";
 
 const ROOT = process.cwd();
 const PUBLIC_DIR = path.join(ROOT, "public");
-const OUTPUT_DIR = path.join(PUBLIC_DIR, "_agent-markdown");
+const OUTPUT_DIR = path.join(PUBLIC_DIR, "agent-markdown");
 const TEMP_DIR = `${OUTPUT_DIR}.tmp-${process.pid}`;
 const LLMS_PATH = path.join(PUBLIC_DIR, "llms.txt");
 const LLMS_TEMP_PATH = `${LLMS_PATH}.tmp-${process.pid}`;

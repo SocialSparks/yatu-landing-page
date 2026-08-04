@@ -200,7 +200,7 @@ chaque page indexable, puis intégrées au build.
 
 - `/llms.txt` fournit l’index machine lisible du site ;
 - la page d’accueil expose cet index avec un en-tête RFC 8288 `Link` ;
-- `middleware.ts` effectue la négociation de contenu ;
+- `middleware.ts` effectue la négociation de contenu et redirige vers `public/agent-markdown/` (le dossier ne commence pas par un underscore `_` pour éviter d'être ignoré par les assets statiques Cloudflare) ;
 - `scripts/check-agent-readiness.mjs` vérifie le contrat HTTP localement.
 
 La configuration DNS-AID et DNSSEC reste une opération de zone Cloudflare. Les enregistrements,

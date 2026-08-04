@@ -1,7 +1,7 @@
 import {NextRequest, NextResponse} from "next/server";
 import {SITE_PAGES} from "@/lib/site";
 
-const AGENT_MARKDOWN_PREFIX = "/_agent-markdown";
+const AGENT_MARKDOWN_PREFIX = "/agent-markdown";
 const INDEXABLE_PATHS = new Set(SITE_PAGES.map(({ path }) => path));
 const NEXT_VARY = [
   "Accept",

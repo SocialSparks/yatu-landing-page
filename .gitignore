@@ -9,7 +9,7 @@ next-env.d.ts
 *.tsbuildinfo
 
 # Generated from the rendered, indexable pages before dev/build.
-public/_agent-markdown
+public/agent-markdown
 public/llms.txt
 
 # Local Wrangler state; wrangler.jsonc itself stays versioned.
