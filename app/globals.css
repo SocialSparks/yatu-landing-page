@@ -635,22 +635,35 @@ details[open] .yq-plus {
 .yq-submit:not(:disabled):not([data-state="done"]):not([data-state="error"]):hover {
   background: #3a4750;
 }
+/* `!important` is not decoration here. SubmitButton paints its resting colours
+   in a style attribute, and an inline declaration beats a stylesheet rule - so
+   these two backgrounds never actually reached the button. It popped, it shook,
+   it swapped its icon, and it stayed ink through all of it. The colour is the
+   loudest half of the answer, so it wins the cascade.
+
+   `color` comes along for the ride: the dark-tone button on /go is ink-on-white
+   at rest, and without this its ink label would sit on the red. */
 .yq-submit[data-state="done"] {
-  background: #44b678;
+  background: #44b678 !important;
+  color: #ffffff !important;
   animation: yq-pop 460ms var(--ease-standard);
 }
 .yq-submit[data-state="error"] {
-  background: #d92e2e;
+  background: #d92e2e !important;
+  color: #ffffff !important;
   animation: yq-shake 440ms var(--ease-standard);
 }
 
+/* currentColor, not white: the button is white-on-ink everywhere except the ink
+   card on /go, where it flips and a white spinner would be invisible. On the
+   light tone currentColor *is* #ffffff, so nothing changes there. */
 .yq-spinner {
   width: 17px;
   height: 17px;
   flex: none;
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top-color: #ffffff;
+  border: 2px solid color-mix(in srgb, currentColor 30%, transparent);
+  border-top-color: currentColor;
   animation: yq-spin 700ms linear infinite;
 }
 
@@ -689,6 +702,75 @@ details[open] .yq-plus {
   88% {
     transform: translateX(2px);
   }
+}
+
+/* --------------------- /go: the link-in-bio rows -------------------- */
+
+/* The surface lives here rather than inline, unlike most of this site: an
+   inline `background` beats a stylesheet rule, so a card that paints itself
+   white in its style attribute can never be repainted by a :hover. That is
+   why .yq-btn-light only ever lifts the cards that use it. These rows are the
+   whole point of the page, so they get a hover that actually answers. */
+.yq-go-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  background: #ffffff;
+  border: 1px solid #ebe7de;
+  border-radius: 20px;
+  text-decoration: none;
+  box-shadow: var(--shadow-card);
+  translate: 0 0;
+  transition:
+    background 200ms var(--ease-standard),
+    border-color 200ms var(--ease-standard),
+    translate 200ms var(--ease-standard),
+    box-shadow 200ms var(--ease-standard);
+}
+
+.yq-go-row:hover {
+  border-color: #dcd6cb;
+  translate: 0 -2px;
+  box-shadow: 0 10px 26px rgba(42, 52, 61, 0.13);
+}
+
+.yq-go-row:active {
+  translate: 0 0;
+  box-shadow: var(--shadow-card);
+}
+
+.yq-go-arrow {
+  transition: transform 200ms var(--ease-standard);
+}
+
+.yq-go-row:hover .yq-go-arrow {
+  transform: translateX(3px);
+}
+
+/* The ink card holding the signup. The global focus ring is ink too, so on this
+   background it would be a dark outline on a dark panel - the brand yellow is
+   the one colour that reads against both the card and the white field. */
+.yq-go-cta :focus-visible {
+  outline-color: #fed873;
+}
+
+/* This form is the page's one conversion, so below the width where the field
+   and the button stop sharing a line, the button takes the whole line instead
+   of sitting orphaned to the left. `!important` is what reaches past the inline
+   `flex` WaitlistForm gives its button. */
+@media (max-width: 470px) {
+  .yq-go-cta .yq-submit {
+    flex: 1 0 100% !important;
+  }
+}
+
+.yq-go-legal {
+  transition: color 200ms var(--ease-standard);
+}
+
+.yq-go-legal:hover {
+  color: #2a343d;
 }
 
 .yq-row-btn {
@@ -750,8 +832,14 @@ details[open] .yq-plus {
   .yq-btn-dark,
   .yq-btn-light,
   .yq-submit,
+  .yq-go-row,
+  .yq-go-arrow,
   .yq-back-to-top {
     transition: none;
+  }
+
+  .yq-go-row:hover .yq-go-arrow {
+    transform: none;
   }
 
   /* The colour change still answers; the pop and the shake don't. The spinner

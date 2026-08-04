@@ -19,6 +19,8 @@ export const ROUTES = {
   bdePilote: "/bde#pilote",
   bdeDemo: "/bde#demo",
   bienvenue: "/bienvenue",
+  /** The link-in-bio page - what the Instagram and TikTok profiles point at. */
+  go: "/go",
   mentionsLegales: "/mentions-legales",
   confidentialite: "/confidentialite",
   cookies: "/cookies",

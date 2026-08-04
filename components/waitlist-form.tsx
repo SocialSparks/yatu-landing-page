@@ -1,12 +1,12 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useEffect, useId, useRef, useState } from "react";
-import { Honeypot } from "@/components/honeypot";
-import { type SubmitStatus, SubmitButton } from "@/components/submit-button";
-import { CTA } from "@/lib/content";
-import { HONEYPOT_NAME, submitForm } from "@/lib/forms";
-import { ROUTES } from "@/lib/routes";
+import {useRouter} from "next/navigation";
+import {useEffect, useId, useRef, useState} from "react";
+import {Honeypot} from "@/components/honeypot";
+import {SubmitButton, type SubmitStatus} from "@/components/submit-button";
+import {CTA} from "@/lib/content";
+import {HONEYPOT_NAME, submitForm} from "@/lib/forms";
+import {ROUTES} from "@/lib/routes";
 
 const UI = "var(--font-ui), system-ui, sans-serif";
 
@@ -23,11 +23,14 @@ export function WaitlistForm({
   placeholder = "ton@email.com",
   note = DEFAULT_NOTE,
   source = "accueil",
+  tone = "light",
 }: {
   cta?: string;
   placeholder?: string;
   note?: string;
   source?: string;
+  /** `"dark"` for the ink card on /go: the ink submit button would vanish into it. */
+  tone?: "light" | "dark";
 }) {
   const [value, setValue] = useState("");
   const [status, setStatus] = useState<SubmitStatus>("idle");
@@ -76,7 +79,14 @@ export function WaitlistForm({
     }, CONFIRM_MS);
   }
 
-  const noteColor = status === "error" ? "#D92E2E" : "#71787E";
+  const dark = tone === "dark";
+  const noteColor = dark
+    ? status === "error"
+      ? "#FFA8A8"
+      : "rgba(255,255,255,.62)"
+    : status === "error"
+      ? "#D92E2E"
+      : "#71787E";
 
   return (
     <div
@@ -119,7 +129,7 @@ export function WaitlistForm({
             height: 56,
             padding: "0 18px",
             boxSizing: "border-box",
-            border: "1px solid #EBE7DE",
+            border: `1px solid ${dark ? "rgba(255,255,255,.18)" : "#EBE7DE"}`,
             borderRadius: 16,
             background: "#FFFFFF",
             fontFamily: UI,
@@ -133,7 +143,15 @@ export function WaitlistForm({
           label={cta}
           sendingLabel="On t’inscrit…"
           doneLabel="Inscrit !"
-          style={{ flex: "0 0 auto", height: 56, padding: "0 26px", borderRadius: 16 }}
+          style={{
+            flex: "0 0 auto",
+            height: 56,
+            padding: "0 26px",
+            borderRadius: 16,
+            // The button is ink on a light page; on the ink card it flips, or it
+            // would be a dark rectangle on a dark rectangle.
+            ...(dark ? { background: "#FFFFFF", color: "#2A343D" } : {}),
+          }}
         />
       </form>
 

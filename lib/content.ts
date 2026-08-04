@@ -17,6 +17,22 @@ export const LAUNCH_DATE = "2026-09-09T00:00:00";
 /** Written once - the date shows up in the hero, the footer, the FAQ and the metadata. */
 export const LAUNCH_LABEL = "9 septembre 2026";
 
+/**
+ * The two store listings, empty until the app ships.
+ *
+ * This is the switch the whole "télécharger l'appli" story hangs on: while both
+ * are empty, /go offers the waitlist instead. Paste the real URLs the day of the
+ * launch and the download buttons take over - see `STORES_LIVE` below. A store
+ * that is not open yet stays empty and simply does not get a button.
+ */
+/* Typed `string`, not inferred as the empty literal: without the annotation
+   TypeScript narrows every `if (APP_STORE_URL)` to `never` while they are blank. */
+export const APP_STORE_URL: string = "";
+export const PLAY_STORE_URL: string = "";
+
+/** True as soon as one of the two stores has a listing to point at. */
+export const STORES_LIVE = Boolean(APP_STORE_URL || PLAY_STORE_URL);
+
 export const ACCENT = {
   ink: "#2A343D",
   sand: "#F7F4ED",

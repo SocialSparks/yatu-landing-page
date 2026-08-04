@@ -106,12 +106,26 @@ open-next.config.ts   Adaptateur du build Next.js vers Cloudflare Workers
 | `/organiser` | Index des guides d’organisation. |
 | `/[slug]` | Guides éditoriaux et pages « application pour… » générés statiquement. |
 | `/bienvenue` | Questionnaire facultatif après inscription, en `noindex`. |
+| `/go` | Page « lien en bio » pour Instagram et TikTok, en `noindex`. |
 | `/mentions-legales` | Mentions légales. |
 | `/confidentialite` | Politique de confidentialité. |
 | `/cookies` | Gestion du consentement et détail des traceurs. |
 
 Le header, le footer, la mesure d’audience, le bandeau de consentement et les données structurées
 globales sont montés dans `app/layout.tsx`.
+
+### La page `/go`
+
+C’est l’adresse à coller dans les bios Instagram et TikTok : un mini-linktree aux couleurs du
+site, servi **sans header ni footer** pour que rien ne concurrence les quatre destinations.
+`components/site-chrome.tsx` décide de cette mise à nu à partir du chemin ; son en-tête de
+fichier explique pourquoi un groupe de routes `app/(site)/` n’a pas été retenu.
+
+Le contenu — titre, accroche, libellés et liste des liens — vit dans `lib/go-content.ts`.
+La carte principale a deux états, et un seul réglage les sépare : tant que `APP_STORE_URL` et
+`PLAY_STORE_URL` sont vides dans `lib/content.ts`, elle affiche le compte à rebours et le
+formulaire de liste d’attente ; dès qu’une des deux URL est renseignée, elle affiche les boutons
+de téléchargement correspondants. Le jour du lancement, coller les deux liens suffit.
 
 ## Contenu et SEO
 

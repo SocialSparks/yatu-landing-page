@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { LAUNCH_DATE } from "@/lib/content";
+import {useEffect, useState} from "react";
+import {LAUNCH_DATE} from "@/lib/content";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
@@ -78,13 +78,29 @@ const LABEL: React.CSSProperties = {
   whiteSpace: "nowrap",
 };
 
-/** The four-cell countdown above the bottom-of-page signup. */
-export function Countdown() {
+/**
+ * The four-cell countdown above the bottom-of-page signup.
+ *
+ * `tone="dark"` is for the ink card on /go: the three white cells already read
+ * on ink, so only the caption and the accent cell - which is ink itself, and
+ * would vanish into the card - change.
+ */
+export function Countdown({ tone = "light" }: { tone?: "light" | "dark" } = {}) {
   const c = useLaunchClock(true);
+  const dark = tone === "dark";
 
   return (
     <div data-reveal="scale" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-      <span style={{ ...LABEL, fontSize: 12, letterSpacing: ".16em" }}>AVANT LA SORTIE</span>
+      <span
+        style={{
+          ...LABEL,
+          fontSize: 12,
+          letterSpacing: ".16em",
+          ...(dark ? { color: "rgba(255,255,255,.55)" } : {}),
+        }}
+      >
+        AVANT LA SORTIE
+      </span>
       <div
         style={{
           display: "flex",
@@ -111,7 +127,13 @@ export function Countdown() {
           </span>
           <span style={LABEL}>MINUTES</span>
         </span>
-        <span style={{ ...CELL, background: "#2A343D", border: "1px solid #2A343D" }}>
+        <span
+          style={{
+            ...CELL,
+            background: dark ? "rgba(255,255,255,.09)" : "#2A343D",
+            border: `1px solid ${dark ? "rgba(255,255,255,.16)" : "#2A343D"}`,
+          }}
+        >
           <span suppressHydrationWarning style={{ ...NUM, color: "#FED873" }}>
             {c.secondes}
           </span>

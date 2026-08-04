@@ -1,7 +1,11 @@
 /**
- * The three glyphs the confirmation page pulls from the design system
+ * The glyphs that are not Yatu's own: the networks we publish on, the two
+ * stores, and the copy affordance. The first three come from the design system
  * (Icons24Whatsapp / Icons24Instagram / Icons24Copy), inlined so there is no
- * runtime dependency on the DS bundle. They paint with currentColor.
+ * runtime dependency on the DS bundle.
+ *
+ * They paint with currentColor - except the Google Play mark, whose four shards
+ * are the logo itself and carry their own fills.
  */
 
 type IconProps = { size?: number };
@@ -36,6 +40,37 @@ export function TikTokIcon({ size = 20 }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17.93.9 2.18 1.46 3.42 1.6V9.8a9.14 9.14 0 0 1-3.38-.78c-.46-.21-.89-.48-1.31-.76-.01 2.92.01 5.84-.02 8.75a7.42 7.42 0 0 1-1.35 3.94 7.35 7.35 0 0 1-5.91 3.21 7.15 7.15 0 0 1-4.08-1.03 7.4 7.4 0 0 1-3.65-5.72c-.02-.5-.03-1-.01-1.49a7.4 7.4 0 0 1 2.58-4.96 7.2 7.2 0 0 1 6.15-1.72c.02 1.48-.04 2.96-.04 4.44a3.36 3.36 0 0 0-3.02.37 3.3 3.3 0 0 0-1.36 1.75c-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87a3.4 3.4 0 0 0 2.77-1.61c.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07Z" />
+    </svg>
+  );
+}
+
+export function AppleIcon({ size = 20 }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M16.36 1.43c0 1.14-.42 2.2-1.25 3.03-1 1-2.13 1.57-3.36 1.47a2.9 2.9 0 0 1-.03-.41c0-1.09.5-2.25 1.32-3.06.46-.47 1.05-.86 1.76-1.17.7-.3 1.37-.47 2-.5.01.21.02.42.02.64Zm4.54 15.67c-.35.8-.76 1.53-1.24 2.2-.65.92-1.19 1.55-1.6 1.9-.64.58-1.33.88-2.07.9-.53 0-1.17-.15-1.91-.46-.75-.3-1.43-.45-2.06-.45-.66 0-1.36.15-2.11.45-.75.31-1.35.47-1.81.49-.71.03-1.41-.28-2.11-.93-.44-.38-1.01-1.03-1.69-1.96a13.6 13.6 0 0 1-1.8-3.45 12.5 12.5 0 0 1-.76-4.12c0-1.52.33-2.83.99-3.93a5.8 5.8 0 0 1 2.07-2.09 5.57 5.57 0 0 1 2.8-.79c.56 0 1.3.17 2.22.51.92.34 1.51.51 1.77.51.2 0 .85-.2 1.96-.6 1.05-.37 1.93-.52 2.66-.46 1.96.16 3.44.93 4.42 2.33-1.76 1.06-2.63 2.55-2.61 4.46.02 1.48.56 2.72 1.61 3.7.48.45 1.01.8 1.6 1.04-.13.37-.27.73-.43 1.07Z" />
+    </svg>
+  );
+}
+
+export function GooglePlayIcon({ size = 20 }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M3.61 1.81 13.79 12 3.61 22.19A1.5 1.5 0 0 1 3 20.98V3.02c0-.47.24-.9.61-1.21Z"
+        fill="#00A0FF"
+      />
+      <path
+        d="m17.51 15.72-3.72-3.72 3.72-3.72 4.39 2.5c.99.56.99 1.88 0 2.44l-4.39 2.5Z"
+        fill="#FFBC00"
+      />
+      <path
+        d="M17.51 15.72 13.79 12 3.61 22.19c.37.31.92.35 1.36.1l12.54-6.57Z"
+        fill="#FF3A44"
+      />
+      <path
+        d="M17.51 8.28 4.97 1.71a1.13 1.13 0 0 0-1.36.1L13.79 12l3.72-3.72Z"
+        fill="#00C853"
+      />
     </svg>
   );
 }

@@ -124,6 +124,26 @@ export const BIENVENUE_DECOR: DecorItem[] = [
   { i: "people", l: "calc(50% - 600px)", b: "14%", s: 26, o: 0.82, rot: 12, amp: 10, dur: "4.40s", lag: "1.50s" },
 ];
 
+/**
+ * /go - the link-in-bio page. Its column is 520px wide, so the side icons hug
+ * it far more closely than anywhere else on the site (`calc(50% - 300px)` rather
+ * than `calc(50% - 660px)`); on a phone they fall outside the viewport and the
+ * section clips them, leaving only the four faint ones the Decor component
+ * scatters through the background.
+ */
+export const GO_DECOR: DecorItem[] = [
+  { i: "heart", l: "calc(50% - 330px)", t: "9%", s: 34, o: 0.82, rot: -11, amp: 9, dur: "6.60s", lag: "1.13s" },
+  { i: "img", r: "calc(50% - 336px)", t: "17%", s: 30, o: 0.82, rot: 12, amp: 8, dur: "6.05s", lag: "0.76s" },
+  { i: "bell", r: "calc(50% - 302px)", t: "46%", s: 26, o: 0.82, rot: -12, amp: 12, dur: "5.50s", lag: "0.04s" },
+  { i: "liste", l: "calc(50% - 304px)", t: "54%", s: 26, o: 0.82, rot: 13, amp: 9, dur: "6.05s", lag: "0.41s" },
+  { i: "planning", r: "calc(50% - 324px)", b: "20%", s: 32, o: 0.82, rot: -7, amp: 10, dur: "4.40s", lag: "1.50s" },
+  { i: "ticket", l: "calc(50% - 320px)", b: "11%", s: 28, o: 0.82, rot: 9, amp: 11, dur: "4.95s", lag: "1.87s" },
+  { i: "send", s: 30, o: 0.3, rot: 8, amp: 11, dur: "4.95s", lag: "1.87s" },
+  { i: "calendar", s: 28, o: 0.28, rot: -11, amp: 8, dur: "6.05s", lag: "0.76s" },
+  { i: "pin", s: 26, o: 0.26, rot: 7, amp: 9, dur: "6.60s", lag: "1.13s" },
+  { i: "bubble", s: 28, o: 0.24, rot: -13, amp: 10, dur: "4.40s", lag: "1.50s" },
+];
+
 /* ── BDE ─────────────────────────────────────────────────────────────── */
 
 export const BDE_HERO_DECOR: DecorItem[] = [
