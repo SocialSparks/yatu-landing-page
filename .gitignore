@@ -5,3 +5,10 @@ out
 next-env.d.ts
 .DS_Store
 *.tsbuildinfo
+
+# Generated from the rendered, indexable pages before dev/build.
+public/_agent-markdown
+public/llms.txt
+
+# Local Wrangler state; wrangler.jsonc itself stays versioned.
+.wrangler

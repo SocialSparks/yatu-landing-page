@@ -1,5 +1,5 @@
 import path from "node:path";
-import type { NextConfig } from "next";
+import type {NextConfig} from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -16,6 +16,15 @@ const nextConfig: NextConfig = {
    */
   async headers() {
     return [
+      {
+        source: "/",
+        headers: [
+          {
+            key: "Link",
+            value: '</llms.txt>; rel="describedby"; type="text/plain"',
+          },
+        ],
+      },
       {
         source: "/:dir(assets|mockups)/:path*",
         headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
