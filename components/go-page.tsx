@@ -5,7 +5,16 @@ import {NavLink} from "@/components/nav-link";
 import {WaitlistForm} from "@/components/waitlist-form";
 import {APP_STORE_URL, CTA, icon, PLAY_STORE_URL, STORES_LIVE} from "@/lib/content";
 import {GO_DECOR} from "@/lib/decor";
-import {GO_DOWNLOAD, GO_HANDLE, GO_LEDE, GO_LINKS, GO_TITLE, GO_WAITLIST, type GoLink,} from "@/lib/go-content";
+import {
+    GO_DOWNLOAD,
+    GO_HANDLE,
+    GO_LEDE,
+    GO_LINKS,
+    GO_SITE_LINK,
+    GO_TITLE,
+    GO_WAITLIST,
+    type GoLink,
+} from "@/lib/go-content";
 import {ROUTES} from "@/lib/routes";
 import {PUBLISHER} from "@/lib/site";
 
@@ -358,6 +367,61 @@ export function GoPage() {
             </>
           )}
         </section>
+
+        <NavLink
+          href={GO_SITE_LINK.href}
+          className="yq-go-row yq-shimmer-border"
+          data-reveal="up"
+          data-reveal-delay="210"
+        >
+          <span
+            aria-hidden="true"
+            style={{
+              width: 48,
+              height: 48,
+              flex: "none",
+              display: "grid",
+              placeItems: "center",
+              borderRadius: 15,
+              background: "#EFE8DE",
+            }}
+          >
+            <img
+              loading="lazy"
+              decoding="async"
+              src={icon("heart")}
+              alt=""
+              width={30}
+              height={30}
+              style={{ display: "block" }}
+            />
+          </span>
+
+          <span style={{ minWidth: 0, flex: 1, display: "flex", flexDirection: "column", gap: 2 }}>
+            <span style={{ fontFamily: UI, fontWeight: 700, fontSize: 16, color: "#2A343D" }}>
+              {GO_SITE_LINK.title}
+            </span>
+            <span
+              style={{
+                fontFamily: UI,
+                fontSize: 13.5,
+                lineHeight: 1.35,
+                color: "rgba(42, 52, 61, 0.75)",
+                textWrap: "pretty",
+              }}
+            >
+              {GO_SITE_LINK.sub}
+            </span>
+          </span>
+
+          <span
+            aria-hidden="true"
+            className="yq-go-arrow"
+            style={{ flex: "none", display: "flex", color: "rgba(42, 52, 61, 0.5)" }}
+          >
+            <ArrowIcon />
+          </span>
+        </NavLink>
 
         <nav aria-label="Nos liens" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           {GO_LINKS.map((link, i) => (

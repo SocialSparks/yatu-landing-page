@@ -1,42 +1,49 @@
 /**
- * Where the two forms of the site send what visitors type.
+ * Where the three forms of the site send what visitors type.
  *
- * The destination is a Google Apps Script web app bound to a Google Sheet - see
- * `scripts/google-sheet.gs` and the "Formulaires" section of the README. That
- * URL is public by design, so no secret lives here and the site still needs no
- * server of its own: nothing changes for the Cloudflare deployment.
+ * They post to `/api/forms` - the site's own domain. Before, the browser posted
+ * straight to the Google Apps Script URL, and that one hop was where signups
+ * quietly died: ad blockers and school DNS filters drop `script.google.com`, the
+ * `/exec` URL answers with a redirect that some proxies mangle, and the script
+ * serialises writes behind a 20 second lock that lined up exactly with the
+ * client timeout. None of that is reachable from here any more.
  *
- * Leave `NEXT_PUBLIC_FORMS_ENDPOINT` unset and both forms stay in local mode -
- * the submission is kept in localStorage only, and the journey still runs end
- * to end so the pages remain testable.
+ * The Worker writes the submission to D1 before answering, then carries it to
+ * the sheet in the background, retrying until it lands. See
+ * `app/api/forms/route.ts` and `lib/server/forward-to-sheet.ts`.
  */
-export const FORMS_ENDPOINT = process.env.NEXT_PUBLIC_FORMS_ENDPOINT ?? "";
+const FORMS_API_PATH = "/api/forms";
 
-/** One tab of the sheet each. The script keys its column mapping on this. */
+/** One tab of the sheet each. The Apps Script keys its column mapping on this. */
 export type FormKind = "waitlist" | "bde-demo" | "profil";
 
-/** Name of the field no human sees; see `components/honeypot.tsx`. */
-export const HONEYPOT_NAME = "website";
-
-/** localStorage key per form, kept as a copy of what left the browser. */
-const BACKUP_KEY: Record<FormKind, string> = {
-  waitlist: "yatu-waitlist",
-  "bde-demo": "yatu-bde-demandes",
-  profil: "yatu-profil",
-};
+/**
+ * Name of the field no human sees; see `components/honeypot.tsx`.
+ *
+ * Not `website`: that is the field name password managers fill from a saved
+ * login's URL, which turned honest signups into silently discarded ones.
+ */
+export const HONEYPOT_NAME = "yq-ref";
 
 /**
- * `sent` - the sheet answered; `stored` - no endpoint configured, kept locally;
- * `failed` - the endpoint is configured but did not take it.
+ * `sent` - the server acknowledged and filed the submission; it will reach the
+ * sheet, now or on the next drain. `failed` - nothing was filed anywhere and the
+ * visitor has to try again.
  *
- * Callers treat `failed` as a real error: the local copy sits on the visitor's
- * machine, so a lost submission is a lost lead unless they retry.
+ * There is deliberately no third value. The old `stored` meant "kept in
+ * localStorage only" and every caller read it as success, so a build without the
+ * endpoint configured showed a green tick for a signup that went nowhere.
  */
-export type SubmitResult = "sent" | "stored" | "failed";
+export type SubmitResult = "sent" | "failed";
 
-/** Apps Script cold-starts, and the /exec URL redirects once before answering.
- *  Short timeouts turn a slow first submission into a false error. */
-const TIMEOUT_MS = 20000;
+/** The server answers without waiting for Google, so a slow reply now means a
+ *  real problem rather than a cold-starting Apps Script. */
+const TIMEOUT_MS = 10000;
+
+/** Two attempts, because the id makes a resend harmless and a momentary network
+ *  blip should not become a red button. */
+const ATTEMPTS = 2;
+const RETRY_DELAY_MS = 1200;
 
 export async function submitForm(
   kind: FormKind,
@@ -45,43 +52,54 @@ export async function submitForm(
   const payload = {
     ...fields,
     kind,
+    // Minted here rather than server-side: this is what makes a resend safe all
+    // the way from the <visitor's double-click to the Worker's retry an hour later.
+    id: newId(),
     ts: new Date().toISOString(),
     page: typeof window === "undefined" ? "" : window.location.pathname,
   };
 
-  keepLocalCopy(kind, payload);
+  for (let attempt = 0; attempt < ATTEMPTS; attempt++) {
+    if (attempt) await sleep(RETRY_DELAY_MS);
 
-  if (!FORMS_ENDPOINT) return "stored";
+    try {
+      const res = await fetch(FORMS_API_PATH, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
 
-  try {
-    const res = await fetch(FORMS_ENDPOINT, {
-      method: "POST",
-      // text/plain on purpose: Apps Script cannot answer a CORS preflight, and
-      // application/json would trigger one. This keeps the POST a "simple
-      // request" that goes straight through - the body is still JSON, and the
-      // script parses it as such.
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify(payload),
-      signal: AbortSignal.timeout(TIMEOUT_MS),
-    });
+      if (res.ok) return "sent";
 
-    if (!res.ok) return "failed";
-
-    // The script always answers { ok: true } on a row it wrote.
-    const body = (await res.json().catch(() => null)) as { ok?: boolean } | null;
-    return body?.ok === false ? "failed" : "sent";
-  } catch {
-    return "failed";
+      // A 4xx means the submission itself was refused - sending it again would
+      // get the same answer. 429 is the exception: that one is worth waiting out.
+      if (res.status >= 400 && res.status < 500 && res.status !== 429) return "failed";
+    } catch {
+      /* network or timeout - worth one more try */
+    }
   }
+
+  return "failed";
 }
 
-function keepLocalCopy(kind: FormKind, payload: Record<string, unknown>) {
-  try {
-    const key = BACKUP_KEY[kind];
-    const list = JSON.parse(window.localStorage.getItem(key) || "[]");
-    list.push(payload);
-    window.localStorage.setItem(key, JSON.stringify(list));
-  } catch {
-    /* storage blocked - not worth failing the submission over */
-  }
+/**
+ * `crypto.randomUUID` needs a secure context and is missing on Safari below
+ * 15.4. Without the fallback that is a TypeError inside the submit handler -
+ * which the visitor would read as a red button.
+ */
+function newId(): string {
+  const c = globalThis.crypto;
+  if (c?.randomUUID) return c.randomUUID();
+
+  const b = new Uint8Array(16);
+  c.getRandomValues(b);
+  b[6] = (b[6] & 0x0f) | 0x40;
+  b[8] = (b[8] & 0x3f) | 0x80;
+  const h = [...b].map((x) => x.toString(16).padStart(2, "0")).join("");
+  return `${h.slice(0, 8)}-${h.slice(8, 12)}-${h.slice(12, 16)}-${h.slice(16, 20)}-${h.slice(20)}`;
+}
+
+function sleep(ms: number) {
+  return new Promise((resolve) => window.setTimeout(resolve, ms));
 }

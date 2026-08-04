@@ -1,17 +1,17 @@
-import type { Metadata } from "next";
-import { ConsentStatus } from "@/components/consent-status";
-import { B, LegalPage, LegalSection, P } from "@/components/legal-page";
-import { NavLink } from "@/components/nav-link";
-import { ACCENT } from "@/lib/content";
-import { COOKIES_DECOR } from "@/lib/decor";
-import { ROUTES } from "@/lib/routes";
-import { pageMetadata } from "@/lib/site";
+import type {Metadata} from "next";
+import {ConsentStatus} from "@/components/consent-status";
+import {B, LegalPage, LegalSection, P} from "@/components/legal-page";
+import {NavLink} from "@/components/nav-link";
+import {ACCENT} from "@/lib/content";
+import {COOKIES_DECOR} from "@/lib/decor";
+import {ROUTES} from "@/lib/routes";
+import {pageMetadata} from "@/lib/site";
 
 const UI = "var(--font-ui), system-ui, sans-serif";
 
 export const metadata: Metadata = pageMetadata({
   path: "/cookies",
-  title: "Gestion des cookies — Yatu",
+  title: "Gestion des cookies - Yatu",
   description:
     "Le stockage local et les éventuels traceurs du site Yatu, leur durée et la façon de revoir ses préférences à tout moment.",
 });
@@ -103,26 +103,17 @@ export default function Page() {
           rule="Toujours actifs - pas de consentement requis"
         >
           <Line>
-            <B>yatu-consent-v1</B> — mémorise les catégories acceptées ou refusées et la date du
+            <B>yatu-consent-v1</B> - mémorise les catégories acceptées ou refusées et la date du
             choix. Stockage local, six mois.
           </Line>
           <Line>
-            <B>yatu-waitlist</B> — conserve dans ton navigateur l’adresse e-mail saisie, la page
-            d’origine et la date du parcours de préinscription. Supprimé en vidant les données du
-            site.
+            <B>yatu-signup-email</B> - retient l’adresse saisie le temps de passer de la
+            préinscription à la page de bienvenue, pour ne pas te la redemander. Stockage de
+            session : effacé à la fermeture de l’onglet.
           </Line>
           <Line>
-            <B>yatu-profil</B> — conserve une copie des réponses facultatives données sur la page
-            de bienvenue. Supprimé en vidant les données du site.
-          </Line>
-          <Line>
-            <B>yatu-bde-demandes</B> — conserve une copie des formulaires BDE saisis. Supprimé en
-            vidant les données du site.
-          </Line>
-          <Line>
-            Ces trois entrées sont des copies conservées sur ton appareil pour éviter la perte de
-            saisie. Le contenu des formulaires est par ailleurs transmis à QUANTIQ STUDIO au moment
-            où tu valides, pour pouvoir te recontacter : voir la{" "}
+            Le contenu des formulaires est transmis à QUANTIQ STUDIO au moment où tu valides, pour
+            pouvoir te recontacter : voir la{" "}
             <NavLink href={ROUTES.confidentialite} style={{ color: "#4E565D" }}>
               politique de confidentialité
             </NavLink>

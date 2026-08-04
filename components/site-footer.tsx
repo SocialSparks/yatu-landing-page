@@ -1,9 +1,9 @@
-import { NavLink } from "@/components/nav-link";
-import { ConsentButton } from "@/components/consent-button";
-import { LAUNCH_LABEL } from "@/lib/content";
-import { APP_PAGES, GUIDE_PAGES, landingPath } from "@/lib/landing-content";
-import { ROUTES } from "@/lib/routes";
-import { CONTACT_EMAIL, PUBLISHER } from "@/lib/site";
+import {NavLink} from "@/components/nav-link";
+import {ConsentButton} from "@/components/consent-button";
+import {LAUNCH_LABEL} from "@/lib/content";
+import {APP_PAGES, GUIDE_PAGES, landingPath} from "@/lib/landing-content";
+import {ROUTES} from "@/lib/routes";
+import {PUBLISHER} from "@/lib/site";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
@@ -173,7 +173,7 @@ export function SiteFooter() {
             © 2026 Yatu - édité par {PUBLISHER}
           </span>
           <span style={{ fontFamily: UI, fontSize: 13, color: "rgba(255,255,255,.5)" }}>
-            Fait en France, pour les bandes qui mettent trois semaines à choisir une date
+            Imaginée et développée en France 🇫🇷, pour les bandes qui mettent trois semaines à choisir une date
           </span>
         </div>
       </div>

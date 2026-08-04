@@ -56,5 +56,8 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next|favicon.ico|_not-found|_error).*)"],
+  // `api` est exclu : la negociation Markdown ne concerne que les pages, et
+  // faire traverser ce middleware a chaque soumission de formulaire n'apporte
+  // qu'un saut de plus entre le visiteur et sa place dans la file.
+  matcher: ["/((?!api|_next|favicon.ico|_not-found|_error).*)"],
 };

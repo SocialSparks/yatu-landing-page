@@ -728,13 +728,17 @@ export const FAQ: FaqEntry[] = [
   },
   {
     q: "Comment mes données sont-elles utilisées ?",
-    a: "Tes données servent au fonctionnement et à la sécurisation de Yatu. Elles ne sont pas utilisées pour afficher de la publicité.",
+    a: "Les données confiées à Yatu servent à faire fonctionner et sécuriser le service. Elles ne sont ni vendues ni louées, et ne servent pas à afficher de la publicité ciblée.",
     link: {
       href: "/confidentialite",
       label: "politique de confidentialité",
       before: "Retrouve tous les détails dans notre ",
       after: ".",
     },
+  },
+  {
+    q: "Yatu est-elle une application française ?",
+    a: "Oui. Yatu est imaginée, conçue et développée en France par une équipe française.",
   },
   {
     q: "Yatu fonctionne-t-il aussi pour les BDE et les associations ?",

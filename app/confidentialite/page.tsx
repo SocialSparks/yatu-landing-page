@@ -1,25 +1,25 @@
-import type { Metadata } from "next";
-import { B, Bullet, LegalPage, LegalSection, P } from "@/components/legal-page";
-import { NavLink } from "@/components/nav-link";
-import { ACCENT } from "@/lib/content";
-import { CONFIDENTIALITE_DECOR } from "@/lib/decor";
-import { ROUTES } from "@/lib/routes";
+import type {Metadata} from "next";
+import {B, Bullet, LegalPage, LegalSection, P} from "@/components/legal-page";
+import {NavLink} from "@/components/nav-link";
+import {ACCENT} from "@/lib/content";
+import {CONFIDENTIALITE_DECOR} from "@/lib/decor";
+import {ROUTES} from "@/lib/routes";
 import {
   COMPANY_ADDRESS,
   CONTACT_PHONE,
   CONTACT_PHONE_HREF,
   HOST_NAME,
+  pageMetadata,
   PRIVACY_EMAIL,
   PUBLISHER,
   SITE_DOMAIN,
-  pageMetadata,
 } from "@/lib/site";
 
 const UI = "var(--font-ui), system-ui, sans-serif";
 
 export const metadata: Metadata = pageMetadata({
   path: "/confidentialite",
-  title: "Politique de confidentialité — Yatu",
+  title: "Politique de confidentialité - Yatu",
   description:
     "Les données traitées sur le site Yatu, leurs finalités, bases légales, durées de conservation, destinataires et les moyens d’exercer ses droits.",
 });
@@ -150,7 +150,7 @@ export default function Page() {
           rows={[
             [
               "Données",
-              "adresse e-mail, page d’origine, date d’inscription et, si tu réponds aux questions facultatives, types d’événements, taille du groupe et appartenance éventuelle à une association.",
+              "adresse e-mail, page d’origine, date d’inscription et, si tu réponds aux questions facultatives, types d’événements, taille du groupe et appartenance éventuelle à une association. S’y ajoutent ton navigateur et une empreinte non réversible de ton adresse IP, conservées avec la soumission pour limiter les envois automatisés ; l’adresse elle-même n’est jamais enregistrée.",
             ],
             [
               "Finalités",
@@ -162,11 +162,11 @@ export default function Page() {
             ],
             [
               "Fonctionnement actuel",
-              "ces informations sont enregistrées dans le stockage local de ton navigateur et, si un point de collecte est configuré, transmises à QUANTIQ STUDIO. L’adresse e-mail passe à la page de confirmation par le stockage de session du navigateur et n’est pas ajoutée à son URL.",
+              "ta soumission est enregistrée par Cloudflare, hébergeur du site, dans une base qui sert de tampon d’envoi, puis transmise à une feuille de calcul Google Sheets détenue par QUANTIQ STUDIO. Ce tampon existe pour qu’une inscription ne soit pas perdue si la transmission échoue. L’adresse e-mail passe à la page de confirmation par le stockage de session du navigateur et n’est pas ajoutée à son URL.",
             ],
             [
               "Conservation",
-              "jusqu’à leur suppression depuis ton navigateur. Si une transmission à QUANTIQ STUDIO est activée, les données seront supprimées au plus tard trois mois après le lancement, ou plus tôt en cas de retrait du consentement.",
+              "au plus tard trois mois après le lancement, ou plus tôt en cas de retrait du consentement. La copie technique gardée dans le tampon d’envoi est supprimée 90 jours après sa transmission.",
             ],
           ]}
         />
@@ -177,7 +177,7 @@ export default function Page() {
           rows={[
             [
               "Données",
-              "nom, association, école ou campus, adresse e-mail, type et taille d’événement, message libre et date de saisie.",
+              "nom, association, école ou campus, adresse e-mail, type et taille d’événement, message libre et date de saisie. S’y ajoutent ton navigateur et une empreinte non réversible de ton adresse IP, conservées avec la demande pour limiter les envois automatisés ; l’adresse elle-même n’est jamais enregistrée.",
             ],
             [
               "Finalités",
@@ -189,11 +189,11 @@ export default function Page() {
             ],
             [
               "Fonctionnement actuel",
-              "le formulaire conserve actuellement la demande dans ton navigateur et ne la transmet pas à QUANTIQ STUDIO. Pour une demande immédiate, écris à support@yatu-app.com.",
+              "ta demande est enregistrée par Cloudflare, hébergeur du site, dans une base qui sert de tampon d’envoi, puis transmise à une feuille de calcul Google Sheets détenue par QUANTIQ STUDIO. Pour une demande immédiate, écris à support@yatu-app.com.",
             ],
             [
               "Conservation",
-              "jusqu’à suppression des données du navigateur ; après activation d’une transmission, trois ans à compter du dernier contact, puis archivage intermédiaire si nécessaire à la défense de droits en justice.",
+              "trois ans à compter du dernier contact, puis archivage intermédiaire si nécessaire à la défense de droits en justice. La copie technique gardée dans le tampon d’envoi est supprimée 90 jours après sa transmission.",
             ],
           ]}
         />
@@ -294,7 +294,12 @@ export default function Page() {
         <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
           <Bullet>
             à <B>{HOST_NAME}</B>, sous-traitant chargé de l’hébergement, de la distribution et de
-            la sécurité du site ;
+            la sécurité du site, et qui héberge également le tampon dans lequel les formulaires
+            sont enregistrés avant leur transmission ;
+          </Bullet>
+          <Bullet>
+            à <B>Google</B>, sous-traitant chargé du stockage des formulaires reçus dans une
+            feuille de calcul Google Sheets détenue par {PUBLISHER} ;
           </Bullet>
           <Bullet>
             à Google pour Google Analytics 4 et à Microsoft pour Clarity, uniquement après ton
@@ -322,6 +327,12 @@ export default function Page() {
           indique encadrer les transferts vers les États-Unis par le cadre de protection des
           données UE–États-Unis et, lorsque nécessaire, par les clauses contractuelles types de la
           Commission européenne et des garanties supplémentaires.
+        </P>
+        <P>
+          Les formulaires reçus sont stockés dans une feuille de calcul Google Sheets : Google est
+          une société américaine et ce traitement, indépendant de la mesure d’audience, peut donc
+          lui aussi impliquer un transfert hors de l’Espace économique européen, encadré par les
+          mécanismes indiqués ci-dessous.
         </P>
         <P>
           Lorsque tu acceptes la mesure d’audience, Google et Microsoft peuvent également traiter
@@ -380,7 +391,7 @@ export default function Page() {
           Une réponse sera apportée dans un délai d’un mois, pouvant être prolongé de deux mois si
           la demande est complexe ou nombreuse, avec information préalable. Si tu estimes que tes
           droits ne sont pas respectés, tu peux déposer une réclamation auprès de la CNIL : 3 place
-          de Fontenoy, TSA 80715, 75334 Paris Cedex 07 —{" "}
+          de Fontenoy, TSA 80715, 75334 Paris Cedex 07 -{" "}
           <a href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noopener noreferrer">
             cnil.fr/fr/plaintes
           </a>

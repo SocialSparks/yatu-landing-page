@@ -1,0 +1,23 @@
+# Secrets cote Worker, lus par `wrangler dev` (npm run preview) et par
+# `next dev` via getPlatformProxy. Copier ce fichier vers `.dev.vars`.
+#
+# En production ces quatre valeurs sont posees avec `npx wrangler secret put <NOM>`
+# et n'apparaissent jamais dans wrangler.jsonc, qui est versionne.
+
+# URL /exec de l'application Google Apps Script.
+# Laisser vide en local : la soumission est quand meme rangee dans la D1 locale,
+# le parcours reste testable de bout en bout, et la ligne porte simplement
+# last_error = 'endpoint absent'. Rien n'est perdu et rien ne ment.
+FORMS_ENDPOINT=
+
+# Jeton partage avec les proprietes du script Apps Script (cle FORMS_TOKEN).
+# L'URL /exec reste publique : ce jeton est ce qui empeche n'importe qui d'ecrire
+# dans la feuille.
+FORMS_TOKEN=dev
+
+# Protege /api/forms/health et /api/forms/drain. Sans la bonne cle, ces routes
+# repondent 404 : elles ne s'annoncent pas.
+FORMS_ADMIN_KEY=dev
+
+# Sel du hachage d'IP. Change de valeur = anciens hachages non correlables.
+FORMS_IP_SALT=dev

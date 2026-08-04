@@ -748,6 +748,21 @@ details[open] .yq-plus {
   transform: translateX(3px);
 }
 
+.yq-go-row.yq-shimmer-border {
+  animation: yq-shimmer-border 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes yq-shimmer-border {
+  0% {
+    border-color: rgba(254, 216, 115, 0.4);
+    box-shadow: 0 0 2px rgba(254, 216, 115, 0.2), var(--shadow-card);
+  }
+  100% {
+    border-color: #fed873;
+    box-shadow: 0 0 12px rgba(254, 216, 115, 0.8), var(--shadow-card);
+  }
+}
+
 /* The ink card holding the signup. The global focus ring is ink too, so on this
    background it would be a dark outline on a dark panel - the brand yellow is
    the one colour that reads against both the card and the white field. */

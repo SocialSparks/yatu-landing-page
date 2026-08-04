@@ -1,17 +1,17 @@
-import { DaysUntil } from "@/components/countdown";
-import { Decor } from "@/components/decor";
-import { Picture } from "@/components/picture";
-import { WaitlistForm } from "@/components/waitlist-form";
-import { LAUNCH_LABEL, icon } from "@/lib/content";
-import { HERO_DECOR } from "@/lib/decor";
+import {DaysUntil} from "@/components/countdown";
+import {Decor} from "@/components/decor";
+import {Picture} from "@/components/picture";
+import {WaitlistForm} from "@/components/waitlist-form";
+import {icon, LAUNCH_LABEL} from "@/lib/content";
+import {HERO_DECOR} from "@/lib/decor";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
 
 const CHIPS = [
-  { dot: "#96E087", label: "Gratuit au lancement" },
   { dot: "#6FC6F1", label: "Pour tous tes événements" },
   { dot: "#C6A8E1", label: "iOS et Android" },
+  { dot: "#FED873", label: "Application française" },
 ];
 
 const PILL_BASE: React.CSSProperties = {

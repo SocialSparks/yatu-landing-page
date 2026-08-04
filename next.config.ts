@@ -1,5 +1,16 @@
 import path from "node:path";
 import type {NextConfig} from "next";
+import {initOpenNextCloudflareForDev} from "@opennextjs/cloudflare";
+
+/**
+ * Donne a `next dev` les memes bindings que le Worker deploye - la D1 locale
+ * comprise, sans quoi `/api/forms` n'aurait nulle part ou ecrire hors de
+ * `npm run preview`.
+ *
+ * Garde sur NODE_ENV : appele pendant `next build`, il demarrerait une miniflare
+ * a chaque build. La fonction est async mais n'a pas besoin d'etre attendue.
+ */
+if (process.env.NODE_ENV === "development") void initOpenNextCloudflareForDev();
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,

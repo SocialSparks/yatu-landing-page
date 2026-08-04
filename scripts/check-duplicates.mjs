@@ -17,7 +17,7 @@
  * Exits 1 if a pair shares a sentence, or if two pages carry the same module
  * <h2> - the strongest "these are one page" signal a pair can send.
  */
-import { readFileSync, readdirSync, existsSync } from "node:fs";
+import {existsSync, readdirSync, readFileSync} from "node:fs";
 import path from "node:path";
 
 const DIR = path.join(import.meta.dirname, "..", ".next", "server", "app");
@@ -76,7 +76,7 @@ for (const [guide, app] of PAIRS) {
 
   console.log(`  ${guide}`);
   console.log(`  ${app}`);
-  console.log(`    ${words(guide)} / ${words(app)} mots — ${shared.length} phrase(s) en commun`);
+  console.log(`    ${words(guide)} / ${words(app)} mots - ${shared.length} phrase(s) en commun`);
   shared.forEach((s) => console.log(`    ! ${s}`));
   console.log();
 

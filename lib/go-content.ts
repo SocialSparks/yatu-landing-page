@@ -53,6 +53,14 @@ export type GoLink = {
   | { tool: string }
 );
 
+export const GO_SITE_LINK: GoLink = {
+  href: ROUTES.home,
+  tool: "heart",
+  title: "Visiter le site Yatu",
+  sub: "Découvre les modules et la démo",
+  external: false,
+};
+
 export const GO_LINKS: GoLink[] = [
   {
     href: "https://www.instagram.com/yatu_app/",
@@ -67,13 +75,6 @@ export const GO_LINKS: GoLink[] = [
     title: "TikTok",
     sub: "L’organisation de groupe, en vidéo",
     external: true,
-  },
-  {
-    href: ROUTES.home,
-    tool: "heart",
-    title: "Découvrir Yatu",
-    sub: "Le site, les modules et la démo",
-    external: false,
   },
   {
     href: ROUTES.bde,

@@ -5,8 +5,10 @@ la discussion, le planning, le budget, les listes, les documents et les souvenir
 événement organisé à plusieurs.
 
 Le projet est une application **Next.js App Router** en TypeScript, rendue principalement
-en statique et déployée sur **Cloudflare Workers**. Les formulaires sont envoyés vers une
-Google Sheet par Google Apps Script ; le dépôt ne contient ni base de données ni API métier.
+en statique et déployée sur **Cloudflare Workers**. Les formulaires passent par une route
+Worker qui les range dans une base **D1** avant de les transmettre à une Google Sheet par
+Google Apps Script : le tampon existe pour qu’une inscription ne se perde pas quand Google
+ne répond pas.
 
 ## Stack
 
@@ -14,7 +16,8 @@ Google Sheet par Google Apps Script ; le dépôt ne contient ni base de données
 - Next.js 15, React 19 et TypeScript
 - CSS natif et styles React, sans framework CSS
 - Cloudflare Workers et OpenNext pour l’hébergement
-- Google Apps Script pour les formulaires
+- Cloudflare D1 comme tampon des formulaires
+- Google Apps Script pour l’écriture dans la Google Sheet
 - Google Analytics 4 et Microsoft Clarity après consentement
 - Sharp pour produire les variantes WebP et AVIF
 
@@ -27,6 +30,19 @@ npm run dev
 ```
 
 Le site est ensuite disponible sur <http://localhost:3000>.
+
+Pour que les formulaires fonctionnent en local, il faut en plus la base du tampon et les secrets
+du Worker :
+
+```bash
+cp .dev.vars.example .dev.vars
+npx wrangler d1 create yatu-forms                    # reporter le database_id dans wrangler.jsonc
+npx wrangler d1 migrations apply yatu-forms --local
+```
+
+`FORMS_ENDPOINT` peut rester vide : la soumission est quand même enregistrée, le parcours reste
+testable de bout en bout, et la ligne porte `last_error = 'endpoint absent'`. Rien n’est perdu et
+rien n’affiche une confirmation mensongère.
 
 `predev` génère automatiquement `/llms.txt` et les représentations Markdown destinées aux
 agents avant de démarrer Next.js. Le premier lancement est donc un peu plus long.
@@ -70,7 +86,6 @@ sont lus au build ; ils doivent également être configurés dans les variables 
 | Variable | Rôle | Valeur locale par défaut |
 | --- | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | Domaine utilisé par les URL canoniques, le sitemap et les cartes sociales. | `https://yatu-app.com` |
-| `NEXT_PUBLIC_FORMS_ENDPOINT` | URL `/exec` de l’application Google Apps Script. | Vide, stockage local uniquement. |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Identifiant Google Analytics 4. | Vide, GA désactivé. |
 | `NEXT_PUBLIC_CLARITY_PROJECT_ID` | Identifiant du projet Microsoft Clarity. | Vide, Clarity désactivé. |
 | `GOOGLE_SITE_VERIFICATION` | Jeton de validation Google Search Console. | Valeur de démonstration à remplacer. |
@@ -80,20 +95,41 @@ donc un redémarrage local ou un nouveau déploiement. `GOOGLE_SITE_VERIFICATION
 les métadonnées statiques et doit elle aussi être définie comme variable de build, pas comme secret
 runtime du Worker.
 
+Les formulaires ne dépendent d’aucune variable de build. C’était le cas jusqu’à
+`NEXT_PUBLIC_FORMS_ENDPOINT` : oubliée dans les variables de build Cloudflare, elle produisait un
+bundle où chaque inscription affichait une confirmation verte sans que rien ne parte. L’URL Apps
+Script vit désormais côté Worker, en secret runtime.
+
+| Secret du Worker | Rôle |
+| --- | --- |
+| `FORMS_ENDPOINT` | URL `/exec` de l’application Google Apps Script. |
+| `FORMS_TOKEN` | Jeton partagé avec les propriétés du script Apps Script. |
+| `FORMS_ADMIN_KEY` | Protège `/api/forms/health` et `/api/forms/drain`. |
+| `FORMS_IP_SALT` | Sel du hachage des adresses IP. |
+
+```bash
+npx wrangler secret put FORMS_ENDPOINT   # puis TOKEN, ADMIN_KEY, IP_SALT
+cp .dev.vars.example .dev.vars           # les mêmes clés en local
+```
+
 ## Architecture
 
 ```text
 app/                  Routes, métadonnées, sitemap, robots et cartes Open Graph
+app/api/forms/        Réception des formulaires, santé et vidage du tampon
 components/           Sections React, navigation, formulaires et consentement
 components/landing/   Gabarit partagé des guides et pages produit SEO
 lib/                  Contenus, routes, constantes du site et logique partagée
+lib/server/           Validation et acheminement des formulaires côté Worker
+migrations/           Schéma D1 du tampon des formulaires
 public/               Fichiers servis tels quels au navigateur
 assets-src/           Sources haute définition non exposées publiquement
 scripts/              Images, Google Sheet, contenu agent et contrôles
 docs/                 Procédures opérationnelles complémentaires
 middleware.ts         Négociation HTML/Markdown pour les agents
 next.config.ts        En-têtes HTTP et cache des ressources statiques
-wrangler.jsonc        Observabilité locale du Worker Cloudflare
+custom-worker.ts      Point d’entrée Worker avec le cron de vidage (non activé)
+wrangler.jsonc        Bindings, observabilité et déclaration du Worker Cloudflare
 open-next.config.ts   Adaptateur du build Next.js vers Cloudflare Workers
 ```
 
@@ -121,7 +157,7 @@ site, servi **sans header ni footer** pour que rien ne concurrence les quatre de
 `components/site-chrome.tsx` décide de cette mise à nu à partir du chemin ; son en-tête de
 fichier explique pourquoi un groupe de routes `app/(site)/` n’a pas été retenu.
 
-Le contenu — titre, accroche, libellés et liste des liens — vit dans `lib/go-content.ts`.
+Le contenu - titre, accroche, libellés et liste des liens - vit dans `lib/go-content.ts`.
 La carte principale a deux états, et un seul réglage les sépare : tant que `APP_STORE_URL` et
 `PLAY_STORE_URL` sont vides dans `lib/content.ts`, elle affiche le compte à rebours et le
 formulaire de liste d’attente ; dès qu’une des deux URL est renseignée, elle affiche les boutons
@@ -170,17 +206,93 @@ Les trois parcours passent par `lib/forms.ts` :
 | Questionnaire `/bienvenue` | Complète la ligne `Waitlist` correspondant à l’e-mail. |
 | Demande BDE | Onglet `Demandes BDE`. |
 
-Le script serveur est `scripts/google-sheet.gs`. Sa procédure d’installation est détaillée en
-tête du fichier : créer une Google Sheet, publier le script comme application Web accessible à
-tous, puis placer son URL `/exec` dans `NEXT_PUBLIC_FORMS_ENDPOINT`.
+Le navigateur ne parle jamais directement à Google. Il poste sur `/api/forms`, sur le domaine du
+site : ni bloqueur de publicité, ni filtre DNS scolaire, ni prévol CORS, ni redirection `/exec`
+n’ont plus l’occasion d’intercepter une inscription.
 
-Après toute modification du script Apps Script, créer une **nouvelle version** du déploiement.
-Modifier le fichier local ne met pas à jour la version déjà publiée par Google.
+Le script serveur est `scripts/google-sheet.gs`. Sa procédure d’installation est détaillée en tête
+du fichier. Après toute modification, créer une **nouvelle version** du déploiement : modifier le
+fichier local ne met pas à jour la version déjà publiée par Google.
 
-Sans endpoint configuré, les soumissions restent dans `localStorage` et le parcours complet reste
-testable. Avec un endpoint, une copie locale est conservée, mais un échec réseau est affiché au
-visiteur afin d’éviter de perdre silencieusement un contact. Chaque formulaire possède aussi un
-honeypot `website` ignoré côté Google Apps Script.
+Chaque formulaire possède un honeypot, nommé `yq-ref` et non plus `website` - c’est le nom de champ
+que les gestionnaires de mots de passe remplissent depuis l’URL d’un identifiant enregistré, ce qui
+transformait de vraies inscriptions en soumissions silencieusement ignorées. Une soumission piégée
+n’est plus jetée : elle est rangée dans le tampon avec `status = 'spam'`, donc inspectable et
+récupérable.
+
+### Tampon des formulaires (D1)
+
+Une soumission est écrite dans la base D1 `yatu-forms` **avant** toute tentative d’envoi, puis
+portée jusqu’à la feuille en arrière-plan. Le visiteur n’attend jamais Google, et une panne du
+script ne perd plus rien.
+
+```
+Navigateur ──POST /api/forms──> Worker
+                                   ├─ INSERT D1 (status=pending)
+                                   ├─ répond 202 tout de suite
+                                   └─ waitUntil: POST Apps Script + vidage du reliquat
+```
+
+| Statut | Sens |
+| --- | --- |
+| `pending` | Accepté, pas encore accusé par Apps Script. Rejoué selon un backoff de 1 min à 24 h. |
+| `sent` | Apps Script a répondu `{ok:true}`. Purgé au bout de 90 jours. |
+| `spam` | Honeypot déclenché. Conservé, jamais transmis. |
+| `dead` | Huit tentatives épuisées. Demande une intervention. |
+
+L’identifiant de chaque soumission est un UUID généré par le navigateur, écrit dans la colonne `Id`
+de la feuille. C’est lui qui rend un rejeu inoffensif : un délai dépassé côté Cloudflare ne veut pas
+dire que la ligne n’a pas été écrite, et le script refuse d’écrire deux fois le même identifiant.
+
+Mise en place :
+
+```bash
+npx wrangler d1 create yatu-forms                      # reporter le database_id dans wrangler.jsonc
+npx wrangler d1 migrations apply yatu-forms --local    # puis --remote avant le déploiement
+npm run cf-typegen                                     # requis après tout changement de wrangler.jsonc
+```
+
+La procédure complète - base D1, déploiement Apps Script, secrets du Worker, vérifications et
+dépannage - est dans **[docs/mise-en-place-formulaires.md](docs/mise-en-place-formulaires.md)**.
+
+Exploitation - `FORMS_ADMIN_KEY` protège les deux routes, qui répondent `404` sans la bonne clé :
+
+```bash
+# État du tampon : répartition par statut, âge du plus vieux pending, top des erreurs
+curl -s "https://yatu-app.com/api/forms/health?key=$FORMS_ADMIN_KEY"
+
+# Forcer un vidage, par exemple après avoir réparé le déploiement Apps Script
+curl -s "https://yatu-app.com/api/forms/drain?key=$FORMS_ADMIN_KEY"
+
+# Ce qui coince, avec la raison
+npx wrangler d1 execute yatu-forms --remote --command \
+  "SELECT id, kind, email, attempts, last_error FROM submissions
+    WHERE status IN ('pending','dead') ORDER BY created_at DESC LIMIT 20"
+
+# Remettre une ligne dans la file
+npx wrangler d1 execute yatu-forms --remote --command \
+  "UPDATE submissions SET status='pending', attempts=0, next_attempt_at=0 WHERE id='<uuid>'"
+```
+
+Le champ `last_error` est le point de diagnostic : `timeout`, `http 500`, `script: …` ou
+`non-json: …` - ce dernier apparaît quand `/exec` renvoie une page de connexion Google plutôt que
+du JSON, c’est-à-dire quand le déploiement est mal configuré.
+
+Un `oldestPendingAgeMinutes` supérieur à 30 signifie que le tuyau vers la feuille est bouché.
+
+### Vidage périodique
+
+Le vidage opportuniste déclenché à chaque soumission suffit tant que le site reçoit du trafic.
+`custom-worker.ts` contient un handler `scheduled` prêt à l’emploi, **non activé** : il le devient
+en pointant `main` sur ce fichier et en ajoutant le déclencheur.
+
+```jsonc
+"main": "custom-worker.ts",
+"triggers": { "crons": ["*/5 * * * *"] }
+```
+
+À faire seulement après avoir vérifié le reste en production : c’est le seul changement qui touche
+au point d’entrée du Worker.
 
 ## Images
 
@@ -250,7 +362,7 @@ chaque carte Open Graph à chaque requête, jusqu’à l’erreur Cloudflare 110
 resource limits ».
 
 Au déploiement, les entrées de `.open-next/cache/` sont copiées dans
-`.open-next/assets/cdn-cgi/_next_cache/` — un préfixe que seul le Worker peut lire — et relues par
+`.open-next/assets/cdn-cgi/_next_cache/` - un préfixe que seul le Worker peut lire - et relues par
 le binding `ASSETS`. Une réponse servie depuis ce cache porte l’en-tête `x-nextjs-cache: HIT` :
 c’est le contrôle à faire après chaque déploiement.
 

@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
-import { B, LegalPage, LegalSection, P } from "@/components/legal-page";
-import { NavLink } from "@/components/nav-link";
-import { LAUNCH_LABEL } from "@/lib/content";
-import { MENTIONS_DECOR } from "@/lib/decor";
-import { ROUTES } from "@/lib/routes";
+import type {Metadata} from "next";
+import {B, LegalPage, LegalSection, P} from "@/components/legal-page";
+import {NavLink} from "@/components/nav-link";
+import {LAUNCH_LABEL} from "@/lib/content";
+import {MENTIONS_DECOR} from "@/lib/decor";
+import {ROUTES} from "@/lib/routes";
 import {
   COMPANY_ADDRESS,
   COMPANY_CAPITAL,
@@ -19,15 +19,15 @@ import {
   HOST_NAME,
   HOST_PHONE,
   HOST_PHONE_HREF,
+  pageMetadata,
   PUBLISHER,
   PUBLISHING_DIRECTOR,
   SITE_DOMAIN,
-  pageMetadata,
 } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
   path: "/mentions-legales",
-  title: "Mentions légales — Yatu",
+  title: "Mentions légales - Yatu",
   description:
     "Identité de l’éditeur de Yatu, direction de la publication, hébergement, propriété intellectuelle, responsabilité et droit applicable.",
 });

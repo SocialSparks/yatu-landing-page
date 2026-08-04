@@ -4,6 +4,12 @@ out
 .open-next
 .idea
 .env*.local
+
+# Secrets du Worker en local : l'URL Apps Script et son jeton vivent la.
+# Le modele commite est .dev.vars.example.
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
 next-env.d.ts
 .DS_Store
 *.tsbuildinfo
