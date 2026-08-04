@@ -43,7 +43,7 @@ les contrôles de production.
 | `npm run build` | Génère le contenu agent, le build Next.js puis l’artefact Worker OpenNext. |
 | `npm run start` | Sert un build de production existant. |
 | `npm run preview` | Construit puis sert le Worker dans le runtime local Cloudflare. |
-| `npm run deploy` | Construit puis déploie le Worker avec Wrangler. |
+| `npm run deploy` | Construit, copie le cache prérendu dans les assets, puis déploie le Worker. |
 | `npm run logs` | Affiche les logs Cloudflare du Worker en temps réel. |
 | `npm run logs:errors` | Affiche uniquement les invocations Cloudflare en erreur. |
 | `npm run cf-typegen` | Régénère les types des bindings déclarés dans Wrangler. |
@@ -155,8 +155,10 @@ présentent la réponse produit. Une paire guide/produit doit rester éditoriale
 - les URL canoniques et les métadonnées par page ;
 - les dates `lastModified` du sitemap.
 
-Ne pas mettre `dynamicParams = false` sur `app/[slug]` : cette option a déjà provoqué des 404
-sur le runtime Cloudflare malgré un prérendu local correct.
+`dynamicParams` reste à sa valeur par défaut sur `app/[slug]`. Les 404 observées autrefois en
+production venaient du cache incrémental vide, pas de cette option : le routeur cherchait les
+entrées prérendues dans un cache qui ne renvoyait jamais rien (voir
+[Cache des pages prérendues](#cache-des-pages-prérendues)).
 
 ## Formulaires
 
@@ -230,12 +232,37 @@ Le domaine de production est `https://yatu-app.com`. Le déploiement utilise l�
 npm ci
 npm run build
 # Commande de déploiement Cloudflare Workers Builds :
-npx wrangler deploy
+npx opennextjs-cloudflare deploy
 ```
 
 `npm run build` produit `.open-next/worker.js` et `.open-next/assets`. `wrangler.jsonc` référence
 ces deux sorties, active `nodejs_compat`, le binding Cloudflare Images `IMAGES`, les source maps,
 les logs d’invocation et les traces. Le nom du Worker est `yatu-landing-page`.
+
+Le déploiement passe par `opennextjs-cloudflare deploy` et non par `wrangler deploy` seul : lui
+seul copie le cache des pages prérendues dans les assets avant l’envoi (voir ci-dessous).
+
+### Cache des pages prérendues
+
+`open-next.config.ts` déclare `staticAssetsIncrementalCache`. Sans cette configuration, OpenNext
+utilise un cache factice qui ne renvoie jamais rien : le Worker re-rendait alors chaque page et
+chaque carte Open Graph à chaque requête, jusqu’à l’erreur Cloudflare 1102 « Worker exceeded
+resource limits ».
+
+Au déploiement, les entrées de `.open-next/cache/` sont copiées dans
+`.open-next/assets/cdn-cgi/_next_cache/` — un préfixe que seul le Worker peut lire — et relues par
+le binding `ASSETS`. Une réponse servie depuis ce cache porte l’en-tête `x-nextjs-cache: HIT` :
+c’est le contrôle à faire après chaque déploiement.
+
+```bash
+curl -sI https://yatu-app.com/ | grep -i x-nextjs-cache            # attendu : HIT
+curl -sI https://yatu-app.com/opengraph-image | grep -i x-nextjs-cache
+```
+
+Ce cache est en lecture seule, ce qui convient à un site dont le contenu ne change qu’au
+déploiement : pas d’ISR, pas de `revalidatePath()`. Une page qui devrait se revalider en
+production imposerait de passer à R2 ou KV. Les rendus hors cache (slug inconnu, 404) émettent un
+log `Failed to set to read-only cache` sans incidence sur la réponse.
 
 Le fichier Wrangler ne contient volontairement aucun secret. Les variables publiques et le jeton
 Search Console sont configurés dans les variables de build du projet Cloudflare. Lorsqu’un nouveau

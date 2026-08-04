@@ -142,6 +142,10 @@ export const GO_DECOR: DecorItem[] = [
   { i: "calendar", s: 28, o: 0.28, rot: -11, amp: 8, dur: "6.05s", lag: "0.76s" },
   { i: "pin", s: 26, o: 0.26, rot: 7, amp: 9, dur: "6.60s", lag: "1.13s" },
   { i: "bubble", s: 28, o: 0.24, rot: -13, amp: 10, dur: "4.40s", lag: "1.50s" },
+  { i: "chart", s: 30, o: 0.28, rot: 12, amp: 12, dur: "5.50s", lag: "0.50s" },
+  { i: "documents", s: 26, o: 0.25, rot: -8, amp: 9, dur: "6.05s", lag: "1.20s" },
+  { i: "people", s: 32, o: 0.22, rot: 14, amp: 11, dur: "4.95s", lag: "0.80s" },
+  { i: "addpeople", s: 28, o: 0.20, rot: -10, amp: 8, dur: "6.60s", lag: "1.50s" },
 ];
 
 /* ── BDE ─────────────────────────────────────────────────────────────── */
