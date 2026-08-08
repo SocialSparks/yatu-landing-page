@@ -72,21 +72,18 @@ export const SITE_PAGES: SitePage[] = [
     changeFrequency: "weekly",
     priority: 1,
     updated: "2026-08-02",
-    images: ["/opengraph-image"],
   },
   {
     path: "/bde",
     changeFrequency: "monthly",
     priority: 0.8,
     updated: "2026-08-01",
-    images: ["/bde/opengraph-image"],
   },
   {
     path: LANDING_INDEX_PATH,
     changeFrequency: "monthly",
     priority: 0.7,
     updated: "2026-08-01",
-    images: [`${LANDING_INDEX_PATH}/opengraph-image`],
   },
   ...LANDING_PAGES.map((page): SitePage => ({
     path: `/${page.slug}`,
@@ -95,7 +92,7 @@ export const SITE_PAGES: SitePage[] = [
     // entry points we want crawled often, but they are not the front door.
     priority: 0.7,
     updated: page.updated,
-    images: [page.photo, `/${page.slug}/opengraph-image`],
+    images: [page.photo],
   })),
   { path: "/mentions-legales", changeFrequency: "yearly", priority: 0.2, updated: "2026-08-01" },
   { path: "/confidentialite", changeFrequency: "yearly", priority: 0.2, updated: "2026-08-01" },

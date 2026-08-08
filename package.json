@@ -1,6 +1,6 @@
 {
   "name": "yatu-landing-page",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "engines": {
     "node": ">=20.0.0"
@@ -9,7 +9,7 @@
     "predev": "npm run generate:agents",
     "dev": "next dev",
     "prebuild": "npm run generate:agents",
-    "build": "next build && opennextjs-cloudflare build --skipNextBuild",
+    "build": "next build && npm run check:duplicates && npm run check:internal-links && opennextjs-cloudflare build --skipNextBuild",
     "start": "next start",
     "preview": "npm run build && opennextjs-cloudflare preview",
     "deploy": "npm run build && opennextjs-cloudflare deploy",
@@ -18,7 +18,9 @@
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "typecheck": "tsc --noEmit",
     "generate:agents": "node scripts/generate-agent-content.mjs",
-    "check:agents": "node scripts/check-agent-readiness.mjs"
+    "check:agents": "node scripts/check-agent-readiness.mjs",
+    "check:duplicates": "node scripts/check-duplicates.mjs",
+    "check:internal-links": "node scripts/check-internal-links.mjs"
   },
   "dependencies": {
     "@microsoft/clarity": "^1.0.2",

@@ -1,5 +1,6 @@
 /**
- * Reports what a guide and its "application pour X" page still say identically.
+ * Reports what two occasion guides, or a guide and its "application pour X"
+ * page, still say identically.
  *
  *   npm run build && node scripts/check-duplicates.mjs
  *
@@ -14,8 +15,14 @@
  * pointing at the same guide is the point of them - and the remaining shared
  * chrome is skipped by the SHARED list below.
  *
- * Exits 1 if a pair shares a sentence, or if two pages carry the same module
- * <h2> - the strongest "these are one page" signal a pair can send.
+ * Occasion guides are also compared after their occasion vocabulary has been
+ * masked. That catches the exact anti-pattern this file exists to prevent:
+ * copying a paragraph and changing only "EVJF" to "EVG". Product modules are
+ * excluded from that comparison because their canonical descriptions are
+ * deliberately reused.
+ *
+ * Exits 1 if a pair shares a sentence, if two occasion guides share a masked
+ * sentence, if a guide is too thin, or if two pages carry the same module <h2>.
  */
 import {existsSync, readdirSync, readFileSync} from "node:fs";
 import path from "node:path";
@@ -33,6 +40,15 @@ const PAIRS = [
   ["organiser-un-voyage-entre-amis", "application-organiser-voyage-groupe"],
   ["partager-les-depenses-entre-amis", "application-partage-depenses-entre-amis"],
 ];
+
+/** Every root guide matching the scope requested for the occasion content. */
+const OCCASION_GUIDES = readdirSync(DIR)
+  .filter((file) => /^organiser-un-.*\.html$/.test(file))
+  .map((file) => file.replace(".html", ""))
+  .sort();
+
+/** Enough room for a real method, not a keyword-swapped landing template. */
+const MIN_EDITORIAL_WORDS = 700;
 
 /** Chrome rendered inside <main> on every landing page - not a duplication. */
 const SHARED = [
@@ -65,6 +81,25 @@ const sentences = (text) =>
     .filter((s) => s.split(" ").length >= 8)
     .filter((s) => !SHARED.some((chrome) => s.includes(chrome)));
 
+/**
+ * Keep only the advice, figures and mistakes authored for this occasion. The
+ * module grid below "Avec Yatu" quite correctly reuses product descriptions.
+ */
+const editorial = (slug) => main(slug).split("Avec Yatu")[0].trim();
+
+const fingerprint = (sentence) =>
+  sentence
+    .toLocaleLowerCase("fr")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(
+      /\b(?:week-?ends?|voyages?|evjf|evg|anniversaires?|ski|future mariee|marie)\b/g,
+      "<occasion>",
+    )
+    .replace(/[’']/g, " ")
+    .replace(/[^a-z0-9<>]+/g, " ")
+    .trim();
+
 let failed = false;
 
 console.log("Phrases partagées entre un guide et sa page « application »\n");
@@ -81,6 +116,46 @@ for (const [guide, app] of PAIRS) {
   console.log();
 
   if (shared.length) failed = true;
+}
+
+console.log("Différenciation des pages /organiser-un-*\n");
+
+for (const slug of OCCASION_GUIDES) {
+  const wordCount = editorial(slug).split(/\s+/).filter(Boolean).length;
+  const verdict = wordCount >= MIN_EDITORIAL_WORDS ? "ok" : "trop court";
+  console.log(`  ${verdict.padEnd(9)} ${slug} — ${wordCount} mots éditoriaux`);
+  if (wordCount < MIN_EDITORIAL_WORDS) failed = true;
+}
+
+console.log();
+
+for (let i = 0; i < OCCASION_GUIDES.length; i += 1) {
+  for (let j = i + 1; j < OCCASION_GUIDES.length; j += 1) {
+    const left = OCCASION_GUIDES[i];
+    const right = OCCASION_GUIDES[j];
+    const leftSentences = sentences(editorial(left));
+    const rightByFingerprint = new Map(
+      sentences(editorial(right)).map((sentence) => [fingerprint(sentence), sentence]),
+    );
+    const shared = leftSentences
+      .map((sentence) => ({ left: sentence, right: rightByFingerprint.get(fingerprint(sentence)) }))
+      .filter((match) => match.right);
+
+    if (shared.length === 0) continue;
+
+    failed = true;
+    console.log(`  ! ${left} <> ${right}`);
+    for (const match of shared) {
+      console.log(`      ${match.left}`);
+      if (match.left !== match.right) console.log(`      ${match.right}`);
+    }
+    console.log();
+  }
+}
+
+if (OCCASION_GUIDES.length === 0) {
+  failed = true;
+  console.log("  ! aucune page /organiser-un-* trouvée dans le build\n");
 }
 
 console.log("Titre <h2> du bloc modules, page par page\n");

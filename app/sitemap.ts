@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 import { SITE_PAGES, absoluteUrl } from "@/lib/site";
 
 /**
- * /sitemap.xml - every indexable page, with the images we want Google Images to
- * pick up (the guide photos and the social cards). robots.txt points here, and
- * this is the file to submit in Search Console.
+ * /sitemap.xml - every indexable page, with the editorial photos we want Google
+ * Images to pick up. Social-card routes are deliberately absent: robots.txt
+ * blocks them because they are previews, not indexable documents.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   return SITE_PAGES.map((page) => ({

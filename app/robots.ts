@@ -38,7 +38,18 @@ const AI_TRAINING_CRAWLERS = [
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
-      { userAgent: "*", allow: "/", disallow: PRIVATE_PATHS },
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: [
+          ...PRIVATE_PATHS,
+          // Build assets and social-preview endpoints are useful to browsers
+          // and link unfurlers, but are not indexable documents.
+          "/_next/static/media/",
+          "/opengraph-image",
+          "/*/opengraph-image",
+        ],
+      },
       // Un groupe nommé remplace la règle `*` pour ces bots au lieu de s'y
       // ajouter : le `Disallow: /` couvre déjà PRIVATE_PATHS, rien à répéter.
       { userAgent: AI_TRAINING_CRAWLERS, disallow: "/" },
