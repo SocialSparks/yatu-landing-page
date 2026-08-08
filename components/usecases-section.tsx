@@ -43,7 +43,7 @@ function Card({ card }: { card: UseCase }) {
       {card.photo ? (
         <Picture
           src={card.photo}
-          alt=""
+          alt={card.photoAlt}
           widths={[480, 1040]}
           sizes="(max-width: 600px) 100vw, 300px"
           style={{

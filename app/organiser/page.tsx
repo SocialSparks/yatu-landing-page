@@ -29,7 +29,7 @@ export const metadata: Metadata = pageMetadata({
   path: ROUTES.organiser,
   title: "Organiser un événement entre amis : tous les guides - Yatu",
   description:
-    "Week-end, voyage, EVJF, EVG, anniversaire, soirée, ski, dépenses partagées : nos méthodes pour organiser un événement à plusieurs sans passer trois semaines à relancer le groupe.",
+    "Week-end, voyage, EVJF, EVG, anniversaire, soirée, ski, dépenses partagées : nos méthodes pour organiser un événement à plusieurs sans relancer le groupe.",
   image: "/organiser/opengraph-image",
 });
 

@@ -87,7 +87,7 @@ export function SiteHeader() {
             fetchPriority="high"
             src="/assets/yatu-wordmark-172.webp"
             srcSet="/assets/yatu-wordmark-172.webp 1x, /assets/yatu-wordmark-344.webp 2x"
-            alt=""
+            alt="Yatu"
             className="yq-logo-mark"
             width={86}
             height={40}

@@ -477,7 +477,14 @@ export type UseCase = {
   /**
    * Editorial photo generated for the use-case card.
    */
-  photo?: string;
+  photo: string;
+  /**
+   * What the photo shows, for screen readers and for crawlers that never see
+   * the file. Required alongside `photo`: the card's label and title say what
+   * the *occasion* is, not what is in the frame, so an empty alt here would
+   * drop the only description the image has.
+   */
+  photoAlt: string;
 };
 
 export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase[] }[] = [
@@ -488,6 +495,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       {
         id: "usage-soiree",
         photo: "/assets/usecases/usage-soiree.jpg",
+        photoAlt: "Une soirée entre amis dans un appartement",
         icon: icon("chat"),
         badge: ACCENT.blush,
         label: "Soirée",
@@ -497,6 +505,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       {
         id: "usage-anniv",
         photo: "/assets/usecases/usage-anniv.jpg",
+        photoAlt: "Un groupe d’amis fêtant un anniversaire surprise",
         icon: icon("heart"),
         badge: ACCENT.coral,
         label: "Anniversaire",
@@ -506,6 +515,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       {
         id: "usage-weekend",
         photo: "/assets/usecases/usage-weekend.jpg",
+        photoAlt: "Un groupe d’amis dans un chalet pendant un week-end à la campagne",
         icon: icon("calendar"),
         badge: ACCENT.apricot,
         label: "Week-end",
@@ -515,6 +525,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       {
         id: "usage-voyage",
         photo: "/assets/usecases/usage-voyage.jpg",
+        photoAlt: "Un groupe d’amis en voyage, valises à la main, devant un logement de vacances",
         icon: icon("send"),
         badge: ACCENT.sky,
         label: "Voyage en groupe",
@@ -524,6 +535,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       {
         id: "usage-festival",
         photo: "/assets/usecases/usage-festival.jpg",
+        photoAlt: "Quatre amis penchés sur un plan devant les tentes d’un festival, la scène éclairée au fond",
         icon: icon("ticket"),
         badge: ACCENT.lilac,
         label: "Festival",
@@ -533,6 +545,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       {
         id: "usage-evjf",
         photo: "/assets/usecases/usage-evjf.jpg",
+        photoAlt: "Un groupe d’amies pendant un week-end d’enterrement de vie de jeune fille",
         icon: icon("heart"),
         badge: ACCENT.blush,
         label: "EVJF",
@@ -542,6 +555,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       {
         id: "usage-evg",
         photo: "/assets/usecases/usage-evg.jpg",
+        photoAlt: "Un groupe d’amis pendant un enterrement de vie de garçon",
         icon: icon("bubble"),
         badge: ACCENT.meadow,
         label: "EVG",
@@ -557,6 +571,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       {
         id: "usage-rando",
         photo: "/assets/usecases/usage-rando.jpg",
+        photoAlt: "Six randonneurs sac au dos, assis sur un rocher autour d’une carte en montagne",
         icon: icon("pin"),
         badge: ACCENT.meadow,
         label: "Randonnée",
@@ -566,6 +581,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       {
         id: "usage-ski",
         photo: "/assets/usecases/usage-ski.jpg",
+        photoAlt: "Un groupe d’amis en week-end au ski devant un chalet enneigé",
         icon: icon("documents"),
         badge: ACCENT.sky,
         label: "Séjour ski",
@@ -575,6 +591,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       {
         id: "usage-cremaillere",
         photo: "/assets/usecases/usage-cremaillere.jpg",
+        photoAlt: "Une femme accueillant ses amis les bras ouverts dans un appartement encore rempli de cartons",
         icon: icon("people"),
         badge: ACCENT.sunbeam,
         label: "Crémaillère",
@@ -584,6 +601,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       {
         id: "usage-nouvelan",
         photo: "/assets/usecases/usage-nouvelan.jpg",
+        photoAlt: "Des amis trinquant autour d’une table dressée aux bougies, devant une fenêtre enneigée",
         icon: icon("bell"),
         badge: ACCENT.lilac,
         label: "Nouvel An",
@@ -593,6 +611,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       {
         id: "usage-roadtrip",
         photo: "/assets/usecases/usage-roadtrip.jpg",
+        photoAlt: "Des amis en road trip calculant leurs dépenses communes",
         icon: icon("planning"),
         badge: ACCENT.apricot,
         label: "Road trip",
@@ -602,6 +621,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       {
         id: "usage-camping",
         photo: "/assets/usecases/usage-camping.jpg",
+        photoAlt: "Quatre amis montant une tente et remplissant une glacière au bord d’une rivière",
         icon: icon("liste"),
         badge: ACCENT.meadow,
         label: "Camping",
@@ -611,6 +631,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       {
         id: "usage-concert",
         photo: "/assets/usecases/usage-concert.jpg",
+        photoAlt: "Quatre amis montrant leurs billets sur leur téléphone devant la scène d’un concert",
         icon: icon("ticket"),
         badge: ACCENT.coral,
         label: "Concert",
@@ -626,6 +647,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       {
         id: "usage-match",
         photo: "/assets/usecases/usage-match.jpg",
+        photoAlt: "Des supporters en écharpe aux couleurs de leur club, serrés dans une voiture en route pour le stade",
         icon: icon("chart"),
         badge: ACCENT.sky,
         label: "Match",
@@ -635,6 +657,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       {
         id: "usage-coloc",
         photo: "/assets/usecases/usage-coloc.jpg",
+        photoAlt: "Des amis en colocation faisant les comptes de leurs dépenses communes",
         icon: icon("budget"),
         badge: ACCENT.lilac,
         label: "Coloc",
@@ -644,6 +667,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       {
         id: "usage-mariage",
         photo: "/assets/usecases/usage-mariage.jpg",
+        photoAlt: "Les invités d’un mariage photographiant les mariés avec leurs téléphones",
         icon: icon("img"),
         badge: ACCENT.blush,
         label: "Mariage",
@@ -653,6 +677,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       {
         id: "usage-famille",
         photo: "/assets/usecases/usage-famille.jpg",
+        photoAlt: "Une famille de trois générations pique-niquant devant une maison en bord de mer",
         icon: icon("documents"),
         badge: ACCENT.apricot,
         label: "Vacances en famille",
@@ -662,6 +687,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       {
         id: "usage-marathon",
         photo: "/assets/usecases/usage-marathon.jpg",
+        photoAlt: "Des amis brandissant des pancartes pour encourager une coureuse pendant un marathon à Paris",
         icon: icon("chart"),
         badge: ACCENT.coral,
         label: "Marathon",
@@ -671,6 +697,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       {
         id: "usage-surf",
         photo: "/assets/usecases/usage-surf.jpg",
+        photoAlt: "Un groupe d’amis en voyage au bord de la mer",
         icon: icon("send"),
         badge: ACCENT.sky,
         label: "Surf trip",
@@ -680,6 +707,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
       {
         id: "usage-retrouvailles",
         photo: "/assets/usecases/usage-retrouvailles.jpg",
+        photoAlt: "Un groupe d’amis réunis dans une maison pour un week-end",
         icon: icon("people"),
         badge: ACCENT.sunbeam,
         label: "Retrouvailles",

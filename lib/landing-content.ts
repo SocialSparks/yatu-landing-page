@@ -184,7 +184,7 @@ export const LANDING_PAGES: LandingPage[] = [
     h1: "Organiser un week-end entre amis, de la date au retour",
     title: "Organiser un week-end entre amis : la checklist - Yatu",
     description:
-      "Caler la date, réserver la maison, annoncer le budget par personne, faire les courses et solder les comptes : la méthode en 6 étapes pour un week-end à plusieurs qui ne s’organise pas tout seul.",
+      "Caler la date, réserver la maison, annoncer le budget par personne, faire les courses et solder les comptes : la méthode en 6 étapes pour un week-end réussi.",
     lede: "Une maison, huit copains, et une conversation de groupe où trois semaines passent sans qu’une date sorte. Voilà comment décider vite, annoncer un budget clair et rentrer sans avoir à relancer personne pour 40 €.",
     og: {
       title: "Organiser un week-end entre amis, sans relancer tout le monde.",
@@ -348,7 +348,7 @@ export const LANDING_PAGES: LandingPage[] = [
     h1: "Organiser un voyage entre amis sans y laisser l’amitié",
     title: "Organiser un voyage entre amis : le guide complet - Yatu",
     description:
-      "Budget plafond, vols, logement, papiers, programme et comptes : la méthode pour organiser un voyage en groupe à plusieurs, sans qu’une seule personne porte tout le dossier.",
+      "Budget plafond, vols, logement, papiers, programme et comptes : la méthode pour organiser un voyage en groupe sans qu’une seule personne porte tout le dossier.",
     lede: "À six ou huit, un voyage se joue sur trois décisions prises tôt : combien on met, qui réserve quoi, et où on range les billets. Le reste - le programme, les photos, les comptes - suit tout seul si ces trois-là sont claires.",
     og: {
       title: "Organiser un voyage entre amis, sans porter le dossier tout seul.",
@@ -512,7 +512,7 @@ export const LANDING_PAGES: LandingPage[] = [
     h1: "Organiser un EVJF : le programme, le budget, la surprise",
     title: "Organiser un EVJF : méthode, budget et surprise - Yatu",
     description:
-      "Constituer l’équipe, fixer un budget par participante, construire un programme tenable et garder la surprise : la méthode complète pour organiser un enterrement de vie de jeune fille.",
+      "Constituer l’équipe, fixer un budget par participante, bâtir un programme tenable et garder la surprise : la méthode pour organiser un EVJF de bout en bout.",
     lede: "Un EVJF se prépare à deux niveaux : le groupe qui organise, et la future mariée qui ne doit rien savoir. Tant que ces deux conversations se mélangent, la surprise fuit et le budget dérape.",
     og: {
       title: "Organiser un EVJF sans que la surprise fuite.",
@@ -666,7 +666,7 @@ export const LANDING_PAGES: LandingPage[] = [
     h1: "Organiser un EVG qui ressemble vraiment au marié",
     title: "Organiser un EVG : budget, activités et logistique - Yatu",
     description:
-      "Limites du marié, participants à la journée, activité principale, retours de nuit et budget à options : une méthode concrète pour organiser un EVG sans forcer tout le monde dans le même programme.",
+      "Limites du marié, participants, activité principale, retours de nuit et budget à options : la méthode pour organiser un EVG qui convienne à tout le groupe.",
     lede: "Le bon EVG n’est pas le plus spectaculaire : c’est celui que le marié aurait choisi sans connaître les détails. Commence par ses limites, construis une activité pivot et laisse une porte d’entrée à ceux qui n’ont ni tout le week-end ni tout le budget.",
     og: {
       title: "Organiser un EVG pensé pour le marié, pas pour la galerie.",
@@ -815,7 +815,7 @@ export const LANDING_PAGES: LandingPage[] = [
     h1: "Organiser un anniversaire, et garder la surprise",
     title: "Organiser un anniversaire surprise : le guide - Yatu",
     description:
-      "Inviter sans fuite, monter la cagnotte du cadeau, répartir ce que chacun ramène et tenir le déroulé : la méthode pour organiser un anniversaire, surprise comprise.",
+      "Inviter sans fuite, monter la cagnotte du cadeau, répartir ce que chacun ramène et tenir le déroulé : la méthode pour organiser un anniversaire surprise.",
     lede: "Une surprise tient sur deux choses : un endroit où en parler sans que la personne concernée le voie, et une liste de qui ramène quoi. Le reste - le gâteau, la playlist, les photos - se règle en une soirée.",
     og: {
       title: "Organiser un anniversaire surprise sans qu’elle l’apprenne.",
@@ -962,7 +962,7 @@ export const LANDING_PAGES: LandingPage[] = [
     h1: "Organiser une soirée entre amis en une heure",
     title: "Organiser une soirée entre amis : la checklist - Yatu",
     description:
-      "Savoir qui vient vraiment, répartir ce que chacun ramène, tenir les courses et solder les comptes le lendemain : la checklist d’une soirée entre amis qui s’organise en une heure.",
+      "Savoir qui vient vraiment, répartir ce que chacun ramène, tenir les courses et solder les comptes : la checklist d’une soirée entre amis montée en une heure.",
     lede: "Une soirée ne demande pas un plan sur trois semaines. Elle demande trois réponses : qui vient vraiment, qui ramène quoi, et qui a avancé l’argent des courses.",
     og: {
       title: "Organiser une soirée entre amis en une heure.",
@@ -1108,7 +1108,7 @@ export const LANDING_PAGES: LandingPage[] = [
     h1: "Organiser un week-end au ski à plusieurs",
     title: "Organiser un week-end au ski entre amis - Yatu",
     description:
-      "Réservation, chambres, forfaits, location de matériel, budget et niveaux différents : la méthode pour organiser un week-end au ski à huit sans laisser une seule personne tout avancer.",
+      "Réservation, chambres, forfaits, location de matériel, budget et niveaux différents : la méthode pour organiser un week-end au ski entre amis, même à huit.",
     lede: "Le ski est l’occasion où tout se paie d’avance : logement, forfaits, matériel. C’est aussi celle où les comptes se perdent le plus vite, parce que quatre personnes ont avancé quatre choses différentes.",
     og: {
       title: "Organiser un week-end au ski à huit, comptes compris.",
@@ -1265,7 +1265,7 @@ export const LANDING_PAGES: LandingPage[] = [
     h1: "Partager les dépenses entre amis, sans tableur",
     title: "Partager les dépenses entre amis : la méthode - Yatu",
     description:
-      "Noter les dépenses, gérer les avances, répartir autrement qu’en parts égales et solder en un minimum de virements : la méthode pour partager les frais d’un groupe sans y passer la soirée.",
+      "Noter les dépenses, gérer les avances, répartir autrement qu’en parts égales et solder en un minimum de virements : la méthode pour partager les frais.",
     lede: "Le problème n’est presque jamais le calcul : c’est la mémoire. Une dépense notée trois jours plus tard est une dépense à moitié fausse, et un groupe qui reconstitue un week-end de tête finit toujours par arrondir en sa défaveur.",
     og: {
       title: "Partager les dépenses entre amis, sans tableur.",
@@ -1424,7 +1424,7 @@ export const LANDING_PAGES: LandingPage[] = [
     h1: "L’application qui tient les dépenses de ton groupe",
     title: "Application pour partager les dépenses entre amis - Yatu",
     description:
-      "Noter une dépense, dire qui elle concerne, voir qui doit combien et solder en un minimum de virements - dans le même espace que la conversation et les listes du groupe. Yatu ouvre le 9 septembre 2026.",
+      "Noter une dépense, voir qui doit combien et solder en un minimum de virements, au même endroit que la conversation du groupe. Yatu ouvre le 9 septembre 2026.",
     lede: "Les applis de comptes partagés font très bien le calcul. Ce qu’elles ne font pas, c’est te dire pourquoi la dépense existe : la conversation qui l’a décidée, la liste qui l’a produite et le programme qui la justifie vivent ailleurs. Yatu met les comptes à l’intérieur de l’événement.",
     og: {
       title: "Les dépenses du groupe, dans l’événement qui les a produites.",
@@ -1584,7 +1584,7 @@ export const LANDING_PAGES: LandingPage[] = [
     h1: "L’application pour organiser un week-end entre amis",
     title: "Application pour organiser un week-end entre amis - Yatu",
     description:
-      "Un espace par week-end : la discussion, les infos pratiques, la liste de courses, le budget et l’album photo au même endroit, pour que l’organisation ne repose plus sur une seule personne. Ouverture le 9 septembre 2026.",
+      "Un espace par week-end : discussion, infos pratiques, liste de courses, budget et album photo au même endroit. Yatu ouvre le 9 septembre 2026.",
     lede: "Un week-end à huit, ce n’est pas une appli qu’il faut, c’est un endroit. Un lien, tout le monde dedans, et les décisions qui arrêtent de se perdre entre une conversation, deux messages privés et un tableur que personne ne rouvre.",
     og: {
       title: "Un espace par week-end, et le groupe s’organise dedans.",
@@ -1744,7 +1744,7 @@ export const LANDING_PAGES: LandingPage[] = [
     h1: "L’application pour organiser un voyage en groupe",
     title: "Application pour organiser un voyage en groupe - Yatu",
     description:
-      "Billets, réservations, budget, programme et photos d’un voyage à plusieurs, réunis dans un seul espace partagé au lieu de huit boîtes mail. Yatu ouvre le 9 septembre 2026 sur iOS et Android.",
+      "Billets, réservations, budget, programme et photos d’un voyage en groupe, réunis dans un seul espace partagé. Yatu ouvre le 9 septembre 2026 sur iOS et Android.",
     lede: "Un voyage de groupe se joue sur ce que personne ne retrouve : le billet, l’adresse du logement, le montant déjà avancé. Yatu range tout ça dans l’événement, accessible à tout le groupe plutôt qu’à celui qui a réservé.",
     og: {
       title: "Un voyage à huit, dans un seul espace partagé.",

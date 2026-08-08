@@ -13,7 +13,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/bde",
   title: "Yatu pour les BDE : organiser un WEI ou un événement étudiant",
   description:
-    "Un espace unique pour ton WEI, ton gala ou ton séjour ski : inscriptions validées, annonces officielles, planning, chambres, discussion et album photo. Pack pilote gratuit avant le lancement.",
+    "Un espace unique pour ton WEI, ton gala ou ton séjour ski : inscriptions validées, annonces, planning, chambres, discussion et album photo. Pack pilote gratuit.",
   image: "/bde/opengraph-image",
 });
 
