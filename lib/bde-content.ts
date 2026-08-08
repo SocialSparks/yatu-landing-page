@@ -19,7 +19,6 @@ export const BDE_CTA = {
 
 export const BDE_CHIPS = [
   { dot: "#96E087", label: "Gratuit pour les pilotes" },
-  { dot: "#6FC6F1", label: "Aucun outil à remplacer" },
   { dot: "#C6A8E1", label: "Accompagnement par l’équipe" },
 ];
 
