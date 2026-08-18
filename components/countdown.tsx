@@ -8,9 +8,11 @@ const UI = "var(--font-ui), system-ui, sans-serif";
 
 const pad = (n: number) => (n < 10 ? `0${n}` : String(n));
 
+const LAUNCH_MS = new Date(LAUNCH_DATE).getTime();
+
+/** Le temps qui reste, tel quel : 20 j 23 h 08 m se lit "20 JOURS". */
 function parts(now: number) {
-  const left = Math.max(0, new Date(LAUNCH_DATE).getTime() - now);
-  const s = Math.floor(left / 1000);
+  const s = Math.floor(Math.max(0, LAUNCH_MS - now) / 1000);
   return {
     jours: Math.floor(s / 86400),
     heures: pad(Math.floor(s / 3600) % 24),
@@ -19,11 +21,38 @@ function parts(now: number) {
   };
 }
 
+const PARIS = new Intl.DateTimeFormat("en-US", {
+  timeZone: "Europe/Paris",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+});
+
+/** Minuit UTC du jour civil parisien contenant `ms` - une clé de date comparable. */
+function parisDay(ms: number) {
+  const p = PARIS.formatToParts(ms);
+  const get = (type: string) => Number(p.find((x) => x.type === type)?.value);
+  return Date.UTC(get("year"), get("month") - 1, get("day"));
+}
+
+const LAUNCH_DAY = parisDay(LAUNCH_MS);
+
+/**
+ * Le "J–N" du badge, qui compte des jours au calendrier et non des tranches de
+ * 24 h : le 19 août à Paris il reste 21 jours avant le 9 septembre, quelle que
+ * soit l'heure qu'il est - alors que `parts()` dirait encore 20 jours et 23 h.
+ * Les deux bornes sont des minuits UTC, donc la soustraction tombe juste même
+ * si un changement d'heure sépare aujourd'hui de la sortie.
+ */
+function daysUntilLaunch(now: number) {
+  return Math.max(0, Math.round((LAUNCH_DAY - parisDay(now)) / 86400000));
+}
+
 /**
  * Both readouts render from the server’s clock and then re-sync on mount, so
  * there is no layout shift and no blank frame - the values simply refresh.
  */
-function useLaunchClock(tick: boolean) {
+function useNow(tick: boolean) {
   const [now, setNow] = useState(() => Date.now());
 
   useEffect(() => {
@@ -33,12 +62,12 @@ function useLaunchClock(tick: boolean) {
     return () => window.clearInterval(id);
   }, [tick]);
 
-  return parts(now);
+  return now;
 }
 
 /** "J–NNN" - the days-remaining chip in the hero badge. */
 export function DaysUntil() {
-  const { jours } = useLaunchClock(false);
+  const jours = daysUntilLaunch(useNow(false));
   return (
     <span suppressHydrationWarning style={{ color: "#71787E", fontWeight: 600 }}>
       J–{jours}
@@ -86,7 +115,7 @@ const LABEL: React.CSSProperties = {
  * would vanish into the card - change.
  */
 export function Countdown({ tone = "light" }: { tone?: "light" | "dark" } = {}) {
-  const c = useLaunchClock(true);
+  const c = parts(useNow(true));
   const dark = tone === "dark";
 
   return (

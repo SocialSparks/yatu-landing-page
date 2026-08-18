@@ -13,7 +13,13 @@
  * tâches, discussion cachée, souvenirs, documents.
  */
 
-export const LAUNCH_DATE = "2026-09-09T00:00:00";
+/*
+ * Minuit à Paris le jour de la sortie. L'offset est obligatoire : sans lui,
+ * `new Date(LAUNCH_DATE)` se lit dans le fuseau de la machine - UTC côté serveur,
+ * n'importe quoi côté visiteur - et le compte à rebours dérive d'autant.
+ * +02:00 = CEST, en vigueur le 9 septembre (l'heure d'hiver revient fin octobre).
+ */
+export const LAUNCH_DATE = "2026-09-09T00:00:00+02:00";
 /** Written once - the date shows up in the hero, the footer, the FAQ and the metadata. */
 export const LAUNCH_LABEL = "9 septembre 2026";
 
