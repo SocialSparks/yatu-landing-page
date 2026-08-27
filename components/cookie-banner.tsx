@@ -121,7 +121,6 @@ export function CookieBanner() {
     } catch {
       /* storage blocked */
     }
-    // Hook point: load the measurement tag here when nextAnalytics is true.
     window.dispatchEvent(new CustomEvent(CONSENT_CHANGED_EVENT));
     setAnalytics(nextAnalytics);
     setSocial(nextSocial);
@@ -157,9 +156,9 @@ export function CookieBanner() {
               textWrap: "pretty",
             }}
           >
-            Le site mémorise localement tes choix et les informations que tu saisis. Google
-            Analytics et Microsoft Clarity ne sont chargés qu’avec ton accord. Tu peux accepter,
-            refuser ou personnaliser les catégories.
+            Le site mémorise localement tes choix et les informations que tu saisis. Les outils de
+            mesure d’audience et le Meta Pixel ne sont chargés qu’avec ton accord. Tu peux
+            accepter, refuser ou personnaliser les catégories.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
             <button type="button" className="yq-btn-dark" style={PRIMARY} onClick={() => persist(true, true)}>
@@ -270,8 +269,8 @@ export function CookieBanner() {
                 toggle: () => setAnalytics((v) => !v),
               },
               {
-                title: "Contenus des réseaux sociaux",
-                desc: "Aucune publication intégrée pour le moment.",
+                title: "Publicité et réseaux sociaux",
+                desc: "Meta Pixel : mesure des visites et de l’efficacité des campagnes.",
                 on: social,
                 toggle: () => setSocial((v) => !v),
               },

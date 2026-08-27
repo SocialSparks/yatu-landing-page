@@ -88,6 +88,7 @@ sont lus au build ; ils doivent également être configurés dans les variables 
 | `NEXT_PUBLIC_SITE_URL` | Domaine utilisé par les URL canoniques, le sitemap et les cartes sociales. | `https://yatu-app.com` |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Identifiant Google Analytics 4. | Vide, GA désactivé. |
 | `NEXT_PUBLIC_CLARITY_PROJECT_ID` | Identifiant du projet Microsoft Clarity. | Vide, Clarity désactivé. |
+| `NEXT_PUBLIC_META_PIXEL_ID` | Identifiant du Meta Pixel. | `2191380281815578` |
 | `GOOGLE_SITE_VERIFICATION` | Jeton de validation Google Search Console. | Valeur de démonstration à remplacer. |
 
 Les variables `NEXT_PUBLIC_*` sont intégrées au JavaScript lors du build. Une modification exige
@@ -314,8 +315,9 @@ requête. Les ressources stables de `/assets` et `/mockups` reçoivent un cache 
 ## Analytics et consentement
 
 `components/measurement.tsx` ne charge Google Analytics et Microsoft Clarity qu’après acceptation
-de la catégorie « Mesure d’audience ». Le retrait du consentement est transmis aux deux outils et
-leurs cookies accessibles sont supprimés.
+de la catégorie « Mesure d’audience », et Meta Pixel qu’après acceptation de « Publicité et réseaux
+sociaux ». Le retrait du consentement est transmis aux outils concernés et leurs cookies
+accessibles sont supprimés.
 
 Les préférences sont gérées par `components/cookie-banner.tsx` et décrites sur `/cookies`. Aucun
 signal publicitaire Google n’est activé.

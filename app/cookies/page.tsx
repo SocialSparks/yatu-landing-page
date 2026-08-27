@@ -80,9 +80,9 @@ export default function Page() {
     <LegalPage
       badge="Traceurs"
       title="Gestion des cookies"
-      updatedAt="1er août 2026"
+      updatedAt="27 août 2026"
       decor={COOKIES_DECOR}
-      lede="Le site utilise le stockage local pour mémoriser tes choix. Google Analytics et Microsoft Clarity ne sont chargés qu’après ton accord à la mesure d’audience."
+      lede="Le site utilise le stockage local pour mémoriser tes choix. Google Analytics, Microsoft Clarity et Meta Pixel ne sont chargés qu’après ton accord à leur catégorie respective."
     >
       <ConsentStatus />
 
@@ -150,14 +150,19 @@ export default function Page() {
         </Tracker>
 
         <Tracker
-          label="Contenus des réseaux sociaux"
+          label="Publicité et réseaux sociaux"
           badge={ACCENT.blush}
           rule="Déposés seulement si tu les acceptes"
         >
           <Line>
-            Le site contient actuellement de simples liens vers Instagram, TikTok et WhatsApp,
-            sans publication intégrée. Aucun traceur de ces plateformes n’est chargé tant que tu ne
-            quittes pas le site en cliquant sur l’un de ces liens.
+            <B>Meta Pixel</B> mesure les pages consultées afin d’évaluer l’efficacité des campagnes
+            publicitaires. Il peut déposer les cookies <B>_fbp</B> et <B>_fbc</B>. Le Pixel est
+            entièrement bloqué avant ton accord à cette catégorie ; si tu retires ton accord, le
+            site transmet la révocation à Meta et supprime ses cookies accessibles sur le domaine.
+          </Line>
+          <Line>
+            Les liens vers Instagram, TikTok et WhatsApp restent de simples liens externes, sans
+            publication intégrée.
           </Line>
         </Tracker>
       </LegalSection>

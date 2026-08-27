@@ -77,7 +77,7 @@ export default function Page() {
     <LegalPage
       badge="Tes données"
       title="Politique de confidentialité"
-      updatedAt="1er août 2026"
+      updatedAt="27 août 2026"
       decor={CONFIDENTIALITE_DECOR}
       lede={`Cette politique explique comment ${PUBLISHER} traite les données liées au site ${SITE_DOMAIN}. Elle concerne le site de pré-lancement, pas encore les données qui seront créées dans l’application Yatu.`}
     >
@@ -111,7 +111,7 @@ export default function Page() {
           </Bullet>
           <Bullet>
             de ta navigation et de tes interactions avec les pages lorsque tu acceptes la mesure
-            d’audience.
+            d’audience ou la catégorie « Publicité et réseaux sociaux ».
           </Bullet>
         </div>
         <P>
@@ -263,6 +263,29 @@ export default function Page() {
             ],
           ]}
         />
+
+        <Treatment
+          label="Mesure des campagnes publicitaires"
+          badge={ACCENT.blush}
+          rows={[
+            [
+              "Données",
+              "page consultée, date de visite, adresse de la page, provenance, navigateur, appareil, données techniques de connexion et identifiants pseudonymes associés aux cookies Meta.",
+            ],
+            [
+              "Finalité",
+              "mesurer les visites et évaluer l’efficacité des campagnes publicitaires grâce à Meta Pixel.",
+            ],
+            [
+              "Base légale",
+              "consentement (article 6.1.a du RGPD), retirable à tout moment depuis la gestion des cookies.",
+            ],
+            [
+              "Conservation",
+              "le retrait du consentement bloque les nouveaux événements et supprime les cookies Meta accessibles sur le domaine ; Meta applique ensuite ses propres durées de conservation aux données déjà reçues.",
+            ],
+          ]}
+        />
       </LegalSection>
 
       <LegalSection title="4. Mesure d’audience et réseaux sociaux">
@@ -272,6 +295,12 @@ export default function Page() {
           personnalisation publicitaire de Google sont désactivées. Pour Clarity, le stockage
           publicitaire reste refusé ; les champs sensibles des formulaires sont masqués par défaut.
           Tu peux retirer ton accord à tout moment depuis le pied de page.
+        </P>
+        <P>
+          Meta Pixel est lui aussi bloqué par défaut. Il n’est chargé que si tu acceptes la
+          catégorie « Publicité et réseaux sociaux », puis transmet à Meta un événement de visite
+          de page afin de mesurer l’efficacité des campagnes. Le retrait de ton accord est transmis
+          au Pixel et ses cookies accessibles sur le domaine sont supprimés.
         </P>
         <P>
           Google Search Console sert uniquement à vérifier la propriété du site et à consulter des
@@ -306,6 +335,10 @@ export default function Page() {
             consentement à la mesure d’audience ;
           </Bullet>
           <Bullet>
+            à <B>Meta Platforms Ireland</B> pour Meta Pixel, uniquement après ton consentement à la
+            catégorie « Publicité et réseaux sociaux » ;
+          </Bullet>
+          <Bullet>
             aux conseils professionnels, autorités administratives ou judiciaires lorsque la loi
             l’exige ou pour protéger les droits de {PUBLISHER} ;
           </Bullet>
@@ -314,10 +347,7 @@ export default function Page() {
             de cette politique et encadrement contractuel conforme au RGPD.
           </Bullet>
         </div>
-        <P>
-          Aucune donnée n’est vendue, louée ou communiquée à des tiers pour leur prospection
-          commerciale ou de la publicité ciblée.
-        </P>
+        <P>Aucune donnée n’est vendue ou louée par {PUBLISHER}.</P>
       </LegalSection>
 
       <LegalSection title="6. Transferts hors de l’Espace économique européen">
@@ -335,11 +365,12 @@ export default function Page() {
           mécanismes indiqués ci-dessous.
         </P>
         <P>
-          Lorsque tu acceptes la mesure d’audience, Google et Microsoft peuvent également traiter
-          certaines données depuis des pays situés hors de l’Espace économique européen, notamment
-          les États-Unis. Ces prestataires indiquent encadrer ces transferts au moyen des mécanismes
-          reconnus applicables, notamment le cadre de protection des données UE–États-Unis et les
-          clauses contractuelles types lorsque nécessaire.
+          Lorsque tu acceptes la mesure d’audience ou la catégorie « Publicité et réseaux sociaux »,
+          Google, Microsoft et Meta peuvent également traiter certaines données depuis des pays
+          situés hors de l’Espace économique européen, notamment les États-Unis. Ces prestataires
+          indiquent encadrer ces transferts au moyen des mécanismes reconnus applicables, notamment
+          le cadre de protection des données UE–États-Unis et les clauses contractuelles types
+          lorsque nécessaire.
         </P>
         <P>
           Les garanties contractuelles sont consultables dans le{" "}
