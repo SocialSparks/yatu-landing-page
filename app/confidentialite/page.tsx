@@ -270,11 +270,11 @@ export default function Page() {
           rows={[
             [
               "Données",
-              "page consultée, date de visite, adresse de la page, provenance, navigateur, appareil, données techniques de connexion et identifiants pseudonymes associés aux cookies Meta.",
+              "page consultée, date de visite, adresse de la page, provenance, navigateur, appareil, données techniques de connexion, identifiants pseudonymes associés aux cookies Meta et, lorsqu’une inscription à la waiting list aboutit, emplacement du formulaire. L’adresse e-mail saisie dans le formulaire n’est pas transmise à Meta.",
             ],
             [
               "Finalité",
-              "mesurer les visites et évaluer l’efficacité des campagnes publicitaires grâce à Meta Pixel.",
+              "mesurer les visites et les inscriptions à la waiting list afin d’évaluer l’efficacité des campagnes publicitaires grâce à Meta Pixel.",
             ],
             [
               "Base légale",
@@ -299,8 +299,10 @@ export default function Page() {
         <P>
           Meta Pixel est lui aussi bloqué par défaut. Il n’est chargé que si tu acceptes la
           catégorie « Publicité et réseaux sociaux », puis transmet à Meta un événement de visite
-          de page afin de mesurer l’efficacité des campagnes. Le retrait de ton accord est transmis
-          au Pixel et ses cookies accessibles sur le domaine sont supprimés.
+          de page et, après une inscription confirmée à la waiting list, un événement Lead avec
+          l’emplacement du formulaire. L’adresse e-mail saisie n’est pas transmise à Meta. Le
+          retrait de ton accord est transmis au Pixel et ses cookies accessibles sur le domaine
+          sont supprimés.
         </P>
         <P>
           Google Search Console sert uniquement à vérifier la propriété du site et à consulter des

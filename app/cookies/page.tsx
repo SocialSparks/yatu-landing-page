@@ -155,10 +155,12 @@ export default function Page() {
           rule="Déposés seulement si tu les acceptes"
         >
           <Line>
-            <B>Meta Pixel</B> mesure les pages consultées afin d’évaluer l’efficacité des campagnes
-            publicitaires. Il peut déposer les cookies <B>_fbp</B> et <B>_fbc</B>. Le Pixel est
-            entièrement bloqué avant ton accord à cette catégorie ; si tu retires ton accord, le
-            site transmet la révocation à Meta et supprime ses cookies accessibles sur le domaine.
+            <B>Meta Pixel</B> mesure les pages consultées et, lorsqu’elle aboutit, l’inscription à
+            la waiting list afin d’évaluer l’efficacité des campagnes publicitaires. L’adresse
+            e-mail saisie n’est pas transmise à Meta. Le Pixel peut déposer les cookies <B>_fbp</B>
+            et <B>_fbc</B>. Il est entièrement bloqué avant ton accord à cette catégorie ; si tu
+            retires ton accord, le site transmet la révocation à Meta et supprime ses cookies
+            accessibles sur le domaine.
           </Line>
           <Line>
             Les liens vers Instagram, TikTok et WhatsApp restent de simples liens externes, sans

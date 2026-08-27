@@ -3,6 +3,7 @@
 import {useRouter} from "next/navigation";
 import {useEffect, useId, useRef, useState} from "react";
 import {Honeypot} from "@/components/honeypot";
+import {trackMetaWaitlistLead} from "@/components/measurement";
 import {SubmitButton, type SubmitStatus} from "@/components/submit-button";
 import {CTA} from "@/lib/content";
 import {HONEYPOT_NAME, submitForm} from "@/lib/forms";
@@ -44,6 +45,10 @@ export function WaitlistForm({
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    // The green confirmation remains clickable for a short beat. Do not turn a
+    // second click during that animation into another signup or another Lead.
+    if (status === "sending" || status === "done") return;
+
     const email = value.trim();
     const trap = new FormData(e.currentTarget).get(HONEYPOT_NAME);
 
@@ -66,6 +71,9 @@ export function WaitlistForm({
       return;
     }
 
+    // A click is not a lead. Fire only once our own server has accepted and
+    // durably filed the signup; the helper also enforces Meta consent.
+    trackMetaWaitlistLead(source);
     setStatus("done");
     setMessage("C’est bon, on t’emmène…");
     // Let the button finish turning green before the page changes under it.

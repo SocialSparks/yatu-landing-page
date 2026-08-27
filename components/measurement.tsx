@@ -30,6 +30,24 @@ declare global {
   }
 }
 
+/**
+ * Records a confirmed waitlist signup as a Meta standard event.
+ *
+ * The email is deliberately not included: the browser only shares the form's
+ * placement, which is enough to compare campaigns and landing-page variants.
+ * Keeping the consent check here makes future callers unable to bypass the
+ * choice made in the cookie panel by accident.
+ */
+export function trackMetaWaitlistLead(source: string) {
+  if (!readConsent()?.social || !window.fbq) return;
+
+  window.fbq("track", "Lead", {
+    content_name: "Inscription waiting list",
+    content_category: "waitlist",
+    signup_source: source,
+  });
+}
+
 function clearCookies(matches: (name: string) => boolean) {
   const names = document.cookie
     .split(";")

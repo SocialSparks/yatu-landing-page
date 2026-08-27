@@ -317,7 +317,9 @@ requête. Les ressources stables de `/assets` et `/mockups` reçoivent un cache 
 `components/measurement.tsx` ne charge Google Analytics et Microsoft Clarity qu’après acceptation
 de la catégorie « Mesure d’audience », et Meta Pixel qu’après acceptation de « Publicité et réseaux
 sociaux ». Le retrait du consentement est transmis aux outils concernés et leurs cookies
-accessibles sont supprimés.
+accessibles sont supprimés. Après acceptation, une inscription à la waiting list confirmée par le
+serveur envoie l’événement standard Meta `Lead`, accompagné uniquement de la source du formulaire ;
+l’adresse e-mail n’est jamais incluse dans cet événement.
 
 Les préférences sont gérées par `components/cookie-banner.tsx` et décrites sur `/cookies`. Aucun
 signal publicitaire Google n’est activé.
