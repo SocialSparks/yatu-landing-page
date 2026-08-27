@@ -316,10 +316,13 @@ requête. Les ressources stables de `/assets` et `/mockups` reçoivent un cache 
 
 `components/measurement.tsx` ne charge Google Analytics et Microsoft Clarity qu’après acceptation
 de la catégorie « Mesure d’audience », et Meta Pixel qu’après acceptation de « Publicité et réseaux
-sociaux ». Le retrait du consentement est transmis aux outils concernés et leurs cookies
-accessibles sont supprimés. Après acceptation, une inscription à la waiting list confirmée par le
-serveur envoie l’événement standard Meta `Lead`, accompagné uniquement de la source du formulaire ;
-l’adresse e-mail n’est jamais incluse dans cet événement.
+sociaux ». Le bootstrap officiel de Meta se trouve dans le `<head>` : il ne s’exécute au chargement
+que si un consentement publicitaire valide est déjà enregistré. Le composant de mesure prend le
+relais après un premier consentement et lors des changements de page, sans doubler `PageView`. Le
+retrait du consentement est transmis aux outils concernés et leurs cookies accessibles sont
+supprimés. Après acceptation, une inscription à la waiting list confirmée par le serveur envoie
+l’événement standard Meta `Lead`, accompagné uniquement de la source du formulaire ; l’adresse
+e-mail n’est jamais incluse dans cet événement.
 
 Les préférences sont gérées par `components/cookie-banner.tsx` et décrites sur `/cookies`. Aucun
 signal publicitaire Google n’est activé.

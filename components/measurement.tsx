@@ -24,6 +24,8 @@ type Fbq = {
 declare global {
   interface Window {
     _fbq?: Fbq;
+    __yatuMetaInitialized?: boolean;
+    __yatuMetaPageView?: string;
     dataLayer?: unknown[];
     fbq?: Fbq;
     gtag?: Gtag;
@@ -132,7 +134,10 @@ function configureMetaPixel() {
   }
 
   window.fbq("consent", "grant");
-  window.fbq("init", META_PIXEL_ID);
+  if (!window.__yatuMetaInitialized) {
+    window.fbq("init", META_PIXEL_ID);
+    window.__yatuMetaInitialized = true;
+  }
 
   if (!document.getElementById("yatu-meta-pixel")) {
     const script = document.createElement("script");
@@ -223,8 +228,14 @@ export function Measurement() {
       } else {
         window.fbq?.("consent", "grant");
       }
+      // The head bootstrap already sent the initial PageView for a returning,
+      // consented visitor. Adopt it so the React effect does not send it twice.
+      if (window.__yatuMetaPageView) {
+        lastMetaPageView.current = window.__yatuMetaPageView;
+      }
     } else {
       lastMetaPageView.current = "";
+      window.__yatuMetaPageView = "";
       window.fbq?.("consent", "revoke");
       clearMetaCookies();
     }
@@ -259,6 +270,7 @@ export function Measurement() {
     }
 
     lastMetaPageView.current = pathname;
+    window.__yatuMetaPageView = pathname;
     window.fbq("track", "PageView");
   }, [socialAllowed, pathname]);
 

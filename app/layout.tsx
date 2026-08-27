@@ -11,6 +11,42 @@ import {SiteStructuredData} from "@/components/structured-data";
 import {PUBLISHER, SITE_NAME, SITE_URL} from "@/lib/site";
 import "./globals.css";
 
+const META_PIXEL_ID = (process.env.NEXT_PUBLIC_META_PIXEL_ID ?? "2191380281815578").trim();
+const META_CONSENT_MAX_AGE_MS = 1000 * 60 * 60 * 24 * 183;
+
+/**
+ * Meta's official bootstrap, placed in <head> for returning visitors who have
+ * already accepted the advertising category. Consent lives in localStorage,
+ * so this small guard has to run in the browser before the bootstrap itself.
+ */
+const META_PIXEL_HEAD_SCRIPT = /^\d+$/.test(META_PIXEL_ID)
+  ? `
+(function (w, d, pixelId, consentKey, maxAge) {
+  var consent = null;
+  try {
+    consent = JSON.parse(w.localStorage.getItem(consentKey) || "null");
+  } catch (_) {}
+
+  var savedAt = consent && consent.ts ? new Date(consent.ts).getTime() : NaN;
+  if (!consent || consent.social !== true || !Number.isFinite(savedAt) || Date.now() - savedAt > maxAge) return;
+
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;t.id='yatu-meta-pixel';
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(w,d,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+
+  w.fbq('consent', 'grant');
+  w.fbq('init', pixelId);
+  w.__yatuMetaInitialized = true;
+  w.fbq('track', 'PageView');
+  w.__yatuMetaPageView = w.location.pathname;
+})(window, document, ${JSON.stringify(META_PIXEL_ID)}, "yatu-consent-v1", ${META_CONSENT_MAX_AGE_MS});`
+  : "";
+
 /* Capriola - display / titles. Lato - UI + body.
    Outfit stands in for Safiro (commercial); it only appears on brand boards. */
 const capriola = Capriola({
@@ -90,6 +126,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="fr"
       className={`${capriola.variable} ${lato.variable} ${outfit.variable}`}
     >
+      <head>
+        {META_PIXEL_HEAD_SCRIPT ? (
+          <script
+            id="yatu-meta-pixel-bootstrap"
+            dangerouslySetInnerHTML={{__html: META_PIXEL_HEAD_SCRIPT}}
+          />
+        ) : null}
+      </head>
       <body>
         <noscript>
           {/* site-motion.js hid elements from script; without script nothing should stay hidden. */}
