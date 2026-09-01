@@ -1,6 +1,7 @@
 import {NavLink} from "@/components/nav-link";
 import {ConsentButton} from "@/components/consent-button";
-import {LAUNCH_LABEL} from "@/lib/content";
+import {FooterLaunch} from "@/components/footer-launch";
+import {InstagramIcon, TikTokIcon} from "@/components/icons";
 import {APP_PAGES, GUIDE_PAGES, landingPath} from "@/lib/landing-content";
 import {ROUTES} from "@/lib/routes";
 import {PUBLISHER} from "@/lib/site";
@@ -59,8 +60,8 @@ const COLUMNS: { title: string; links: { href: string; label: string; external?:
 ];
 
 const SOCIAL = [
-  { href: "https://www.instagram.com/yatu_app/", label: "Instagram" },
-  { href: "https://www.tiktok.com/@yatu_app", label: "TikTok" },
+  { href: "https://www.instagram.com/yatu_app/", label: "Instagram", brand: "instagram" },
+  { href: "https://www.tiktok.com/@yatu_app", label: "TikTok", brand: "tiktok" },
 ];
 
 export function SiteFooter() {
@@ -96,23 +97,7 @@ export function SiteFooter() {
               L’appli qui réunit tout ce qu’un groupe d’amis doit organiser autour d’un événement,
               de la première idée aux dernières photos.
             </p>
-            <span
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 8,
-                alignSelf: "flex-start",
-                background: "rgba(255,255,255,.08)",
-                borderRadius: 999,
-                padding: "7px 14px",
-                fontFamily: UI,
-                fontWeight: 700,
-                fontSize: 13,
-                color: "#FED873",
-              }}
-            >
-              Sortie le {LAUNCH_LABEL}
-            </span>
+            <FooterLaunch />
           </div>
 
           {COLUMNS.map((col) => (
@@ -142,19 +127,36 @@ export function SiteFooter() {
 
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             <span style={COLUMN_TITLE}>Nous suivre</span>
-            {SOCIAL.map((s) => (
-              <a
-                key={s.href}
-                href={s.href}
-                className="yq-footer-link"
-                style={LINK}
-                {...(s.href.startsWith("http")
-                  ? { target: "_blank", rel: "noreferrer noopener" }
-                  : {})}
-              >
-                {s.label}
-              </a>
-            ))}
+            <div style={{display: "flex", alignItems: "center", gap: 10}}>
+              {SOCIAL.map((s) => (
+                <a
+                  key={s.href}
+                  href={s.href}
+                  className="yq-footer-social"
+                  aria-label={s.label}
+                  title={s.label}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  style={{
+                    width: 44,
+                    height: 44,
+                    display: "grid",
+                    placeItems: "center",
+                    borderRadius: 999,
+                    background: "rgba(255,255,255,.08)",
+                    border: "1px solid rgba(255,255,255,.12)",
+                    color: "#FFFFFF",
+                    textDecoration: "none",
+                  }}
+                >
+                  {s.brand === "instagram" ? (
+                    <InstagramIcon size={23} />
+                  ) : (
+                    <TikTokIcon size={21} />
+                  )}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
 

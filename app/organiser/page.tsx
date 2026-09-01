@@ -7,6 +7,7 @@ import { SectionCta } from "@/components/section-cta";
 import { SectionHeading } from "@/components/section-heading";
 import { LandingIndexStructuredData } from "@/components/structured-data";
 import { WaitlistForm } from "@/components/waitlist-form";
+import {LaunchText} from "@/components/launch-text";
 import { ACCENT, CTA, LAUNCH_LABEL } from "@/lib/content";
 import { USAGES_DECOR } from "@/lib/decor";
 import { GUIDE_PAGES, landingPath } from "@/lib/landing-content";
@@ -112,9 +113,10 @@ export default function Page() {
                 textWrap: "pretty",
               }}
             >
-              Une méthode par occasion : ce qui bloque, les étapes dans l’ordre, le budget à
-              annoncer et les questions que ton groupe va poser. Écrites pour être utiles avant
-              même que Yatu ouvre, le {LAUNCH_LABEL}.
+              <LaunchText
+                before={`Une méthode par occasion : ce qui bloque, les étapes dans l’ordre, le budget à annoncer et les questions que ton groupe va poser. Écrites pour être utiles avant même que Yatu ouvre, le ${LAUNCH_LABEL}.`}
+                after="Une méthode par occasion : ce qui bloque, les étapes dans l’ordre, le budget à annoncer et les questions que ton groupe va poser. Puis Yatu t’aide à tout mettre en pratique avec ton groupe."
+              />
             </p>
 
             <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>

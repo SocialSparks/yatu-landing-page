@@ -7,8 +7,8 @@ import { ACCENT, LAUNCH_LABEL, type ModuleKey, icon } from "@/lib/content";
  * These are the pages people land on from Google before they have ever heard of
  * Yatu, so each one has to be worth reading on its own: a real method, real
  * numbers, real answers. The product comes after the advice, never instead of
- * it. Nothing here may claim the app is already available - it opens on
- * 9 septembre 2026 and the call to action is the waiting list.
+ * it. Pre-launch and post-launch variants must stay aligned whenever a sentence
+ * mentions availability.
  *
  * Editorial rules are the ones from lib/content.ts: tutoiement, the benefit
  * before the feature, no number we cannot back.
@@ -23,7 +23,7 @@ export type LandingStep = { title: string; body: string };
 export type LandingMilestone = { when: string; what: string };
 export type LandingMistake = { title: string; desc: string };
 export type LandingPain = { tool: string; title: string; desc: string };
-export type LandingFaq = { q: string; a: string };
+export type LandingFaq = { q: string; a: string; availableA?: string };
 
 /** One format of an occasion, and what it costs a participant. */
 export type LandingCost = { format: string; range: string; detail: string };
@@ -313,6 +313,7 @@ export const LANDING_PAGES: LandingPage[] = [
       {
         q: "Quelle appli pour organiser un week-end entre amis ?",
         a: `La plupart des groupes cumulent une messagerie, un tableur pour les comptes et un album photo créé après coup. Yatu réunit la discussion, le budget partagé, les listes, le planning, les documents et les photos dans un même espace d’événement. L’application ouvre le ${LAUNCH_LABEL} et la liste d’attente est ouverte.`,
+        availableA: "La plupart des groupes cumulent une messagerie, un tableur pour les comptes et un album photo créé après coup. Yatu réunit la discussion, le budget partagé, les listes, le planning, les documents et les photos dans un même espace d’événement. L’application est disponible sur iOS et Android.",
       },
       {
         q: "Combien de personnes pour un week-end qui reste gérable ?",
@@ -1385,6 +1386,7 @@ export const LANDING_PAGES: LandingPage[] = [
       {
         q: "Quelle application pour partager les dépenses d’un groupe ?",
         a: `Les applications de comptes partagés font bien le calcul, mais elles vivent à côté de la conversation et des listes qui ont produit la dépense. Yatu met le budget dans l’événement lui-même : la discussion, les listes, les documents et les comptes au même endroit, à partir du ${LAUNCH_LABEL}.`,
+        availableA: "Les applications de comptes partagés font bien le calcul, mais elles vivent à côté de la conversation et des listes qui ont produit la dépense. Yatu, disponible sur iOS et Android, met le budget dans l’événement lui-même : la discussion, les listes, les documents et les comptes au même endroit.",
       },
       {
         q: "Que faire des dépenses payées en espèces ?",
@@ -1549,6 +1551,7 @@ export const LANDING_PAGES: LandingPage[] = [
       {
         q: "Sur quels téléphones, et à partir de quand ?",
         a: `Sur iOS et Android, à partir du ${LAUNCH_LABEL}. Les personnes inscrites sur la liste d’attente sont prévenues le jour de l’ouverture.`,
+        availableA: "Yatu est disponible sur iOS et Android.",
       },
       {
         q: "En quoi c’est différent d’une application de comptes partagés ?",
@@ -1717,6 +1720,7 @@ export const LANDING_PAGES: LandingPage[] = [
       {
         q: "Quand est-ce que je peux l’utiliser ?",
         a: `À partir du ${LAUNCH_LABEL}, sur iOS et Android. En attendant, la méthode complète pour organiser un week-end entre amis est écrite dans notre guide, budgets par personne compris, et la liste d’attente prévient dès l’ouverture.`,
+        availableA: "Dès maintenant, sur iOS et Android.",
       },
     ],
     counterpart: {

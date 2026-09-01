@@ -3,11 +3,13 @@
 import { NavLink } from "@/components/nav-link";
 import { useId, useState } from "react";
 import { FAQ, type FaqEntry } from "@/lib/content";
+import {useHasLaunched} from "@/lib/use-launch-state";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
 
 function FaqItem({ item }: { item: FaqEntry }) {
+  const hasLaunched = useHasLaunched();
   const [open, setOpen] = useState(false);
   const id = useId();
   const answerId = `${id}-answer`;
@@ -61,7 +63,7 @@ function FaqItem({ item }: { item: FaqEntry }) {
               textWrap: "pretty",
             }}
           >
-            {item.a}
+            {hasLaunched && item.availableA ? item.availableA : item.a}
             {item.link ? (
               <>
                 {" "}

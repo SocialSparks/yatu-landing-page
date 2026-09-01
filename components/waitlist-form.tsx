@@ -2,12 +2,14 @@
 
 import {useRouter} from "next/navigation";
 import {useEffect, useId, useRef, useState} from "react";
+import {AppDownloadButtons} from "@/components/app-download-buttons";
 import {Honeypot} from "@/components/honeypot";
 import {trackMetaWaitlistLead} from "@/components/measurement";
 import {SubmitButton, type SubmitStatus} from "@/components/submit-button";
 import {CTA} from "@/lib/content";
 import {HONEYPOT_NAME, submitForm} from "@/lib/forms";
 import {ROUTES} from "@/lib/routes";
+import {useHasLaunched} from "@/lib/use-launch-state";
 
 const UI = "var(--font-ui), system-ui, sans-serif";
 
@@ -33,6 +35,7 @@ export function WaitlistForm({
   /** `"dark"` for the ink card on /go: the ink submit button would vanish into it. */
   tone?: "light" | "dark";
 }) {
+  const hasLaunched = useHasLaunched();
   const [value, setValue] = useState("");
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [message, setMessage] = useState("");
@@ -95,6 +98,8 @@ export function WaitlistForm({
     : status === "error"
       ? "#D92E2E"
       : "#71787E";
+
+  if (hasLaunched) return <AppDownloadButtons tone={tone} />;
 
   return (
     <div

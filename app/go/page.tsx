@@ -14,7 +14,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/go",
   title: "Yatu - tous nos liens",
   description:
-    "Les liens Yatu : Instagram, TikTok, la liste d’attente de l’appli et la page dédiée aux BDE.",
+    "Les liens Yatu : téléchargement de l’appli, Instagram, TikTok et page dédiée aux BDE.",
   image: "/go/opengraph-image",
   index: false,
 });

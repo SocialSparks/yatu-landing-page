@@ -31,13 +31,11 @@ export const GO_WAITLIST = {
   source: "go",
 } as const;
 
-/* ── The download card, once APP_STORE_URL / PLAY_STORE_URL are filled ─ */
+/* ── The download card, once the launch deadline has passed ────────── */
 
 export const GO_DOWNLOAD = {
   title: "Télécharge Yatu.",
   lede: "Gratuit, sur iPhone et Android. Crée ton premier événement en une minute.",
-  appStore: "App Store",
-  playStore: "Google Play",
 } as const;
 
 /* ── The link rows ──────────────────────────────────────────────────── */
@@ -46,6 +44,7 @@ export type GoLink = {
   href: string;
   title: string;
   sub: string;
+  availableSub?: string;
   external: boolean;
 } & (
   | { brand: "instagram" | "tiktok" }
@@ -67,6 +66,7 @@ export const GO_LINKS: GoLink[] = [
     brand: "instagram",
     title: "Instagram",
     sub: "Les coulisses d’ici septembre",
+    availableSub: "Nouveautés, conseils et coulisses de Yatu",
     external: true,
   },
   {

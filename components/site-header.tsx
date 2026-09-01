@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { CTA } from "@/lib/content";
 import { ROUTES } from "@/lib/routes";
+import {useHasLaunched} from "@/lib/use-launch-state";
 
 const UI = "var(--font-ui), system-ui, sans-serif";
 
@@ -25,6 +26,7 @@ function anchorId(href: string): string | null {
 }
 
 export function SiteHeader() {
+  const hasLaunched = useHasLaunched();
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
   const pathname = usePathname();
@@ -154,7 +156,7 @@ export function SiteHeader() {
           <span
             style={{ width: 8, height: 8, borderRadius: 80, background: "#FED873", flex: "none" }}
           />
-          {CTA.waitlist}
+          {hasLaunched ? CTA.download : CTA.waitlist}
         </NavLink>
 
         <button

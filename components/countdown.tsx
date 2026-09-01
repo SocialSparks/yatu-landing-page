@@ -1,7 +1,8 @@
 "use client";
 
 import {useEffect, useState} from "react";
-import {LAUNCH_DATE} from "@/lib/content";
+import {LAUNCH_DATE, LAUNCH_LABEL} from "@/lib/content";
+import {useHasLaunched} from "@/lib/use-launch-state";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
@@ -75,6 +76,18 @@ export function DaysUntil() {
   );
 }
 
+/** The launch pill stays evergreen after the countdown reaches zero. */
+export function LaunchStatus() {
+  const hasLaunched = useHasLaunched();
+  return hasLaunched ? (
+    <>Disponible maintenant</>
+  ) : (
+    <>
+      Sortie le {LAUNCH_LABEL} <DaysUntil />
+    </>
+  );
+}
+
 const CELL: React.CSSProperties = {
   background: "#FFFFFF",
   border: "1px solid #EBE7DE",
@@ -115,8 +128,11 @@ const LABEL: React.CSSProperties = {
  * would vanish into the card - change.
  */
 export function Countdown({ tone = "light" }: { tone?: "light" | "dark" } = {}) {
+  const hasLaunched = useHasLaunched();
   const c = parts(useNow(true));
   const dark = tone === "dark";
+
+  if (hasLaunched) return null;
 
   return (
     <div data-reveal="scale" style={{ display: "flex", flexDirection: "column", gap: 12 }}>

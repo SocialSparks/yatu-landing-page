@@ -20,3 +20,4 @@ public/llms.txt
 
 # Local Wrangler state; wrangler.jsonc itself stays versioned.
 .wrangler
+/.env

@@ -1,9 +1,12 @@
+"use client";
+
 import {Countdown} from "@/components/countdown";
 import {Decor} from "@/components/decor";
-import {AppleIcon, GooglePlayIcon, InstagramIcon, TikTokIcon} from "@/components/icons";
+import {AppDownloadButtons} from "@/components/app-download-buttons";
+import {InstagramIcon, TikTokIcon} from "@/components/icons";
 import {NavLink} from "@/components/nav-link";
 import {WaitlistForm} from "@/components/waitlist-form";
-import {APP_STORE_URL, CTA, icon, PLAY_STORE_URL, STORES_LIVE} from "@/lib/content";
+import {CTA, icon} from "@/lib/content";
 import {GO_DECOR} from "@/lib/decor";
 import {
     GO_DOWNLOAD,
@@ -17,6 +20,7 @@ import {
 } from "@/lib/go-content";
 import {ROUTES} from "@/lib/routes";
 import {PUBLISHER} from "@/lib/site";
+import {useHasLaunched} from "@/lib/use-launch-state";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
@@ -107,13 +111,17 @@ function LinkTile({ link }: { link: GoLink }) {
   );
 }
 
-function LinkRow({ link, delay }: { link: GoLink; delay: number }) {
+function LinkRow({
+  link,
+  hasLaunched,
+}: {
+  link: GoLink;
+  hasLaunched: boolean;
+}) {
   return (
     <NavLink
       href={link.href}
       className="yq-go-row"
-      data-reveal="up"
-      data-reveal-delay={delay}
       {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
     >
       <LinkTile link={link} />
@@ -131,7 +139,7 @@ function LinkRow({ link, delay }: { link: GoLink; delay: number }) {
             textWrap: "pretty",
           }}
         >
-          {link.sub}
+          {hasLaunched && link.availableSub ? link.availableSub : link.sub}
         </span>
       </span>
 
@@ -146,56 +154,6 @@ function LinkRow({ link, delay }: { link: GoLink; delay: number }) {
   );
 }
 
-const STORE_BUTTON: React.CSSProperties = {
-  flex: "1 1 190px",
-  minHeight: 58,
-  padding: "0 20px",
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center",
-  gap: 11,
-  background: "#FFFFFF",
-  color: "#2A343D",
-  border: "1px solid #FFFFFF",
-  borderRadius: 16,
-  fontFamily: UI,
-  fontWeight: 700,
-  fontSize: 15,
-  textDecoration: "none",
-};
-
-/** What the ink card holds once the app is out: one button per open store. */
-function StoreButtons() {
-  return (
-    <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
-      {APP_STORE_URL ? (
-        <a
-          href={APP_STORE_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="yq-btn-light"
-          style={STORE_BUTTON}
-        >
-          <AppleIcon size={22} />
-          {GO_DOWNLOAD.appStore}
-        </a>
-      ) : null}
-      {PLAY_STORE_URL ? (
-        <a
-          href={PLAY_STORE_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="yq-btn-light"
-          style={STORE_BUTTON}
-        >
-          <GooglePlayIcon size={22} />
-          {GO_DOWNLOAD.playStore}
-        </a>
-      ) : null}
-    </div>
-  );
-}
-
 /**
  * /go - the link-in-bio page, the one address the Instagram and TikTok profiles
  * point at.
@@ -206,11 +164,12 @@ function StoreButtons() {
  * components/site-chrome.tsx - so nothing competes with the four destinations.
  *
  * The card under the title is the whole point of the page, and it has two
- * states: the waitlist while the stores are closed, the download buttons once
- * they open. Filling APP_STORE_URL / PLAY_STORE_URL in lib/content.ts is the
- * only thing that has to happen on launch day.
+ * states: the waitlist before `LAUNCH_DATE`, and the download buttons after it.
+ * The browser performs that switch live, including in a tab already open.
  */
 export function GoPage() {
+  const hasLaunched = useHasLaunched();
+
   return (
     <div
       style={{
@@ -312,8 +271,6 @@ export function GoPage() {
         <section
           aria-labelledby="go-cta-title"
           className="yq-go-cta"
-          data-reveal="up"
-          data-reveal-delay="160"
           style={{
             background: "#2A343D",
             borderRadius: 24,
@@ -337,7 +294,7 @@ export function GoPage() {
                 textWrap: "balance",
               }}
             >
-              {STORES_LIVE ? GO_DOWNLOAD.title : GO_WAITLIST.title}
+              {hasLaunched ? GO_DOWNLOAD.title : GO_WAITLIST.title}
             </h2>
             <p
               style={{
@@ -349,12 +306,12 @@ export function GoPage() {
                 textWrap: "pretty",
               }}
             >
-              {STORES_LIVE ? GO_DOWNLOAD.lede : GO_WAITLIST.lede}
+              {hasLaunched ? GO_DOWNLOAD.lede : GO_WAITLIST.lede}
             </p>
           </div>
 
-          {STORES_LIVE ? (
-            <StoreButtons />
+          {hasLaunched ? (
+            <AppDownloadButtons tone="dark" />
           ) : (
             <>
               <Countdown tone="dark" />
@@ -371,8 +328,6 @@ export function GoPage() {
         <NavLink
           href={GO_SITE_LINK.href}
           className="yq-go-row yq-shimmer-border"
-          data-reveal="up"
-          data-reveal-delay="210"
         >
           <span
             aria-hidden="true"
@@ -424,8 +379,12 @@ export function GoPage() {
         </NavLink>
 
         <nav aria-label="Nos liens" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          {GO_LINKS.map((link, i) => (
-            <LinkRow key={link.href} link={link} delay={60 + i * 60} />
+          {GO_LINKS.map((link) => (
+            <LinkRow
+              key={link.href}
+              link={link}
+              hasLaunched={hasLaunched}
+            />
           ))}
         </nav>
       </main>

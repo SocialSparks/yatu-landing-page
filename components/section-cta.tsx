@@ -1,4 +1,9 @@
+"use client";
+
 import { NavLink } from "@/components/nav-link";
+import {CTA} from "@/lib/content";
+import {ROUTES} from "@/lib/routes";
+import {useHasLaunched} from "@/lib/use-launch-state";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
@@ -15,6 +20,8 @@ export function SectionCta({
   secondary,
   onDark = false,
   accent = "#FED873",
+  availableTitle,
+  availableBody,
 }: {
   title: string;
   body: string;
@@ -22,7 +29,17 @@ export function SectionCta({
   secondary?: Action;
   onDark?: boolean;
   accent?: string;
+  availableTitle?: string;
+  availableBody?: string;
 }) {
+  const hasLaunched = useHasLaunched();
+  const launchAction = (action: Action) =>
+    hasLaunched && action.href === ROUTES.liste
+      ? {href: ROUTES.liste, label: CTA.download}
+      : action;
+  const shownPrimary = launchAction(primary);
+  const shownSecondary = secondary ? launchAction(secondary) : undefined;
+
   return (
     <div
       data-reveal="up"
@@ -46,7 +63,7 @@ export function SectionCta({
               color: onDark ? "#FFFFFF" : "#2A343D",
             }}
           >
-            {title}
+            {hasLaunched && availableTitle ? availableTitle : title}
           </span>
           <span
             style={{
@@ -57,19 +74,19 @@ export function SectionCta({
               color: onDark ? "rgba(255,255,255,.66)" : "rgba(42,52,61,.68)",
             }}
           >
-            {body}
+            {hasLaunched && availableBody ? availableBody : body}
           </span>
         </span>
       </div>
 
       <div className="yq-section-cta-actions">
-        <NavLink href={primary.href} className="yq-section-cta-primary">
-          {primary.label}
+        <NavLink href={shownPrimary.href} className="yq-section-cta-primary">
+          {shownPrimary.label}
           <span aria-hidden="true">→</span>
         </NavLink>
-        {secondary ? (
-          <NavLink href={secondary.href} className="yq-section-cta-secondary">
-            {secondary.label}
+        {shownSecondary ? (
+          <NavLink href={shownSecondary.href} className="yq-section-cta-secondary">
+            {shownSecondary.label}
           </NavLink>
         ) : null}
       </div>
