@@ -1015,6 +1015,8 @@ export function GuidePage({ page }: { page: LandingPage }) {
           <SectionCta
             title={`Yatu ouvre le ${LAUNCH_LABEL}.`}
             body="Garde ta place : les inscrits sont prévenus le jour de l’ouverture et créent leur premier événement en premier."
+            availableTitle="Yatu est disponible."
+            availableBody="Télécharge l’appli et crée ton premier événement dès maintenant."
             primary={{ href: ROUTES.liste, label: CTA.waitlist }}
             secondary={{ href: ROUTES.fonctionnement, label: CTA.demo }}
             accent={page.accent}

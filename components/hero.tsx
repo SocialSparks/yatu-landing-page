@@ -1,8 +1,8 @@
-import {DaysUntil} from "@/components/countdown";
+import {LaunchStatus} from "@/components/countdown";
 import {Decor} from "@/components/decor";
 import {Picture} from "@/components/picture";
 import {WaitlistForm} from "@/components/waitlist-form";
-import {icon, LAUNCH_LABEL} from "@/lib/content";
+import {icon} from "@/lib/content";
 import {HERO_DECOR} from "@/lib/decor";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
@@ -97,8 +97,7 @@ export function Hero() {
             <span
               style={{ width: 8, height: 8, borderRadius: 80, background: "#FED873", flex: "none" }}
             />
-            Sortie le {LAUNCH_LABEL}
-            <DaysUntil />
+            <LaunchStatus />
           </span>
 
           <div

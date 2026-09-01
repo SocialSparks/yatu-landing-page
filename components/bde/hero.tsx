@@ -1,4 +1,5 @@
 import { CountUp } from "@/components/count-up";
+import {BdeAvailability} from "@/components/bde/availability";
 import { Decor } from "@/components/decor";
 import { Picture } from "@/components/picture";
 import { BDE_CHIPS, BDE_CTA, BDE_SHOWCASE } from "@/lib/bde-content";
@@ -55,7 +56,7 @@ export function BdeHero() {
             <span
               style={{ width: 8, height: 8, borderRadius: 80, background: "#2A343D", flex: "none" }}
             />
-            Pack pilote gratuit, avant le lancement
+            Pack pilote gratuit
           </span>
 
           <h1
@@ -106,6 +107,8 @@ export function BdeHero() {
             Tu gardes ta billetterie. Yatu se branche juste après le paiement : les participants
             arrivent informés, et ton équipe arrête de tenir trois fichiers en parallèle.
           </p>
+
+          <BdeAvailability />
 
           <div
             data-reveal="up"

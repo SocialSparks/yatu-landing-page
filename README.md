@@ -31,6 +31,17 @@ npm run dev
 
 Le site est ensuite disponible sur <http://localhost:3000>.
 
+Pour tester manuellement les deux états du lancement, règle dans `.env.local` :
+
+```dotenv
+NEXT_PUBLIC_LAUNCH_MODE=pre   # compte à rebours et waitlist
+NEXT_PUBLIC_LAUNCH_MODE=post  # boutons App Store et Google Play
+NEXT_PUBLIC_LAUNCH_MODE=auto  # bascule automatiquement à LAUNCH_DATE
+```
+
+Redémarre `npm run dev` après chaque changement : les variables `NEXT_PUBLIC_*` sont intégrées
+au bundle navigateur au démarrage.
+
 Pour que les formulaires fonctionnent en local, il faut en plus la base du tampon et les secrets
 du Worker :
 
@@ -159,10 +170,11 @@ site, servi **sans header ni footer** pour que rien ne concurrence les quatre de
 fichier explique pourquoi un groupe de routes `app/(site)/` n’a pas été retenu.
 
 Le contenu - titre, accroche, libellés et liste des liens - vit dans `lib/go-content.ts`.
-La carte principale a deux états, et un seul réglage les sépare : tant que `APP_STORE_URL` et
-`PLAY_STORE_URL` sont vides dans `lib/content.ts`, elle affiche le compte à rebours et le
-formulaire de liste d’attente ; dès qu’une des deux URL est renseignée, elle affiche les boutons
-de téléchargement correspondants. Le jour du lancement, coller les deux liens suffit.
+La carte principale a deux états séparés par `LAUNCH_DATE` dans `lib/content.ts` : avant
+l’échéance, elle affiche le compte à rebours et le formulaire de liste d’attente ; après, elle
+affiche les liens App Store et Google Play. Le basculement est piloté par l’horloge du navigateur,
+y compris dans un onglet resté ouvert : aucun rebuild ni déploiement n’est nécessaire le jour du
+lancement. Les URL stables des deux fiches sont elles aussi centralisées dans `lib/content.ts`.
 
 ## Contenu et SEO
 

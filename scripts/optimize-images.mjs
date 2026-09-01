@@ -21,11 +21,17 @@
  * base64 barely gzips). Rasterising the whole wrapper flattens both layers and
  * keeps the transparent frame.
  */
-import { existsSync, readdirSync, statSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readdirSync, statSync } from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
 
 const ROOT = path.join(import.meta.dirname, "..");
+
+/** SVGs that are served as supplied rather than rasterised. */
+const STATIC_COPIES = [
+  ["assets-src/badges-stores/black-ios.svg", "public/assets/badges-stores/black-ios.svg"],
+  ["assets-src/badges-stores/black-google.svg", "public/assets/badges-stores/black-google.svg"],
+];
 
 /**
  * `from` is the source, `to` the public directory the variants land in - they
@@ -79,6 +85,16 @@ const sources = (job) =>
 
 let written = 0;
 let saved = 0;
+
+for (const [from, to] of STATIC_COPIES) {
+  const source = path.join(ROOT, from);
+  const output = path.join(ROOT, to);
+  if (existsSync(output) && statSync(output).mtimeMs > statSync(source).mtimeMs) continue;
+
+  mkdirSync(path.dirname(output), { recursive: true });
+  copyFileSync(source, output);
+  console.log(`${to.padEnd(52)} copie`);
+}
 
 for (const job of JOBS) {
   for (const rel of sources(job)) {

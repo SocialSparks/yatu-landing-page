@@ -1,4 +1,5 @@
 import { Decor } from "@/components/decor";
+import {BdeAvailability} from "@/components/bde/availability";
 import { SectionHeading } from "@/components/section-heading";
 import { SectionCta } from "@/components/section-cta";
 import {
@@ -437,11 +438,15 @@ export function BdePilote() {
         <SectionHeading
           badge="Le programme pilote"
           badgeBg={ACCENT.sunbeam}
-          title="Pack BDE pilote : gratuit, avant le lancement."
+          title="Pack BDE pilote : les dernières places sont ouvertes."
           titleMaxCh={20}
           ledeMaxCh={48}
-          lede="On ouvre Yatu à quelques BDE pour leur prochain événement. Tu utilises tout, gratuitement, avec l’équipe au bout du fil. En échange, on apprend de ton organisation."
+          lede="10 BDE peuvent tester Yatu gratuitement avec l’équipe au bout du fil. 7 ont déjà été sélectionnés : les 3 prochaines candidatures retenues fermeront le programme."
         />
+
+        <div style={{maxWidth: 520, margin: "clamp(-24px,-3vw,-12px) 0 clamp(28px,4vw,42px)"}}>
+          <BdeAvailability />
+        </div>
 
         <div
           style={{
@@ -535,7 +540,7 @@ export function BdePilote() {
 
         <SectionCta
           title="Le prochain BDE pilote peut être le tien."
-          body="Le pack est gratuit, sans engagement, et accompagné directement par l’équipe Yatu."
+          body="Il reste 3 places sur 10. Candidate maintenant avant la fermeture du programme pilote."
           primary={{ href: ROUTES.bdeDemo, label: BDE_CTA.demo }}
           accent={ACCENT.sunbeam}
         />

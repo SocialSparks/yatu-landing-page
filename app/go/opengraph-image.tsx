@@ -10,7 +10,7 @@ export default function Image() {
   return ogImage({
     badge: "Tous nos liens",
     title: "Yatu, au même endroit.",
-    subtitle: "Instagram, TikTok, la liste d’attente de l’appli et la page BDE.",
+    subtitle: "Téléchargement de l’appli, Instagram, TikTok et page BDE.",
     accent: ACCENT.blush,
   });
 }

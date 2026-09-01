@@ -24,20 +24,14 @@ export const LAUNCH_DATE = "2026-09-09T00:00:00+02:00";
 export const LAUNCH_LABEL = "9 septembre 2026";
 
 /**
- * The two store listings, empty until the app ships.
- *
- * This is the switch the whole "télécharger l'appli" story hangs on: while both
- * are empty, /go offers the waitlist instead. Paste the real URLs the day of the
- * launch and the download buttons take over - see `STORES_LIVE` below. A store
- * that is not open yet stays empty and simply does not get a button.
+ * Stable store listing URLs. The public site keeps them hidden until
+ * `LAUNCH_DATE`, then exposes them from the already-deployed client bundle: the
+ * launch-day switch therefore needs neither a content edit nor a rebuild.
  */
-/* Typed `string`, not inferred as the empty literal: without the annotation
-   TypeScript narrows every `if (APP_STORE_URL)` to `never` while they are blank. */
-export const APP_STORE_URL: string = "";
-export const PLAY_STORE_URL: string = "";
-
-/** True as soon as one of the two stores has a listing to point at. */
-export const STORES_LIVE = Boolean(APP_STORE_URL || PLAY_STORE_URL);
+export const APP_STORE_URL =
+  "https://apps.apple.com/fr/app/organiser-entre-amis-yatu/id6737450955";
+export const PLAY_STORE_URL =
+  "https://play.google.com/store/apps/details?id=com.socialspark.www";
 
 export const ACCENT = {
   ink: "#2A343D",
@@ -59,6 +53,7 @@ export const icon = (name: string) => `/assets/tools/${name}.svg`;
 
 export const CTA = {
   waitlist: "Rejoindre la liste",
+  download: "Télécharger l’appli",
   demo: "Voir la démo",
 } as const;
 
@@ -732,6 +727,7 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
 export type FaqEntry = {
   q: string;
   a: string;
+  availableA?: string;
   link?: { href: string; label: string; before: string; after: string };
 };
 
@@ -743,6 +739,7 @@ export const FAQ: FaqEntry[] = [
   {
     q: "Quand est-ce que Yatu sera disponible ?",
     a: `Yatu sortira le ${LAUNCH_LABEL} sur iOS et Android. Les personnes inscrites seront prévenues dès l’ouverture.`,
+    availableA: "Yatu est disponible dès maintenant sur iOS et Android.",
   },
   {
     q: "Yatu est-il gratuit ?",
@@ -759,6 +756,7 @@ export const FAQ: FaqEntry[] = [
   {
     q: "Sur quels téléphones Yatu est-il disponible ?",
     a: "Yatu sera disponible sur iPhone et Android dès le lancement. Tous les participants pourront utiliser le même événement, quel que soit leur téléphone.",
+    availableA: "Yatu est disponible sur iPhone et Android. Tous les participants peuvent utiliser le même événement, quel que soit leur téléphone.",
   },
   {
     q: "Comment mes données sont-elles utilisées ?",

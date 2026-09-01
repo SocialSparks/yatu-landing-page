@@ -413,6 +413,7 @@ export function ModulesSection() {
         <SectionCta
           title="Ton prochain événement, tu le lances avec Yatu ?"
           body="Inscris-toi pour recevoir Yatu le jour du lancement."
+          availableBody="Télécharge Yatu et crée ton premier événement dès maintenant."
           primary={{ href: ROUTES.liste, label: CTA.waitlist }}
           secondary={{ href: ROUTES.fonctionnement, label: CTA.demo }}
           onDark

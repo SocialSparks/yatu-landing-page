@@ -1,4 +1,5 @@
 import { NavLink } from "@/components/nav-link";
+import {BdeAvailability} from "@/components/bde/availability";
 import { icon } from "@/lib/content";
 import { ROUTES } from "@/lib/routes";
 
@@ -46,6 +47,8 @@ export function BdeTeaser() {
               Pack pilote gratuit
             </span>
 
+            <BdeAvailability tone="dark" compact />
+
             <h2
               style={{
                 margin: 0,
@@ -73,7 +76,7 @@ export function BdeTeaser() {
               }}
             >
               WEI, gala, séjour ski : Yatu a une page dédiée aux BDE et aux associations
-              étudiantes, avec un pack pilote gratuit avant le lancement.
+              étudiantes. Le pack pilote est gratuit, mais il ne reste que 3 places sur 10.
             </p>
 
             <NavLink

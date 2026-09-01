@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import {AppDownloadButtons} from "@/components/app-download-buttons";
 import { Decor } from "@/components/decor";
 import { IOSDevice } from "@/components/ios-frame";
 import { SectionHeading } from "@/components/section-heading";
@@ -17,6 +18,7 @@ import {
 } from "@/lib/content";
 import { DEMO_DECOR } from "@/lib/decor";
 import { SITE_DOMAIN } from "@/lib/site";
+import {useHasLaunched} from "@/lib/use-launch-state";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
@@ -54,6 +56,7 @@ const SCREEN_TITLE: React.CSSProperties = {
 };
 
 export function DemoSection() {
+  const hasLaunched = useHasLaunched();
   const [demo, setDemo] = useState(INITIAL);
   const [copie, setCopie] = useState(false);
   const copyTimer = useRef<number | undefined>(undefined);
@@ -925,25 +928,31 @@ export function DemoSection() {
                         ))}
                       </div>
 
-                      <div style={{ ...CARD, marginTop: "auto" }}>
-                        <img
-                          loading="lazy"
-                          decoding="async"
-                          src={icon("send")}
-                          alt=""
-                          style={{ width: 26, height: 26, flex: "none" }}
-                        />
-                        <span
-                          style={{
-                            fontFamily: UI,
-                            fontSize: 14,
-                            lineHeight: 1.4,
-                            color: "#4E565D",
-                          }}
-                        >
-                          Le vrai Yatu arrive le {LAUNCH_LABEL}.
-                        </span>
-                      </div>
+                      {hasLaunched ? (
+                        <div style={{marginTop: "auto"}}>
+                          <AppDownloadButtons />
+                        </div>
+                      ) : (
+                        <div style={{ ...CARD, marginTop: "auto" }}>
+                          <img
+                            loading="lazy"
+                            decoding="async"
+                            src={icon("send")}
+                            alt=""
+                            style={{ width: 26, height: 26, flex: "none" }}
+                          />
+                          <span
+                            style={{
+                              fontFamily: UI,
+                              fontSize: 14,
+                              lineHeight: 1.4,
+                              color: "#4E565D",
+                            }}
+                          >
+                            Le vrai Yatu arrive le {LAUNCH_LABEL}.
+                          </span>
+                        </div>
+                      )}
                     </>
                   ) : null}
 
