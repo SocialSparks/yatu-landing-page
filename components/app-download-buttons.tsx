@@ -1,12 +1,17 @@
+"use client";
+
+import {trackStoreClick} from "@/components/measurement";
 import {APP_STORE_URL, PLAY_STORE_URL} from "@/lib/content";
 
 const STORES = [
   {
+    id: "app_store",
     href: APP_STORE_URL,
     src: "/assets/badges-stores/black-ios.svg",
     alt: "Télécharger dans l’App Store",
   },
   {
+    id: "google_play",
     href: PLAY_STORE_URL,
     src: "/assets/badges-stores/black-google.svg",
     alt: "Disponible sur Google Play",
@@ -25,6 +30,7 @@ export function AppDownloadButtons({
         <a
           key={store.href}
           href={store.href}
+          onClick={() => trackStoreClick(store.id, store.href)}
           target="_blank"
           rel="noopener noreferrer"
           className="yq-store-badge"

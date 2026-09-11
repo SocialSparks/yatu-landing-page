@@ -336,6 +336,11 @@ supprimés. Après acceptation, une inscription à la waiting list confirmée pa
 l’événement standard Meta `Lead`, accompagné uniquement de la source du formulaire ; l’adresse
 e-mail n’est jamais incluse dans cet événement.
 
+Les pages vues envoyées à GA4 conservent uniquement les paramètres de campagne UTM autorisés ; les
+autres paramètres d’URL sont retirés. Sur `/go`, une visite marquée `utm_medium=qr` produit aussi
+l’événement `qr_landing`, et chaque départ vers l’App Store ou Google Play produit `store_click`.
+Le raccourci `?src=nom-de-campagne` est accepté et normalisé en campagne QR standard.
+
 Les préférences sont gérées par `components/cookie-banner.tsx` et décrites sur `/cookies`. Aucun
 signal publicitaire Google n’est activé.
 

@@ -128,7 +128,9 @@ export default function Page() {
         >
           <Line>
             <B>Google Analytics 4</B> mesure les pages consultées, la provenance, les appareils et
-            les interactions générales. Il peut déposer <B>_ga</B> et <B>_ga_&lt;identifiant&gt;</B>,
+            les interactions générales, dont l’ouverture des QR codes de campagne et les clics vers
+            l’App Store ou Google Play. Seuls les paramètres de campagne UTM sont conservés dans
+            l’adresse transmise ; les autres paramètres sont retirés. Il peut déposer <B>_ga</B> et <B>_ga_&lt;identifiant&gt;</B>,
             utilisés pour distinguer les visiteurs et les sessions, avec une durée maximale par
             défaut de deux ans.
           </Line>

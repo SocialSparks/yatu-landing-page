@@ -6,6 +6,7 @@ import {AppDownloadButtons} from "@/components/app-download-buttons";
 import {Honeypot} from "@/components/honeypot";
 import {trackMetaWaitlistLead} from "@/components/measurement";
 import {SubmitButton, type SubmitStatus} from "@/components/submit-button";
+import {campaignFormSource} from "@/lib/campaign";
 import {CTA} from "@/lib/content";
 import {HONEYPOT_NAME, submitForm} from "@/lib/forms";
 import {ROUTES} from "@/lib/routes";
@@ -64,7 +65,12 @@ export function WaitlistForm({
     setStatus("sending");
     setMessage("On t’inscrit…");
 
-    const result = await submitForm("waitlist", { email, source, [HONEYPOT_NAME]: trap });
+    const measuredSource = campaignFormSource(source, window.location.search);
+    const result = await submitForm("waitlist", {
+      email,
+      source: measuredSource,
+      [HONEYPOT_NAME]: trap,
+    });
 
     // The local copy sits on this visitor's machine, so a failed send is a lead
     // we never see: say so and let them try again rather than sail on.
@@ -76,7 +82,7 @@ export function WaitlistForm({
 
     // A click is not a lead. Fire only once our own server has accepted and
     // durably filed the signup; the helper also enforces Meta consent.
-    trackMetaWaitlistLead(source);
+    trackMetaWaitlistLead(measuredSource);
     setStatus("done");
     setMessage("C’est bon, on t’emmène…");
     // Let the button finish turning green before the page changes under it.
@@ -86,7 +92,7 @@ export function WaitlistForm({
       } catch {
         /* storage blocked - the confirmation page falls back to generic copy */
       }
-      router.push(`${ROUTES.bienvenue}?s=${encodeURIComponent(source)}`);
+      router.push(`${ROUTES.bienvenue}?s=${encodeURIComponent(measuredSource)}`);
     }, CONFIRM_MS);
   }
 

@@ -247,11 +247,11 @@ export default function Page() {
           rows={[
             [
               "Données",
-              "pages consultées, date et durée de visite, provenance, navigateur, appareil, zone géographique approximative, identifiants pseudonymes et interactions telles que clics, défilements et mouvements. Les paramètres des URL ne sont pas ajoutés aux événements de page envoyés par Yatu à Google Analytics.",
+              "pages consultées, date et durée de visite, provenance, navigateur, appareil, zone géographique approximative, identifiants pseudonymes et interactions telles que clics, défilements et mouvements. Pour mesurer une campagne, Yatu peut aussi transmettre les paramètres dédiés utm_id, utm_source, utm_medium, utm_campaign, utm_content, utm_term et utm_source_platform. Les autres paramètres des URL ne sont pas ajoutés aux événements envoyés à Google Analytics.",
             ],
             [
               "Finalités",
-              "mesurer la fréquentation, comprendre les parcours, repérer les difficultés d’utilisation et améliorer les pages grâce à Google Analytics 4 et Microsoft Clarity.",
+              "mesurer la fréquentation, comprendre les parcours, attribuer l’ouverture d’un QR code et les clics vers les boutiques d’applications à une campagne, repérer les difficultés d’utilisation et améliorer les pages grâce à Google Analytics 4 et Microsoft Clarity.",
             ],
             [
               "Base légale",

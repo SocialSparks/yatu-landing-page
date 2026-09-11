@@ -6,6 +6,11 @@ import {
   CONSENT_CHANGED_EVENT,
   readConsent,
 } from "@/components/consent-button";
+import {
+  campaignEventParameters,
+  campaignFromSearch,
+  measuredPageLocation,
+} from "@/lib/campaign";
 
 const GA_ID = (process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "G-TBFPKYGBGY").trim();
 const CLARITY_ID = (process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID ?? "xvqi59gd5v").trim();
@@ -48,6 +53,21 @@ export function trackMetaWaitlistLead(source: string) {
     content_category: "waitlist",
     signup_source: source,
   });
+}
+
+/** Records the last measurable step before the visitor leaves for a store. */
+export function trackStoreClick(store: "app_store" | "google_play", destination: string) {
+  if (!readConsent()?.analytics || !window.gtag) return;
+
+  window.gtag("event", "store_click", {
+    store,
+    link_url: destination,
+    ...campaignEventParameters(window.location.search),
+  });
+}
+
+function currentMeasuredLocation(pathname = window.location.pathname) {
+  return measuredPageLocation(window.location.origin, pathname, window.location.search);
 }
 
 function clearCookies(matches: (name: string) => boolean) {
@@ -96,7 +116,7 @@ function configureGoogleAnalytics() {
     send_page_view: false,
     allow_google_signals: false,
     allow_ad_personalization_signals: false,
-    page_location: new URL(window.location.pathname, window.location.origin).toString(),
+    page_location: currentMeasuredLocation(),
     page_path: window.location.pathname,
   });
 
@@ -159,6 +179,7 @@ export function Measurement() {
   const clarityConfigured = useRef(false);
   const metaConfigured = useRef(false);
   const lastAnalyticsPageView = useRef("");
+  const lastQrLanding = useRef("");
   const lastMetaPageView = useRef("");
 
   useEffect(() => {
@@ -198,6 +219,7 @@ export function Measurement() {
       }
     } else {
       lastAnalyticsPageView.current = "";
+      lastQrLanding.current = "";
       window.gtag?.("consent", "update", {
         analytics_storage: "denied",
         ad_storage: "denied",
@@ -242,21 +264,32 @@ export function Measurement() {
   }, [socialAllowed]);
 
   useEffect(() => {
+    const pageLocation = currentMeasuredLocation(pathname);
     if (
       analyticsAllowed !== true ||
       !gaConfigured.current ||
       !window.gtag ||
-      lastAnalyticsPageView.current === pathname
+      lastAnalyticsPageView.current === pageLocation
     ) {
       return;
     }
 
-    lastAnalyticsPageView.current = pathname;
+    lastAnalyticsPageView.current = pageLocation;
     window.gtag("event", "page_view", {
       page_path: pathname,
-      page_location: new URL(pathname, window.location.origin).toString(),
+      page_location: pageLocation,
       page_title: document.title,
     });
+
+    const campaign = campaignFromSearch(window.location.search);
+    if (
+      pathname === "/go" &&
+      campaign.utm_medium?.toLowerCase() === "qr" &&
+      lastQrLanding.current !== pageLocation
+    ) {
+      lastQrLanding.current = pageLocation;
+      window.gtag("event", "qr_landing", campaignEventParameters(window.location.search));
+    }
   }, [analyticsAllowed, pathname]);
 
   useEffect(() => {
