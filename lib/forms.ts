@@ -1,8 +1,8 @@
 /**
- * Where the three forms of the site send what visitors type.
+ * Where the forms of the site send what visitors type.
  *
  * They post to `/api/forms` - the site's own domain. Before, the browser posted
- * straight to the Google Apps Script URL, and that one hop was where signups
+ * straight to the Google Apps Script URL, and that one hop was where submissions
  * quietly died: ad blockers and school DNS filters drop `script.google.com`, the
  * `/exec` URL answers with a redirect that some proxies mangle, and the script
  * serialises writes behind a 20 second lock that lined up exactly with the
@@ -15,7 +15,7 @@
 const FORMS_API_PATH = "/api/forms";
 
 /** One tab of the sheet each. The Apps Script keys its column mapping on this. */
-export type FormKind = "waitlist" | "bde-demo" | "profil";
+export type FormKind = "bde-demo";
 
 /**
  * Name of the field no human sees; see `components/honeypot.tsx`.

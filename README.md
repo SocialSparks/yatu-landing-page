@@ -1,13 +1,13 @@
 # Site Yatu
 
-Site officiel de pré-lancement de [Yatu](https://yatu-app.com), l’application qui réunit
+Site officiel de [Yatu](https://yatu-app.com), l’application qui réunit
 la discussion, le planning, le budget, les listes, les documents et les souvenirs d’un
 événement organisé à plusieurs.
 
 Le projet est une application **Next.js App Router** en TypeScript, rendue principalement
 en statique et déployée sur **Cloudflare Workers**. Les formulaires passent par une route
 Worker qui les range dans une base **D1** avant de les transmettre à une Google Sheet par
-Google Apps Script : le tampon existe pour qu’une inscription ne se perde pas quand Google
+Google Apps Script : le tampon existe pour qu’une demande ne se perde pas quand Google
 ne répond pas.
 
 ## Stack
@@ -31,18 +31,7 @@ npm run dev
 
 Le site est ensuite disponible sur <http://localhost:3000>.
 
-Pour tester manuellement les deux états du lancement, règle dans `.env.local` :
-
-```dotenv
-NEXT_PUBLIC_LAUNCH_MODE=pre   # compte à rebours et waitlist
-NEXT_PUBLIC_LAUNCH_MODE=post  # boutons App Store et Google Play
-NEXT_PUBLIC_LAUNCH_MODE=auto  # bascule automatiquement à LAUNCH_DATE
-```
-
-Redémarre `npm run dev` après chaque changement : les variables `NEXT_PUBLIC_*` sont intégrées
-au bundle navigateur au démarrage.
-
-Pour que les formulaires fonctionnent en local, il faut en plus la base du tampon et les secrets
+Pour que le formulaire BDE fonctionne en local, il faut la base du tampon et les secrets
 du Worker :
 
 ```bash
@@ -149,11 +138,10 @@ open-next.config.ts   Adaptateur du build Next.js vers Cloudflare Workers
 
 | Route | Contenu |
 | --- | --- |
-| `/` | Présentation produit et inscription à la liste d’attente. |
+| `/` | Présentation produit et liens App Store / Google Play. |
 | `/bde` | Offre dédiée aux BDE et associations, avec demande de démonstration. |
 | `/organiser` | Index des guides d’organisation. |
 | `/[slug]` | Guides éditoriaux et pages « application pour… » générés statiquement. |
-| `/bienvenue` | Questionnaire facultatif après inscription, en `noindex`. |
 | `/go` | Page « lien en bio » pour Instagram et TikTok, en `noindex`. |
 | `/mentions-legales` | Mentions légales. |
 | `/confidentialite` | Politique de confidentialité. |
@@ -170,11 +158,8 @@ site, servi **sans header ni footer** pour que rien ne concurrence les quatre de
 fichier explique pourquoi un groupe de routes `app/(site)/` n’a pas été retenu.
 
 Le contenu - titre, accroche, libellés et liste des liens - vit dans `lib/go-content.ts`.
-La carte principale a deux états séparés par `LAUNCH_DATE` dans `lib/content.ts` : avant
-l’échéance, elle affiche le compte à rebours et le formulaire de liste d’attente ; après, elle
-affiche les liens App Store et Google Play. Le basculement est piloté par l’horloge du navigateur,
-y compris dans un onglet resté ouvert : aucun rebuild ni déploiement n’est nécessaire le jour du
-lancement. Les URL stables des deux fiches sont elles aussi centralisées dans `lib/content.ts`.
+La carte principale affiche les liens App Store et Google Play, dont les URL sont centralisées
+dans `lib/content.ts`.
 
 ## Contenu et SEO
 
@@ -211,17 +196,12 @@ entrées prérendues dans un cache qui ne renvoyait jamais rien (voir
 
 ## Formulaires
 
-Les trois parcours passent par `lib/forms.ts` :
-
-| Formulaire | Destination |
-| --- | --- |
-| Liste d’attente | Onglet `Waitlist` de la Google Sheet. |
-| Questionnaire `/bienvenue` | Complète la ligne `Waitlist` correspondant à l’e-mail. |
-| Demande BDE | Onglet `Demandes BDE`. |
+La demande de démonstration BDE passe par `lib/forms.ts` et arrive dans l’onglet
+`Demandes BDE` de la Google Sheet.
 
 Le navigateur ne parle jamais directement à Google. Il poste sur `/api/forms`, sur le domaine du
 site : ni bloqueur de publicité, ni filtre DNS scolaire, ni prévol CORS, ni redirection `/exec`
-n’ont plus l’occasion d’intercepter une inscription.
+n’ont plus l’occasion d’intercepter une demande.
 
 Le script serveur est `scripts/google-sheet.gs`. Sa procédure d’installation est détaillée en tête
 du fichier. Après toute modification, créer une **nouvelle version** du déploiement : modifier le
@@ -332,9 +312,7 @@ sociaux ». Le bootstrap officiel de Meta se trouve dans le `<head>` : il ne s�
 que si un consentement publicitaire valide est déjà enregistré. Le composant de mesure prend le
 relais après un premier consentement et lors des changements de page, sans doubler `PageView`. Le
 retrait du consentement est transmis aux outils concernés et leurs cookies accessibles sont
-supprimés. Après acceptation, une inscription à la waiting list confirmée par le serveur envoie
-l’événement standard Meta `Lead`, accompagné uniquement de la source du formulaire ; l’adresse
-e-mail n’est jamais incluse dans cet événement.
+supprimés.
 
 Les pages vues envoyées à GA4 conservent uniquement les paramètres de campagne UTM autorisés ; les
 autres paramètres d’URL sont retirés. Sur `/go`, une visite marquée `utm_medium=qr` produit aussi

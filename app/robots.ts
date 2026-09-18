@@ -1,5 +1,5 @@
 import type {MetadataRoute} from "next";
-import {absoluteUrl, PRIVATE_PATHS} from "@/lib/site";
+import {absoluteUrl} from "@/lib/site";
 
 /**
  * Crawlers qui collectent la page pour entraîner un modèle.
@@ -8,8 +8,8 @@ import {absoluteUrl, PRIVATE_PATHS} from "@/lib/site";
  * robots.txt » (AI Crawl Control), maintenant désactivé : deux systèmes
  * écrivaient dans le même fichier, ce qui produisait deux groupes
  * `User-agent: *` concurrents. Les crawlers stricts fusionnent ces groupes,
- * les autres ne gardent que le premier - et notre `Disallow: /bienvenue`
- * passait alors à la trappe. Un seul émetteur, plus d'ambiguïté.
+ * les autres ne gardent que le premier - et nos `Disallow` passaient alors à
+ * la trappe. Un seul émetteur, plus d'ambiguïté.
  *
  * Ne pas confondre avec les bots de *citation*, volontairement absents d'ici :
  * OAI-SearchBot et ChatGPT-User (OpenAI), Claude-SearchBot et Claude-User
@@ -42,7 +42,6 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: "*",
         allow: "/",
         disallow: [
-          ...PRIVATE_PATHS,
           // Build assets and social-preview endpoints are useful to browsers
           // and link unfurlers, but are not indexable documents.
           "/_next/static/media/",
@@ -51,7 +50,7 @@ export default function robots(): MetadataRoute.Robots {
         ],
       },
       // Un groupe nommé remplace la règle `*` pour ces bots au lieu de s'y
-      // ajouter : le `Disallow: /` couvre déjà PRIVATE_PATHS, rien à répéter.
+      // ajouter : le `Disallow: /` couvre déjà tout le reste.
       { userAgent: AI_TRAINING_CRAWLERS, disallow: "/" },
     ],
     sitemap: absoluteUrl("/sitemap.xml"),

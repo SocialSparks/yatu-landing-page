@@ -1,8 +1,8 @@
 /**
  * Where the design files' page links land in this app.
  *
- * Every page of the design project is now implemented: Accueil, BDE, Bienvenue,
- * Mentions legales, Confidentialite and Cookies.
+ * Every page of the design project is now implemented: Accueil, BDE, Mentions
+ * legales, Confidentialite and Cookies.
  */
 export const ROUTES = {
   home: "/",
@@ -13,12 +13,11 @@ export const ROUTES = {
   fonctionnement: "/#fonctionnement",
   usages: "/#usages",
   faq: "/#faq",
-  liste: "/#liste",
+  telecharger: "/#telecharger",
   bde: "/bde",
   bdeFeatures: "/bde#fonctionnalites",
   bdePilote: "/bde#pilote",
   bdeDemo: "/bde#demo",
-  bienvenue: "/bienvenue",
   /** The link-in-bio page - what the Instagram and TikTok profiles point at. */
   go: "/go",
   mentionsLegales: "/mentions-legales",

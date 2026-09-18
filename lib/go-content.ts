@@ -11,6 +11,7 @@
  * entry; nothing in the page component knows the list's length.
  */
 
+import {yatuProUrl} from "@/lib/content";
 import {ROUTES} from "@/lib/routes";
 
 /** The handle, identical on both networks - it is what the visitor just left. */
@@ -21,17 +22,7 @@ export const GO_TITLE = "L’appli qui organise tes événements entre amis.";
 export const GO_LEDE =
   "Discussion, budget, listes, planning et souvenirs : un seul endroit, du premier message aux dernières photos.";
 
-/* ── The waitlist card, while the stores are still closed ───────────── */
-
-export const GO_WAITLIST = {
-  title: "Yatu sort le 9 septembre.",
-  lede: "Laisse ton e-mail : tu reçois ton accès le jour du lancement, avant l’ouverture publique.",
-  note: "Ton adresse sert seulement à te prévenir.",
-  /** Tags the signup in the sheet, so the bio link's conversions are countable. */
-  source: "go",
-} as const;
-
-/* ── The download card, once the launch deadline has passed ────────── */
+/* ── The download card ──────────────────────────────────────────────── */
 
 export const GO_DOWNLOAD = {
   title: "Télécharge Yatu.",
@@ -44,7 +35,6 @@ export type GoLink = {
   href: string;
   title: string;
   sub: string;
-  availableSub?: string;
   external: boolean;
 } & (
   | { brand: "instagram" | "tiktok" }
@@ -65,8 +55,7 @@ export const GO_LINKS: GoLink[] = [
     href: "https://www.instagram.com/yatu_app/",
     brand: "instagram",
     title: "Instagram",
-    sub: "Les coulisses d’ici septembre",
-    availableSub: "Nouveautés, conseils et coulisses de Yatu",
+    sub: "Nouveautés, conseils et coulisses de Yatu",
     external: true,
   },
   {
@@ -82,5 +71,12 @@ export const GO_LINKS: GoLink[] = [
     title: "Yatu pour les BDE",
     sub: "WEI, soirées et pack pilote gratuit",
     external: false,
+  },
+  {
+    href: yatuProUrl("go"),
+    tool: "ticket",
+    title: "Yatu Pro",
+    sub: "Clubs, boîtes de nuit, festivals et lieux",
+    external: true,
   },
 ];

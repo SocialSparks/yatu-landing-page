@@ -107,11 +107,6 @@ export default function Page() {
             choix. Stockage local, six mois.
           </Line>
           <Line>
-            <B>yatu-signup-email</B> - retient l’adresse saisie le temps de passer de la
-            préinscription à la page de bienvenue, pour ne pas te la redemander. Stockage de
-            session : effacé à la fermeture de l’onglet.
-          </Line>
-          <Line>
             Le contenu des formulaires est transmis à QUANTIQ STUDIO au moment où tu valides, pour
             pouvoir te recontacter : voir la{" "}
             <NavLink href={ROUTES.confidentialite} style={{ color: "#4E565D" }}>
@@ -157,9 +152,8 @@ export default function Page() {
           rule="Déposés seulement si tu les acceptes"
         >
           <Line>
-            <B>Meta Pixel</B> mesure les pages consultées et, lorsqu’elle aboutit, l’inscription à
-            la waiting list afin d’évaluer l’efficacité des campagnes publicitaires. L’adresse
-            e-mail saisie n’est pas transmise à Meta. Le Pixel peut déposer les cookies <B>_fbp</B>
+            <B>Meta Pixel</B> mesure les pages consultées afin d’évaluer l’efficacité des campagnes
+            publicitaires. Le Pixel peut déposer les cookies <B>_fbp</B>
             et <B>_fbc</B>. Il est entièrement bloqué avant ton accord à cette catégorie ; si tu
             retires ton accord, le site transmet la révocation à Meta et supprime ses cookies
             accessibles sur le domaine.

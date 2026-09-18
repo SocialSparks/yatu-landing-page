@@ -12,8 +12,8 @@
  * holds what it never asks for. <Picture> emits `-418.avif`-style paths and
  * never the original, so shipping the originals meant 8.6 MiB of Worker bundle
  * that no request could ever reach. The two exceptions stay in public/ because
- * something really does fetch them - waitlist-avatars.jpg is the image-set()
- * fallback in components/waitlist-social-proof.tsx, and app-home.webp is served
+ * something really does fetch them - user-avatars.jpg is the image-set()
+ * fallback in components/user-social-proof.tsx, and app-home.webp is served
  * as-is by components/app-home.tsx.
  *
  * The mockups are the reason this exists: they are not really SVG, they are two
@@ -68,7 +68,7 @@ const JOBS = [
   },
   // Served from public/ as its own JPEG fallback - see the note above.
   {
-    files: ["public/assets/waitlist-avatars.jpg"],
+    files: ["public/assets/user-avatars.jpg"],
     to: "public/assets",
     widths: [320, 640],
     formats: ["webp"],

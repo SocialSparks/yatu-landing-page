@@ -3,9 +3,8 @@
 import { NavLink } from "@/components/nav-link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { CTA } from "@/lib/content";
+import { CTA, yatuProUrl } from "@/lib/content";
 import { ROUTES } from "@/lib/routes";
-import {useHasLaunched} from "@/lib/use-launch-state";
 
 const UI = "var(--font-ui), system-ui, sans-serif";
 
@@ -17,6 +16,7 @@ const NAV = [
   { href: ROUTES.usages, label: "Cas d’usage" },
   { href: ROUTES.organiser, label: "Guides" },
   { href: ROUTES.bde, label: "BDE & assos", note: "Page dédiée" },
+  { href: yatuProUrl("header"), label: "Yatu Pro", note: "Clubs, lieux, festivals" },
 ];
 
 /** "/#solution" -> "solution", "/bde" -> null (no in-page anchor). */
@@ -26,7 +26,6 @@ function anchorId(href: string): string | null {
 }
 
 export function SiteHeader() {
-  const hasLaunched = useHasLaunched();
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
   const pathname = usePathname();
@@ -135,7 +134,7 @@ export function SiteHeader() {
 
         <NavLink
           data-r="hdr-cta"
-          href={ROUTES.liste}
+          href={ROUTES.telecharger}
           className="yq-btn-dark"
           style={{
             flex: "none",
@@ -156,7 +155,7 @@ export function SiteHeader() {
           <span
             style={{ width: 8, height: 8, borderRadius: 80, background: "#FED873", flex: "none" }}
           />
-          {hasLaunched ? CTA.download : CTA.waitlist}
+          {CTA.download}
         </NavLink>
 
         <button

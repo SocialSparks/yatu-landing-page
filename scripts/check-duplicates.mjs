@@ -9,7 +9,7 @@
  * that matters here is zero shared body sentences. It reads the prerendered
  * HTML rather than the source, because that is what a crawler actually sees.
  *
- * The header, the footer, the waiting-list form and the sibling cards are the
+ * The header, the footer, the download block and the sibling cards are the
  * same markup on every page by design. Only <main> is compared, it is cut
  * before the "à lire ensuite" rail - those cards are navigation, and two pages
  * pointing at the same guide is the point of them - and the remaining shared
@@ -52,9 +52,7 @@ const MIN_EDITORIAL_WORDS = 700;
 
 /** Chrome rendered inside <main> on every landing page - not a duplication. */
 const SHARED = [
-  "Rejoindre la liste",
-  "Garde ta place",
-  "Laisse ton adresse",
+  "Télécharge l’appli",
   "Voir tous les guides",
 ];
 

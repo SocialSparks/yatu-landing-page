@@ -1,3 +1,4 @@
+import { AppDownloadButtons } from "@/components/app-download-buttons";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { Decor } from "@/components/decor";
 import { FaqSection } from "@/components/faq-section";
@@ -6,8 +7,7 @@ import { Picture } from "@/components/picture";
 import { SectionCta } from "@/components/section-cta";
 import { SectionHeading } from "@/components/section-heading";
 import { LandingStructuredData } from "@/components/structured-data";
-import { WaitlistForm } from "@/components/waitlist-form";
-import { ACCENT, CTA, LAUNCH_LABEL, MODULES, icon } from "@/lib/content";
+import { ACCENT, CTA, MODULES, icon } from "@/lib/content";
 import { USAGES_DECOR } from "@/lib/decor";
 import {
   type LandingCounterpart,
@@ -269,7 +269,7 @@ function RelatedCard({ slug }: { slug: string }) {
 }
 
 /**
- * The shape every occasion guide takes: the promise and the signup, what goes
+ * The shape every occasion guide takes: the promise and the store buttons, what goes
  * wrong, the method, the Yatu modules that carry it, the questions, and the
  * guides next door.
  *
@@ -371,10 +371,7 @@ export function GuidePage({ page }: { page: LandingPage }) {
                 {page.lede}
               </p>
 
-              <WaitlistForm
-                source={page.slug}
-                note={`Yatu ouvre le ${LAUNCH_LABEL}. Laisse ton adresse, on te prévient le jour même.`}
-              />
+              <AppDownloadButtons />
             </div>
 
             <div
@@ -1013,11 +1010,9 @@ export function GuidePage({ page }: { page: LandingPage }) {
           ) : null}
 
           <SectionCta
-            title={`Yatu ouvre le ${LAUNCH_LABEL}.`}
-            body="Garde ta place : les inscrits sont prévenus le jour de l’ouverture et créent leur premier événement en premier."
-            availableTitle="Yatu est disponible."
-            availableBody="Télécharge l’appli et crée ton premier événement dès maintenant."
-            primary={{ href: ROUTES.liste, label: CTA.waitlist }}
+            title="Yatu est disponible."
+            body="Télécharge l’appli et crée ton premier événement dès maintenant."
+            primary={{ href: ROUTES.telecharger, label: CTA.download }}
             secondary={{ href: ROUTES.fonctionnement, label: CTA.demo }}
             accent={page.accent}
           />

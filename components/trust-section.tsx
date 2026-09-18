@@ -28,7 +28,7 @@ const COMMITMENTS = [
 ] as const;
 
 /**
- * A short trust pause before the signup section. The legal page carries the
+ * A short trust pause before the download section. The legal page carries the
  * details; this section makes the three product commitments visible without
  * turning the home page into a privacy policy.
  */

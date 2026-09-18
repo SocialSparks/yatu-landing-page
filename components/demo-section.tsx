@@ -11,14 +11,12 @@ import {
   DEMO_ETAPES,
   DEMO_GENS,
   DEMO_TYPES,
-  LAUNCH_LABEL,
   MODULES,
   icon,
   type ModuleKey,
 } from "@/lib/content";
 import { DEMO_DECOR } from "@/lib/decor";
 import { SITE_DOMAIN } from "@/lib/site";
-import {useHasLaunched} from "@/lib/use-launch-state";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
@@ -56,7 +54,6 @@ const SCREEN_TITLE: React.CSSProperties = {
 };
 
 export function DemoSection() {
-  const hasLaunched = useHasLaunched();
   const [demo, setDemo] = useState(INITIAL);
   const [copie, setCopie] = useState(false);
   const copyTimer = useRef<number | undefined>(undefined);
@@ -928,31 +925,9 @@ export function DemoSection() {
                         ))}
                       </div>
 
-                      {hasLaunched ? (
-                        <div style={{marginTop: "auto"}}>
-                          <AppDownloadButtons />
-                        </div>
-                      ) : (
-                        <div style={{ ...CARD, marginTop: "auto" }}>
-                          <img
-                            loading="lazy"
-                            decoding="async"
-                            src={icon("send")}
-                            alt=""
-                            style={{ width: 26, height: 26, flex: "none" }}
-                          />
-                          <span
-                            style={{
-                              fontFamily: UI,
-                              fontSize: 14,
-                              lineHeight: 1.4,
-                              color: "#4E565D",
-                            }}
-                          >
-                            Le vrai Yatu arrive le {LAUNCH_LABEL}.
-                          </span>
-                        </div>
-                      )}
+                      <div style={{marginTop: "auto"}}>
+                        <AppDownloadButtons />
+                      </div>
                     </>
                   ) : null}
 

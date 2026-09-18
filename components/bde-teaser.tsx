@@ -13,8 +13,10 @@ const FEATURES = [
 ];
 
 export function BdeTeaser() {
+  // Tight bottom: the Yatu Pro band follows directly and carries the section's
+  // closing space, so the two organiser offers read as one pair.
   return (
-    <section style={{ background: "#F7F4ED", padding: "0 0 clamp(56px,8vw,104px)" }}>
+    <section style={{ background: "#F7F4ED", padding: "0 0 16px" }}>
       <div
         data-r="gutter"
         style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}

@@ -69,14 +69,6 @@ async function check() {
     const llmsBody = await llms.text();
     assert(llms.ok && llmsBody.startsWith("# Yatu\n"), "llms.txt is unavailable or invalid");
 
-    const privatePage = await fetch(`${origin}/bienvenue`, {
-      headers: { Accept: "text/markdown" },
-    });
-    assert(
-      privatePage.headers.get("content-type")?.startsWith("text/html"),
-      "The non-indexable bienvenue page was exposed as Markdown",
-    );
-
     process.stdout.write(`Agent readiness checks passed for ${paths.length} pages.\n`);
   } finally {
     await stopNextServer(child);

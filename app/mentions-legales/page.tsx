@@ -1,7 +1,6 @@
 import type {Metadata} from "next";
 import {B, LegalPage, LegalSection, P} from "@/components/legal-page";
 import {NavLink} from "@/components/nav-link";
-import {LAUNCH_LABEL} from "@/lib/content";
 import {MENTIONS_DECOR} from "@/lib/decor";
 import {ROUTES} from "@/lib/routes";
 import {
@@ -111,9 +110,8 @@ export default function Page() {
 
       <LegalSection title="5. Informations publiées et disponibilité">
         <P>
-          Yatu est présenté avant son lancement annoncé pour le {LAUNCH_LABEL}. Les captures,
-          fonctionnalités, tarifs éventuels, calendriers et conditions d’accès présentés sur le
-          site peuvent évoluer avant la mise à disposition définitive de l’application.
+          Les captures, fonctionnalités, tarifs éventuels et conditions d’accès présentés sur le
+          site peuvent évoluer au fil des mises à jour de l’application.
         </P>
         <P>
           {PUBLISHER} s’efforce de fournir des informations exactes et à jour, sans garantir leur

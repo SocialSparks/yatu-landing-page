@@ -40,28 +40,6 @@
 const HONEYPOT_FIELDS = ['yq-ref', 'website'];
 
 /**
- * L'onglet Waitlist tient une ligne par personne. L'inscription ecrit les
- * quatre premieres colonnes ; le questionnaire facultatif de /bienvenue
- * complete les quatre suivantes sur cette meme ligne, retrouvee par e-mail.
- *
- * Les deux colonnes d'identifiant sont distinctes parce que les deux ecritures
- * d'une meme ligne viennent de deux soumissions differentes, chacune avec son
- * propre identifiant a dedoublonner.
- */
-const WAITLIST_COLUMNS = [
-  'Date',
-  'E-mail',
-  'Source',
-  'Page',
-  'Date questionnaire',
-  'Ce qu il organise',
-  'Taille du groupe',
-  'BDE ou asso',
-  'Id',
-  'Id questionnaire',
-];
-
-/**
  * Un formulaire : son onglet, les colonnes de cet onglet, quelle cle du payload
  * alimente quelle colonne, et la colonne qui porte son identifiant.
  *
@@ -71,35 +49,6 @@ const WAITLIST_COLUMNS = [
  * ajoutee toute seule a la feuille existante.
  */
 const FORMS = {
-  waitlist: {
-    sheet: 'Waitlist',
-    columns: WAITLIST_COLUMNS,
-    idColumn: 'Id',
-    values: {
-      Date: 'ts',
-      'E-mail': 'email',
-      Source: 'source',
-      Page: 'page',
-      Id: 'id',
-    },
-  },
-  profil: {
-    sheet: 'Waitlist',
-    columns: WAITLIST_COLUMNS,
-    idColumn: 'Id questionnaire',
-    values: {
-      'E-mail': 'email',
-      'Date questionnaire': 'ts',
-      'Ce qu il organise': 'types',
-      'Taille du groupe': 'size',
-      'BDE ou asso': 'bde',
-      'Id questionnaire': 'id',
-    },
-    // Le questionnaire prolonge une inscription : on complete la ligne de cette
-    // personne au lieu d'en ajouter une deuxieme. Sans e-mail (lien /bienvenue
-    // ouvert directement), on retombe sur un simple ajout.
-    mergeOn: 'E-mail',
-  },
   'bde-demo': {
     sheet: 'Demandes BDE',
     columns: [
@@ -159,9 +108,7 @@ function doPost(e) {
       // partie et cesse de la rejouer.
       if (alreadySeen(sheet, header, form, body)) return reply({ ok: true, duplicate: true });
 
-      const row = form.mergeOn ? findRow(sheet, header, form, body) : 0;
-      if (row) updateRow(sheet, header, form, body, row);
-      else sheet.appendRow(buildRow(header, form, body));
+      sheet.appendRow(buildRow(header, form, body));
     } finally {
       lock.releaseLock();
     }
@@ -252,42 +199,9 @@ function buildRow(header, form, body) {
   });
 }
 
-/**
- * Le numero de la ligne dont la colonne `mergeOn` vaut la meme chose que le
- * payload, 0 si personne. On parcourt a l'envers : si la meme adresse s'est
- * inscrite deux fois, le questionnaire complete la plus recente.
- */
-function findRow(sheet, header, form, body) {
-  const index = header.indexOf(form.mergeOn);
-  const wanted = String(body[form.values[form.mergeOn]] || '').trim().toLowerCase();
-  if (index === -1 || !wanted) return 0;
-
-  const last = sheet.getLastRow();
-  if (last < 2) return 0;
-
-  const values = sheet.getRange(2, index + 1, last - 1, 1).getValues();
-  for (let i = values.length - 1; i >= 0; i--) {
-    if (String(values[i][0]).trim().toLowerCase() === wanted) return i + 2;
-  }
-  return 0;
-}
-
-/** Ecrit seulement les colonnes que ce formulaire alimente, cellule par cellule. */
-function updateRow(sheet, header, form, body, row) {
-  header.forEach(function (column, i) {
-    const key = form.values[column];
-    if (key) sheet.getRange(row, i + 1).setValue(cell(body[key]));
-  });
-}
-
-/**
- * Une valeur telle qu'elle doit apparaitre dans la feuille. Les questions a
- * choix multiple (le questionnaire de /bienvenue) arrivent en tableau : une
- * seule cellule lisible plutot qu'une valeur que Sheets ne sait pas ecrire.
- */
+/** Une valeur telle qu'elle doit apparaitre dans la feuille. */
 function cell(value) {
   if (value === undefined || value === null) return '';
-  if (Array.isArray(value)) return value.join(', ');
   return value;
 }
 

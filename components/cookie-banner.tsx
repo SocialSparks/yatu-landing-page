@@ -270,7 +270,7 @@ export function CookieBanner() {
               },
               {
                 title: "Publicité et réseaux sociaux",
-                desc: "Meta Pixel : mesure des visites, inscriptions et campagnes.",
+                desc: "Meta Pixel : mesure des visites et des campagnes.",
                 on: social,
                 toggle: () => setSocial((v) => !v),
               },

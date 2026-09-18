@@ -1,4 +1,4 @@
-import { ACCENT, LAUNCH_LABEL, type ModuleKey, icon } from "@/lib/content";
+import { ACCENT, type ModuleKey, icon } from "@/lib/content";
 
 /**
  * The occasion guides - one page per search intent ("organiser un EVJF",
@@ -7,8 +7,7 @@ import { ACCENT, LAUNCH_LABEL, type ModuleKey, icon } from "@/lib/content";
  * These are the pages people land on from Google before they have ever heard of
  * Yatu, so each one has to be worth reading on its own: a real method, real
  * numbers, real answers. The product comes after the advice, never instead of
- * it. Pre-launch and post-launch variants must stay aligned whenever a sentence
- * mentions availability.
+ * it.
  *
  * Editorial rules are the ones from lib/content.ts: tutoiement, the benefit
  * before the feature, no number we cannot back.
@@ -23,7 +22,7 @@ export type LandingStep = { title: string; body: string };
 export type LandingMilestone = { when: string; what: string };
 export type LandingMistake = { title: string; desc: string };
 export type LandingPain = { tool: string; title: string; desc: string };
-export type LandingFaq = { q: string; a: string; availableA?: string };
+export type LandingFaq = { q: string; a: string };
 
 /** One format of an occasion, and what it costs a participant. */
 export type LandingCost = { format: string; range: string; detail: string };
@@ -312,8 +311,7 @@ export const LANDING_PAGES: LandingPage[] = [
       },
       {
         q: "Quelle appli pour organiser un week-end entre amis ?",
-        a: `La plupart des groupes cumulent une messagerie, un tableur pour les comptes et un album photo créé après coup. Yatu réunit la discussion, le budget partagé, les listes, le planning, les documents et les photos dans un même espace d’événement. L’application ouvre le ${LAUNCH_LABEL} et la liste d’attente est ouverte.`,
-        availableA: "La plupart des groupes cumulent une messagerie, un tableur pour les comptes et un album photo créé après coup. Yatu réunit la discussion, le budget partagé, les listes, le planning, les documents et les photos dans un même espace d’événement. L’application est disponible sur iOS et Android.",
+        a: "La plupart des groupes cumulent une messagerie, un tableur pour les comptes et un album photo créé après coup. Yatu réunit la discussion, le budget partagé, les listes, le planning, les documents et les photos dans un même espace d’événement. L’application est disponible sur iOS et Android.",
       },
       {
         q: "Combien de personnes pour un week-end qui reste gérable ?",
@@ -477,7 +475,7 @@ export const LANDING_PAGES: LandingPage[] = [
       },
       {
         q: "Comment garder toutes les réservations accessibles au groupe ?",
-        a: `Dans un espace commun où chacun dépose ce qu’il réserve, au lieu d’un fil de conversation où les PDF remontent. Yatu range les documents de l’événement à côté du planning et du budget, à partir du ${LAUNCH_LABEL}.`,
+        a: `Dans un espace commun où chacun dépose ce qu’il réserve, au lieu d’un fil de conversation où les PDF remontent. Yatu range les documents de l’événement à côté du planning et du budget.`,
       },
       {
         q: "Faut-il voter chaque décision ou désigner un référent ?",
@@ -637,7 +635,7 @@ export const LANDING_PAGES: LandingPage[] = [
       },
       {
         q: "Comment garder la surprise quand la future mariée est dans le groupe ?",
-        a: `Il faut un espace séparé où elle n’a pas accès - pas un deuxième groupe de discussion créé à la va-vite, où l’on finit par se tromper de fenêtre. Yatu prévoit une discussion cachée à l’intérieur de l’événement : le groupe prépare, la personne concernée ne voit rien. Disponible le ${LAUNCH_LABEL}.`,
+        a: `Il faut un espace séparé où elle n’a pas accès - pas un deuxième groupe de discussion créé à la va-vite, où l’on finit par se tromper de fenêtre. Yatu prévoit une discussion cachée à l’intérieur de l’événement : le groupe prépare, la personne concernée ne voit rien.`,
       },
       {
         q: "Quand organiser l’EVJF par rapport au mariage ?",
@@ -798,7 +796,7 @@ export const LANDING_PAGES: LandingPage[] = [
       },
       {
         q: "Comment garder une partie du programme secrète ?",
-        a: `Donne au marié uniquement l’heure, le point de rendez-vous et la tenue nécessaire. Le groupe conserve les réservations, les transports et les options dans une discussion cachée de l’événement. Yatu permet cette séparation à partir du ${LAUNCH_LABEL}.`,
+        a: `Donne au marié uniquement l’heure, le point de rendez-vous et la tenue nécessaire. Le groupe conserve les réservations, les transports et les options dans une discussion cachée de l’événement. Yatu permet cette séparation.`,
       },
     ],
     related: ["organiser-un-evjf", "organiser-un-week-end-entre-amis", "partager-les-depenses-entre-amis"],
@@ -925,7 +923,7 @@ export const LANDING_PAGES: LandingPage[] = [
     faq: [
       {
         q: "Comment organiser un anniversaire surprise sans que la personne le sache ?",
-        a: `En sortant l’organisation de la conversation habituelle. Le risque n’est pas la trahison, c’est le message envoyé dans la mauvaise fenêtre. Yatu propose une discussion cachée à l’intérieur de l’événement : la personne fêtée peut être dans le groupe sans jamais voir ce fil, à partir du ${LAUNCH_LABEL}.`,
+        a: `En sortant l’organisation de la conversation habituelle. Le risque n’est pas la trahison, c’est le message envoyé dans la mauvaise fenêtre. Yatu propose une discussion cachée à l’intérieur de l’événement : la personne fêtée peut être dans le groupe sans jamais voir ce fil.`,
       },
       {
         q: "Comment organiser une cagnotte pour un cadeau commun ?",
@@ -1083,7 +1081,7 @@ export const LANDING_PAGES: LandingPage[] = [
       },
       {
         q: "Que faire des photos de la soirée ?",
-        a: `Ouvre un album commun le soir même : chacun y dépose les siennes et récupère celles des autres. C’est ce que fait le module souvenirs de Yatu, dans le même espace que la soirée, dès le ${LAUNCH_LABEL}.`,
+        a: `Ouvre un album commun le soir même : chacun y dépose les siennes et récupère celles des autres. C’est ce que fait le module souvenirs de Yatu, dans le même espace que la soirée.`,
       },
       {
         q: "Comment gérer les invités qui en amènent d’autres ?",
@@ -1385,8 +1383,7 @@ export const LANDING_PAGES: LandingPage[] = [
       },
       {
         q: "Quelle application pour partager les dépenses d’un groupe ?",
-        a: `Les applications de comptes partagés font bien le calcul, mais elles vivent à côté de la conversation et des listes qui ont produit la dépense. Yatu met le budget dans l’événement lui-même : la discussion, les listes, les documents et les comptes au même endroit, à partir du ${LAUNCH_LABEL}.`,
-        availableA: "Les applications de comptes partagés font bien le calcul, mais elles vivent à côté de la conversation et des listes qui ont produit la dépense. Yatu, disponible sur iOS et Android, met le budget dans l’événement lui-même : la discussion, les listes, les documents et les comptes au même endroit.",
+        a: "Les applications de comptes partagés font bien le calcul, mais elles vivent à côté de la conversation et des listes qui ont produit la dépense. Yatu, disponible sur iOS et Android, met le budget dans l’événement lui-même : la discussion, les listes, les documents et les comptes au même endroit.",
       },
       {
         q: "Que faire des dépenses payées en espèces ?",
@@ -1426,7 +1423,7 @@ export const LANDING_PAGES: LandingPage[] = [
     h1: "L’application qui tient les dépenses de ton groupe",
     title: "Application pour partager les dépenses entre amis - Yatu",
     description:
-      "Noter une dépense, voir qui doit combien et solder en un minimum de virements, au même endroit que la conversation du groupe. Yatu ouvre le 9 septembre 2026.",
+      "Noter une dépense, voir qui doit combien et solder en un minimum de virements, au même endroit que la conversation du groupe. Disponible sur iOS et Android.",
     lede: "Les applis de comptes partagés font très bien le calcul. Ce qu’elles ne font pas, c’est te dire pourquoi la dépense existe : la conversation qui l’a décidée, la liste qui l’a produite et le programme qui la justifie vivent ailleurs. Yatu met les comptes à l’intérieur de l’événement.",
     og: {
       title: "Les dépenses du groupe, dans l’événement qui les a produites.",
@@ -1550,8 +1547,7 @@ export const LANDING_PAGES: LandingPage[] = [
       },
       {
         q: "Sur quels téléphones, et à partir de quand ?",
-        a: `Sur iOS et Android, à partir du ${LAUNCH_LABEL}. Les personnes inscrites sur la liste d’attente sont prévenues le jour de l’ouverture.`,
-        availableA: "Yatu est disponible sur iOS et Android.",
+        a: "Yatu est disponible sur iOS et Android.",
       },
       {
         q: "En quoi c’est différent d’une application de comptes partagés ?",
@@ -1587,7 +1583,7 @@ export const LANDING_PAGES: LandingPage[] = [
     h1: "L’application pour organiser un week-end entre amis",
     title: "Application pour organiser un week-end entre amis - Yatu",
     description:
-      "Un espace par week-end : discussion, infos pratiques, liste de courses, budget et album photo au même endroit. Yatu ouvre le 9 septembre 2026.",
+      "Un espace par week-end : discussion, infos pratiques, liste de courses, budget et album photo au même endroit. Disponible sur iOS et Android.",
     lede: "Un week-end à huit, ce n’est pas une appli qu’il faut, c’est un endroit. Un lien, tout le monde dedans, et les décisions qui arrêtent de se perdre entre une conversation, deux messages privés et un tableur que personne ne rouvre.",
     og: {
       title: "Un espace par week-end, et le groupe s’organise dedans.",
@@ -1719,8 +1715,7 @@ export const LANDING_PAGES: LandingPage[] = [
       },
       {
         q: "Quand est-ce que je peux l’utiliser ?",
-        a: `À partir du ${LAUNCH_LABEL}, sur iOS et Android. En attendant, la méthode complète pour organiser un week-end entre amis est écrite dans notre guide, budgets par personne compris, et la liste d’attente prévient dès l’ouverture.`,
-        availableA: "Dès maintenant, sur iOS et Android.",
+        a: "Dès maintenant, sur iOS et Android.",
       },
     ],
     counterpart: {
@@ -1748,7 +1743,7 @@ export const LANDING_PAGES: LandingPage[] = [
     h1: "L’application pour organiser un voyage en groupe",
     title: "Application pour organiser un voyage en groupe - Yatu",
     description:
-      "Billets, réservations, budget, programme et photos d’un voyage en groupe, réunis dans un seul espace partagé. Yatu ouvre le 9 septembre 2026 sur iOS et Android.",
+      "Billets, réservations, budget, programme et photos d’un voyage en groupe, réunis dans un seul espace partagé. Disponible sur iOS et Android.",
     lede: "Un voyage de groupe se joue sur ce que personne ne retrouve : le billet, l’adresse du logement, le montant déjà avancé. Yatu range tout ça dans l’événement, accessible à tout le groupe plutôt qu’à celui qui a réservé.",
     og: {
       title: "Un voyage à huit, dans un seul espace partagé.",
@@ -1874,10 +1869,6 @@ export const LANDING_PAGES: LandingPage[] = [
       {
         q: "Que se passe-t-il après le voyage ?",
         a: "L’événement reste consultable : les comptes soldés, les documents, le programme et l’album. C’est précisément ce qu’un fil de discussion ne rend pas au bout de six mois.",
-      },
-      {
-        q: "Comment organiser le voyage en attendant l’ouverture ?",
-        a: `Notre guide pour organiser un voyage entre amis donne la méthode complète, avec les fourchettes de budget par personne et par format, applicable dès aujourd’hui. Yatu ouvre le ${LAUNCH_LABEL} et les inscrits sont prévenus le jour même.`,
       },
     ],
     counterpart: {

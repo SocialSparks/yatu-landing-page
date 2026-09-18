@@ -24,13 +24,14 @@ const DEFAULT_ACTIVE: ModuleKey[] = ["chat", "infos", "planning", "budget", "lis
 export function ModulesSection() {
   const [active, setActive] = useState<ModuleKey[]>(DEFAULT_ACTIVE);
   const [preset, setPreset] = useState("weekend");
-  const [chatNotice, setChatNotice] = useState(false);
+  // The locked module whose "why can't I switch this off" note is open.
+  const [notice, setNotice] = useState<ModuleKey | null>(null);
 
   function toggle(key: ModuleKey) {
     const mod = MODULES.find((m) => m.key === key);
     if (!mod) return;
     if (mod.locked) {
-      setChatNotice((visible) => !visible);
+      setNotice((open) => (open === key ? null : key));
       return;
     }
     setPreset("custom");
@@ -128,15 +129,16 @@ export function ModulesSection() {
         >
           {MODULES.map((m) => {
             const on = active.includes(m.key);
-            const explainingChat = Boolean(m.locked && chatNotice);
+            const explaining = Boolean(m.locked && notice === m.key);
+            const noteId = `${m.key}-module-note`;
             return (
               <button
                 key={m.key}
                 type="button"
                 onClick={() => toggle(m.key)}
                 aria-pressed={on}
-                aria-expanded={m.locked ? chatNotice : undefined}
-                aria-describedby={explainingChat ? "chat-module-note" : undefined}
+                aria-expanded={m.locked ? notice === m.key : undefined}
+                aria-describedby={explaining ? noteId : undefined}
                 data-r="module-card"
                 style={{
                   textAlign: "left",
@@ -147,15 +149,15 @@ export function ModulesSection() {
                   gap: 12,
                   transition: `background ${EASE}, border-color ${EASE}, transform ${EASE}, box-shadow ${EASE}`,
                   cursor: "pointer",
-                  transform: explainingChat ? "translateY(-3px)" : "translateY(0)",
-                  boxShadow: explainingChat ? "0 12px 28px rgba(0,0,0,.18)" : "none",
-                  background: explainingChat
+                  transform: explaining ? "translateY(-3px)" : "translateY(0)",
+                  boxShadow: explaining ? "0 12px 28px rgba(0,0,0,.18)" : "none",
+                  background: explaining
                     ? "rgba(150,224,135,.14)"
                     : on
                       ? "rgba(255,255,255,.08)"
                       : "rgba(255,255,255,.02)",
                   border: `1px solid ${
-                    explainingChat
+                    explaining
                       ? "rgba(150,224,135,.8)"
                       : on
                         ? "rgba(255,255,255,.16)"
@@ -242,7 +244,7 @@ export function ModulesSection() {
 
                 {/* Kept in the flow on every card so they stay the same height,
                     but hidden from the accessibility tree and from crawlers -
-                    otherwise "Toujours actif" reads out on all eight modules. */}
+                    otherwise "Toujours actif" reads out on every module. */}
                 <span
                   aria-hidden={!m.locked}
                   data-r="module-badge"
@@ -269,29 +271,30 @@ export function ModulesSection() {
 
                 {m.locked && (
                   <span
-                    id="chat-module-note"
+                    id={noteId}
                     role="status"
-                    aria-hidden={!explainingChat}
+                    aria-hidden={!explaining}
                     style={{
                       width: "100%",
-                      maxHeight: explainingChat ? 130 : 0,
+                      maxHeight: explaining ? 130 : 0,
                       overflow: "hidden",
                       borderRadius: 12,
-                      padding: explainingChat ? "11px 13px" : "0 13px",
+                      padding: explaining ? "11px 13px" : "0 13px",
                       fontFamily: UI,
                       fontSize: 13,
                       lineHeight: 1.45,
                       color: "rgba(255,255,255,.82)",
                       background: "rgba(150,224,135,.11)",
-                      border: explainingChat
+                      border: explaining
                         ? "1px solid rgba(150,224,135,.28)"
                         : "1px solid transparent",
-                      opacity: explainingChat ? 1 : 0,
+                      opacity: explaining ? 1 : 0,
                       transition: `max-height ${EASE}, padding ${EASE}, opacity ${EASE}, border-color ${EASE}`,
                     }}
                   >
-                    C’est le seul module obligatoire et commun à tous les événements : chaque
-                    groupe garde toujours un espace pour échanger.
+                    La discussion et les infos clés sont les deux modules obligatoires, communs à
+                    tous les événements : chaque groupe garde toujours un espace pour échanger et
+                    l’essentiel à portée de main.
                   </span>
                 )}
               </button>
@@ -412,9 +415,8 @@ export function ModulesSection() {
 
         <SectionCta
           title="Ton prochain événement, tu le lances avec Yatu ?"
-          body="Inscris-toi pour recevoir Yatu le jour du lancement."
-          availableBody="Télécharge Yatu et crée ton premier événement dès maintenant."
-          primary={{ href: ROUTES.liste, label: CTA.waitlist }}
+          body="Télécharge Yatu et crée ton premier événement dès maintenant."
+          primary={{ href: ROUTES.telecharger, label: CTA.download }}
           secondary={{ href: ROUTES.fonctionnement, label: CTA.demo }}
           onDark
           accent={ACCENT.sky}

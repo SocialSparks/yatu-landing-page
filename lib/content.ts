@@ -13,25 +13,26 @@
  * tâches, discussion cachée, souvenirs, documents.
  */
 
-/*
- * Minuit à Paris le jour de la sortie. L'offset est obligatoire : sans lui,
- * `new Date(LAUNCH_DATE)` se lit dans le fuseau de la machine - UTC côté serveur,
- * n'importe quoi côté visiteur - et le compte à rebours dérive d'autant.
- * +02:00 = CEST, en vigueur le 9 septembre (l'heure d'hiver revient fin octobre).
- */
-export const LAUNCH_DATE = "2026-09-09T00:00:00+02:00";
-/** Written once - the date shows up in the hero, the footer, the FAQ and the metadata. */
-export const LAUNCH_LABEL = "9 septembre 2026";
+/** Release day, quoted as `datePublished` in the structured data. */
+export const LAUNCH_DATE = "2026-09-09";
 
-/**
- * Stable store listing URLs. The public site keeps them hidden until
- * `LAUNCH_DATE`, then exposes them from the already-deployed client bundle: the
- * launch-day switch therefore needs neither a content edit nor a rebuild.
- */
+/** Shown as "+300" next to the faces in the hero and the download section. */
+export const USER_COUNT = 300;
+
+/** Stable store listing URLs. */
 export const APP_STORE_URL =
   "https://apps.apple.com/fr/app/organiser-entre-amis-yatu/id6737450955";
 export const PLAY_STORE_URL =
   "https://play.google.com/store/apps/details?id=com.socialspark.www";
+
+/**
+ * Yatu Pro - the organiser product for clubs, venues, festivals and companies,
+ * on its own domain. `placement` lands in utm_content so its analytics can tell
+ * which link on this site sent the visitor.
+ */
+export const YATU_PRO_URL = "https://yatu-pro.com";
+export const yatuProUrl = (placement: string) =>
+  `${YATU_PRO_URL}/?utm_source=yatu-app&utm_medium=site&utm_campaign=cross-sell&utm_content=${placement}`;
 
 export const ACCENT = {
   ink: "#2A343D",
@@ -49,10 +50,9 @@ export const ACCENT = {
 
 export const icon = (name: string) => `/assets/tools/${name}.svg`;
 
-/* ── The two calls to action, spelled the same way everywhere ────────── */
+/* ── The calls to action, spelled the same way everywhere ────────────── */
 
 export const CTA = {
-  waitlist: "Rejoindre la liste",
   download: "Télécharger l’appli",
   demo: "Voir la démo",
 } as const;
@@ -125,12 +125,13 @@ export const MODULES: Module[] = [
     label: "Discussion",
     icon: icon("chat"),
     locked: true,
-    desc: "La conversation du groupe, rattachée à l’événement. Le seul module qu’on ne coupe jamais.",
+    desc: "La conversation du groupe, rattachée à l’événement. Toujours présente, dans chaque événement.",
   },
   {
     key: "infos",
     label: "Infos clés",
     icon: icon("pin"),
+    locked: true,
     desc: "L’adresse, le code du portail, le numéro à appeler. Épinglés en haut de l’événement.",
   },
   {
@@ -727,7 +728,6 @@ export const USE_CASE_ROWS: { duration: string; reverse: boolean; cards: UseCase
 export type FaqEntry = {
   q: string;
   a: string;
-  availableA?: string;
   link?: { href: string; label: string; before: string; after: string };
 };
 
@@ -737,9 +737,8 @@ export const FAQ: FaqEntry[] = [
     a: "Yatu est l’application qui réunit au même endroit tout ce qu’un groupe doit organiser, décider et partager autour d’un événement entre amis.",
   },
   {
-    q: "Quand est-ce que Yatu sera disponible ?",
-    a: `Yatu sortira le ${LAUNCH_LABEL} sur iOS et Android. Les personnes inscrites seront prévenues dès l’ouverture.`,
-    availableA: "Yatu est disponible dès maintenant sur iOS et Android.",
+    q: "Où télécharger Yatu ?",
+    a: "Yatu est disponible dès maintenant sur iOS et Android.",
   },
   {
     q: "Yatu est-il gratuit ?",
@@ -755,8 +754,7 @@ export const FAQ: FaqEntry[] = [
   },
   {
     q: "Sur quels téléphones Yatu est-il disponible ?",
-    a: "Yatu sera disponible sur iPhone et Android dès le lancement. Tous les participants pourront utiliser le même événement, quel que soit leur téléphone.",
-    availableA: "Yatu est disponible sur iPhone et Android. Tous les participants peuvent utiliser le même événement, quel que soit leur téléphone.",
+    a: "Yatu est disponible sur iPhone et Android. Tous les participants peuvent utiliser le même événement, quel que soit leur téléphone.",
   },
   {
     q: "Comment mes données sont-elles utilisées ?",
@@ -780,6 +778,16 @@ export const FAQ: FaqEntry[] = [
       label: "découvrir Yatu pour les BDE",
       before: "Tu peux ",
       after: " et rejoindre le programme pilote.",
+    },
+  },
+  {
+    q: "Et pour un club de sport, une boîte de nuit ou un festival ?",
+    a: "Les organisateurs qui reçoivent du public ont leur formule : Yatu Pro. Tu publies tes événements dans l’app, tu gères les inscriptions ou tu renvoies vers ta billetterie, sans commission sur tes ventes, et tu gardes le contact avec ta communauté.",
+    link: {
+      href: yatuProUrl("faq"),
+      label: "découvrir Yatu Pro",
+      before: "Tu peux ",
+      after: ".",
     },
   },
 ];

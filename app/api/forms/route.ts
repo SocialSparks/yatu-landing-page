@@ -2,7 +2,7 @@
  * Le point d'entree des trois formulaires du site.
  *
  * Meme origine que la page : plus de bloqueur de pub ni de DNS scolaire capable
- * d'intercepter l'inscription, plus de prevol CORS, plus de redirection 302 vers
+ * d'intercepter la demande, plus de prevol CORS, plus de redirection 302 vers
  * script.googleusercontent.com. Le Worker range la soumission dans D1, repond
  * tout de suite, et se charge de la porter jusqu'a la feuille en arriere-plan.
  *

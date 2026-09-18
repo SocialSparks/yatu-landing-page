@@ -79,7 +79,7 @@ export default function Page() {
       title="Politique de confidentialité"
       updatedAt="27 août 2026"
       decor={CONFIDENTIALITE_DECOR}
-      lede={`Cette politique explique comment ${PUBLISHER} traite les données liées au site ${SITE_DOMAIN}. Elle concerne le site de pré-lancement, pas encore les données qui seront créées dans l’application Yatu.`}
+      lede={`Cette politique explique comment ${PUBLISHER} traite les données liées au site ${SITE_DOMAIN}. Elle concerne le site, pas les données créées dans l’application Yatu.`}
     >
       <LegalSection title="1. Responsable du traitement">
         <P>
@@ -98,8 +98,7 @@ export default function Page() {
         <P>Les données traitées proviennent :</P>
         <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
           <Bullet>
-            directement de toi lorsque tu saisis une adresse e-mail, réponds aux questions
-            facultatives, remplis le formulaire BDE ou écris au support ;
+            directement de toi lorsque tu remplis le formulaire BDE ou écris au support ;
           </Bullet>
           <Bullet>
             de ton navigateur lorsque le site enregistre localement tes réponses ou tes
@@ -140,33 +139,6 @@ export default function Page() {
             [
               "Conservation",
               "les données de requête sont traitées pendant la durée nécessaire à la fourniture et à la sécurisation du service ; les éventuels journaux accessibles à QUANTIQ STUDIO ne sont pas conservés au-delà de 30 jours, sauf incident de sécurité ou obligation légale.",
-            ],
-          ]}
-        />
-
-        <Treatment
-          label="Liste d’attente et page de bienvenue"
-          badge={ACCENT.sunbeam}
-          rows={[
-            [
-              "Données",
-              "adresse e-mail, page d’origine, date d’inscription et, si tu réponds aux questions facultatives, types d’événements, taille du groupe et appartenance éventuelle à une association. S’y ajoutent ton navigateur et une empreinte non réversible de ton adresse IP, conservées avec la soumission pour limiter les envois automatisés ; l’adresse elle-même n’est jamais enregistrée.",
-            ],
-            [
-              "Finalités",
-              "confirmer ton parcours de préinscription, préparer l’annonce du lancement et mieux comprendre les usages attendus.",
-            ],
-            [
-              "Base légale",
-              "consentement (article 6.1.a du RGPD), retirable à tout moment.",
-            ],
-            [
-              "Fonctionnement actuel",
-              "ta soumission est enregistrée par Cloudflare, hébergeur du site, dans une base qui sert de tampon d’envoi, puis transmise à une feuille de calcul Google Sheets détenue par QUANTIQ STUDIO. Ce tampon existe pour qu’une inscription ne soit pas perdue si la transmission échoue. L’adresse e-mail passe à la page de confirmation par le stockage de session du navigateur et n’est pas ajoutée à son URL.",
-            ],
-            [
-              "Conservation",
-              "au plus tard trois mois après le lancement, ou plus tôt en cas de retrait du consentement. La copie technique gardée dans le tampon d’envoi est supprimée 90 jours après sa transmission.",
             ],
           ]}
         />
@@ -270,11 +242,11 @@ export default function Page() {
           rows={[
             [
               "Données",
-              "page consultée, date de visite, adresse de la page, provenance, navigateur, appareil, données techniques de connexion, identifiants pseudonymes associés aux cookies Meta et, lorsqu’une inscription à la waiting list aboutit, emplacement du formulaire. L’adresse e-mail saisie dans le formulaire n’est pas transmise à Meta.",
+              "page consultée, date de visite, adresse de la page, provenance, navigateur, appareil, données techniques de connexion, et identifiants pseudonymes associés aux cookies Meta.",
             ],
             [
               "Finalité",
-              "mesurer les visites et les inscriptions à la waiting list afin d’évaluer l’efficacité des campagnes publicitaires grâce à Meta Pixel.",
+              "mesurer les visites afin d’évaluer l’efficacité des campagnes publicitaires grâce à Meta Pixel.",
             ],
             [
               "Base légale",
@@ -299,9 +271,7 @@ export default function Page() {
         <P>
           Meta Pixel est lui aussi bloqué par défaut. Il n’est chargé que si tu acceptes la
           catégorie « Publicité et réseaux sociaux », puis transmet à Meta un événement de visite
-          de page et, après une inscription confirmée à la waiting list, un événement Lead avec
-          l’emplacement du formulaire. L’adresse e-mail saisie n’est pas transmise à Meta. Le
-          retrait de ton accord est transmis au Pixel et ses cookies accessibles sur le domaine
+          de page. Le retrait de ton accord est transmis au Pixel et ses cookies accessibles sur le domaine
           sont supprimés.
         </P>
         <P>
@@ -391,8 +361,7 @@ export default function Page() {
       <LegalSection title="7. Caractère obligatoire des données">
         <P>
           Les données techniques de connexion sont nécessaires pour afficher et sécuriser le site.
-          L’adresse e-mail est nécessaire si tu souhaites utiliser le parcours de liste d’attente.
-          Les questions de qualification sont facultatives. Les champs marqués comme obligatoires
+          Les champs marqués comme obligatoires
           dans le formulaire BDE sont nécessaires pour préparer une prise de contact ; tu peux
           toutefois contacter directement le support sans remplir ce formulaire.
         </P>
@@ -442,8 +411,7 @@ export default function Page() {
         </P>
         <P>
           Les données enregistrées uniquement dans ton navigateur restent sous le contrôle de ton
-          terminal. Tu peux les effacer depuis les réglages du navigateur. Évite de partager une URL
-          de confirmation contenant ton adresse e-mail et protège l’accès à ton appareil.
+          terminal. Tu peux les effacer depuis les réglages du navigateur. Protège l’accès à ton appareil.
         </P>
       </LegalSection>
 

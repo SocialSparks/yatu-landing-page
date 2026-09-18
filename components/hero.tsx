@@ -1,7 +1,7 @@
-import {LaunchStatus} from "@/components/countdown";
+import {AppDownloadButtons} from "@/components/app-download-buttons";
 import {Decor} from "@/components/decor";
 import {Picture} from "@/components/picture";
-import {WaitlistForm} from "@/components/waitlist-form";
+import {UserSocialProof} from "@/components/user-social-proof";
 import {icon} from "@/lib/content";
 import {HERO_DECOR} from "@/lib/decor";
 
@@ -97,7 +97,7 @@ export function Hero() {
             <span
               style={{ width: 8, height: 8, borderRadius: 80, background: "#FED873", flex: "none" }}
             />
-            <LaunchStatus />
+            Disponible maintenant
           </span>
 
           <div
@@ -271,8 +271,12 @@ export function Hero() {
             ))}
           </div>
 
+          <div data-reveal="up" data-reveal-delay="210">
+            <UserSocialProof />
+          </div>
+
           <div data-reveal="up" data-reveal-delay="230">
-            <WaitlistForm source="hero" />
+            <AppDownloadButtons />
           </div>
         </div>
 

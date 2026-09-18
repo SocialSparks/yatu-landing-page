@@ -1,7 +1,7 @@
 /**
  * L'etat du tampon en une requete.
  *
- * La question a laquelle cette route repond : « est-ce que des inscriptions
+ * La question a laquelle cette route repond : « est-ce que des soumissions
  * sont coincees, et pourquoi ». Un `oldestPendingAgeMinutes` qui depasse la
  * demi-heure veut dire que le tuyau vers la feuille est bouche.
  */

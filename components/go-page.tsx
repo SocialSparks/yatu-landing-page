@@ -1,12 +1,10 @@
 "use client";
 
-import {Countdown} from "@/components/countdown";
 import {Decor} from "@/components/decor";
 import {AppDownloadButtons} from "@/components/app-download-buttons";
 import {InstagramIcon, TikTokIcon} from "@/components/icons";
 import {NavLink} from "@/components/nav-link";
-import {WaitlistForm} from "@/components/waitlist-form";
-import {CTA, icon} from "@/lib/content";
+import {icon} from "@/lib/content";
 import {GO_DECOR} from "@/lib/decor";
 import {
     GO_DOWNLOAD,
@@ -15,12 +13,10 @@ import {
     GO_LINKS,
     GO_SITE_LINK,
     GO_TITLE,
-    GO_WAITLIST,
     type GoLink,
 } from "@/lib/go-content";
 import {ROUTES} from "@/lib/routes";
 import {PUBLISHER} from "@/lib/site";
-import {useHasLaunched} from "@/lib/use-launch-state";
 
 const DISPLAY = "var(--font-display), 'Trebuchet MS', system-ui, sans-serif";
 const UI = "var(--font-ui), system-ui, sans-serif";
@@ -111,13 +107,7 @@ function LinkTile({ link }: { link: GoLink }) {
   );
 }
 
-function LinkRow({
-  link,
-  hasLaunched,
-}: {
-  link: GoLink;
-  hasLaunched: boolean;
-}) {
+function LinkRow({link}: {link: GoLink}) {
   return (
     <NavLink
       href={link.href}
@@ -139,7 +129,7 @@ function LinkRow({
             textWrap: "pretty",
           }}
         >
-          {hasLaunched && link.availableSub ? link.availableSub : link.sub}
+          {link.sub}
         </span>
       </span>
 
@@ -163,13 +153,9 @@ function LinkRow({
  * somewhere that already looks like Yatu. It is served bare - see
  * components/site-chrome.tsx - so nothing competes with the four destinations.
  *
- * The card under the title is the whole point of the page, and it has two
- * states: the waitlist before `LAUNCH_DATE`, and the download buttons after it.
- * The browser performs that switch live, including in a tab already open.
+ * The card under the title is the whole point of the page: the store buttons.
  */
 export function GoPage() {
-  const hasLaunched = useHasLaunched();
-
   return (
     <div
       style={{
@@ -294,7 +280,7 @@ export function GoPage() {
                 textWrap: "balance",
               }}
             >
-              {hasLaunched ? GO_DOWNLOAD.title : GO_WAITLIST.title}
+              {GO_DOWNLOAD.title}
             </h2>
             <p
               style={{
@@ -306,23 +292,11 @@ export function GoPage() {
                 textWrap: "pretty",
               }}
             >
-              {hasLaunched ? GO_DOWNLOAD.lede : GO_WAITLIST.lede}
+              {GO_DOWNLOAD.lede}
             </p>
           </div>
 
-          {hasLaunched ? (
-            <AppDownloadButtons tone="dark" />
-          ) : (
-            <>
-              <Countdown tone="dark" />
-              <WaitlistForm
-                tone="dark"
-                cta={CTA.waitlist}
-                source={GO_WAITLIST.source}
-                note={GO_WAITLIST.note}
-              />
-            </>
-          )}
+          <AppDownloadButtons tone="dark" />
         </section>
 
         <NavLink
@@ -380,11 +354,7 @@ export function GoPage() {
 
         <nav aria-label="Nos liens" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           {GO_LINKS.map((link) => (
-            <LinkRow
-              key={link.href}
-              link={link}
-              hasLaunched={hasLaunched}
-            />
+            <LinkRow key={link.href} link={link} />
           ))}
         </nav>
       </main>

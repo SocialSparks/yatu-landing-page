@@ -184,9 +184,8 @@ export function UseCasesSection() {
 
         <SectionCta
           title="Tu as déjà le prochain événement en tête ?"
-          body="Garde ta place pour créer ton premier événement dès l’ouverture."
-          availableBody="Télécharge Yatu et crée cet événement dès maintenant."
-          primary={{ href: ROUTES.liste, label: CTA.waitlist }}
+          body="Télécharge Yatu et crée cet événement dès maintenant."
+          primary={{ href: ROUTES.telecharger, label: CTA.download }}
           secondary={{ href: ROUTES.fonctionnement, label: CTA.demo }}
           accent={ACCENT.coral}
         />

@@ -1,7 +1,8 @@
+import {AppDownloadButtons} from "@/components/app-download-buttons";
 import {NavLink} from "@/components/nav-link";
 import {ConsentButton} from "@/components/consent-button";
-import {FooterLaunch} from "@/components/footer-launch";
 import {InstagramIcon, TikTokIcon} from "@/components/icons";
+import {yatuProUrl} from "@/lib/content";
 import {APP_PAGES, GUIDE_PAGES, landingPath} from "@/lib/landing-content";
 import {ROUTES} from "@/lib/routes";
 import {PUBLISHER} from "@/lib/site";
@@ -57,6 +58,15 @@ const COLUMNS: { title: string; links: { href: string; label: string; external?:
       { href: ROUTES.bdeDemo, label: "Demander une démo" },
     ],
   },
+  {
+    title: "Yatu Pro",
+    links: [
+      { href: yatuProUrl("footer-clubs"), label: "Clubs de sport" },
+      { href: yatuProUrl("footer-nuit"), label: "Boîtes de nuit et bars" },
+      { href: yatuProUrl("footer-festivals"), label: "Festivals et concerts" },
+      { href: yatuProUrl("footer-lieux"), label: "Lieux et entreprises" },
+    ],
+  },
 ];
 
 const SOCIAL = [
@@ -97,7 +107,7 @@ export function SiteFooter() {
               L’appli qui réunit tout ce qu’un groupe d’amis doit organiser autour d’un événement,
               de la première idée aux dernières photos.
             </p>
-            <FooterLaunch />
+            <AppDownloadButtons layout="column" />
           </div>
 
           {COLUMNS.map((col) => (

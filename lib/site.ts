@@ -63,8 +63,7 @@ export type SitePage = {
  *
  * The occasion guides are not listed one by one: they come from
  * LANDING_PAGES, so adding a guide in lib/landing-content.ts is enough for the
- * sitemap, robots.txt and the internal links to pick it up. `/bienvenue` is
- * deliberately absent - it is a post-signup page and stays out of the index.
+ * sitemap, robots.txt and the internal links to pick it up.
  */
 export const SITE_PAGES: SitePage[] = [
   {
@@ -111,9 +110,6 @@ export const formatDateFr = (iso: string) => {
 
   return `${day === 1 ? "1er" : day} ${rest}`;
 };
-
-/** Pages excluded from the index; kept next to SITE_PAGES so robots.ts stays in sync. */
-export const PRIVATE_PATHS = ["/bienvenue"];
 
 /**
  * One page’s metadata: unique title and description, canonical URL, and the

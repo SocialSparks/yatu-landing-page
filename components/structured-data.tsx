@@ -108,7 +108,7 @@ export function HomeStructuredData() {
     description:
       "Application d’organisation d’événements entre amis : discussion, budget partagé, listes et tâches, planning, documents et album photo dans un même espace.",
     featureList: MODULES.map((module) => module.label),
-    datePublished: LAUNCH_DATE.slice(0, 10),
+    datePublished: LAUNCH_DATE,
     offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
     publisher: { "@id": ORGANIZATION_ID },
     isPartOf: { "@id": WEBSITE_ID },

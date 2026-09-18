@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AppDownloadButtons } from "@/components/app-download-buttons";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { Decor } from "@/components/decor";
 import { NavLink } from "@/components/nav-link";
@@ -6,9 +7,7 @@ import { Picture } from "@/components/picture";
 import { SectionCta } from "@/components/section-cta";
 import { SectionHeading } from "@/components/section-heading";
 import { LandingIndexStructuredData } from "@/components/structured-data";
-import { WaitlistForm } from "@/components/waitlist-form";
-import {LaunchText} from "@/components/launch-text";
-import { ACCENT, CTA, LAUNCH_LABEL } from "@/lib/content";
+import { ACCENT, CTA } from "@/lib/content";
 import { USAGES_DECOR } from "@/lib/decor";
 import { GUIDE_PAGES, landingPath } from "@/lib/landing-content";
 import { HOME_CRUMB, GUIDES_CRUMB, ROUTES } from "@/lib/routes";
@@ -113,14 +112,13 @@ export default function Page() {
                 textWrap: "pretty",
               }}
             >
-              <LaunchText
-                before={`Une méthode par occasion : ce qui bloque, les étapes dans l’ordre, le budget à annoncer et les questions que ton groupe va poser. Écrites pour être utiles avant même que Yatu ouvre, le ${LAUNCH_LABEL}.`}
-                after="Une méthode par occasion : ce qui bloque, les étapes dans l’ordre, le budget à annoncer et les questions que ton groupe va poser. Puis Yatu t’aide à tout mettre en pratique avec ton groupe."
-              />
+              Une méthode par occasion : ce qui bloque, les étapes dans l’ordre, le budget à
+              annoncer et les questions que ton groupe va poser. Puis Yatu t’aide à tout mettre en
+              pratique avec ton groupe.
             </p>
 
             <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-              <WaitlistForm source="guides" />
+              <AppDownloadButtons />
             </div>
           </div>
         </div>
@@ -223,7 +221,7 @@ export default function Page() {
             title="Tu organises avec une asso ou un BDE ?"
             body="Le WEI, le gala et les séjours ont leur propre page : inscriptions validées, annonces officielles et pack pilote gratuit."
             primary={{ href: ROUTES.bde, label: "Voir la page BDE" }}
-            secondary={{ href: ROUTES.liste, label: CTA.waitlist }}
+            secondary={{ href: ROUTES.telecharger, label: CTA.download }}
             accent={ACCENT.meadow}
           />
         </div>

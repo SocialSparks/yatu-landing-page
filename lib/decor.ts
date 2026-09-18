@@ -92,7 +92,7 @@ export const DEMO_DECOR: DecorItem[] = [
   { i: "people", r: "6%", b: "6%", s: 22, o: 0.1, rot: -9, amp: 13, dur: "6.05s", lag: "0.41s" },
 ];
 
-export const WAITLIST_DECOR: DecorItem[] = [
+export const DOWNLOAD_DECOR: DecorItem[] = [
   { i: "heart", l: "calc(50% - 664px)", t: "22%", s: 32, o: 0.82, rot: -9, amp: 9, dur: "6.60s", lag: "1.13s" },
   { i: "ticket", r: "calc(50% - 662px)", t: "28%", s: 30, o: 0.82, rot: 7, amp: 10, dur: "4.40s", lag: "1.50s" },
   { i: "people", r: "calc(50% - 606px)", b: "20%", s: 26, o: 0.82, rot: -13, amp: 11, dur: "4.95s", lag: "1.87s" },
@@ -116,12 +116,6 @@ export const CONFIDENTIALITE_DECOR: DecorItem[] = [
   { i: "people", l: "calc(50% - 620px)", t: "12%", s: 32, o: 0.82, rot: -10, amp: 9, dur: "6.60s", lag: "1.13s" },
   { i: "chart", r: "calc(50% - 624px)", t: "26%", s: 30, o: 0.82, rot: 9, amp: 11, dur: "4.95s", lag: "1.87s" },
   { i: "bell", l: "calc(50% - 600px)", b: "14%", s: 26, o: 0.82, rot: 12, amp: 10, dur: "4.40s", lag: "1.50s" },
-];
-
-export const BIENVENUE_DECOR: DecorItem[] = [
-  { i: "heart", l: "calc(50% - 620px)", t: "12%", s: 32, o: 0.82, rot: -10, amp: 9, dur: "6.60s", lag: "1.13s" },
-  { i: "bell", r: "calc(50% - 624px)", t: "26%", s: 30, o: 0.82, rot: 9, amp: 11, dur: "4.95s", lag: "1.87s" },
-  { i: "people", l: "calc(50% - 600px)", b: "14%", s: 26, o: 0.82, rot: 12, amp: 10, dur: "4.40s", lag: "1.50s" },
 ];
 
 /**

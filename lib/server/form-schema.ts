@@ -11,22 +11,17 @@
  */
 import {type FormKind, HONEYPOT_NAME} from "@/lib/forms";
 
-const KINDS: readonly FormKind[] = ["waitlist", "bde-demo", "profil"];
+const KINDS: readonly FormKind[] = ["bde-demo"];
 
 /**
  * Les champs de chaque formulaire. Une cle absente des deux listes n'arrive
  * jamais jusqu'a la feuille, meme si le navigateur l'a postee.
  */
 const FIELDS: Record<FormKind, { required: readonly string[]; optional: readonly string[] }> = {
-  waitlist: { required: ["email"], optional: ["source"] },
   "bde-demo": {
     required: ["nom", "email"],
     optional: ["asso", "ecole", "type", "taille", "message"],
   },
-  // Le questionnaire de /bienvenue tolere un e-mail vide : `bienvenue-content.tsx`
-  // le recupere du sessionStorage ou du parametre `?e=`, et le lien ouvert
-  // directement n'en a aucun. Ce sont les reponses qui font la valeur de la ligne.
-  profil: { required: [], optional: ["email", "types", "size", "bde", "source"] },
 };
 
 /** Au-dela, c'est la feuille qui deviendrait illisible, pas la base qui souffre. */
@@ -36,12 +31,7 @@ const MAX_LENGTH: Record<string, number> = {
 };
 const DEFAULT_MAX_LENGTH = 200;
 
-/** `types` est la seule question a choix multiple du site. */
-const ARRAY_MAX_ITEMS = 10;
-const ARRAY_MAX_LENGTH = 60;
-
-/** La meme que celle du navigateur (`components/waitlist-form.tsx`) : deux
- *  regles differentes produiraient un refus serveur apres un accord client. */
+/** Une forme d'adresse plausible, sans pretendre valider la RFC. */
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -72,7 +62,7 @@ export function validateSubmission(body: unknown): ValidationResult {
   }
   const spec = FIELDS[kind as FormKind];
 
-  // Un id absent ou malforme ne justifie pas de refuser une inscription : on en
+  // Un id absent ou malforme ne justifie pas de refuser une demande : on en
   // fabrique un. La soumission perd son idempotence, jamais sa place en base.
   const id = typeof input.id === "string" && UUID.test(input.id) ? input.id : crypto.randomUUID();
 
@@ -86,15 +76,6 @@ export function validateSubmission(body: unknown): ValidationResult {
   for (const field of [...spec.required, ...spec.optional]) {
     const raw = input[field];
     if (raw === undefined || raw === null) continue;
-
-    if (field === "types") {
-      if (!Array.isArray(raw)) return { ok: false, field };
-      payload[field] = raw
-        .slice(0, ARRAY_MAX_ITEMS)
-        .filter((item): item is string => typeof item === "string")
-        .map((item) => item.trim().slice(0, ARRAY_MAX_LENGTH));
-      continue;
-    }
 
     if (typeof raw !== "string" && typeof raw !== "number") return { ok: false, field };
     const value = String(raw).trim().slice(0, MAX_LENGTH[field] ?? DEFAULT_MAX_LENGTH);
@@ -135,7 +116,7 @@ function isoDate(value: unknown): string {
 }
 
 /** Un chemin du site, jamais une URL complete : la colonne Page sert a savoir
- *  d'ou vient l'inscription, pas a stocker ce qu'un bot veut y ecrire. */
+ *  d'ou vient la demande, pas a stocker ce qu'un bot veut y ecrire. */
 function pagePath(value: unknown): string {
   if (typeof value !== "string" || !value.startsWith("/")) return "";
   return value.slice(0, DEFAULT_MAX_LENGTH);
