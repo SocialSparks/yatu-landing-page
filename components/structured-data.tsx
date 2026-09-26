@@ -94,7 +94,9 @@ export function BreadcrumbStructuredData({ trail }: { trail: Crumb[] }) {
  *
  * The FAQ entries are the ones rendered in the accordion further down the same
  * page - Google requires the marked-up answers to be visible, so both read from
- * lib/content.ts. Nothing here claims a rating or a number of users.
+ * lib/content.ts. Nothing here claims a rating or a number of users: the store
+ * ratings shown on the page are collected on the stores, and Google refuses
+ * rating snippets gathered on another site.
  */
 export function HomeStructuredData() {
   const application = {

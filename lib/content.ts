@@ -16,8 +16,17 @@
 /** Release day, quoted as `datePublished` in the structured data. */
 export const LAUNCH_DATE = "2026-09-09";
 
-/** Shown as "+300" next to the faces in the hero and the download section. */
-export const USER_COUNT = 300;
+/** Shown as "+500" next to the faces in the hero and the download section. */
+export const USER_COUNT = 500;
+
+/**
+ * Each store's average rating, out of 5, shown with the stars above that line.
+ * Copied by hand from the listings: update them when the listings move.
+ */
+export const STORE_RATINGS = [
+  { id: "app_store", where: "sur l’App Store", rating: 4.9 },
+  { id: "google_play", where: "sur Google Play", rating: 5 },
+] as const;
 
 /** Stable store listing URLs. */
 export const APP_STORE_URL =
