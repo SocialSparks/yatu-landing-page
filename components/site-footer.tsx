@@ -30,6 +30,7 @@ const COLUMNS: { title: string; links: { href: string; label: string; external?:
   {
     title: "L’app",
     links: [
+      { href: ROUTES.about, label: "Qu’est-ce que Yatu ?" },
       { href: ROUTES.fonctionnement, label: "Comment ça marche" },
       { href: ROUTES.modules, label: "Les modules" },
       { href: ROUTES.cycle, label: "Avant, pendant, après" },

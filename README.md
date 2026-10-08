@@ -140,7 +140,8 @@ open-next.config.ts   Adaptateur du build Next.js vers Cloudflare Workers
 | `/` | Présentation produit et liens App Store / Google Play. |
 | `/bde` | Offre dédiée aux BDE et associations, avec demande de démonstration. |
 | `/organiser` | Index des guides d’organisation. |
-| `/[slug]` | Guides éditoriaux et pages « application pour… » générés statiquement. |
+| `/qu-est-ce-que-yatu` | Fiche d’identité de la marque : faits, prix, limites, éditeur. Contenu dans `lib/about-content.ts`. |
+| `/[slug]` | Guides éditoriaux, pages « application pour… » et comparatifs, générés statiquement. |
 | `/go` | Page « lien en bio » pour Instagram et TikTok, en `noindex`. |
 | `/mentions-legales` | Mentions légales. |
 | `/confidentialite` | Politique de confidentialité. |

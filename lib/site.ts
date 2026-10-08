@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { COMPARISON_PAGES } from "@/lib/comparison-content";
 import { LANDING_INDEX_PATH, LANDING_PAGES } from "@/lib/landing-content";
+import { ROUTES } from "@/lib/routes";
 
 /**
  * Everything that depends on *where* the site is served lives here, so the
@@ -80,6 +81,13 @@ export const SITE_PAGES: SitePage[] = [
     path: "/",
     changeFrequency: "weekly",
     priority: 1,
+    updated: "2026-10-08",
+  },
+  {
+    // The identity card: what an assistant reads when asked "qu'est-ce que Yatu ?".
+    path: ROUTES.about,
+    changeFrequency: "monthly",
+    priority: 0.8,
     updated: "2026-10-08",
   },
   {

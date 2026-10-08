@@ -39,6 +39,8 @@ const PAIRS = [
   ["organiser-un-week-end-entre-amis", "application-organiser-week-end-entre-amis"],
   ["organiser-un-voyage-entre-amis", "application-organiser-voyage-groupe"],
   ["partager-les-depenses-entre-amis", "application-partage-depenses-entre-amis"],
+  ["organiser-un-anniversaire", "application-organiser-anniversaire"],
+  ["organiser-une-soiree-entre-amis", "application-organiser-soiree-entre-amis"],
 ];
 
 /** Every root guide matching the scope requested for the occasion content. */

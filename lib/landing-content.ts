@@ -330,7 +330,7 @@ export const LANDING_PAGES: LandingPage[] = [
     },
     related: [
       "application-organiser-week-end-entre-amis",
-      "organiser-un-voyage-entre-amis",
+      "organiser-sans-groupe-whatsapp",
       "partager-les-depenses-entre-amis",
     ],
   },
@@ -494,7 +494,7 @@ export const LANDING_PAGES: LandingPage[] = [
     },
     related: [
       "application-organiser-voyage-groupe",
-      "organiser-un-week-end-entre-amis",
+      "application-partage-photos-entre-amis",
       "partager-les-depenses-entre-amis",
     ],
   },
@@ -946,7 +946,17 @@ export const LANDING_PAGES: LandingPage[] = [
         a: "Passe par une personne de chaque cercle - la famille, les collègues, les amis d’enfance - plutôt que de collecter cinquante numéros. C’est plus rapide, et ça évite le message qui arrive à quelqu’un qui n’était pas censé savoir.",
       },
     ],
-    related: ["organiser-une-soiree-entre-amis", "organiser-un-evjf", "partager-les-depenses-entre-amis"],
+    counterpart: {
+      slug: "application-organiser-anniversaire",
+      kicker: "Cette méthode, dans un outil",
+      label: "l’application pour organiser un anniversaire",
+      body: "La discussion cachée que la personne fêtée ne voit pas, le cadeau commun partagé dans le budget, la liste du qui ramène quoi et l’album de la fête : ce que fait Yatu, écran par écran.",
+    },
+    related: [
+      "application-organiser-anniversaire",
+      "organiser-une-soiree-entre-amis",
+      "organiser-un-evjf",
+    ],
   },
 
   {
@@ -1092,7 +1102,17 @@ export const LANDING_PAGES: LandingPage[] = [
         a: "Pour un apéritif, non. Pour une soirée où tu avances des courses conséquentes, annonce-le avant plutôt qu’au moment de réclamer : « je m’occupe des courses, comptez une quinzaine d’euros » passe très bien en amont, et beaucoup moins bien à deux heures du matin.",
       },
     ],
-    related: ["organiser-un-anniversaire", "organiser-un-week-end-entre-amis", "partager-les-depenses-entre-amis"],
+    counterpart: {
+      slug: "application-organiser-soiree-entre-amis",
+      kicker: "Cette checklist, dans un outil",
+      label: "l’application pour organiser une soirée ou une sortie",
+      body: "Le soir voté par sondage, l’adresse épinglée, la liste où chacun inscrit ce qu’il apporte, les courses de l’hôte partagées et les photos gardées : ce que fait Yatu, de la création au lendemain.",
+    },
+    related: [
+      "application-organiser-soiree-entre-amis",
+      "organiser-un-anniversaire",
+      "organiser-un-week-end-entre-amis",
+    ],
   },
 
   {
@@ -1402,7 +1422,7 @@ export const LANDING_PAGES: LandingPage[] = [
     },
     related: [
       "application-partage-depenses-entre-amis",
-      "organiser-un-week-end-entre-amis",
+      "alternative-tricount",
       "organiser-un-voyage-entre-amis",
     ],
   },
@@ -1451,7 +1471,7 @@ export const LANDING_PAGES: LandingPage[] = [
     ],
     screensTitle: "À quoi ça ressemble",
     screensLede:
-      "Deux écrans de l’application, à quelques semaines de son ouverture.",
+      "Deux écrans de l’application : le budget, et l’événement qui l’entoure.",
     screens: [
       {
         src: "/mockups/iphone_budget.svg",
@@ -1535,7 +1555,7 @@ export const LANDING_PAGES: LandingPage[] = [
     faq: [
       {
         q: "L’application est-elle gratuite ?",
-        a: "Oui. Yatu propose une version gratuite pour créer et organiser tes événements, budget partagé compris. Des options premium permettront plus tard d’accéder à davantage de possibilités ou de lever certaines limites.",
+        a: "Oui. Créer et organiser tes événements est gratuit, budget partagé compris, en une ou plusieurs devises. Seule la gestion chiffrée des documents est payante, avec Yatu Premium.",
       },
       {
         q: "Faut-il que tout le groupe installe l’application ?",
@@ -1566,8 +1586,8 @@ export const LANDING_PAGES: LandingPage[] = [
     },
     related: [
       "partager-les-depenses-entre-amis",
+      "alternative-tricount",
       "organiser-un-voyage-entre-amis",
-      "organiser-un-week-end-entre-amis",
     ],
   },
 
@@ -1610,7 +1630,7 @@ export const LANDING_PAGES: LandingPage[] = [
       },
     ],
     screensTitle: "À quoi ça ressemble",
-    screensLede: "Trois écrans de l’application, à quelques semaines de son ouverture.",
+    screensLede: "Trois écrans de l’application : la création, l’invitation et l’espace partagé.",
     screens: [
       {
         src: "/mockups/iphone_create_event.svg",
@@ -1707,11 +1727,11 @@ export const LANDING_PAGES: LandingPage[] = [
       },
       {
         q: "Combien de personnes peut-on inviter ?",
-        a: "Un week-end entre amis tient largement dans ce que permet la version gratuite. Pour les groupes de plusieurs dizaines de personnes - un WEI, un gala - la page BDE et associations décrit ce qui est prévu.",
+        a: "Autant que tu veux : un événement Yatu n’a pas de nombre maximum de participants. Pour un WEI ou un gala, la page BDE et associations décrit les outils prévus pour les organisateurs.",
       },
       {
         q: "L’application est-elle gratuite ?",
-        a: "Oui, dans sa version de base : créer un événement, inviter ton groupe et utiliser les modules. Des options premium viendront lever certaines limites, sans fermer ce qui est ouvert au lancement.",
+        a: "Oui : créer un événement, inviter ton groupe et utiliser les modules est gratuit. Seule la gestion chiffrée des documents est payante, avec Yatu Premium.",
       },
       {
         q: "Quand est-ce que je peux l’utiliser ?",
@@ -1726,8 +1746,8 @@ export const LANDING_PAGES: LandingPage[] = [
     },
     related: [
       "organiser-un-week-end-entre-amis",
+      "organiser-sans-groupe-whatsapp",
       "application-partage-depenses-entre-amis",
-      "organiser-un-week-end-au-ski",
     ],
   },
 
@@ -1770,7 +1790,7 @@ export const LANDING_PAGES: LandingPage[] = [
       },
     ],
     screensTitle: "À quoi ça ressemble",
-    screensLede: "Trois écrans de l’application, à quelques semaines de son ouverture.",
+    screensLede: "Trois écrans de l’application, du départ au retour.",
     screens: [
       {
         src: "/mockups/iphone_event.svg",
@@ -1867,6 +1887,14 @@ export const LANDING_PAGES: LandingPage[] = [
         a: "Oui. Plus le groupe est grand, plus l’écart se creuse avec une conversation classique : c’est à quinze que les décisions se perdent et que les comptes deviennent illisibles.",
       },
       {
+        q: "Peut-on noter des dépenses en devises étrangères ?",
+        a: "Oui : le budget de l’événement accepte plusieurs devises, pour noter chaque dépense dans la monnaie où elle a été payée.",
+      },
+      {
+        q: "Y a-t-il une durée maximale pour un voyage ?",
+        a: "Oui : un événement Yatu dure 14 jours au maximum. C’est assez pour la plupart des voyages entre amis, mais pas pour un tour du monde.",
+      },
+      {
         q: "Que se passe-t-il après le voyage ?",
         a: "L’événement reste consultable : les comptes soldés, les documents, le programme et l’album. C’est précisément ce qu’un fil de discussion ne rend pas au bout de six mois.",
       },
@@ -1879,8 +1907,329 @@ export const LANDING_PAGES: LandingPage[] = [
     },
     related: [
       "organiser-un-voyage-entre-amis",
-      "application-partage-depenses-entre-amis",
-      "organiser-un-week-end-au-ski",
+      "application-partage-photos-entre-amis",
+      "alternative-tricount",
+    ],
+  },
+
+  {
+    kind: "app",
+    slug: "application-organiser-anniversaire",
+    updated: "2026-10-08",
+    badge: "Anniversaire",
+    accent: ACCENT.coral,
+    icon: icon("heart"),
+    photo: "/assets/usecases/usage-cremaillere.jpg",
+    photoAlt: "Des amis arrivent chez leur hôte avec une plante et un gâteau",
+    h1: "L’application pour organiser un anniversaire à plusieurs",
+    title: "Application pour organiser un anniversaire entre amis - Yatu",
+    description:
+      "Une discussion cachée pour la surprise, le cadeau commun dans le budget, la liste du qui ramène quoi et l’album de la soirée. Gratuit sur iOS et Android.",
+    lede: "Un anniversaire à plusieurs, c’est deux groupes en un : celui qui prépare et celui qui découvre. Yatu les met dans le même événement, avec un salon que la personne fêtée ne voit pas, et tout ce que la fête demande autour.",
+    og: {
+      title: "La surprise se prépare dans l’événement, sans qu’elle le voie.",
+      subtitle: "Discussion cachée, cadeau commun, qui ramène quoi, photos de la fête.",
+    },
+    cardTitle: "Appli anniversaire",
+    cardSub: "La surprise dans l’événement, pas à côté.",
+    painsTitle: "Ce que les outils habituels font payer à une surprise",
+    pains: [
+      {
+        tool: "people",
+        title: "Deux groupes à tenir en parallèle",
+        desc: "Un groupe avec la personne fêtée, un autre sans elle : chaque message demande de vérifier où l’on écrit. Dans Yatu, il n’y a qu’un événement, et la discussion cachée vit à l’intérieur.",
+      },
+      {
+        tool: "budget",
+        title: "Le cadeau payé par celui qui a commandé",
+        desc: "L’organisateur passe commande, puis court après les remboursements pendant des semaines. Le budget de l’événement affiche ce que chacun doit sur le cadeau, et qui est déjà à jour.",
+      },
+      {
+        tool: "img",
+        title: "Les photos de la fête éparpillées",
+        desc: "Chacun a filmé le moment où elle a ouvert la porte, sous un angle différent. L’album de l’événement les réunit en qualité d’origine, pour elle comme pour les autres.",
+      },
+    ],
+    screensTitle: "À quoi ça ressemble",
+    screensLede: "Trois écrans de l’application, de la création de la fête aux souvenirs.",
+    screens: [
+      {
+        src: "/mockups/iphone_create_event.svg",
+        alt: "Écran de création d’un événement Yatu : le nom, les dates et le choix des modules à activer",
+        label: "La création",
+        caption: "Un nom, une date, et les modules qu’une fête demande.",
+      },
+      {
+        src: "/mockups/iphone_add_participants.svg",
+        alt: "Écran d’ajout de participants à un événement Yatu : le lien d’invitation et la liste des personnes déjà présentes",
+        label: "Les invités",
+        caption: "Le lien part, et la liste des présents se remplit.",
+      },
+      {
+        src: "/mockups/iphone_homepage.svg",
+        alt: "Écran d’accueil de Yatu : les événements en cours et à venir, et les albums des événements passés",
+        label: "Les souvenirs",
+        caption: "Après la fête, l’anniversaire rejoint tes souvenirs, avec son album.",
+      },
+    ],
+    stepsTitle: "De la première idée à l’album",
+    stepsLede:
+      "Ce que tu fais dans l’appli, étape par étape. La méthode elle-même - quand inviter, combien demander pour le cadeau - est dans le guide.",
+    steps: [
+      {
+        title: "Crée l’anniversaire et invite ceux qui préparent",
+        body: "Tu ouvres l’événement, tu choisis les modules, et tu envoies le lien aux complices. La personne fêtée peut rejoindre dès le départ si tu actives la discussion cachée, ou plus tard, quand il n’y a plus rien à cacher.",
+      },
+      {
+        title: "Active la discussion cachée",
+        body: "Un salon invisible pour une personne de l’événement : le groupe y parle du cadeau, du prétexte et de l’heure d’arrivée, pendant qu’elle voit l’adresse et l’horaire comme tout le monde.",
+      },
+      {
+        title: "Mets le cadeau dans le budget",
+        body: "La dépense du cadeau se partage entre ceux qui participent, pas forcément entre tous les invités. Chacun voit sa part, et tu n’as plus à relancer personne en message privé.",
+      },
+      {
+        title: "Ouvre la liste de la fête",
+        body: "Gâteau, bougies, boissons, enceinte : chacun coche ce qu’il apporte depuis son téléphone. Le jour J, ce qui manque se voit encore à temps pour passer au magasin.",
+      },
+      {
+        title: "Garde les photos de la soirée",
+        body: "Chacun dépose ses photos dans l’événement pendant la fête. Une fois la soirée passée et le cadeau remboursé, Yatu les rassemble dans un album souvenirs.",
+      },
+    ],
+    compareTitle: "Deux groupes de discussion, ou un seul événement",
+    compareLede:
+      "Comment se passe un anniversaire à plusieurs avec les outils de tous les jours, et ce qui change dans un événement Yatu.",
+    compareBefore: "Avec un groupe de discussion et des virements",
+    compare: [
+      {
+        need: "Parler de la surprise",
+        before: "Un groupe parallèle sans elle, et la peur permanente de se tromper de fenêtre.",
+        after: "Une discussion cachée dans l’événement, invisible pour elle.",
+      },
+      {
+        need: "Payer le cadeau",
+        before: "Une personne avance, puis réclame les virements un par un.",
+        after: "La dépense est partagée dans le budget ; chacun voit sa part et qui a réglé.",
+      },
+      {
+        need: "Savoir qui apporte quoi",
+        before: "Des « je m’occupe des boissons » perdus dans le fil.",
+        after: "Une liste où chaque ligne porte un nom, cochée en direct.",
+      },
+      {
+        need: "Donner l’adresse et l’heure",
+        before: "Un message à retrouver le jour J, ou à redemander.",
+        after: "Épinglées dans les infos clés de l’événement.",
+      },
+      {
+        need: "Garder les photos",
+        before: "Des photos compressées dans le fil, ou promises et jamais envoyées.",
+        after: "Un album dans l’événement, en qualité d’origine.",
+      },
+    ],
+    modulesTitle: "Les modules d’un anniversaire à plusieurs",
+    modulesLede: "Pour une fête, ces cinq modules font l’essentiel du travail.",
+    modules: ["secret", "budget", "liste", "infos", "img"],
+    moduleNotes: {
+      secret: "Le fil où se prépare la surprise. Invisible pour la personne fêtée, même quand elle fait partie de l’événement.",
+      budget: "Le cadeau commun et les courses, répartis entre ceux qui participent. Chacun voit ce qu’il doit, sans relance en privé.",
+      liste: "Le qui-ramène-quoi de la fête, avec un nom sur chaque ligne.",
+      infos: "L’adresse, l’heure d’arrivée des invités, le code de l’interphone : épinglés en haut de l’événement.",
+      img: "L’album de la fête, alimenté par tous les téléphones et gardé en qualité d’origine.",
+    },
+    faq: [
+      {
+        q: "Comment préparer une surprise dans Yatu sans que la personne le voie ?",
+        a: "Active la discussion cachée dans l’événement : c’est un salon invisible pour la personne fêtée. Elle peut faire partie de l’événement, voir l’adresse et l’heure, sans jamais lire ce qui s’y prépare.",
+      },
+      {
+        q: "Peut-on gérer le cadeau commun dans l’appli ?",
+        a: "Oui, dans le budget de l’événement : tu notes le prix du cadeau, qui l’a avancé et entre qui il se partage. Chacun voit sa part et ce qu’il reste à rembourser ; l’argent, lui, passe par vos moyens habituels.",
+      },
+      {
+        q: "Peut-on faire voter la date ou le restaurant ?",
+        a: "Oui : un sondage dans l’événement fait choisir le groupe entre plusieurs dates, restaurants ou activités, avec une clôture automatique si tu veux trancher à une heure précise.",
+      },
+      {
+        q: "Combien d’invités peut-on ajouter ?",
+        a: "Autant que tu veux : un événement Yatu n’a pas de nombre maximum de participants. Chaque invité installe l’appli pour rejoindre l’anniversaire.",
+      },
+      {
+        q: "L’application est-elle gratuite ?",
+        a: "Oui. Organiser l’anniversaire, inviter, voter, tenir le budget, faire la liste et partager les photos est gratuit. Seule la gestion chiffrée des documents est payante, avec Yatu Premium.",
+      },
+    ],
+    counterpart: {
+      slug: "organiser-un-anniversaire",
+      kicker: "Avant d’ouvrir l’appli",
+      label: "la méthode pour organiser un anniversaire surprise",
+      body: "Quand bloquer la date sans éveiller les soupçons, combien demander pour le cadeau, ce que coûte la fête par invité et les erreurs qui font fuiter la surprise : le guide complet, utile même sans application.",
+    },
+    related: [
+      "organiser-un-anniversaire",
+      "application-organiser-soiree-entre-amis",
+      "organiser-un-evjf",
+    ],
+  },
+
+  {
+    kind: "app",
+    slug: "application-organiser-soiree-entre-amis",
+    updated: "2026-10-08",
+    badge: "Soirée et sorties",
+    accent: ACCENT.lilac,
+    icon: icon("bubble"),
+    photo: "/assets/usecases/usage-match.jpg",
+    photoAlt: "Des amis supporters, écharpe au cou, partagent des chips en route pour un match",
+    h1: "L’application pour organiser une soirée ou une sortie entre amis",
+    title: "Application pour organiser une soirée entre amis - Yatu",
+    description:
+      "Un sondage pour la date, l’adresse épinglée, la liste du qui ramène quoi, les comptes et les photos de la soirée au même endroit. Gratuit sur iOS et Android.",
+    lede: "Une soirée se monte vite, et c’est justement pour ça qu’elle se monte mal : une date lancée dans le groupe, trois réponses, et le reste se règle à la dernière minute. Yatu donne à chaque soirée, concert ou match son propre espace, ouvert en deux minutes.",
+    og: {
+      title: "Une soirée, un espace, et chacun sait quoi apporter.",
+      subtitle: "Date votée, adresse épinglée, qui ramène quoi, comptes et photos.",
+    },
+    cardTitle: "Appli soirée entre amis",
+    cardSub: "Ouverte en deux minutes, rangée après.",
+    painsTitle: "Pourquoi les soirées se jouent à la dernière minute",
+    pains: [
+      {
+        tool: "calendar",
+        title: "Le soir qui ne se tranche jamais",
+        desc: "« Vendredi ou samedi ? » reste sans réponse tant que personne ne force le choix. Un sondage avec une heure de clôture tranche à ta place.",
+      },
+      {
+        tool: "pin",
+        title: "L’adresse redemandée à 21 h",
+        desc: "Le code de l’immeuble et l’étage sont dans un message d’il y a dix jours. Dans les infos clés, ils restent en haut de l’événement.",
+      },
+      {
+        tool: "budget",
+        title: "L’hôte qui paie pour tout le monde",
+        desc: "Celui qui reçoit fait les courses et n’ose pas réclamer. Le budget de la soirée répartit ce qu’il a payé entre ceux qui étaient là.",
+      },
+    ],
+    screensTitle: "À quoi ça ressemble",
+    screensLede: "Trois écrans de l’application, de la création de la soirée aux comptes du lendemain.",
+    screens: [
+      {
+        src: "/mockups/iphone_create_event.svg",
+        alt: "Écran de création d’un événement Yatu : le nom, les dates et le choix des modules à activer",
+        label: "En deux minutes",
+        caption: "Un nom, une date, et seulement les modules utiles ce soir-là.",
+      },
+      {
+        src: "/mockups/iphone_event.svg",
+        alt: "Écran d’un événement Yatu : le nom de l’événement, les participants, la description et les onglets Infos, Discussion et Budget",
+        label: "L’espace de la soirée",
+        caption: "Les participants, les infos pratiques et les onglets que la soirée demande.",
+      },
+      {
+        src: "/mockups/iphone_budget.svg",
+        alt: "Écran budget d’un événement Yatu : le total des dépenses, la part de chaque participant et la liste des dépenses avec le nom de celui qui a payé",
+        label: "Les comptes du lendemain",
+        caption: "Ce que l’hôte a avancé, et ce que chacun lui doit.",
+      },
+    ],
+    stepsTitle: "Une soirée montée dans l’appli",
+    stepsLede: "Cinq gestes, du sondage de date aux photos du lendemain.",
+    steps: [
+      {
+        title: "Ouvre la soirée et n’active que l’utile",
+        body: "Pour un dîner ou un apéro, la discussion, les infos clés et une liste suffisent. Le budget et l’album s’ajoutent si la soirée le demande, sans changer d’outil.",
+      },
+      {
+        title: "Fais voter le soir",
+        body: "Un sondage avec deux ou trois soirs possibles et une clôture automatique : à l’heure dite, la date est fixée, sans relance de ta part.",
+      },
+      {
+        title: "Épingle l’adresse et l’heure",
+        body: "L’adresse, le code, l’étage et l’heure à laquelle venir, en infos clés : visibles en haut de l’événement par tous les invités.",
+      },
+      {
+        title: "Laisse chacun choisir ce qu’il apporte",
+        body: "La liste de la soirée, avec un nom sur chaque ligne. L’hôte voit ce qui manque avant de faire ses courses, pas en ouvrant le frigo.",
+      },
+      {
+        title: "Solde et partage le lendemain",
+        body: "Les courses avancées sont dans le budget, et la part de chacun est déjà calculée. Les photos de la soirée attendent dans l’événement, en qualité d’origine.",
+      },
+    ],
+    compareTitle: "Le groupe de discussion, ou l’événement de la soirée",
+    compareLede:
+      "La plupart des soirées s’organisent dans le groupe de discussion habituel. Voilà ce qu’il tient bien, et ce qu’il laisse filer.",
+    compareBefore: "Dans le groupe de discussion habituel",
+    compare: [
+      {
+        need: "Choisir le soir",
+        before: "Un sondage qui reste ouvert, et que la moitié du groupe ne voit pas passer.",
+        after: "Un sondage dans l’événement, clos automatiquement à l’heure choisie.",
+      },
+      {
+        need: "Donner l’adresse",
+        before: "Un message que chacun redemande en arrivant.",
+        after: "Épinglée en infos clés pour toute la soirée.",
+      },
+      {
+        need: "Répartir les courses",
+        before: "Des promesses dans le fil, et deux sacs de chips de trop.",
+        after: "Une liste où chaque ligne a un nom.",
+      },
+      {
+        need: "Rembourser l’hôte",
+        before: "Un « je te dois combien ? » qui reste sans suite.",
+        after: "Le budget calcule la part de chacun.",
+      },
+      {
+        need: "Partager les photos",
+        before: "Compressées dans le fil, mêlées aux messages du lendemain.",
+        after: "Rangées dans l’événement, en qualité d’origine.",
+      },
+    ],
+    modulesTitle: "Les modules qui font tourner une soirée",
+    modulesLede: "Pour une soirée, ces modules suffisent - et tu n’actives que ceux qui servent.",
+    modules: ["chat", "infos", "liste", "budget", "img"],
+    moduleNotes: {
+      chat: "La conversation de cette soirée seulement : elle ne se perd pas dans le groupe où l’on parle de tout le reste.",
+      infos: "L’adresse, l’étage, le code et l’heure, en haut de l’événement : plus personne ne les redemande sur le palier.",
+      liste: "Boissons, apéritif, dessert, glaçons : chacun met son nom sur une ligne avant de passer au magasin.",
+      budget: "Les courses de l’hôte, partagées entre les présents, et ce que chacun lui doit le lendemain.",
+      img: "Les photos de la soirée, déposées par tous et gardées en qualité d’origine.",
+    },
+    faq: [
+      {
+        q: "Quelle application pour organiser une soirée entre amis ?",
+        a: "Pour une soirée simple, le groupe de discussion habituel peut suffire. Si tu veux faire voter la date, répartir ce que chacun apporte, partager les frais et garder les photos au même endroit, Yatu ouvre un espace dédié à la soirée, gratuitement, sur iPhone et Android.",
+      },
+      {
+        q: "Peut-on organiser une sortie, pas seulement une soirée chez soi ?",
+        a: "Oui. Un concert, un match, un restaurant ou un bowling s’organisent de la même façon : un sondage pour la date, les infos pratiques épinglées, et le budget si quelqu’un avance les places.",
+      },
+      {
+        q: "Faut-il que tous les invités installent l’appli ?",
+        a: "Oui : chaque invité installe Yatu et rejoint la soirée par le lien que tu lui envoies. Pour un groupe qui ne veut rien installer, un événement dans un groupe WhatsApp reste une bonne option.",
+      },
+      {
+        q: "Combien d’amis peut-on inviter ?",
+        a: "Il n’y a pas de nombre maximum de participants dans un événement Yatu, de la soirée à six au grand anniversaire.",
+      },
+      {
+        q: "L’application est-elle gratuite ?",
+        a: "Oui. Créer la soirée, inviter, voter, faire la liste, partager les frais et les photos ne coûte rien. Seule la gestion chiffrée des documents est payante.",
+      },
+    ],
+    counterpart: {
+      slug: "organiser-une-soiree-entre-amis",
+      kicker: "Sans appli, ça marche aussi",
+      label: "la checklist pour organiser une soirée en une heure",
+      body: "Comment obtenir des réponses fermes, combien prévoir par personne, quoi demander à chacun d’apporter et comment solder les comptes le lendemain : la méthode, applicable tout de suite.",
+    },
+    related: [
+      "organiser-une-soiree-entre-amis",
+      "application-organiser-anniversaire",
+      "meilleures-applications-organiser-evenement-entre-amis",
     ],
   },
 

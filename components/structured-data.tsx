@@ -7,6 +7,7 @@ import {
   YATU_REVEAL_SCREENS,
   faqAnswerText,
 } from "@/lib/content";
+import { ABOUT, ABOUT_PATH, ABOUT_PROFILES, ABOUT_UPDATED } from "@/lib/about-content";
 import { type ComparisonPage, appAnchor } from "@/lib/comparison-content";
 import { GUIDE_PAGES, LANDING_INDEX_PATH, type LandingPage } from "@/lib/landing-content";
 import type { Crumb } from "@/lib/routes";
@@ -64,7 +65,7 @@ export function SiteStructuredData() {
     logo: absoluteUrl("/icon-512.png"),
     areaServed: "FR",
     knowsLanguage: "fr",
-    sameAs: ["https://www.instagram.com/yatu_app/", "https://www.tiktok.com/@yatu_app"],
+    sameAs: ABOUT_PROFILES.map((profile) => profile.href),
     parentOrganization: { "@id": PUBLISHER_ID },
   };
 
@@ -115,7 +116,25 @@ export function BreadcrumbStructuredData({ trail }: { trail: Crumb[] }) {
  * rating snippets gathered on another site.
  */
 export function HomeStructuredData() {
-  const application = {
+  const faq = {
+    "@type": "FAQPage",
+    "@id": absoluteUrl("/#faq"),
+    mainEntity: FAQ.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: faqAnswerText(item) },
+    })),
+  };
+
+  return <JsonLd data={graph(applicationNode(), faq)} />;
+}
+
+/**
+ * The app itself, under one @id. Declared in full on the two pages that are
+ * about it - the home page and the identity card - and pointed at elsewhere.
+ */
+function applicationNode() {
+  return {
     "@type": "SoftwareApplication",
     "@id": absoluteUrl("/#app"),
     name: SITE_NAME,
@@ -143,18 +162,40 @@ export function HomeStructuredData() {
     publisher: { "@id": ORGANIZATION_ID },
     isPartOf: { "@id": WEBSITE_ID },
   };
+}
+
+/**
+ * /qu-est-ce-que-yatu: an AboutPage whose subject is the brand and whose main
+ * entity is the app, plus the questions printed on the page.
+ */
+export function AboutStructuredData({ trail }: { trail: Crumb[] }) {
+  const url = absoluteUrl(ABOUT_PATH);
+
+  const aboutPage = {
+    "@type": "AboutPage",
+    "@id": url,
+    url,
+    name: ABOUT.h1,
+    description: ABOUT.lede,
+    inLanguage: "fr-FR",
+    dateModified: ABOUT_UPDATED,
+    isPartOf: { "@id": WEBSITE_ID },
+    about: { "@id": ORGANIZATION_ID },
+    mainEntity: { "@id": absoluteUrl("/#app") },
+    breadcrumb: breadcrumbNode(trail),
+  };
 
   const faq = {
     "@type": "FAQPage",
-    "@id": absoluteUrl("/#faq"),
-    mainEntity: FAQ.map((item) => ({
+    "@id": `${url}#faq`,
+    mainEntity: ABOUT.faq.map((item) => ({
       "@type": "Question",
       name: item.q,
-      acceptedAnswer: { "@type": "Answer", text: faqAnswerText(item) },
+      acceptedAnswer: { "@type": "Answer", text: item.a },
     })),
   };
 
-  return <JsonLd data={graph(application, faq)} />;
+  return <JsonLd data={graph(aboutPage, applicationNode(), faq)} />;
 }
 
 /**

@@ -9,6 +9,8 @@ import { SectionHeading } from "@/components/section-heading";
 import { LandingIndexStructuredData } from "@/components/structured-data";
 import { ACCENT, CTA } from "@/lib/content";
 import { USAGES_DECOR } from "@/lib/decor";
+import { RelatedCard } from "@/components/landing/guide-page";
+import { COMPARISON_PAGES } from "@/lib/comparison-content";
 import { GUIDE_PAGES, landingPath } from "@/lib/landing-content";
 import { HOME_CRUMB, GUIDES_CRUMB, ROUTES } from "@/lib/routes";
 import { pageMetadata } from "@/lib/site";
@@ -215,6 +217,27 @@ export default function Page() {
                 </span>
               </NavLink>
             ))}
+          </div>
+
+          {/* The other question a reader of these guides has: which tool. */}
+          <div style={{ marginTop: "clamp(56px,7vw,84px)" }}>
+            <SectionHeading
+              badge="Choisir une application"
+              badgeBg={ACCENT.sky}
+              title="Les comparatifs"
+              lede="WhatsApp, Doodle, Tricount ou une appli dédiée : ce que fait chaque outil, sur pièces."
+              titleMaxCh={22}
+              ledeMaxCh={52}
+              marginBottom="clamp(28px,4vw,40px)"
+            />
+            <div
+              data-reveal="stagger"
+              style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(240px,100%),1fr))", gap: 14 }}
+            >
+              {COMPARISON_PAGES.map((page) => (
+                <RelatedCard key={page.slug} slug={page.slug} />
+              ))}
+            </div>
           </div>
 
           <SectionCta

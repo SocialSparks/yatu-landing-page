@@ -145,6 +145,23 @@ const TRICOUNT_SOURCES: ComparisonSource[] = [
   { label: "FAQ", href: "https://help.tricount.com/articles/tricount-faqs" },
 ];
 
+const DOODLE_PRICE = "Gratuit avec un sondage de groupe ; formules payantes Pro et Team (tarifs sur doodle.com).";
+const DOODLE_SOURCES: ComparisonSource[] = [
+  { label: "formules et tarifs", href: "https://doodle.com/fr/premium/" },
+  { label: "sondages", href: "https://doodle.com/fr/product/polls/" },
+  { label: "application mobile", href: "https://doodle.com/fr/doodle-mobile-app-change/" },
+  {
+    label: "sondage de groupe",
+    href: "https://help.doodle.com/en/articles/9457353-how-do-i-create-a-group-poll",
+  },
+];
+
+const TO_GATHER_SOURCES: ComparisonSource[] = [
+  { label: "site officiel", href: "https://to-gather.io" },
+  { label: "fiche App Store", href: "https://apps.apple.com/fr/app/to-gather-on-se-voit-quand/id6756927610" },
+  { label: "fiche Google Play", href: "https://play.google.com/store/apps/details?id=app.togather.mobile" },
+];
+
 /* ── The pages ───────────────────────────────────────────────────────── */
 
 export const COMPARISON_PAGES: ComparisonPage[] = [
@@ -214,17 +231,9 @@ export const COMPARISON_PAGES: ComparisonPage[] = [
           "L’application mobile est en pause et ne se télécharge plus sur les stores : tout passe par le navigateur.",
           "Ni discussion, ni budget, ni listes, ni photos dans ses pages produit : le reste se gère ailleurs.",
         ],
-        price: "Gratuit avec un sondage de groupe ; formules payantes Pro et Team (tarifs sur doodle.com).",
+        price: DOODLE_PRICE,
         platforms: "Navigateur, sur ordinateur et sur mobile.",
-        sources: [
-          { label: "formules et tarifs", href: "https://doodle.com/fr/premium/" },
-          { label: "sondages", href: "https://doodle.com/fr/product/polls/" },
-          { label: "application mobile", href: "https://doodle.com/fr/doodle-mobile-app-change/" },
-          {
-            label: "sondage de groupe",
-            href: "https://help.doodle.com/en/articles/9457353-how-do-i-create-a-group-poll",
-          },
-        ],
+        sources: DOODLE_SOURCES,
       },
       {
         name: "Tricount",
@@ -263,14 +272,7 @@ export const COMPARISON_PAGES: ComparisonPage[] = [
         ],
         price: "Gratuit.",
         platforms: "iPhone et Android ; réponse aux invitations depuis un navigateur.",
-        sources: [
-          { label: "site officiel", href: "https://to-gather.io" },
-          { label: "fiche App Store", href: "https://apps.apple.com/fr/app/to-gather-on-se-voit-quand/id6756927610" },
-          {
-            label: "fiche Google Play",
-            href: "https://play.google.com/store/apps/details?id=app.togather.mobile",
-          },
-        ],
+        sources: TO_GATHER_SOURCES,
       },
       {
         name: "Yatu",
@@ -448,6 +450,7 @@ export const COMPARISON_PAGES: ComparisonPage[] = [
     ],
     related: [
       "alternative-tricount",
+      "alternative-doodle",
       "organiser-sans-groupe-whatsapp",
       "application-partage-photos-entre-amis",
     ],
@@ -1051,6 +1054,246 @@ export const COMPARISON_PAGES: ComparisonPage[] = [
       "meilleures-applications-organiser-evenement-entre-amis",
       "organiser-un-voyage-entre-amis",
       "organiser-une-soiree-entre-amis",
+    ],
+  },
+
+  {
+    kind: "comparison",
+    slug: "alternative-doodle",
+    updated: "2026-10-08",
+    checked: CHECKED,
+    badge: "Alternative à Doodle",
+    accent: ACCENT.apricot,
+    icon: icon("calendar"),
+    photo: "/assets/usecases/usage-rando.jpg",
+    photoAlt: "Des randonneurs consultent une carte, assis sur un rocher en montagne",
+    h1: "Alternative à Doodle : comment faire voter ses amis pour une date ?",
+    title: "Alternative à Doodle pour choisir une date entre amis - Yatu",
+    description:
+      "Doodle, Framadate, WhatsApp, To Gather ou Yatu : comment faire voter un groupe d’amis pour une date, un lieu ou une activité, avec ou sans application.",
+    lede: "Doodle sert d’abord à caler des réunions, et c’est ce qu’il fait le mieux. Entre amis, la date n’est souvent que la première décision : viennent ensuite le lieu, l’activité, le budget. Le bon outil dépend de ce qui suit le vote.",
+    og: {
+      title: "Faire voter ses amis pour une date.",
+      subtitle: "Doodle, Framadate, WhatsApp, To Gather et Yatu comparés.",
+    },
+    cardTitle: "Alternative à Doodle",
+    cardSub: "Voter une date, et la suite.",
+    answerTitle: "Pour voter sans rien installer, reste dans le navigateur",
+    answer: [
+      "Si ton groupe ne veut rien installer, un sondage dans le navigateur reste le plus simple. Doodle permet de voter sans compte, mais sa formule gratuite se limite à un sondage de groupe par compte et à dix créneaux, et son application mobile ne se télécharge plus. Framadate, de l’association française Framasoft, est gratuit, sans publicité et sans inscription.",
+      "Si le groupe est déjà sur WhatsApp, un sondage dans la discussion suffit souvent : une ou plusieurs réponses et, depuis août 2026, une heure de clôture et des votes anonymes. To Gather, lui, trouve la date en superposant les agendas de chacun, ou par un vote sur des créneaux.",
+      "Si la date n’est que la première décision d’un week-end ou d’un voyage, Yatu fait voter le groupe dans l’événement - date, lieu ou activité, avec clôture automatique - puis garde le reste au même endroit : programme, budget, listes et photos. Chaque participant installe l’appli.",
+    ],
+    tableTitle: "Cinq façons de faire voter un groupe",
+    tableLede:
+      "D’après les pages officielles de chaque outil. « Non documenté » : la fonction n’apparaît pas dans ses pages à la date de vérification.",
+    apps: [
+      {
+        name: "Doodle",
+        summary:
+          "Un outil de planification en ligne : un sondage de créneaux, puis une invitation d’agenda une fois la date choisie.",
+        bestFor: "Caler une date avec des personnes qui ne veulent créer aucun compte.",
+        strengths: [
+          "Vote sans compte Doodle, depuis n’importe quel navigateur.",
+          "Jusqu’à 1 000 participants par sondage.",
+          "Invitation d’agenda envoyée une fois le créneau choisi.",
+        ],
+        limits: [
+          "Un seul sondage de groupe par compte en formule gratuite, et dix créneaux au maximum.",
+          "Application mobile en pause, retirée des stores : tout passe par le navigateur.",
+          "Date limite et rappels réservés aux formules payantes.",
+          "Ni discussion, ni budget, ni photos dans ses pages produit.",
+        ],
+        price: DOODLE_PRICE,
+        platforms: "Navigateur, sur ordinateur et sur mobile.",
+        sources: DOODLE_SOURCES,
+      },
+      {
+        name: "Framadate",
+        summary:
+          "Le service de sondages en ligne de Framasoft, une association française à but non lucratif financée principalement par les dons.",
+        bestFor: "Les groupes qui veulent un outil gratuit, sans publicité et sans inscription.",
+        strengths: [
+          "Gratuit, sans publicité, sans inscription préalable.",
+          "Sondages de dates pour trouver un créneau, ou sondages classiques pour choisir parmi des options.",
+          "Utilisable depuis un smartphone, dans le navigateur.",
+        ],
+        limits: [
+          "Pas d’application mobile mentionnée sur son site.",
+          "Un sondage reste actif 180 jours par défaut, puis il est supprimé deux mois plus tard s’il n’est pas prolongé.",
+          "Uniquement des sondages : le reste de l’organisation se fait ailleurs.",
+        ],
+        price: "Gratuit, financé par les dons à Framasoft.",
+        platforms: "Navigateur, sur ordinateur et sur smartphone.",
+        sources: [
+          { label: "site officiel", href: "https://framadate.org/" },
+          { label: "documentation", href: "https://docs.framasoft.org/fr/framadate/" },
+        ],
+      },
+      {
+        name: "WhatsApp",
+        summary: "La messagerie de groupe, dont les sondages se créent directement dans la discussion.",
+        bestFor: "Trancher vite une question dans un groupe qui existe déjà.",
+        strengths: [
+          "Sondage créé en quelques secondes, dans la discussion où tout le monde est déjà.",
+          "Une ou plusieurs réponses autorisées, au choix.",
+          "Depuis août 2026 : heure de clôture et votes anonymes possibles.",
+        ],
+        limits: [
+          "Chaque votant doit avoir WhatsApp et faire partie de la discussion.",
+          "Les réglages d’un sondage se choisissent à sa création.",
+          "Ni budget, ni listes, ni album d’événement dans sa documentation.",
+        ],
+        price: "Gratuit.",
+        platforms: WHATSAPP_PLATFORMS,
+        sources: WHATSAPP_SOURCES,
+      },
+      {
+        name: "To Gather",
+        summary: "Une application de sorties entre amis construite autour d’une question : quand est-ce qu’on se voit ?",
+        bestFor: "Trouver le soir où tout le monde est libre, sans tableau de créneaux à remplir.",
+        strengths: [
+          "Superpose les agendas de chacun en ne gardant que « libre » ou « occupé ».",
+          "Vote possible sur plusieurs créneaux.",
+          "Réponse depuis un lien, sans compte ni installation.",
+          "Création d’un événement à la voix.",
+        ],
+        limits: [
+          "La discussion, les rappels et les photos passent par l’application.",
+          "Budget, listes et documents non mentionnés sur son site.",
+        ],
+        price: "Gratuit.",
+        platforms: "iPhone et Android ; réponse aux invitations depuis un navigateur.",
+        sources: TO_GATHER_SOURCES,
+      },
+      {
+        name: "Yatu",
+        isYatu: true,
+        summary:
+          "Une application d’organisation d’événements où le vote est une étape de l’événement, pas un outil à part.",
+        bestFor: "Les week-ends, voyages et anniversaires où la date ouvre une série de décisions.",
+        strengths: [
+          "Sondages dans l’événement : date, lieu ou activité, avec clôture automatique.",
+          "Un vote de date dédié pour caler le moment.",
+          "La décision prise, programme, budget, listes et photos suivent au même endroit.",
+          "Pas de nombre maximum de participants.",
+        ],
+        limits: [
+          "Chaque votant installe l’appli et crée un compte.",
+          "Pas de version web.",
+          "Pour un sondage ponctuel, un outil web demande moins d’effort.",
+        ],
+        price: YATU_PRICE,
+        platforms: YATU_PLATFORMS,
+        sources: YATU_SOURCES,
+      },
+    ],
+    rows: [
+      {
+        criterion: "Prix",
+        cells: [
+          "Gratuit pour un sondage de groupe ; Pro et Team payants",
+          "Gratuit, sans publicité",
+          "Gratuit",
+          "Gratuit",
+          "Gratuit",
+        ],
+      },
+      {
+        criterion: "Compte pour voter",
+        cells: ["Non", "Non, sans inscription", "Oui, compte WhatsApp", "Non, réponse par lien", "Oui, appli et compte"],
+      },
+      {
+        criterion: "Plateformes",
+        cells: [
+          "Navigateur (appli mobile retirée des stores)",
+          "Navigateur, compatible smartphone",
+          "iPhone, Android, ordinateur, web",
+          "iPhone, Android, lien web",
+          "iPhone, Android",
+        ],
+      },
+      {
+        criterion: "Ce qu’on fait voter",
+        cells: [
+          "Des créneaux (10 au maximum en gratuit)",
+          "Des dates, ou des options au choix",
+          "Toute question, à une ou plusieurs réponses",
+          "Des créneaux, ou les agendas superposés",
+          "Date, lieu, activité",
+        ],
+      },
+      {
+        criterion: "Clôture du vote",
+        cells: [
+          "Date limite avec les formules payantes",
+          "Sondage actif 180 jours par défaut",
+          "Heure de clôture possible",
+          "Non documenté",
+          "Clôture automatique",
+        ],
+      },
+      {
+        criterion: "Après le vote",
+        cells: [
+          "Invitation d’agenda",
+          "Non documenté",
+          "La discussion continue",
+          "Réponses, discussion, photos de la soirée",
+          "Programme, budget, listes, documents et album",
+        ],
+      },
+    ],
+    choiceTitle: "Quel outil pour ton vote",
+    choices: [
+      {
+        need: "Personne ne veut rien installer",
+        pick: "Framadate ou Doodle, dans le navigateur, sans compte pour voter.",
+      },
+      {
+        need: "Le groupe est déjà sur WhatsApp",
+        pick: "Un sondage dans la discussion, avec une heure de clôture pour que la décision tombe.",
+      },
+      {
+        need: "Tu cherches le soir où tout le monde est libre",
+        pick: "To Gather, qui superpose les agendas en ne gardant que « libre » ou « occupé ».",
+      },
+      {
+        need: "La date n’est que le début d’un week-end ou d’un voyage",
+        pick: "Yatu : le vote se fait dans l’événement, et le programme, le budget et les photos suivent au même endroit.",
+      },
+    ],
+    detailTitle: "Les cinq outils en détail",
+    method: [
+      "Cette page est écrite par l’équipe de Yatu, l’un des cinq outils comparés. Les informations sur Doodle, Framadate, WhatsApp et To Gather viennent de leurs pages officielles, citées sous chaque fiche, et nous disons quand un outil web suffit.",
+      "Relevé fait le 8 octobre 2026. Les tarifs de Doodle s’affichent en dollars par défaut sur son site : nous renvoyons à sa page de tarifs plutôt que de les convertir.",
+    ],
+    faq: [
+      {
+        q: "Quelle application permet de voter pour une date, un lieu ou une activité ?",
+        a: "Plusieurs : Doodle et Framadate pour un sondage dans le navigateur, sans compte ; WhatsApp pour un sondage dans la discussion du groupe ; Yatu pour un vote dans l’événement, avec clôture automatique, suivi du programme, du budget et des photos.",
+      },
+      {
+        q: "Doodle a-t-il encore une application mobile ?",
+        a: "Non. D’après Doodle, son application mobile est en pause et ne peut plus être téléchargée sur les stores ; les sondages se font depuis le navigateur, sur ordinateur ou sur mobile.",
+      },
+      {
+        q: "Doodle est-il gratuit ?",
+        a: "En partie : la formule gratuite permet un sondage de groupe par compte, avec dix créneaux au maximum. Les formules Pro et Team sont payantes.",
+      },
+      {
+        q: "Existe-t-il une alternative gratuite et française à Doodle ?",
+        a: "Oui : Framadate, proposé par l’association Framasoft, est gratuit, sans publicité et sans inscription. Un sondage y reste actif 180 jours par défaut.",
+      },
+      {
+        q: "Peut-on voter dans Yatu sans que tout le monde ait l’appli ?",
+        a: "Non : pour voter dans un événement Yatu, chaque participant doit avoir installé l’application. Pour un sondage ponctuel avec des personnes qui n’ont pas Yatu, un outil web comme Framadate est plus adapté.",
+      },
+    ],
+    related: [
+      "meilleures-applications-organiser-evenement-entre-amis",
+      "organiser-sans-groupe-whatsapp",
+      "application-organiser-soiree-entre-amis",
     ],
   },
 ];

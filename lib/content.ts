@@ -1,3 +1,5 @@
+import { ROUTES } from "@/lib/routes";
+
 /**
  * All the words the home page says, in one file, so the section components
  * stay markup-only and no sentence gets written twice.
@@ -744,6 +746,12 @@ export const FAQ: FaqEntry[] = [
   {
     q: "C’est quoi Yatu, en une phrase ?",
     a: "Yatu est l’application qui réunit au même endroit tout ce qu’un groupe doit organiser, décider et partager autour d’un événement entre amis.",
+    link: {
+      href: ROUTES.about,
+      label: "Yatu en bref",
+      before: "Les faits, les prix et les limites sont sur la page ",
+      after: ".",
+    },
   },
   {
     q: "Où télécharger Yatu ?",
