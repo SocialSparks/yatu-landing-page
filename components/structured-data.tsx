@@ -1,4 +1,12 @@
-import { FAQ, LAUNCH_DATE, MODULES, faqAnswerText } from "@/lib/content";
+import {
+  APP_STORE_URL,
+  FAQ,
+  LAUNCH_DATE,
+  MODULES,
+  PLAY_STORE_URL,
+  YATU_REVEAL_SCREENS,
+  faqAnswerText,
+} from "@/lib/content";
 import { GUIDE_PAGES, LANDING_INDEX_PATH, type LandingPage } from "@/lib/landing-content";
 import type { Crumb } from "@/lib/routes";
 import {
@@ -45,9 +53,15 @@ export function SiteStructuredData() {
     "@type": "Organization",
     "@id": ORGANIZATION_ID,
     name: SITE_NAME,
+    // The sentence an assistant can quote when asked "qu'est-ce que Yatu ?" -
+    // the brand alone is too short a word to be told apart from its homonyms.
+    description:
+      `Yatu est une application mobile française et gratuite, éditée par ${PUBLISHER}, pour organiser un événement entre amis : discussion, planning, budget partagé, listes, documents et album photo réunis dans un même espace.`,
     url: SITE_URL,
     email: CONTACT_EMAIL,
     logo: absoluteUrl("/icon-512.png"),
+    areaServed: "FR",
+    knowsLanguage: "fr",
     sameAs: ["https://www.instagram.com/yatu_app/", "https://www.tiktok.com/@yatu_app"],
     parentOrganization: { "@id": PUBLISHER_ID },
   };
@@ -110,6 +124,18 @@ export function HomeStructuredData() {
     description:
       "Application d’organisation d’événements entre amis : discussion, budget partagé, listes et tâches, planning, documents et album photo dans un même espace.",
     featureList: MODULES.map((module) => module.label),
+    // The store listings are the same app: sameAs ties them to this node, and
+    // downloadUrl tells an assistant where to send someone who asks.
+    sameAs: [APP_STORE_URL, PLAY_STORE_URL],
+    downloadUrl: [APP_STORE_URL, PLAY_STORE_URL],
+    installUrl: [APP_STORE_URL, PLAY_STORE_URL],
+    // The two screens rendered on the home page, in their published variant.
+    screenshot: YATU_REVEAL_SCREENS.map((screen) => ({
+      "@type": "ImageObject",
+      url: absoluteUrl(screen.src.replace(/\.svg$/, "-836.webp")),
+      caption: screen.alt,
+    })),
+    countriesSupported: "FR",
     datePublished: LAUNCH_DATE,
     offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
     publisher: { "@id": ORGANIZATION_ID },

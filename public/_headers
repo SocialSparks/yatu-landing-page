@@ -1,0 +1,14 @@
+# En-têtes des fichiers statiques, appliqués par Cloudflare avant le Worker.
+# Seuls les fichiers servis tels quels sont concernés : une réponse produite
+# par le Worker (pages, API) ignore ce fichier.
+
+# Les représentations Markdown destinées aux agents, générées par
+# scripts/generate-agent-content.mjs. Le charset évite des accents illisibles
+# chez les clients qui supposent l'ASCII. Le noindex garde ces copies hors des
+# résultats de recherche : c'est la page HTML qui doit y figurer, pas son double.
+/agent-markdown/*
+  Content-Type: text/markdown; charset=utf-8
+  X-Robots-Tag: noindex
+
+/llms.txt
+  Content-Type: text/plain; charset=utf-8

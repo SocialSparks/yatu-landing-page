@@ -25,9 +25,13 @@ function sitemapPaths(xml) {
     .map((element) => new URL(element.text.trim()).pathname);
 }
 
+/** Same rule as agentMarkdownPath() in lib/site.ts, which links each page to its copy. */
+function markdownName(pathname) {
+  return pathname === "/" ? "index" : pathname.replace(/^\/+|\/+$/g, "");
+}
+
 function outputPath(pathname) {
-  const relative = pathname === "/" ? "index" : pathname.replace(/^\/+|\/+$/g, "");
-  return path.join(TEMP_DIR, `${relative}.md`);
+  return path.join(TEMP_DIR, `${markdownName(pathname)}.md`);
 }
 
 function yamlString(value) {
@@ -86,9 +90,12 @@ function llmsDocument(pages) {
     "",
     "## Pages",
     "",
-    ...pages.map(
-      ({ title, description, canonical }) => `- [${title}](${canonical}): ${description}`,
-    ),
+    // The page a reader should land on comes first; the Markdown copy follows
+    // for the agents that would rather not parse the HTML.
+    ...pages.map(({ pathname, title, description, canonical }) => {
+      const copy = new URL(`/agent-markdown/${markdownName(pathname)}.md`, canonical).toString();
+      return `- [${title}](${canonical}): ${description} ([Markdown](${copy}))`;
+    }),
     "",
   ].join("\n");
 }

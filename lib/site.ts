@@ -112,6 +112,14 @@ export const formatDateFr = (iso: string) => {
 };
 
 /**
+ * Where the Markdown copy of an indexable page is published, for agents. The
+ * files are generated before each build by scripts/generate-agent-content.mjs,
+ * which spells the same rule, and served as static assets - no Worker code runs.
+ */
+export const agentMarkdownPath = (path: string) =>
+  `/agent-markdown/${path === "/" ? "index" : path.replace(/^\/+|\/+$/g, "")}.md`;
+
+/**
  * One page’s metadata: unique title and description, canonical URL, and the
  * social cards that quote them. `title` is absolute - each page owns its full
  * <title> rather than inheriting the layout template.
@@ -137,7 +145,13 @@ export function pageMetadata({
   return {
     title: { absolute: title },
     description,
-    alternates: { canonical: path },
+    alternates: {
+      canonical: path,
+      // The Markdown copy only exists for the pages listed in the sitemap.
+      ...(SITE_PAGES.some((page) => page.path === path)
+        ? { types: { "text/markdown": agentMarkdownPath(path) } }
+        : {}),
+    },
     // Spread, not `robots: undefined`: a key present with an undefined value
     // still overrides the layout, and the page would lose the googleBot
     // directives (max-image-preview:large…) declared there.

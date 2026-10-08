@@ -2,7 +2,16 @@ import type {MetadataRoute} from "next";
 import {absoluteUrl} from "@/lib/site";
 
 /**
- * Crawlers qui collectent la page pour entraîner un modèle.
+ * Crawlers bloqués partout.
+ *
+ * Il ne reste ici que ceux qui n'apportent rien à Yatu en échange. Les crawlers
+ * d'entraînement des grands assistants (GPTBot, ClaudeBot, Google-Extended,
+ * Applebot-Extended, CCBot) sont désormais autorisés, par la règle `*` : pour
+ * une marque lancée en septembre 2026, être absent de leurs données veut dire
+ * que ChatGPT, Claude ou Gemini ne sauront jamais d'eux-mêmes ce qu'est Yatu.
+ * Google-Extended en particulier ne gouverne pas que l'entraînement : il coupe
+ * aussi le *grounding* de Gemini, c'est-à-dire l'usage des pages pour répondre
+ * en temps réel (les AI Overviews, elles, passent par Googlebot).
  *
  * Cette liste reprend celle que Cloudflare injectait via son « managed
  * robots.txt » (AI Crawl Control), maintenant désactivé : deux systèmes
@@ -11,27 +20,17 @@ import {absoluteUrl} from "@/lib/site";
  * les autres ne gardent que le premier - et nos `Disallow` passaient alors à
  * la trappe. Un seul émetteur, plus d'ambiguïté.
  *
- * Ne pas confondre avec les bots de *citation*, volontairement absents d'ici :
- * OAI-SearchBot et ChatGPT-User (OpenAI), Claude-SearchBot et Claude-User
- * (Anthropic), PerplexityBot. Ceux-là vont chercher la page pour la citer et
- * renvoyer un lien dans une réponse - c'est de l'acquisition, on les laisse
- * passer par la règle `*`. Bloquer l'entraînement n'oblige pas à se rendre
- * invisible dans les réponses IA.
- *
- * Applebot-Extended et Google-Extended ne sont que des jetons d'opt-out
- * d'entraînement : ils n'ont aucun effet sur l'indexation par Apple ou Google.
+ * Les bots de *citation* n'ont jamais été bloqués : OAI-SearchBot et
+ * ChatGPT-User (OpenAI), Claude-SearchBot et Claude-User (Anthropic),
+ * PerplexityBot. Ils vont chercher la page pour la citer et renvoyer un lien
+ * dans une réponse.
  */
-const AI_TRAINING_CRAWLERS = [
+const BLOCKED_CRAWLERS = [
   "Amazonbot",
-  "Applebot-Extended",
   "Bytespider",
-  "CCBot",
-  "ClaudeBot",
   // Le crawler du produit Browser Rendering de Cloudflare, que des tiers
   // utilisent pour scraper. Hérité de la liste Cloudflare, gardé tel quel.
   "CloudflareBrowserRenderingCrawler",
-  "GPTBot",
-  "Google-Extended",
   "meta-externalagent",
 ];
 
@@ -51,7 +50,7 @@ export default function robots(): MetadataRoute.Robots {
       },
       // Un groupe nommé remplace la règle `*` pour ces bots au lieu de s'y
       // ajouter : le `Disallow: /` couvre déjà tout le reste.
-      { userAgent: AI_TRAINING_CRAWLERS, disallow: "/" },
+      { userAgent: BLOCKED_CRAWLERS, disallow: "/" },
     ],
     sitemap: absoluteUrl("/sitemap.xml"),
     // Pas de `host` : directive propriétaire Yandex, jamais lue par Google ni

@@ -65,7 +65,7 @@ les contrôles de production.
 | `npm run cf-typegen` | Régénère les types des bindings déclarés dans Wrangler. |
 | `npm run typecheck` | Vérifie les types TypeScript sans écrire de fichiers. |
 | `npm run generate:agents` | Régénère `/llms.txt` et les variantes Markdown. |
-| `npm run check:agents` | Teste les en-têtes `Link`, `Vary` et la négociation Markdown d’un build. |
+| `npm run check:agents` | Vérifie sur un build les copies Markdown, leurs liens `alternate`, `/llms.txt` et l’en-tête `Link`. |
 | `node scripts/check-duplicates.mjs` | Contrôle les duplications entre guides et pages produit après un build. |
 | `node scripts/optimize-images.mjs` | Régénère les images publiques depuis `assets-src/`. |
 
@@ -127,7 +127,6 @@ public/               Fichiers servis tels quels au navigateur
 assets-src/           Sources haute définition non exposées publiquement
 scripts/              Images, Google Sheet, contenu agent et contrôles
 docs/                 Procédures opérationnelles complémentaires
-middleware.ts         Négociation HTML/Markdown pour les agents
 next.config.ts        En-têtes HTTP et cache des ressources statiques
 custom-worker.ts      Point d’entrée Worker avec le cron de vidage (non activé)
 wrangler.jsonc        Bindings, observabilité et déclaration du Worker Cloudflare
@@ -324,14 +323,21 @@ signal publicitaire Google n’est activé.
 
 ## Accès pour les agents
 
-Le site conserve l’HTML par défaut et répond en Markdown lorsque la requête contient
-`Accept: text/markdown`. Les représentations sont produites depuis le `<main>` réellement rendu de
-chaque page indexable, puis intégrées au build.
+Chaque page indexable a une copie Markdown, produite depuis son `<main>` réellement rendu et
+publiée comme fichier statique sous `/agent-markdown/` (`/` devient `/agent-markdown/index.md`).
 
-- `/llms.txt` fournit l’index machine lisible du site ;
-- la page d’accueil expose cet index avec un en-tête RFC 8288 `Link` ;
-- `middleware.ts` effectue la négociation de contenu et redirige vers `public/agent-markdown/` (le dossier ne commence pas par un underscore `_` pour éviter d'être ignoré par les assets statiques Cloudflare) ;
-- `scripts/check-agent-readiness.mjs` vérifie le contrat HTTP localement.
+- chaque page annonce sa copie avec `<link rel="alternate" type="text/markdown">` ;
+- `/llms.txt` liste les pages, chacune avec le lien vers sa copie Markdown ;
+- la page d’accueil expose `/llms.txt` avec un en-tête RFC 8288 `Link` ;
+- `public/_headers` sert ces fichiers en UTF-8 et en `noindex`, pour que la page HTML reste la
+  seule à figurer dans les résultats de recherche ;
+- `scripts/check-agent-readiness.mjs` vérifie ce contrat sur un build.
+
+Il n’y a volontairement **pas** de négociation de contenu sur `Accept: text/markdown`. Elle vivait
+dans un middleware dont la réécriture n’atteignait jamais les fichiers statiques une fois déployée :
+chaque requête Markdown recevait la page 404 HTML, que le Worker devait rendre à chaque fois (jusqu’à
+280 ms de CPU, contre une dizaine pour une page en cache). Les fichiers statiques, eux, sont servis
+par Cloudflare sans exécuter le Worker.
 
 La configuration DNS-AID et DNSSEC reste une opération de zone Cloudflare. Les enregistrements,
 commandes de validation et limites du draft sont documentés dans
@@ -407,8 +413,9 @@ Après déploiement, vérifier au minimum :
 
 ```bash
 curl -I https://yatu-app.com
-curl -I -H 'Accept: text/markdown' https://yatu-app.com
+curl -I https://yatu-app.com/agent-markdown/index.md
 curl https://yatu-app.com/llms.txt
 ```
 
-La seconde réponse doit utiliser `Content-Type: text/markdown` et inclure `Vary: Accept`.
+La seconde réponse doit utiliser `Content-Type: text/markdown; charset=utf-8` et porter
+`X-Robots-Tag: noindex`.
