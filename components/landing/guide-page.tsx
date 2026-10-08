@@ -9,6 +9,7 @@ import { SectionHeading } from "@/components/section-heading";
 import { LandingStructuredData } from "@/components/structured-data";
 import { ACCENT, CTA, MODULES, icon } from "@/lib/content";
 import { USAGES_DECOR } from "@/lib/decor";
+import { pageCardBySlug } from "@/lib/comparison-content";
 import {
   type LandingCounterpart,
   type LandingPage,
@@ -222,8 +223,9 @@ function Counterpart({ counterpart, accent }: { counterpart: LandingCounterpart;
   );
 }
 
-function RelatedCard({ slug }: { slug: string }) {
-  const page = landingBySlug(slug);
+/** A "à lire ensuite" card - a guide, an app page or a comparison alike. */
+export function RelatedCard({ slug }: { slug: string }) {
+  const page = pageCardBySlug(slug);
   if (!page) return null;
 
   return (

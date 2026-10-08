@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { COMPARISON_PAGES } from "@/lib/comparison-content";
 import { LANDING_INDEX_PATH, LANDING_PAGES } from "@/lib/landing-content";
 
 /**
@@ -42,6 +43,15 @@ export const HOST_PHONE_HREF = "+16503198930";
 /** Absolute URL for a site-relative path. */
 export const absoluteUrl = (path = "/") => new URL(path, `${SITE_URL}/`).toString();
 
+/**
+ * The file a crawler can actually fetch for a photo declared by its source
+ * name ("/assets/usecases/usage-evjf.jpg"). The sources stay in assets-src/;
+ * only the variants written by scripts/optimize-images.mjs are published - see
+ * components/picture.tsx. Quoting the source name sent the sitemap and the
+ * structured data to a 404.
+ */
+export const publishedPhoto = (src: string) => src.replace(/\.(jpg|jpeg|png|webp)$/, "-1040.webp");
+
 export type SitePage = {
   path: string;
   changeFrequency: "weekly" | "monthly" | "yearly";
@@ -70,7 +80,7 @@ export const SITE_PAGES: SitePage[] = [
     path: "/",
     changeFrequency: "weekly",
     priority: 1,
-    updated: "2026-08-02",
+    updated: "2026-10-08",
   },
   {
     path: "/bde",
@@ -91,7 +101,16 @@ export const SITE_PAGES: SitePage[] = [
     // entry points we want crawled often, but they are not the front door.
     priority: 0.7,
     updated: page.updated,
-    images: [page.photo],
+    images: [publishedPhoto(page.photo)],
+  })),
+  // Same weight as the guides: they answer the "quelle application…" questions
+  // asked before anyone has heard of Yatu.
+  ...COMPARISON_PAGES.map((page): SitePage => ({
+    path: `/${page.slug}`,
+    changeFrequency: "monthly",
+    priority: 0.7,
+    updated: page.updated,
+    images: [publishedPhoto(page.photo)],
   })),
   { path: "/mentions-legales", changeFrequency: "yearly", priority: 0.2, updated: "2026-08-01" },
   { path: "/confidentialite", changeFrequency: "yearly", priority: 0.2, updated: "2026-08-01" },

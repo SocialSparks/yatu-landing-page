@@ -751,7 +751,7 @@ export const FAQ: FaqEntry[] = [
   },
   {
     q: "Yatu est-il gratuit ?",
-    a: "Oui. Yatu propose une version gratuite pour créer et organiser tes événements. Des options premium permettront d’accéder à davantage de possibilités ou de lever certaines limites.",
+    a: "Oui. Créer un événement, inviter ton groupe, discuter, voter, tenir le budget, faire les listes et partager les photos est gratuit. Seule la gestion chiffrée des documents est payante, avec l’abonnement Yatu Premium.",
   },
   {
     q: "Quels événements peut-on organiser avec Yatu ?",
@@ -759,7 +759,15 @@ export const FAQ: FaqEntry[] = [
   },
   {
     q: "Qu’est-ce qu’on peut gérer dans un événement ?",
-    a: "Les discussions, les informations importantes, le planning, les tâches, les dépenses, les documents et les souvenirs du groupe.",
+    a: "Les discussions, les sondages, les informations importantes, le planning, les tâches, les dépenses (en plusieurs devises), les documents et les souvenirs du groupe.",
+  },
+  {
+    q: "Peut-on voter pour une date, un lieu ou une activité ?",
+    a: "Oui. Dans un événement, tu crées un sondage pour faire choisir le groupe - une date, un lieu, une activité - avec une clôture automatique si tu veux une décision à heure fixe. Pour la date, Yatu propose aussi un vote de date dédié.",
+  },
+  {
+    q: "Combien de personnes peut-on inviter dans un événement ?",
+    a: "Autant que tu veux : Yatu n’impose pas de nombre maximum de participants. Chacun rejoint l’événement depuis l’application, sur iPhone ou Android.",
   },
   {
     q: "Sur quels téléphones Yatu est-il disponible ?",
@@ -767,7 +775,7 @@ export const FAQ: FaqEntry[] = [
   },
   {
     q: "Comment mes données sont-elles utilisées ?",
-    a: "Les données confiées à Yatu servent à faire fonctionner et sécuriser le service. Elles ne sont ni vendues ni louées, et ne servent pas à afficher de la publicité ciblée.",
+    a: "Les données confiées à Yatu servent à faire fonctionner et sécuriser le service. Elles ne sont ni vendues ni louées. Si tu l’acceptes, sur iPhone comme sur Android, un outil de mesure relie ton appareil à la campagne publicitaire qui t’a fait découvrir Yatu. Tu peux refuser : l’application fonctionne exactement pareil.",
     link: {
       href: "/confidentialite",
       label: "politique de confidentialité",
