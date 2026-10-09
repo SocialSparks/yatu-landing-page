@@ -3,6 +3,7 @@ import {NavLink} from "@/components/nav-link";
 import {ConsentButton} from "@/components/consent-button";
 import {InstagramIcon, TikTokIcon} from "@/components/icons";
 import {yatuProUrl} from "@/lib/content";
+import {COMPARISON_PAGES} from "@/lib/comparison-content";
 import {APP_PAGES, GUIDE_PAGES, landingPath} from "@/lib/landing-content";
 import {ROUTES} from "@/lib/routes";
 import {PUBLISHER} from "@/lib/site";
@@ -29,6 +30,7 @@ const COLUMNS: { title: string; links: { href: string; label: string; external?:
   {
     title: "L’app",
     links: [
+      { href: ROUTES.about, label: "Qu’est-ce que Yatu ?" },
       { href: ROUTES.fonctionnement, label: "Comment ça marche" },
       { href: ROUTES.modules, label: "Les modules" },
       { href: ROUTES.cycle, label: "Avant, pendant, après" },
@@ -48,6 +50,15 @@ const COLUMNS: { title: string; links: { href: string; label: string; external?:
       })),
       { href: ROUTES.organiser, label: "Tous les guides" },
     ],
+  },
+  {
+    // One click from every page, like the guides: the comparisons are the
+    // pages assistants are asked about, and a crawler finds them here.
+    title: "Comparatifs",
+    links: COMPARISON_PAGES.map((page) => ({
+      href: landingPath(page.slug),
+      label: page.cardTitle,
+    })),
   },
   {
     title: "BDE et associations",

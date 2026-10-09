@@ -1,3 +1,4 @@
+import { COMPARISON_PAGES, comparisonBySlug } from "@/lib/comparison-content";
 import { LANDING_PAGES, landingBySlug } from "@/lib/landing-content";
 import { OG_CONTENT_TYPE, OG_SIZE, ogImage } from "@/lib/og-image";
 
@@ -6,13 +7,13 @@ export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 
 export function generateStaticParams() {
-  return LANDING_PAGES.map((page) => ({ slug: page.slug }));
+  return [...LANDING_PAGES, ...COMPARISON_PAGES].map((page) => ({ slug: page.slug }));
 }
 
 /** One card per guide, so a shared link previews the guide and not the site. */
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const page = landingBySlug(slug);
+  const page = landingBySlug(slug) ?? comparisonBySlug(slug);
 
   return ogImage({
     badge: page?.badge ?? "Bientôt disponible",

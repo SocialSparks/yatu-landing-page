@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { ComparisonPage } from "@/components/landing/comparison-page";
 import { GuidePage } from "@/components/landing/guide-page";
+import { COMPARISON_PAGES, comparisonBySlug } from "@/lib/comparison-content";
 import { LANDING_PAGES, landingBySlug } from "@/lib/landing-content";
 import { pageMetadata } from "@/lib/site";
 
 /**
- * The occasion guides, at the root of the site: /organiser-un-evjf,
- * /partager-les-depenses-entre-amis…
+ * The occasion guides and the comparisons, at the root of the site:
+ * /organiser-un-evjf, /alternative-tricount…
  *
  * A static segment always wins over this one, so /bde, /cookies and the rest
  * are untouched.
@@ -20,7 +22,7 @@ import { pageMetadata } from "@/lib/site";
  * are still a real 404: landingBySlug returns null and we call notFound().
  */
 export function generateStaticParams() {
-  return LANDING_PAGES.map((page) => ({ slug: page.slug }));
+  return [...LANDING_PAGES, ...COMPARISON_PAGES].map((page) => ({ slug: page.slug }));
 }
 
 export async function generateMetadata({
@@ -29,7 +31,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const page = landingBySlug(slug);
+  const page = landingBySlug(slug) ?? comparisonBySlug(slug);
 
   if (!page) return {};
 
@@ -43,9 +45,11 @@ export async function generateMetadata({
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const page = landingBySlug(slug);
+  const guide = landingBySlug(slug);
+  if (guide) return <GuidePage page={guide} />;
 
-  if (!page) notFound();
+  const comparison = comparisonBySlug(slug);
+  if (comparison) return <ComparisonPage page={comparison} />;
 
-  return <GuidePage page={page} />;
+  notFound();
 }

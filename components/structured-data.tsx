@@ -7,6 +7,8 @@ import {
   YATU_REVEAL_SCREENS,
   faqAnswerText,
 } from "@/lib/content";
+import { ABOUT, ABOUT_PATH, ABOUT_PROFILES, ABOUT_UPDATED } from "@/lib/about-content";
+import { type ComparisonPage, appAnchor } from "@/lib/comparison-content";
 import { GUIDE_PAGES, LANDING_INDEX_PATH, type LandingPage } from "@/lib/landing-content";
 import type { Crumb } from "@/lib/routes";
 import {
@@ -17,6 +19,7 @@ import {
   SITE_NAME,
   SITE_URL,
   absoluteUrl,
+  publishedPhoto,
 } from "@/lib/site";
 
 function JsonLd({ data }: { data: object }) {
@@ -62,7 +65,7 @@ export function SiteStructuredData() {
     logo: absoluteUrl("/icon-512.png"),
     areaServed: "FR",
     knowsLanguage: "fr",
-    sameAs: ["https://www.instagram.com/yatu_app/", "https://www.tiktok.com/@yatu_app"],
+    sameAs: ABOUT_PROFILES.map((profile) => profile.href),
     parentOrganization: { "@id": PUBLISHER_ID },
   };
 
@@ -113,7 +116,25 @@ export function BreadcrumbStructuredData({ trail }: { trail: Crumb[] }) {
  * rating snippets gathered on another site.
  */
 export function HomeStructuredData() {
-  const application = {
+  const faq = {
+    "@type": "FAQPage",
+    "@id": absoluteUrl("/#faq"),
+    mainEntity: FAQ.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: faqAnswerText(item) },
+    })),
+  };
+
+  return <JsonLd data={graph(applicationNode(), faq)} />;
+}
+
+/**
+ * The app itself, under one @id. Declared in full on the two pages that are
+ * about it - the home page and the identity card - and pointed at elsewhere.
+ */
+function applicationNode() {
+  return {
     "@type": "SoftwareApplication",
     "@id": absoluteUrl("/#app"),
     name: SITE_NAME,
@@ -141,18 +162,40 @@ export function HomeStructuredData() {
     publisher: { "@id": ORGANIZATION_ID },
     isPartOf: { "@id": WEBSITE_ID },
   };
+}
+
+/**
+ * /qu-est-ce-que-yatu: an AboutPage whose subject is the brand and whose main
+ * entity is the app, plus the questions printed on the page.
+ */
+export function AboutStructuredData({ trail }: { trail: Crumb[] }) {
+  const url = absoluteUrl(ABOUT_PATH);
+
+  const aboutPage = {
+    "@type": "AboutPage",
+    "@id": url,
+    url,
+    name: ABOUT.h1,
+    description: ABOUT.lede,
+    inLanguage: "fr-FR",
+    dateModified: ABOUT_UPDATED,
+    isPartOf: { "@id": WEBSITE_ID },
+    about: { "@id": ORGANIZATION_ID },
+    mainEntity: { "@id": absoluteUrl("/#app") },
+    breadcrumb: breadcrumbNode(trail),
+  };
 
   const faq = {
     "@type": "FAQPage",
-    "@id": absoluteUrl("/#faq"),
-    mainEntity: FAQ.map((item) => ({
+    "@id": `${url}#faq`,
+    mainEntity: ABOUT.faq.map((item) => ({
       "@type": "Question",
       name: item.q,
-      acceptedAnswer: { "@type": "Answer", text: faqAnswerText(item) },
+      acceptedAnswer: { "@type": "Answer", text: item.a },
     })),
   };
 
-  return <JsonLd data={graph(application, faq)} />;
+  return <JsonLd data={graph(aboutPage, applicationNode(), faq)} />;
 }
 
 /**
@@ -175,7 +218,7 @@ export function LandingStructuredData({ page, trail }: { page: LandingPage; trai
     inLanguage: "fr-FR",
     isPartOf: { "@id": WEBSITE_ID },
     about: { "@id": absoluteUrl("/#app") },
-    primaryImageOfPage: absoluteUrl(page.photo),
+    primaryImageOfPage: absoluteUrl(publishedPhoto(page.photo)),
     datePublished: page.updated,
     dateModified: page.updated,
     breadcrumb: breadcrumbNode(trail),
@@ -192,7 +235,7 @@ export function LandingStructuredData({ page, trail }: { page: LandingPage; trai
     headline: page.h1,
     description: page.description,
     inLanguage: "fr-FR",
-    image: absoluteUrl(page.photo),
+    image: absoluteUrl(publishedPhoto(page.photo)),
     datePublished: page.updated,
     dateModified: page.updated,
     author: { "@id": ORGANIZATION_ID },
@@ -207,7 +250,7 @@ export function LandingStructuredData({ page, trail }: { page: LandingPage; trai
     name: page.h1,
     description: page.lede,
     inLanguage: "fr-FR",
-    image: absoluteUrl(page.photo),
+    image: absoluteUrl(publishedPhoto(page.photo)),
     step: page.steps.map((step, i) => ({
       "@type": "HowToStep",
       position: i + 1,
@@ -234,6 +277,71 @@ export function LandingStructuredData({ page, trail }: { page: LandingPage; trai
       data={page.kind === "guide" ? graph(webPage, article, howTo, faq) : graph(webPage, howTo, faq)}
     />
   );
+}
+
+/**
+ * A comparison: the page, the article (who compared, and when), the products
+ * it compares as a plain list, and its questions.
+ *
+ * The other products are named, never described as SoftwareApplication nodes:
+ * that markup would be us publishing facts about their software - ratings,
+ * prices - in their name. The list says which products the page covers, which
+ * is all a reader or an assistant needs from it.
+ */
+export function ComparisonStructuredData({ page, trail }: { page: ComparisonPage; trail: Crumb[] }) {
+  const url = absoluteUrl(`/${page.slug}`);
+
+  const webPage = {
+    "@type": "WebPage",
+    "@id": url,
+    url,
+    name: page.title,
+    description: page.description,
+    inLanguage: "fr-FR",
+    isPartOf: { "@id": WEBSITE_ID },
+    primaryImageOfPage: absoluteUrl(publishedPhoto(page.photo)),
+    datePublished: page.updated,
+    dateModified: page.updated,
+    breadcrumb: breadcrumbNode(trail),
+  };
+
+  const article = {
+    "@type": "Article",
+    "@id": `${url}#article`,
+    headline: page.h1,
+    description: page.description,
+    inLanguage: "fr-FR",
+    image: absoluteUrl(publishedPhoto(page.photo)),
+    datePublished: page.updated,
+    dateModified: page.updated,
+    author: { "@id": ORGANIZATION_ID },
+    publisher: { "@id": ORGANIZATION_ID },
+    isPartOf: { "@id": WEBSITE_ID },
+    mainEntityOfPage: { "@id": url },
+    // Each product card on the page carries an anchor; the list points at it.
+    about: {
+      "@type": "ItemList",
+      name: page.tableTitle,
+      itemListElement: page.apps.map((app, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: app.name,
+        url: `${url}#${appAnchor(app.name)}`,
+      })),
+    },
+  };
+
+  const faq = {
+    "@type": "FAQPage",
+    "@id": `${url}#faq`,
+    mainEntity: page.faq.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  };
+
+  return <JsonLd data={graph(webPage, article, faq)} />;
 }
 
 /** The /organiser index: the list of guides, in the order the page shows them. */

@@ -6,6 +6,8 @@
  */
 export const ROUTES = {
   home: "/",
+  /** The brand's identity card - "qu'est-ce que Yatu ?". */
+  about: "/qu-est-ce-que-yatu",
   organiser: "/organiser",
   yatu: "/#yatu",
   modules: "/#solution",

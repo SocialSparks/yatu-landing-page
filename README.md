@@ -140,7 +140,8 @@ open-next.config.ts   Adaptateur du build Next.js vers Cloudflare Workers
 | `/` | Présentation produit et liens App Store / Google Play. |
 | `/bde` | Offre dédiée aux BDE et associations, avec demande de démonstration. |
 | `/organiser` | Index des guides d’organisation. |
-| `/[slug]` | Guides éditoriaux et pages « application pour… » générés statiquement. |
+| `/qu-est-ce-que-yatu` | Fiche d’identité de la marque : faits, prix, limites, éditeur. Contenu dans `lib/about-content.ts`. |
+| `/[slug]` | Guides éditoriaux, pages « application pour… » et comparatifs, générés statiquement. |
 | `/go` | Page « lien en bio » pour Instagram et TikTok, en `noindex`. |
 | `/mentions-legales` | Mentions légales. |
 | `/confidentialite` | Politique de confidentialité. |
@@ -180,6 +181,18 @@ Open Graph, les breadcrumbs, les données structurées, le footer et l’index `
 Les guides `kind: "guide"` répondent à une intention méthodologique. Les pages `kind: "app"`
 présentent la réponse produit. Une paire guide/produit doit rester éditorialement distincte :
 `scripts/check-duplicates.mjs` doit toujours terminer avec zéro phrase partagée.
+
+Les comparatifs (« meilleures applications pour… », « alternative à Tricount »…) sont déclarés
+dans `COMPARISON_PAGES`, dans `lib/comparison-content.ts`, et servis par la même route `/[slug]`
+avec le gabarit `components/landing/comparison-page.tsx`. Ils sont repris de la même façon par le
+sitemap, les cartes Open Graph, les données structurées, le Markdown agent et le footer.
+
+Leurs règles sont plus strictes que celles des guides, parce qu’ils nomment des concurrents : la
+publicité comparative n’est licite que si elle est objective et vérifiable (Code de la consommation,
+L122-1). Chaque fait sur un autre produit renvoie à sa page officielle dans `sources`, `checked` porte
+la date du dernier relevé, les limites de Yatu figurent dans le même tableau, et une information
+contradictoire ou invérifiable reste hors de la page. Revérifier les faits et avancer `checked` au
+moins tous les trois mois.
 
 `lib/site.ts` est la source de vérité pour :
 

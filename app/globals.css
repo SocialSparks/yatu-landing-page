@@ -330,6 +330,26 @@ details[open] .yq-plus {
   color: #2a343d;
 }
 
+/* Comparison table: one column per app. Narrower cells than the two-column
+   tables, and the criterion stays in view while the row scrolls on a phone. */
+.yq-table-compare tbody td {
+  min-width: 17ch;
+}
+
+.yq-table-compare thead th:first-child,
+.yq-table-compare tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: #ffffff;
+  box-shadow: 1px 0 0 #ebe7de;
+}
+
+.yq-table-compare .yq-col-yatu {
+  background: #fffbef;
+  color: #2a343d;
+}
+
 .yq-section-cta {
   margin-top: clamp(56px, 7vw, 84px);
   padding: clamp(20px, 3vw, 28px);

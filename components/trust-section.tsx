@@ -10,8 +10,11 @@ const COMMITMENTS = [
   {
     tool: "heart",
     accent: ACCENT.coral,
-    title: "Jamais utilisées pour la pub",
-    body: "Tes données servent à faire fonctionner et sécuriser Yatu. Elles ne sont ni vendues ni louées, et ne servent pas au ciblage publicitaire.",
+    title: "Jamais vendues, jamais louées",
+    // Said as it is: the app runs a campaign-measurement SDK, behind the
+    // consent prompt on iOS and Android. "Jamais utilisées pour la pub" was
+    // not true, and an assistant would have repeated it word for word.
+    body: "Tes données servent à faire fonctionner et sécuriser Yatu. Elles ne sont ni vendues ni louées. Seule exception, et seulement si tu l’acceptes : un outil de mesure nous dit quelle campagne t’a fait découvrir l’appli.",
   },
   {
     tool: "documents",
@@ -40,7 +43,7 @@ export function TrustSection() {
           badge="Nos engagements"
           badgeBg={ACCENT.sunbeam}
           title="Tes événements sont à toi. Tes données aussi."
-          lede="Yatu gagne ta confiance en protégeant ce que tu lui confies, jamais en l’exploitant pour de la publicité."
+          lede="Yatu gagne ta confiance en protégeant ce que tu lui confies, et en te disant clairement à quoi ça sert."
           ledeMaxCh={57}
           marginBottom="clamp(32px,4vw,48px)"
           onDark
