@@ -3,6 +3,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { Decor } from "@/components/decor";
 import { FaqSection } from "@/components/faq-section";
 import { NavLink } from "@/components/nav-link";
+import { WorkedExample } from "@/components/landing/worked-example";
 import { Picture } from "@/components/picture";
 import { SectionCta } from "@/components/section-cta";
 import { SectionHeading } from "@/components/section-heading";
@@ -747,124 +748,13 @@ export function GuidePage({ page }: { page: LandingPage }) {
 
       {/* ── Le décompte travaillé ────────────────────────────────────── */}
       {page.worked ? (
-        <section style={{ background: "#FFFFFF", padding: "clamp(56px,8vw,96px) 0" }}>
-          <div data-r="gutter" style={GUTTER}>
-            <SectionHeading
-              badge="Un exemple chiffré"
-              badgeBg={ACCENT.sunbeam}
-              title={page.worked.title}
-              lede={page.worked.lede}
-              titleMaxCh={22}
-              ledeMaxCh={52}
-              marginBottom="clamp(30px,4vw,48px)"
-            />
-
-            <div style={{ maxWidth: 860, margin: "0 auto", display: "flex", flexDirection: "column", gap: 28 }}>
-              <div className="yq-table-wrap">
-                <table className="yq-table">
-                  <caption>Les cinq dépenses du week-end</caption>
-                  <thead>
-                    <tr>
-                      <th scope="col">Dépense</th>
-                      <th scope="col">Montant</th>
-                      <th scope="col">Payée par</th>
-                      <th scope="col">Pour qui</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {page.worked.rows.map((row) => (
-                      <tr key={row.label}>
-                        <th scope="row">{row.label}</th>
-                        <td className="yq-num">{row.amount}</td>
-                        <td>{row.who}</td>
-                        <td>{row.forWhom}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              <div className="yq-table-wrap">
-                <table className="yq-table">
-                  <caption>Ce que chacun a payé, ce que chacun doit</caption>
-                  <thead>
-                    <tr>
-                      <th scope="col">Qui</th>
-                      <th scope="col">A payé</th>
-                      <th scope="col">Doit</th>
-                      <th scope="col">Solde</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {page.worked.balances.map((row) => (
-                      <tr key={row.who}>
-                        <th scope="row">{row.who}</th>
-                        <td className="yq-num">{row.paid}</td>
-                        <td className="yq-num">{row.owed}</td>
-                        <td className="yq-num">{row.net}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              <div
-                style={{
-                  background: "#F7F4ED",
-                  border: "1px solid #EBE7DE",
-                  borderLeft: `4px solid ${page.accent}`,
-                  borderRadius: 20,
-                  padding: "22px 26px",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 12,
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: DISPLAY,
-                    fontSize: 20,
-                    lineHeight: 1.2,
-                    letterSpacing: "-.02em",
-                    color: "#2A343D",
-                  }}
-                >
-                  Le solde, en trois virements
-                </span>
-                <ul
-                  style={{
-                    margin: 0,
-                    padding: "0 0 0 20px",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 6,
-                    fontFamily: UI,
-                    fontSize: 16,
-                    lineHeight: 1.5,
-                    color: "rgba(42,52,61,.78)",
-                  }}
-                >
-                  {page.worked.settle.map((line) => (
-                    <li key={line}>{line}</li>
-                  ))}
-                </ul>
-              </div>
-
-              <p
-                style={{
-                  margin: 0,
-                  fontFamily: UI,
-                  fontSize: 15.5,
-                  lineHeight: 1.6,
-                  color: "rgba(42,52,61,.7)",
-                  textWrap: "pretty",
-                }}
-              >
-                {page.worked.note}
-              </p>
-            </div>
-          </div>
-        </section>
+        <WorkedExample
+          worked={page.worked}
+          accent={page.accent}
+          background="#FFFFFF"
+          rowsCaption="Les cinq dépenses du week-end"
+          settleTitle="Le solde, en trois virements"
+        />
       ) : null}
 
       {/* ── Les erreurs classiques ───────────────────────────────────── */}

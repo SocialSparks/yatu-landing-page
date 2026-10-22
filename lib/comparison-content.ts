@@ -1,5 +1,5 @@
 import { ACCENT, icon } from "@/lib/content";
-import { landingBySlug } from "@/lib/landing-content";
+import { type LandingPage, landingBySlug } from "@/lib/landing-content";
 
 /**
  * The comparison pages - "les meilleures applications pour…", "alternative à
@@ -49,6 +49,9 @@ export type ComparisonChoice = { need: string; pick: string };
 
 export type ComparisonFaq = { q: string; a: string };
 
+/** One rung of the "which tool for which need" ladder: the situation, then what fits it. */
+export type ComparisonLevel = { level: string; scenario: string; picks: string };
+
 export type ComparisonPage = {
   kind: "comparison";
   /** URL, without the leading slash. */
@@ -90,6 +93,13 @@ export type ComparisonPage = {
   rows: ComparisonRow[];
   choiceTitle: string;
   choices: ComparisonChoice[];
+  /**
+   * The same question asked by size of need rather than by tool: a weekend, a
+   * trip, a flat share. Optional - only the expense comparison has one.
+   */
+  levels?: { title: string; lede: string; items: ComparisonLevel[] };
+  /** One real split, worked line by line - same shape as the settlement guide's. */
+  worked?: NonNullable<LandingPage["worked"]>;
   /** The product cards: what each one is, does well, and does not do. */
   detailTitle: string;
   /** How the comparison was made: who wrote it, when, from what. */
@@ -459,7 +469,7 @@ export const COMPARISON_PAGES: ComparisonPage[] = [
   {
     kind: "comparison",
     slug: "alternative-tricount",
-    updated: "2026-10-08",
+    updated: "2026-10-22",
     checked: CHECKED,
     badge: "Alternative à Tricount",
     accent: ACCENT.sunbeam,
@@ -624,6 +634,54 @@ export const COMPARISON_PAGES: ComparisonPage[] = [
         pick: "Yatu : le budget est un module de l’événement, à côté de la discussion, des sondages, des listes et des documents. Chaque participant installe l’appli.",
       },
     ],
+    levels: {
+      title: "Trois niveaux de besoin, trois réponses",
+      lede: "Partager des dépenses ne demande pas la même chose pour un week-end à quatre, un voyage à l’étranger et une colocation à l’année. L’outil se choisit selon le niveau, pas selon la notoriété.",
+      items: [
+        {
+          level: "Niveau 1 · Un week-end, une avance, un solde",
+          scenario:
+            "Une personne réserve et avance, les autres lui rendent leur part à la fin. Peu de dépenses, une seule devise, des parts égales ou presque.",
+          picks:
+            "Tricount suffit. Si personne ne veut installer d’application, Kittysplit ou Spliit fonctionnent dans le navigateur. Yatu n’a d’intérêt que si le week-end s’organise déjà dedans.",
+        },
+        {
+          level: "Niveau 2 · Un voyage, plusieurs devises, des parts inégales",
+          scenario:
+            "Des dépenses étalées sur plusieurs jours, payées par plusieurs personnes, parfois à l’étranger, certaines ne concernant qu’une partie du groupe.",
+          picks:
+            "Tricount gère plusieurs devises et fonctionne hors connexion. Splitwise propose quatre types de répartition, avec ses quatre dépenses par jour en gratuit. Yatu permet d’exclure ceux qu’une dépense ne concerne pas, et la rattache au programme et aux réservations. Pour les parts inégales, vérifie d’abord que l’outil les permet : les pages officielles de Tricount se contredisent sur ce point.",
+        },
+        {
+          level: "Niveau 3 · Une colocation, des dépenses sur des mois",
+          scenario: "Un groupe stable qui partage des charges dans la durée, sans date de fin.",
+          picks:
+            "Splitwise ou Tricount. Pas Yatu : un événement y dure 14 jours au maximum. Avec Splitwise, compte sur la limite de quatre dépenses par jour si le groupe en saisit beaucoup.",
+        },
+      ],
+    },
+    worked: {
+      title: "À quoi ressemble un remboursement bien tenu",
+      lede: "Trois amis, trois jours en Bretagne. Quatre dépenses, dont une ne concerne pas tout le monde. Quel que soit l’outil choisi, c’est le décompte qu’il doit produire.",
+      rows: [
+        { label: "Gîte, deux nuits", amount: "360,00 €", who: "Noé", forWhom: "Les trois" },
+        { label: "Location de voiture", amount: "210,00 €", who: "Camille", forWhom: "Les trois" },
+        { label: "Courses", amount: "87,00 €", who: "Inès", forWhom: "Les trois" },
+        {
+          label: "Crêperie du samedi",
+          amount: "54,00 €",
+          who: "Camille",
+          forWhom: "Camille et Inès - Noé n’y était pas",
+        },
+      ],
+      balances: [
+        { who: "Noé", paid: "360,00 €", owed: "219,00 €", net: "+ 141,00 €" },
+        { who: "Camille", paid: "264,00 €", owed: "246,00 €", net: "+ 18,00 €" },
+        { who: "Inès", paid: "87,00 €", owed: "246,00 €", net: "− 159,00 €" },
+      ],
+      settle: ["Inès verse 141,00 € à Noé", "Inès verse 18,00 € à Camille"],
+      note: "711 € de dépenses, une seule personne qui rembourse, deux virements. Camille a avancé 264 € mais n’en doit que 246 : son solde est de + 18 €, pas de + 264 €. Sans la ligne de la crêperie, chacun devrait 237 € et Noé paierait 18 € pour un dîner où il n’était pas. Splitwise et Yatu permettent de répartir une dépense sur une partie du groupe ; ce n’est pas le calcul qui les distingue, c’est ce qui l’entoure.",
+    },
     detailTitle: "Les trois applications en détail",
     method: [
       "Yatu fait partie des applications comparées sur cette page, et c’est l’équipe de Yatu qui l’a écrite. Pour que la comparaison reste vérifiable, chaque information sur Tricount et Splitwise renvoie à leurs propres pages, et nous écrivons noir sur blanc quand Tricount suffit.",

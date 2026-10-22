@@ -3,6 +3,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { Decor } from "@/components/decor";
 import { FaqSection } from "@/components/faq-section";
 import { RelatedCard } from "@/components/landing/guide-page";
+import { WorkedExample } from "@/components/landing/worked-example";
 import { NavLink } from "@/components/nav-link";
 import { Picture } from "@/components/picture";
 import { SectionCta } from "@/components/section-cta";
@@ -402,6 +403,72 @@ export function ComparisonPage({ page }: { page: ComparisonPageData }) {
           </ul>
         </div>
       </section>
+
+      {/* ── Par niveau de besoin ─────────────────────────────────────── */}
+      {page.levels ? (
+        <section style={{ background: "#FFFFFF", padding: "clamp(56px,8vw,96px) 0" }}>
+          <div data-r="gutter" style={GUTTER}>
+            <SectionHeading
+              badge="Selon l’ampleur"
+              badgeBg={ACCENT.apricot}
+              title={page.levels.title}
+              lede={page.levels.lede}
+              titleMaxCh={24}
+              ledeMaxCh={52}
+              marginBottom="clamp(30px,4vw,48px)"
+            />
+
+            <ol
+              data-reveal="stagger"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 12,
+                margin: "0 auto",
+                padding: 0,
+                maxWidth: 860,
+                listStyle: "none",
+              }}
+            >
+              {page.levels.items.map((item) => (
+                <li
+                  key={item.level}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 8,
+                    background: "#F7F4ED",
+                    border: "1px solid #EBE7DE",
+                    borderRadius: 20,
+                    padding: "20px 24px",
+                  }}
+                >
+                  <span style={{ fontFamily: DISPLAY, fontSize: 19, lineHeight: 1.25, letterSpacing: "-.02em", color: "#2A343D" }}>
+                    {item.level}
+                  </span>
+                  <span style={{ fontFamily: UI, fontSize: 15.5, lineHeight: 1.55, color: "rgba(42,52,61,.75)", textWrap: "pretty" }}>
+                    {item.scenario}
+                  </span>
+                  <span style={{ fontFamily: UI, fontSize: 15.5, lineHeight: 1.55, color: "#2A343D", textWrap: "pretty" }}>
+                    {item.picks}
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+      ) : null}
+
+      {/* ── Un décompte travaillé ────────────────────────────────────── */}
+      {page.worked ? (
+        <WorkedExample
+          worked={page.worked}
+          accent={page.accent}
+          background="#F7F4ED"
+          rowsCaption="Les dépenses du séjour"
+          settleTitle="Le solde, en deux virements"
+        />
+      ) : null}
 
       {/* ── Chaque application en détail ─────────────────────────────── */}
       <section style={{ background: "#FFFFFF", padding: "clamp(56px,8vw,96px) 0" }}>
