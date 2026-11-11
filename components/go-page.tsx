@@ -39,6 +39,7 @@ const LEGAL = [
   { href: ROUTES.mentionsLegales, label: "Mentions légales" },
   { href: ROUTES.confidentialite, label: "Confidentialité" },
   { href: ROUTES.cookies, label: "Cookies" },
+  { href: ROUTES.cgu, label: "CGU" },
 ];
 
 function ArrowIcon() {

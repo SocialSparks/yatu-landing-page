@@ -123,6 +123,7 @@ export const SITE_PAGES: SitePage[] = [
   { path: "/mentions-legales", changeFrequency: "yearly", priority: 0.2, updated: "2026-08-01" },
   { path: "/confidentialite", changeFrequency: "yearly", priority: 0.2, updated: "2026-08-01" },
   { path: "/cookies", changeFrequency: "yearly", priority: 0.2, updated: "2026-08-01" },
+  { path: "/cgu", changeFrequency: "yearly", priority: 0.2, updated: "2026-09-30" },
 ];
 
 /** "1er août 2026" - the date as the guides show it, and as Article quotes it. */

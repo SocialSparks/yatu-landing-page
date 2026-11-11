@@ -143,6 +143,9 @@ export function SiteFooter() {
             <NavLink href={ROUTES.cookies} className="yq-footer-link" style={LINK}>
               Gestion des cookies
             </NavLink>
+            <NavLink href={ROUTES.cgu} className="yq-footer-link" style={LINK}>
+              Conditions d’utilisation
+            </NavLink>
             <ConsentButton />
           </div>
 

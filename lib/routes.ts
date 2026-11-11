@@ -25,6 +25,8 @@ export const ROUTES = {
   mentionsLegales: "/mentions-legales",
   confidentialite: "/confidentialite",
   cookies: "/cookies",
+  /** Conditions generales d'utilisation de l'application. */
+  cgu: "/cgu",
 } as const;
 
 /** Hash links must be plain <a>: next/link no-ops when only the hash changes. */

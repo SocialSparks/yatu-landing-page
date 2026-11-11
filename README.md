@@ -146,6 +146,7 @@ open-next.config.ts   Adaptateur du build Next.js vers Cloudflare Workers
 | `/mentions-legales` | Mentions légales. |
 | `/confidentialite` | Politique de confidentialité. |
 | `/cookies` | Gestion du consentement et détail des traceurs. |
+| `/cgu` | Conditions générales d’utilisation de l’application. |
 
 Le header, le footer, la mesure d’audience, le bandeau de consentement et les données structurées
 globales sont montés dans `app/layout.tsx`.
