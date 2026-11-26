@@ -1,3 +1,4 @@
+import {STORE_BADGES_CSS} from "@/components/go-style";
 import type {Metadata, Viewport} from "next";
 import {Capriola, Lato, Outfit} from "next/font/google";
 import {BackToTop} from "@/components/back-to-top";
@@ -135,6 +136,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         ) : null}
       </head>
       <body>
+        <style>{STORE_BADGES_CSS}</style>
         <noscript>
           {/* site-motion.js hid elements from script; without script nothing should stay hidden. */}
           <style>{`[data-reveal],[data-fly],[data-reveal="stagger"]>*,[data-float]{opacity:1!important;transform:none!important;scale:1!important}`}</style>

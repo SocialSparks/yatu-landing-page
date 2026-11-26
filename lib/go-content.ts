@@ -11,8 +11,8 @@
  * entry; nothing in the page component knows the list's length.
  */
 
-import {yatuProUrl} from "@/lib/content";
-import {ROUTES} from "@/lib/routes";
+import {yatuProUrl} from "./yatu-pro-url.ts";
+import {ROUTES} from "./routes.ts";
 
 /** The handle, identical on both networks - it is what the visitor just left. */
 export const GO_HANDLE = "@yatu_app";

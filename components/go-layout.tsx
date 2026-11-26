@@ -1,0 +1,431 @@
+/** @jsxRuntime automatic */
+import type {AnchorHTMLAttributes, ComponentType, ReactNode} from "react";
+import {Decor} from "./decor.tsx";
+import {InstagramIcon, TikTokIcon} from "./icons.tsx";
+import {GO_DECOR} from "../lib/decor.ts";
+import {
+    GO_DOWNLOAD,
+    GO_HANDLE,
+    GO_LEDE,
+    GO_LINKS,
+    GO_SITE_LINK,
+    GO_TITLE,
+    type GoLink,
+} from "../lib/go-content.ts";
+import {ROUTES} from "../lib/routes.ts";
+import {GO_CSS} from "./go-style.ts";
+
+type LinkComponent = ComponentType<AnchorHTMLAttributes<HTMLAnchorElement> & {href: string; children: ReactNode}>;
+const PlainLink: LinkComponent = (props) => <a {...props} />;
+const icon = (base: string, name: string) => `${base}/assets/tools/${name}.svg`;
+
+const DISPLAY = "var(--font-display, Capriola), 'Trebuchet MS', system-ui, sans-serif";
+const UI = "var(--font-ui, Lato), system-ui, sans-serif";
+
+/* The column is deliberately narrow: this page is read on a phone, held in one
+   hand, two seconds after leaving an Instagram bio. `position:relative` lifts
+   it above the decor layer, which is absolutely positioned behind it. */
+const COLUMN_STYLE: React.CSSProperties = {
+  position: "relative",
+  zIndex: 1,
+  width: "100%",
+  boxSizing: "border-box",
+  maxWidth: 520,
+  margin: "0 auto",
+  padding: "0 20px",
+  display: "flex",
+  flexDirection: "column",
+};
+
+const LEGAL = [
+  { href: ROUTES.mentionsLegales, label: "Mentions légales" },
+  { href: ROUTES.confidentialite, label: "Confidentialité" },
+  { href: ROUTES.cookies, label: "Cookies" },
+  { href: ROUTES.cgu, label: "CGU" },
+];
+
+function ArrowIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path
+        d="M7.5 4.5 13 10l-5.5 5.5"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+/** The 48px square at the head of a row - a network mark, or a Yatu tool. */
+function LinkTile({link, site}: {link: GoLink; site: string}) {
+  if ("tool" in link) {
+    return (
+      <span
+        aria-hidden="true"
+        style={{
+          width: 48,
+          height: 48,
+          flex: "none",
+          display: "grid",
+          placeItems: "center",
+          borderRadius: 15,
+          background: "#EFE8DE",
+        }}
+      >
+        <img
+          loading="lazy"
+          decoding="async"
+          src={icon(site, link.tool)}
+          alt=""
+          width={30}
+          height={30}
+          style={{ display: "block" }}
+        />
+      </span>
+    );
+  }
+
+  const instagram = link.brand === "instagram";
+
+  return (
+    <span
+      aria-hidden="true"
+      style={{
+        width: 48,
+        height: 48,
+        flex: "none",
+        display: "grid",
+        placeItems: "center",
+        borderRadius: 15,
+        // A wash of the network's own colour: enough to recognise the row at a
+        // glance, not enough to drag Instagram's gradient onto a Yatu page.
+        background: instagram ? "rgba(225,48,108,.1)" : "rgba(42,52,61,.08)",
+        color: instagram ? "#E1306C" : "#111111",
+      }}
+    >
+      {instagram ? <InstagramIcon size={26} /> : <TikTokIcon size={24} />}
+    </span>
+  );
+}
+
+function LinkRow({link, site, Link}: {link: GoLink; site: string; Link: LinkComponent}) {
+  return (
+    <Link
+      href={link.external ? link.href : site + link.href}
+      className="yq-go-row"
+      {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+    >
+      <LinkTile link={link} site={site} />
+
+      <span style={{ minWidth: 0, flex: 1, display: "flex", flexDirection: "column", gap: 2 }}>
+        <span style={{ fontFamily: UI, fontWeight: 700, fontSize: 16, color: "#2A343D" }}>
+          {link.title}
+        </span>
+        <span
+          style={{
+            fontFamily: UI,
+            fontSize: 13.5,
+            lineHeight: 1.35,
+            color: "#71787E",
+            textWrap: "pretty",
+          }}
+        >
+          {link.sub}
+        </span>
+      </span>
+
+      <span
+        aria-hidden="true"
+        className="yq-go-arrow"
+        style={{ flex: "none", display: "flex", color: "#B8BBBE" }}
+      >
+        <ArrowIcon />
+      </span>
+    </Link>
+  );
+}
+
+/**
+ * /go - the link-in-bio page, the one address the Instagram and TikTok profiles
+ * point at.
+ *
+ * It is a linktree in shape only: same sand, same floating tools, same Capriola
+ * headings as the rest of the site, so a visitor arriving from a story lands
+ * somewhere that already looks like Yatu. It is served bare - see
+ * components/site-chrome.tsx - so nothing competes with the four destinations.
+ *
+ * The card under the title is the whole point of the page: the store buttons.
+ */
+export function GoLayout({
+  site = "",
+  Link = PlainLink,
+  stores,
+  afterStores,
+  handle = GO_HANDLE,
+  title = GO_TITLE,
+  lede = GO_LEDE,
+  download = GO_DOWNLOAD,
+  staticPage = false,
+}: {
+  site?: string;
+  staticPage?: boolean;
+  Link?: LinkComponent;
+  stores: ReactNode;
+  afterStores?: ReactNode;
+  handle?: string;
+  title?: string;
+  lede?: string;
+  download?: {title: string; lede: string};
+}) {
+  return (
+    <div
+      className={staticPage ? "yq-go-page yq-go-static" : "yq-go-page"}
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        minHeight: "100dvh",
+        display: "flex",
+        flexDirection: "column",
+        background: "#F7F4ED",
+        padding: "clamp(30px,7vw,60px) 0 clamp(26px,5vw,44px)",
+      }}
+    >
+      <style>{GO_CSS}</style>
+      <Decor items={GO_DECOR} baseUrl={site} />
+
+      <main
+        style={{
+          ...COLUMN_STYLE,
+          flex: 1,
+          gap: "clamp(22px,4vw,30px)",
+        }}
+      >
+        <header
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
+            gap: 14,
+          }}
+        >
+          {/* The app icon, the same square that will sit on their home screen.
+              Eager: it is the first thing on the page and the only image above
+              the fold that carries the brand. */}
+          <img
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
+            src={site + "/icon-192.png"}
+            alt="Yatu"
+            width={96}
+            height={96}
+            data-reveal="scale"
+            style={{
+              width: "clamp(84px,22vw,96px)",
+              height: "auto",
+              display: "block",
+              borderRadius: 26,
+              boxShadow: "0 10px 30px rgba(42,52,61,.14)",
+            }}
+          />
+
+          <span
+            data-reveal="up"
+            style={{
+              fontFamily: UI,
+              fontWeight: 700,
+              fontSize: 14,
+              letterSpacing: ".04em",
+              color: "#71787E",
+            }}
+          >
+            {handle}
+          </span>
+
+          <h1
+            data-reveal="up"
+            data-reveal-delay="60"
+            style={{
+              margin: 0,
+              fontFamily: DISPLAY,
+              fontWeight: 400,
+              fontSize: "clamp(27px,7vw,34px)",
+              lineHeight: 1.12,
+              letterSpacing: "-.025em",
+              color: "#2A343D",
+              textWrap: "balance",
+            }}
+          >
+            {title}
+          </h1>
+
+          <p
+            data-reveal="up"
+            data-reveal-delay="110"
+            style={{
+              margin: 0,
+              maxWidth: "40ch",
+              fontFamily: UI,
+              fontSize: 15.5,
+              lineHeight: 1.5,
+              color: "rgba(42,52,61,.72)",
+              textWrap: "pretty",
+            }}
+          >
+            {lede}
+          </p>
+        </header>
+
+        <section
+          aria-labelledby="go-cta-title"
+          className="yq-go-cta"
+          style={{
+            background: "#2A343D",
+            borderRadius: 24,
+            padding: "clamp(20px,5vw,26px)",
+            display: "flex",
+            flexDirection: "column",
+            gap: 18,
+          }}
+        >
+          <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
+            <h2
+              id="go-cta-title"
+              style={{
+                margin: 0,
+                fontFamily: DISPLAY,
+                fontWeight: 400,
+                fontSize: "clamp(21px,5.4vw,24px)",
+                lineHeight: 1.2,
+                letterSpacing: "-.02em",
+                color: "#FFFFFF",
+                textWrap: "balance",
+              }}
+            >
+              {download.title}
+            </h2>
+            <p
+              style={{
+                margin: 0,
+                fontFamily: UI,
+                fontSize: 15,
+                lineHeight: 1.5,
+                color: "rgba(255,255,255,.72)",
+                textWrap: "pretty",
+              }}
+            >
+              {download.lede}
+            </p>
+          </div>
+
+          {stores}
+          {afterStores}
+        </section>
+
+        <Link
+          href={site + GO_SITE_LINK.href}
+          className="yq-go-row yq-shimmer-border"
+        >
+          <span
+            aria-hidden="true"
+            style={{
+              width: 48,
+              height: 48,
+              flex: "none",
+              display: "grid",
+              placeItems: "center",
+              borderRadius: 15,
+              background: "#EFE8DE",
+            }}
+          >
+            <img
+              loading="lazy"
+              decoding="async"
+              src={icon(site, "heart")}
+              alt=""
+              width={30}
+              height={30}
+              style={{ display: "block" }}
+            />
+          </span>
+
+          <span style={{ minWidth: 0, flex: 1, display: "flex", flexDirection: "column", gap: 2 }}>
+            <span style={{ fontFamily: UI, fontWeight: 700, fontSize: 16, color: "#2A343D" }}>
+              {GO_SITE_LINK.title}
+            </span>
+            <span
+              style={{
+                fontFamily: UI,
+                fontSize: 13.5,
+                lineHeight: 1.35,
+                color: "rgba(42, 52, 61, 0.75)",
+                textWrap: "pretty",
+              }}
+            >
+              {GO_SITE_LINK.sub}
+            </span>
+          </span>
+
+          <span
+            aria-hidden="true"
+            className="yq-go-arrow"
+            style={{ flex: "none", display: "flex", color: "rgba(42, 52, 61, 0.5)" }}
+          >
+            <ArrowIcon />
+          </span>
+        </Link>
+
+        <nav aria-label="Nos liens" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          {GO_LINKS.map((link) => (
+            <LinkRow key={link.href} link={link} site={site} Link={Link} />
+          ))}
+        </nav>
+      </main>
+
+      {/* Outside <main>: on a page with no site footer, this one is the
+          contentinfo landmark. `marginTop:auto` keeps it at the bottom of a
+          tall screen without pinning it over the content on a short one. */}
+      <footer
+        style={{
+          ...COLUMN_STYLE,
+          marginTop: "auto",
+          paddingTop: "clamp(26px,5vw,34px)",
+          alignItems: "center",
+          gap: 8,
+          textAlign: "center",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            gap: "6px 14px",
+          }}
+        >
+          {LEGAL.map((item) => (
+            <Link
+              key={item.href}
+              href={site + item.href}
+              className="yq-go-legal"
+              style={{
+                fontFamily: UI,
+                fontSize: 13,
+                color: "#71787E",
+                textDecoration: "none",
+              }}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
+        <span style={{ fontFamily: UI, fontSize: 12.5, color: "#94999E" }}>
+          © 2026 Yatu - édité par QUANTIQ STUDIO
+        </span>
+      </footer>
+    </div>
+  );
+}

@@ -1,3 +1,4 @@
+/** @jsxRuntime automatic */
 /**
  * The glyphs that are not Yatu's own: the networks we publish on, the two
  * stores, and the copy affordance. The first three come from the design system
