@@ -1,4 +1,5 @@
-import type { DecorItem } from "@/lib/decor";
+/** @jsxRuntime automatic */
+import type { DecorItem } from "../lib/decor.ts";
 
 const BACKGROUND_POSITIONS: Pick<DecorItem, "l" | "r" | "t" | "b">[] = [
   { l: "2%", t: "52%" },
@@ -15,7 +16,7 @@ const BACKGROUND_POSITIONS: Pick<DecorItem, "l" | "r" | "t" | "b">[] = [
  * The tool icons drifting behind a section. Purely decorative, so the whole
  * layer is aria-hidden and non-interactive; the parent section clips it.
  */
-export function Decor({ items }: { items: DecorItem[] }) {
+export function Decor({items, baseUrl = ""}: {items: DecorItem[]; baseUrl?: string}) {
   let backgroundIndex = 0;
 
   return (
@@ -40,7 +41,7 @@ export function Decor({ items }: { items: DecorItem[] }) {
             loading="lazy"
             decoding="async"
             key={`${d.i}-${i}`}
-            src={`/assets/tools/${d.i}.svg`}
+            src={`${baseUrl}/assets/tools/${d.i}.svg`}
             alt=""
             data-float=""
             style={

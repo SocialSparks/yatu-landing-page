@@ -1,4 +1,5 @@
 import { ROUTES } from "@/lib/routes";
+import { yatuProUrl } from "./yatu-pro-url";
 
 /**
  * All the words the home page says, in one file, so the section components
@@ -41,9 +42,7 @@ export const PLAY_STORE_URL =
  * on its own domain. `placement` lands in utm_content so its analytics can tell
  * which link on this site sent the visitor.
  */
-export const YATU_PRO_URL = "https://yatu-pro.com";
-export const yatuProUrl = (placement: string) =>
-  `${YATU_PRO_URL}/?utm_source=yatu-app&utm_medium=site&utm_campaign=cross-sell&utm_content=${placement}`;
+export { YATU_PRO_URL, yatuProUrl } from "./yatu-pro-url";
 
 export const ACCENT = {
   ink: "#2A343D",
